@@ -1,0 +1,131 @@
+<section class="hero band" aria-labelledby="hero-title">
+  <div class="hero-in">
+    <div class="hero-copy">
+      <h1 class="hero-h" id="hero-title" fmReveal>Chợ sáng nay, giao trước bữa tối</h1>
+      <p class="lead" fmReveal="1">Rau củ, trái cây, thịt cá chọn lọc mỗi sáng cho bữa cơm nhà ở TP.HCM. Đặt trước 16:00, có hàng trong <span class="nowrap">1–2 giờ</span>.</p>
+      <div class="hero-cta" fmReveal="2">
+        <a class="btn btn-paper" routerLink="/san-pham">Đi chợ ngay</a>
+        <a class="link" routerLink="/" fragment="bang-gia">Xem bảng giá sáng nay</a>
+      </div>
+      <dl class="hero-facts" fmReveal="3">
+        <div><dt class="num">{{ ps.all().length }}</dt><dd>sản phẩm tươi và khô</dd></div>
+        <div><dt class="num">12</dt><dd>cửa hàng tại TP.HCM</dd></div>
+        <div><dt class="num">0 đ</dt><dd>miễn phí giao từ 300.000&nbsp;đ</dd></div>
+      </dl>
+    </div>
+    <div class="hero-media">
+      <img src="/img/quay-trai-cay.jpg" alt="Quầy rau củ và trái cây trong cửa hàng FreshMart" width="1400" height="747" fetchpriority="high">
+    </div>
+  </div>
+</section>
+
+<section class="sec band" id="bang-gia" aria-labelledby="h-board">
+  <div class="board-head">
+    <div>
+      <h2 class="h2" id="h-board" fmReveal>Bảng giá sáng nay</h2>
+      <p class="muted" fmReveal="1">{{ today }} · cập nhật lúc 6:00 sáng</p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Chọn quầy" fmReveal="1">
+      @for (g of groups; track g.key) {
+        <button class="tab" role="tab" type="button" [attr.aria-selected]="group() === g.key" (click)="group.set(g.key)">{{ g.label }}</button>
+      }
+    </div>
+  </div>
+  <ul class="board" aria-live="polite">
+    @for (row of board(); track row.p.id) {
+      <li>
+        <a class="ph" [routerLink]="['/san-pham', row.p.id]"><img [fmImg]="row.name" [src]="ps.img(row.p)" alt=""></a>
+        <div><b><a [routerLink]="['/san-pham', row.p.id]">{{ row.name }}</a></b><span class="small muted">{{ row.note }}</span></div>
+        <div class="r">
+          <span class="price num">{{ ps.price(row.p) | vnd }}</span>
+          <div class="was num">
+            @if (ps.off(row.p)) { <s>{{ row.p.price | vnd }}</s><span class="off">−{{ ps.off(row.p) }}%</span> }
+            @else { / {{ ps.unit(row.p) }} }
+          </div>
+        </div>
+        <div><fm-add-control [product]="row.p" /></div>
+      </li>
+    }
+  </ul>
+  <p class="board-note small muted">Hàng cân ký tính theo cân thực tế lúc soạn đơn. Giá đã gồm VAT.</p>
+</section>
+
+<section class="sec band" aria-labelledby="h-aisle">
+  <div class="sec-head">
+    <div><h2 class="h2" id="h-aisle" fmReveal>Đi chợ theo quầy</h2><p fmReveal="1">{{ ps.all().length }} sản phẩm trong {{ ps.categories().length }} quầy, từ rau sáng nay tới gạo, mì và gia vị cho cả tháng.</p></div>
+    <a class="link" routerLink="/san-pham" fmReveal>Xem cả {{ ps.categories().length }} quầy</a>
+  </div>
+  <div class="aisles">
+    @for (a of aisles(); track a.id; let i = $index) {
+      <a class="aisle" routerLink="/san-pham" [queryParams]="{ c: a.id }" [fmReveal]="i % 4 || ''">
+        <div class="ph"><img [src]="'/img/p/' + a.img + '.jpg'" alt="" loading="lazy"></div>
+        <div class="nm"><span>{{ a.name }}</span><span>{{ a.count }} sản phẩm</span></div>
+      </a>
+    }
+  </div>
+</section>
+
+<section class="sec band" aria-labelledby="h-pick">
+  <div class="sec-head"><div><h2 class="h2" id="h-pick" fmReveal>Chọn sao cho ngon</h2><p fmReveal="1">Hai loại trái cây bán chạy tuần này, cách chọn và bảo quản sau khi nhận hàng.</p></div></div>
+  <div class="picks">
+    @for (pk of picks(); track pk.p.id; let i = $index) {
+      <article class="pick" [fmReveal]="i || ''">
+        <a class="ph" [routerLink]="['/san-pham', pk.p.id]"><img [src]="ps.img(pk.p)" [alt]="pk.title" loading="lazy"></a>
+        <div class="pick-body">
+          <h3 class="h3">{{ pk.title }}</h3>
+          <p>{{ pk.text }}</p>
+          <div class="pick-row">
+            <span class="price num">{{ ps.price(pk.p) | vnd }}</span>
+            @if (ps.off(pk.p)) { <s class="small muted num">{{ pk.p.price | vnd }}</s> }
+            <span class="small muted">/ {{ ps.unit(pk.p) }}</span>
+            <button class="btn btn-forest btn-sm" type="button" (click)="addOne(pk.p)">Thêm vào giỏ</button>
+          </div>
+        </div>
+      </article>
+    }
+  </div>
+</section>
+
+<section class="mp band" aria-labelledby="h-mp">
+  <div class="mp-in">
+    <div class="mp-copy">
+      <h2 class="h2" id="h-mp" fmReveal>Có gì trong bếp, nấu món đó</h2>
+      <p class="lead" fmReveal="1">Chọn những nguyên liệu bạn đang có, Meal Planner gợi ý món phù hợp từ {{ recipeCount() }} công thức. Món nào còn thiếu nguyên liệu, một nút là thêm đủ vào giỏ.</p>
+      <a class="btn btn-paper" routerLink="/meal-planner" fmReveal="2">Mở Meal Planner</a>
+    </div>
+    <div class="mp-media" fmReveal>
+      <img src="/img/bep.jpg" alt="Hai người cùng nấu ăn trong bếp" width="900" height="600" loading="lazy">
+      <div class="mp-ui" aria-label="Ví dụ gợi ý của Meal Planner">
+        <p class="small muted">Bạn đang có rau muống, trứng gà ta, cà chua</p>
+        <div class="mp-rec"><div><b>Thịt heo xào rau muống</b><p class="small muted">30 phút · thiếu ba chỉ heo 250&nbsp;g</p></div><a class="btn btn-forest btn-sm" routerLink="/meal-planner" [queryParams]="{ mon: 'rec-003', co: have }">Xem món</a></div>
+        <div class="mp-rec"><div><b>Trứng gà xào cà chua</b><p class="small muted">20 phút · đủ nguyên liệu</p></div><a class="btn btn-stone btn-sm" routerLink="/meal-planner" [queryParams]="{ mon: 'rec-001', co: have }">Xem cách nấu</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tone band" aria-labelledby="h-deal">
+  <div class="sec-head">
+    <div><h2 class="h2" id="h-deal" fmReveal>Ưu đãi tuần này</h2><p fmReveal="1">Giá giảm hôm nay kết thúc sau <b class="num">{{ clock() }}</b>. Lưu mã voucher để dùng khi thanh toán.</p></div>
+    <a class="link" routerLink="/uu-dai" fmReveal>Xem tất cả ưu đãi</a>
+  </div>
+  <div class="p-grid">
+    @for (p of deals(); track p.id) { <fm-product-card [product]="p" /> }
+  </div>
+  <fm-voucher-list class="home-v" [list]="homeVouchers()" />
+</section>
+
+<section class="sec band" aria-labelledby="h-ship">
+  <div class="ship">
+    <div class="ship-media" fmReveal><img src="/img/giao-hang.jpg" alt="Nhân viên FreshMart giao túi rau củ cho khách" width="1400" height="933" loading="lazy"></div>
+    <div class="ship-body">
+      <h2 class="h2" id="h-ship" fmReveal>Giao trước bữa tối</h2>
+      <dl class="ship-facts">
+        <div fmReveal><dt class="num">1–2 giờ</dt><dd>Nội thành TP.HCM cho đơn đặt trước 16:00. Tỉnh lân cận 1–2 ngày.</dd></div>
+        <div fmReveal="1"><dt class="num">0 đ</dt><dd>Phí giao cho đơn từ 300.000 đ trong nội thành, dưới mức này là 20.000 đ.</dd></div>
+        <div fmReveal="2"><dt class="num">7 ngày</dt><dd>Đổi trả hàng còn nguyên tem nhãn, hoàn tiền 100% trong 3–5 ngày làm việc.</dd></div>
+      </dl>
+      <a class="link" routerLink="/cua-hang" fmReveal>Xem 12 cửa hàng gần bạn</a>
+    </div>
+  </div>
+</section>

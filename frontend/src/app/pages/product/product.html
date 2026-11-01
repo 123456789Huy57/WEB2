@@ -1,0 +1,100 @@
+@if (p(); as p) {
+  @if (p.active !== false) {
+  <section class="band pd-wrap">
+    <nav class="crumbs" aria-label="Đường dẫn">
+      <a routerLink="/">Trang chủ</a><span aria-hidden="true">/</span>
+      <a routerLink="/san-pham" [queryParams]="{ c: p.category }">{{ ps.catName(p.category) }}</a><span aria-hidden="true">/</span>
+      <span>{{ name() }}</span>
+    </nav>
+    <div class="pd">
+      <div class="pd-media" [class.single]="images().length < 2">
+        <div class="ph pd-main"><img [fmImg]="name()" [src]="images()[imgIndex()]" [alt]="name()"></div>
+        @if (images().length > 1) {
+          <div class="pd-thumbs" role="tablist" aria-label="Ảnh sản phẩm">
+            @for (u of images(); track u; let i = $index) {
+              <button type="button" role="tab" [attr.aria-selected]="i === imgIndex()" [attr.aria-label]="'Ảnh ' + (i + 1)" (click)="imgIndex.set(i)"><img [fmImg]="name()" [src]="u" alt=""></button>
+            }
+          </div>
+        }
+      </div>
+      <div class="pd-info">
+        <p class="muted">{{ brandLine() }}</p>
+        <h1 class="pd-name">{{ name() }}</h1>
+        <div class="pd-price">
+          <span class="price num">{{ ps.price(p) | vnd }}</span>
+          @if (ps.off(p)) { <s class="num">{{ p.price | vnd }}</s> <span class="off">−{{ ps.off(p) }}%</span> }
+        </div>
+        <p class="muted small">{{ unitNote() }}</p>
+        <div class="pd-buy">
+          <div class="qty" aria-label="Số lượng">
+            <button type="button" (click)="qty.set(qty() > step() ? qty() - step() : step())" aria-label="Bớt">−</button>
+            <span class="num">{{ ps.qty(qty()) }} {{ ps.unit(p) }}</span>
+            <button type="button" (click)="qty.set(qty() + step() <= p.stock ? qty() + step() : qty())" aria-label="Thêm">+</button>
+          </div>
+          <button class="btn btn-forest pd-add" type="button" [disabled]="!p.stock" (click)="add()">{{ p.stock ? 'Thêm vào giỏ' : 'Tạm hết hàng' }}</button>
+          <button class="btn btn-stone round" id="pd-wish" type="button" [attr.aria-pressed]="wished()" [attr.aria-label]="wished() ? 'Bỏ khỏi yêu thích' : 'Lưu vào yêu thích'" (click)="toggleWish()">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>
+          </button>
+        </div>
+        <button class="btn btn-stone btn-sm pd-cmp" type="button" [attr.aria-pressed]="compared()" (click)="toggleCompare()">{{ compared() ? 'Đang so sánh · ' + cmp.ids().length + '/3' : 'So sánh' }}</button>
+        @if (compared() && cmp.ids().length > 1) { <a class="link small" routerLink="/so-sanh" style="margin-left:12px">Xem bảng so sánh</a> }
+        <p class="small" id="pd-stock">
+          @if (p.stock > 10) { <span class="ok-note">Còn hàng</span> · đã bán {{ p.sold_count.toLocaleString('vi-VN') }} }
+          @else if (p.stock > 0) { <span class="off">Chỉ còn {{ p.stock }} {{ ps.unit(p) }}</span> }
+          @else { <span class="off">Tạm hết hàng</span> }
+        </p>
+        <dl class="pd-facts">
+          <div><dt>Giao hàng</dt><dd>1–2 giờ nội thành TP.HCM, miễn phí cho đơn từ 300.000 đ</dd></div>
+          <div><dt>Xuất xứ</dt><dd>{{ p.origin || 'Việt Nam' }}</dd></div>
+          <div><dt>Đổi trả</dt><dd>Trong 7 ngày nếu hàng không đúng mô tả</dd></div>
+        </dl>
+        <div class="pd-desc"><h2 class="f-h">Mô tả</h2><p>{{ p.description }}</p></div>
+        @if (nutrition().length) {
+          <div class="pd-nut">
+            <h2 class="f-h">Dinh dưỡng trên 100 g</h2>
+            <dl class="nut">
+              @for (n of nutrition(); track n.label) {
+                <div><dt>{{ n.label }}</dt><dd class="num">{{ n.value }} <span class="small">{{ n.unit }}</span></dd></div>
+              }
+            </dl>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+  @if (recipes().length) {
+    <section class="sec band" aria-labelledby="h-cook">
+      <div class="sec-head">
+        <div><h2 class="h2" id="h-cook">Nấu gì với {{ cookName().toLowerCase() }}</h2><p>Mở công thức trong Meal Planner, phần nguyên liệu còn thiếu thêm vào giỏ bằng một nút.</p></div>
+        <a class="link" routerLink="/meal-planner">Mở Meal Planner</a>
+      </div>
+      <div class="cook">
+        @for (x of recipes(); track x.recipe.id) {
+          <a class="cook-card" routerLink="/meal-planner" [queryParams]="{ mon: x.recipe.id, co: x.ingredientId }">
+            <span class="cook-img"><img [fmImg]="x.recipe.name" [src]="x.recipe.imageUrl" alt="" loading="lazy"></span>
+            <span class="small muted num">{{ meal[x.recipe.mealType] }} · {{ mp.totalTime(x.recipe) }} phút · {{ x.recipe.nutrition.calories }} kcal</span>
+            <span class="h3">{{ x.recipe.name }}</span>
+          </a>
+        }
+      </div>
+    </section>
+  }
+  <section class="sec band" aria-labelledby="h-rel">
+    <div class="sec-head"><h2 class="h2" id="h-rel">Cùng quầy</h2><a class="link" routerLink="/san-pham" [queryParams]="{ c: p.category }">Xem cả quầy</a></div>
+    <div class="p-grid">
+      @for (r of related(); track r.id) { <fm-product-card [product]="r" /> }
+    </div>
+  </section>
+  } @else {
+    <section class="band empty">
+      <p class="h3">Sản phẩm này tạm ngừng bán.</p>
+      <a class="btn btn-forest" routerLink="/san-pham" [queryParams]="{ c: p.category }">Xem sản phẩm cùng quầy</a>
+    </section>
+  }
+} @else {
+  <section class="band empty">
+    <p class="h3">Không tìm thấy sản phẩm này.</p>
+    <p class="muted">Có thể sản phẩm đã ngừng bán. Bạn xem các quầy khác nhé.</p>
+    <a class="btn btn-forest" routerLink="/san-pham">Xem tất cả sản phẩm</a>
+  </section>
+}

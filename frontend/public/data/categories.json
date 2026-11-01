@@ -1,0 +1,240 @@
+[
+ {
+  "id": "vegetables",
+  "slug": "rau-cu",
+  "name": "Rau - Củ",
+  "description": "Rau - Củ chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "productCount": 20,
+  "sortOrder": 1,
+  "subcategories": [
+   {
+    "id": "vegetables-leafy",
+    "name": "Rau ăn lá"
+   },
+   {
+    "id": "vegetables-other",
+    "name": "Rau củ khác"
+   },
+   {
+    "id": "vegetables-fruit",
+    "name": "Rau ăn quả"
+   }
+  ]
+ },
+ {
+  "id": "fruits",
+  "slug": "trai-cay",
+  "name": "Trái cây",
+  "description": "Trái cây chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "productCount": 12,
+  "sortOrder": 2,
+  "subcategories": [
+   {
+    "id": "fruits-fresh",
+    "name": "Trái cây tươi"
+   }
+  ]
+ },
+ {
+  "id": "meat",
+  "slug": "thit",
+  "name": "Thịt",
+  "description": "Thịt chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "productCount": 20,
+  "sortOrder": 3,
+  "subcategories": [
+   {
+    "id": "meat-pork",
+    "name": "Thịt heo"
+   },
+   {
+    "id": "meat-chicken",
+    "name": "Thịt gà"
+   },
+   {
+    "id": "meat-beef",
+    "name": "Thịt bò"
+   }
+  ]
+ },
+ {
+  "id": "seafood",
+  "slug": "hai-san",
+  "name": "Hải sản",
+  "description": "Hải sản chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "productCount": 12,
+  "sortOrder": 4,
+  "subcategories": [
+   {
+    "id": "seafood-fish",
+    "name": "Cá"
+   },
+   {
+    "id": "seafood-other",
+    "name": "Hải sản khác"
+   }
+  ]
+ },
+ {
+  "id": "dairy-eggs",
+  "slug": "sua-trung",
+  "name": "Sữa - Trứng",
+  "description": "Sữa - Trứng chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "productCount": 16,
+  "sortOrder": 5,
+  "subcategories": [
+   {
+    "id": "dairy-eggs",
+    "name": "Trứng"
+   },
+   {
+    "id": "dairy-other",
+    "name": "Sữa - bơ - phô mai"
+   }
+  ]
+ },
+ {
+  "id": "beverages",
+  "slug": "do-uong",
+  "name": "Đồ uống",
+  "description": "Đồ uống chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "productCount": 16,
+  "sortOrder": 6,
+  "subcategories": [
+   {
+    "id": "beverages-water",
+    "name": "Nước khoáng"
+   },
+   {
+    "id": "beverages-other",
+    "name": "Đồ uống khác"
+   }
+  ]
+ },
+ {
+  "id": "bakery",
+  "slug": "banh-mi-bakery",
+  "name": "Bánh mì - Bakery",
+  "description": "Bánh mì - Bakery chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "productCount": 12,
+  "sortOrder": 7,
+  "subcategories": [
+   {
+    "id": "bakery-sweet",
+    "name": "Bánh ngọt"
+   }
+  ]
+ },
+ {
+  "id": "snacks",
+  "slug": "banh-keo-an-vat",
+  "name": "Bánh kẹo - Ăn vặt",
+  "description": "Bánh kẹo - Ăn vặt chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "productCount": 16,
+  "sortOrder": 8,
+  "subcategories": [
+   {
+    "id": "snacks-biscuit",
+    "name": "Bánh quy"
+   },
+   {
+    "id": "snacks-other",
+    "name": "Ăn vặt khác"
+   },
+   {
+    "id": "snacks-candy",
+    "name": "Kẹo"
+   }
+  ]
+ },
+ {
+  "id": "rice-grains",
+  "slug": "gao-ngu-coc",
+  "name": "Gạo - Ngũ cốc",
+  "description": "Gạo - Ngũ cốc chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "productCount": 16,
+  "sortOrder": 9,
+  "subcategories": [
+   {
+    "id": "rice-rice",
+    "name": "Gạo"
+   },
+   {
+    "id": "rice-other",
+    "name": "Đồ khô khác"
+   }
+  ]
+ },
+ {
+  "id": "noodles",
+  "slug": "mi-bun-pho",
+  "name": "Mì - Bún - Phở",
+  "description": "Mì - Bún - Phở chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "productCount": 16,
+  "sortOrder": 10,
+  "subcategories": [
+   {
+    "id": "noodles-instant",
+    "name": "Mì ăn liền"
+   }
+  ]
+ },
+ {
+  "id": "condiments",
+  "slug": "gia-vi-nuoc-sot",
+  "name": "Gia vị - Nước sốt",
+  "description": "Gia vị - Nước sốt chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "productCount": 18,
+  "sortOrder": 11,
+  "subcategories": [
+   {
+    "id": "condiments-oil",
+    "name": "Dầu ăn"
+   },
+   {
+    "id": "condiments-sauce",
+    "name": "Nước sốt"
+   }
+  ]
+ },
+ {
+  "id": "frozen",
+  "slug": "dong-lanh",
+  "name": "Đông lạnh",
+  "description": "Đông lạnh chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "productCount": 14,
+  "sortOrder": 12,
+  "subcategories": [
+   {
+    "id": "frozen-meat",
+    "name": "Thịt cá đông lạnh"
+   },
+   {
+    "id": "frozen-other",
+    "name": "Đông lạnh khác"
+   },
+   {
+    "id": "frozen-ready",
+    "name": "Món chế biến sẵn"
+   }
+  ]
+ },
+ {
+  "id": "tea-coffee",
+  "slug": "tra-ca-phe",
+  "name": "Trà & cà phê",
+  "description": "Trà & cà phê chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "productCount": 12,
+  "sortOrder": 13,
+  "subcategories": [
+   {
+    "id": "coffee",
+    "name": "Cà phê"
+   },
+   {
+    "id": "tea",
+    "name": "Trà"
+   }
+  ]
+ }
+]
