@@ -53,7 +53,7 @@ Lý do: người mua thực phẩm cần đọc giá, so sánh và lướt danh 
 
 Có năm cỡ chữ: `--t-small` 14px, `--t-body` 16px, `--t-lead` 19px, `--t-head` (36–64px), `--t-display` (52–120px).
 
-**Dòng cao (line-height) tiêu đề là 1,04, không thấp hơn.** Chữ hoa tiếng Việt có dấu chồng lên trên (Ố, Ữ, Ặ). Nếu dòng thấp hơn, dấu sẽ chạm vào dòng phía trên.
+**Dòng cao (line-height) tiêu đề là `--lh-head: 1.25`, không thấp hơn.** Mọi tiêu đề Oswald in hoa (`.display`, `.h2`, `.h3`, tiêu đề hero, tên sản phẩm, tên quầy) đều dùng biến này. Chữ hoa tiếng Việt có dấu chồng lên trên (Ố, Ớ) cao gần 1,12 lần cỡ chữ, còn dấu nặng và dấu phẩy thò xuống dưới khoảng 0,2 lần. Dòng thấp hơn thì dấu của hai dòng sẽ chạm nhau. Chỉ những chữ luôn nằm trên một dòng (giá, con số, logo, đồng hồ) mới được dùng dòng cao 1.
 
 ## 5. Hình khối và khoảng cách
 
