@@ -1,6 +1,6 @@
 .pd-wrap { padding-top: 32px; }
 .pd { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 64px; align-items: start; }
-.pd-media { position: sticky; top: 150px; display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 12px; }
+.pd-media { position: sticky; top: var(--header-h); display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 12px; }
 .pd-main { aspect-ratio: 1; grid-column: 2; grid-row: 1; }
 .pd-main img { padding: 8%; }
 .pd-thumbs { grid-column: 1; grid-row: 1; display: flex; flex-direction: column; gap: 8px; }
@@ -8,9 +8,9 @@
 .pd-thumbs button[aria-selected="true"] { outline: 2px solid var(--forest); }
 .pd-thumbs img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; padding: 8%; }
 .pd-info { padding-top: 8px; }
-.pd-name { font-family: var(--serif); font-size: var(--t-head); line-height: 1.08; letter-spacing: -0.015em; margin-top: 10px; }
+.pd-name { font-family: var(--display); font-size: var(--t-head); line-height: 1.04; font-weight: 600; text-transform: uppercase; margin-top: 10px; }
 .pd-price { margin-top: 24px; display: flex; align-items: baseline; gap: 12px; }
-.pd-price .price { font-size: 40px; }
+.pd-price .price { font-size: clamp(40px, 4vw, 56px); font-weight: 600; color: var(--forest); }
 .pd-price s { color: var(--muted); }
 .pd-buy { margin-top: 28px; display: flex; gap: 10px; align-items: center; }
 .pd-add { flex: 1; }
@@ -27,11 +27,11 @@
 .nut { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .nut div { background: var(--stone); border-radius: var(--r); padding: 14px 16px; }
 .nut dt { font-size: var(--t-small); color: var(--muted); }
-.nut dd { margin: 4px 0 0; font-family: var(--serif); font-size: 24px; }
+.nut dd { margin: 4px 0 0; font-family: var(--display); font-size: 26px; font-weight: 500; }
 @media (max-width: 900px) {
   .pd { grid-template-columns: 1fr; gap: 32px; }
   .pd-media { position: static; grid-template-columns: 1fr; }
-  .pd-main { grid-column: 1; }
+  .pd-main { grid-column: 1; aspect-ratio: 4 / 3; max-height: 50svh; width: 100%; }
   .pd-thumbs { grid-column: 1; grid-row: 2; flex-direction: row; }
   .pd-thumbs button { width: 64px; height: 64px; }
 }

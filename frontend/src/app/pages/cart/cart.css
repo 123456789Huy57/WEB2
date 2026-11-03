@@ -15,7 +15,7 @@
 .rm { border: 0; background: none; padding: 8px 0; color: var(--muted); text-decoration: underline; text-underline-offset: 4px; font-size: var(--t-small); }
 .rm:hover { color: var(--ink); }
 .v-form { display: flex; gap: 8px; }
-.v-form input { flex: 1; min-width: 0; height: 44px; border-radius: 999px; border: 1px solid var(--stone-2); background: var(--paper); padding: 0 16px; outline: none; text-transform: uppercase; }
+.v-form input { flex: 1; min-width: 0; height: 44px; border-radius: var(--r); border: 1px solid var(--stone-2); background: var(--paper); padding: 0 16px; outline: none; text-transform: uppercase; }
 .v-form input::placeholder { text-transform: none; }
 .v-form input:focus { border-color: var(--forest); }
 #v-msg { min-height: 20px; margin: 8px 0 16px; }

@@ -7,7 +7,7 @@
 .adm-nav a { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-radius: var(--r); transition: background-color .2s, color .2s; }
 .adm-nav a:hover { background: var(--forest-line); color: #fff; }
 .adm-nav a.on { background: var(--forest); color: #fff; }
-.adm-count { min-width: 22px; height: 22px; padding: 0 6px; border-radius: 99px; background: #fff; color: var(--forest); font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; }
+.adm-count { min-width: 22px; height: 22px; padding: 0 6px; border-radius: var(--r); background: #fff; color: var(--forest); font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; }
 .adm-foot { margin-top: auto; display: flex; flex-direction: column; gap: 2px; }
 .adm-foot a, .adm-foot button { text-align: left; padding: 9px 12px; border: 0; background: none; color: inherit; border-radius: var(--r); font-size: 15px; }
 .adm-foot a:hover, .adm-foot button:hover { background: var(--forest-line); color: #fff; }
@@ -21,13 +21,13 @@
 .card .h3 { font-size: 24px; margin-bottom: 16px; }
 .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 12px; }
 .stat dt { color: var(--muted); font-size: var(--t-small); }
-.stat dd { margin: 6px 0 0; font-family: var(--serif); font-size: 34px; line-height: 1.1; }
+.stat dd { margin: 6px 0 0; font-family: var(--display); font-size: 34px; line-height: 1.1; }
 .stat .sub { margin-top: 6px; font-size: var(--t-small); color: var(--muted); }
 .grid-2 { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 12px; margin-bottom: 12px; }
 .bars { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; align-items: end; height: 220px; padding-top: 24px; }
 .bar { display: flex; flex-direction: column; align-items: center; gap: 8px; height: 100%; justify-content: flex-end; }
 .bar i { width: 100%; max-width: 48px; background: var(--forest); border-radius: 4px 4px 0 0; min-height: 2px; transition: height .5s var(--ease); }
-.bar.today i { background: var(--forest-line); }
+.bar.today i { background: var(--green); }
 .bar span { font-size: 13px; color: var(--muted); white-space: nowrap; }
 .bar b { font-size: 13px; font-weight: 500; }
 .st-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
@@ -47,16 +47,16 @@
 .tbl select, .adm-input, .adm select { height: 38px; border-radius: var(--r); border: 1px solid var(--stone-2); background: var(--paper); padding: 0 10px; font-size: 15px; }
 .adm-input { padding: 0 14px; min-width: 0; }
 .adm-input:focus, .tbl select:focus { outline: none; border-color: var(--forest); }
-.pill { display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 99px; font-size: 13px; font-weight: 500; background: var(--stone); white-space: nowrap; }
+.pill { display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: var(--r); font-size: 13px; font-weight: 500; background: var(--stone); white-space: nowrap; }
 .pill.on { background: #e3efe6; color: var(--forest); }
 .pill.warn { background: #fbeae8; color: var(--sale); }
 .toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 16px; }
-.toolbar .adm-input { flex: 1 1 240px; height: 42px; border-radius: 999px; }
+.toolbar .adm-input { flex: 1 1 240px; height: 42px; border-radius: var(--r); }
 .link-btn { border: 0; background: none; padding: 0; color: var(--forest); font-weight: 500; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
 .pager { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 16px; font-size: var(--t-small); color: var(--muted); }
 .pager div { display: flex; gap: 6px; }
-.adm-dlg { width: min(640px, calc(100% - 32px)); border: 0; border-radius: 8px; padding: 0; box-shadow: 0 30px 80px rgba(16, 41, 28, .3); }
-.adm-dlg::backdrop { background: rgba(16, 41, 28, .5); }
+.adm-dlg { width: min(640px, calc(100% - 32px)); border: 0; border-radius: 8px; padding: 0; box-shadow: var(--shadow-float); }
+.adm-dlg::backdrop { background: var(--scrim); }
 .adm-dlg form { padding: 28px; display: flex; flex-direction: column; gap: 18px; }
 .adm-dlg .acts { display: flex; justify-content: flex-end; gap: 8px; margin-top: 4px; }
 .adm-dlg .field input, .adm-dlg .field select, .adm-dlg .field textarea { height: 44px; }

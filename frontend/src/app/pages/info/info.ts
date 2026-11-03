@@ -9,8 +9,8 @@ import { INFO, INFO_NAV } from './info-content';
   encapsulation: ViewEncapsulation.None,
   styles: `
     .info { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 56px; align-items: start; }
-    .info-nav { position: sticky; top: 150px; display: flex; flex-direction: column; gap: 4px; }
-    .info-nav a { padding: 8px 14px; border-radius: 999px; color: var(--muted); transition: background-color .2s, color .2s; }
+    .info-nav { position: sticky; top: var(--header-h); display: flex; flex-direction: column; gap: 4px; }
+    .info-nav a { padding: 8px 14px; border-radius: var(--r); color: var(--muted); transition: background-color .2s, color .2s; }
     .info-nav a:hover { background: var(--stone); color: var(--ink); }
     .info-nav a[aria-current] { background: var(--forest); color: #fff; }
     .info-body { max-width: 720px; display: flex; flex-direction: column; gap: 48px; }

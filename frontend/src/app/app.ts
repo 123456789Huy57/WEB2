@@ -13,7 +13,10 @@ import { DataService } from './core/data.service';
   selector: 'fm-root',
   imports: [RouterOutlet, Header, Footer, CartDrawer, ConfirmDialog],
   template: `
-    @if (!isAdmin()) { <fm-header /> }
+    @if (!isAdmin()) {
+      <p class="notice">Miễn phí giao cho đơn từ 300.000 đ · Đặt trước 16:00, nhận hàng trong 1–2 giờ</p>
+      <fm-header />
+    }
     <main>
       @if (data.error()) {
         <section class="band empty"><p class="h3">{{ data.error() }}</p></section>

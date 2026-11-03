@@ -20,9 +20,10 @@ const BOARD: Record<GroupKey, [string, string, string][]> = {
   'trai-cay': [['p-0021', 'Măng cụt', 'Trái từ 65 g'], ['p-0025', 'Dưa hấu đỏ', 'Cắt nửa nếu bạn ghi chú'], ['p-0023', 'Cam sành', 'Trái từ 130 g'], ['p-0026', 'Chuối già Nam Mỹ', 'Trái 120–220 g']],
   'thit-ca': [['p-0053', 'Cá basa cắt khúc', 'Khay cắt khúc, làm sạch'], ['p-0042', 'Ba rọi heo C.P', 'Khay 1 kg, nạc mỡ xen kẽ'], ['p-0071', 'Trứng gà ta', 'Hộp 6 quả, 180–210 g']]
 };
+/** Quầy hàng ở trang chủ: [mã quầy, ảnh trong public/img, tên hiển thị]. Ảnh .png đã tách nền trong suốt */
 const AISLES: [string, string, string?][] = [
-  ['vegetables', 'rau-muong', 'Rau, củ'], ['fruits', 'cam-sanh'], ['meat', 'ba-roi'], ['seafood', 'ca-basa'],
-  ['dairy-eggs', 'trung-ga', 'Sữa, trứng'], ['rice-grains', 'gao', 'Gạo, ngũ cốc'], ['noodles', 'mien', 'Mì, bún, phở'], ['condiments', 'dau-an', 'Gia vị, nước sốt']
+  ['vegetables', 'cut/bi-do.png', 'Rau, củ'], ['fruits', 'p/cam-sanh.jpg'], ['meat', 'p/ba-roi.jpg'], ['seafood', 'p/ca-basa.jpg'],
+  ['dairy-eggs', 'p/trung-ga.jpg', 'Sữa, trứng'], ['rice-grains', 'p/gao.jpg', 'Gạo, ngũ cốc'], ['noodles', 'p/mien.jpg', 'Mì, bún, phở'], ['condiments', 'p/dau-an.jpg', 'Gia vị, nước sốt']
 ];
 
 @Component({
@@ -55,6 +56,10 @@ export class Home {
   /** Nguyên liệu trong thẻ ví dụ Meal Planner */
   protected have = 'ing-rau-muong,ing-trung-ga-ta,ing-ca-chua';
   protected recipeCount = computed(() => this.data.recipes().length);
+  /** Dải chữ chạy dưới hero: chỉ ghi điều FreshMart làm thật, số lấy từ dữ liệu */
+  protected marquee = computed(() => [
+    'Rau củ chọn mỗi sáng', 'Giao 1–2 giờ nội thành', `${this.ps.all().length} sản phẩm`, '12 cửa hàng tại TP.HCM', `${this.recipeCount()} công thức Meal Planner`, 'Đổi trả trong 7 ngày'
+  ]);
 
   protected today = (() => {
     const d = new Date(), days = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
@@ -69,6 +74,14 @@ export class Home {
     tick();
     const t = setInterval(tick, 1000);
     inject(DestroyRef).onDestroy(() => clearInterval(t));
+  }
+
+  /** Tab bảng giá: phím ← → chuyển quầy, giống tab chuẩn của trình duyệt */
+  protected moveTab(step: number): void {
+    const i = this.groups.findIndex(g => g.key === this.group());
+    const next = this.groups[(i + step + this.groups.length) % this.groups.length];
+    this.group.set(next.key);
+    document.getElementById('tab-' + next.key)?.focus();
   }
 
   protected addOne(p: Product): void {
