@@ -56,10 +56,12 @@ export class Home {
   /** Nguyên liệu trong thẻ ví dụ Meal Planner */
   protected have = 'ing-rau-muong,ing-trung-ga-ta,ing-ca-chua';
   protected recipeCount = computed(() => this.data.recipes().length);
-  /** Dải chữ chạy dưới hero: chỉ ghi điều FreshMart làm thật, số lấy từ dữ liệu */
-  protected marquee = computed(() => [
-    'Rau củ chọn mỗi sáng', 'Giao 1–2 giờ nội thành', `${this.ps.all().length} sản phẩm`, '12 cửa hàng tại TP.HCM', `${this.recipeCount()} công thức Meal Planner`, 'Đổi trả trong 7 ngày'
-  ]);
+  /** Ba món mẫu ở khu Meal Planner */
+  protected homeRecipes = computed(() => this.data.recipes().filter(r => ['rec-001', 'rec-002', 'rec-003'].includes(r.id)));
+  /** Dải chữ chạy dưới hero */
+  protected marquee = [
+    'Rau củ tươi mỗi sáng', 'Giao 1–2 giờ nội thành', 'Sản phẩm chất lượng và đạt chuẩn', '12 cửa hàng tại TP.HCM', 'Meal Planner', 'Ưu đãi hấp dẫn'
+  ];
 
   protected today = (() => {
     const d = new Date(), days = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];

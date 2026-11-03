@@ -1,5 +1,6 @@
 import { Component, ElementRef, computed, effect, inject, viewChild } from '@angular/core';
 import { NavigationStart, Router, RouterLink } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CartService, FREE_SHIP_FROM } from '../core/cart.service';
 import { ProductService } from '../core/product.service';
 import { UiService } from '../core/ui.service';
@@ -69,6 +70,6 @@ export class CartDrawer {
       if (!this.ui.cartOpen() && d.open) d.close();
     });
     // Bấm link trong ngăn giỏ thì đóng ngăn
-    inject(Router).events.subscribe(e => { if (e instanceof NavigationStart) this.ui.closeCart(); });
+    inject(Router).events.pipe(takeUntilDestroyed()).subscribe(e => { if (e instanceof NavigationStart) this.ui.closeCart(); });
   }
 }

@@ -3,7 +3,7 @@ import { adminGuard, authGuard, guestGuard } from './core/auth.guard';
 
 /** Mỗi trang tải riêng (lazy) để trang chủ mở nhanh. Đường dẫn tiếng Việt không dấu. */
 export const routes: Routes = [
-  { path: '', title: 'FreshMart · Chợ sáng nay, giao trước bữa tối', loadComponent: () => import('./pages/home/home').then(m => m.Home) },
+  { path: '', title: 'FreshMart · Đi chợ liền tay, giao ngay trước tối', loadComponent: () => import('./pages/home/home').then(m => m.Home) },
   { path: 'san-pham', title: 'Sản phẩm · FreshMart', loadComponent: () => import('./pages/catalog/catalog').then(m => m.Catalog) },
   { path: 'san-pham/:id', title: 'Sản phẩm · FreshMart', loadComponent: () => import('./pages/product/product').then(m => m.ProductPage) },
   { path: 'gio-hang', title: 'Giỏ hàng · FreshMart', loadComponent: () => import('./pages/cart/cart').then(m => m.CartPage) },

@@ -62,7 +62,10 @@ button { cursor: pointer; }
 /* Viền focus khi dùng bàn phím: đen trên nền sáng, vàng trên nền tối */
 :focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
 .board-sec :focus-visible, .footer :focus-visible { outline-color: var(--yellow); }
-::selection { background: var(--yellow); color: var(--ink); }
+/* Nền bôi đen trong suốt một phần: tiêu đề Oswald có dòng thấp hơn chiều cao dấu tiếng Việt,
+   nền đặc của dòng dưới sẽ che mất phần dấu/chân chữ của dòng trên */
+::selection { background: rgb(18 18 18 / .16); }
+.board-sec ::selection, .footer ::selection, .mp ::selection { background: rgb(254 252 245 / .28); }
 h1, h2, h3, h4 { margin: 0; font-weight: 400; text-wrap: balance; }
 p { margin: 0; }
 .num { font-variant-numeric: tabular-nums lining-nums; }
@@ -292,10 +295,16 @@ a.ph, button.ph { display: block; }
 .board-note { margin-top: 18px; }
 .nowrap { white-space: nowrap; }
 
-/* Header thu gọn khi cuộn xuống, hiện lại khi cuộn lên */
-.h-nav { transition: max-height .35s var(--ease), padding .35s var(--ease), opacity .25s; max-height: 60px; }
-.header.compact .h-nav { max-height: 0; padding-block: 0; opacity: 0; }
-.header { view-transition-name: site-header; }
+/* Header thu gọn khi cuộn xuống, hiện lại khi cuộn lên.
+   Chỉ dùng transform: chiều cao header trong trang không đổi, nên nội dung bên dưới không bị đẩy lên xuống.
+   (Trước đây đổi max-height làm trang nhảy, trình duyệt bù lại vị trí cuộn, sự kiện scroll bật/tắt compact liên tục → giật.)
+   --nav-h là chiều cao hàng menu, header.ts đo và gán. */
+.header { view-transition-name: site-header; transition: transform .3s var(--ease); }
+.h-row { position: relative; z-index: 1; background: var(--paper); transition: transform .3s var(--ease); }
+.h-nav { transition: opacity .2s, visibility .3s; }
+.header.compact { transform: translateY(calc(-1 * var(--nav-h, 0px))); }
+.header.compact .h-row { transform: translateY(var(--nav-h, 0px)); }
+.header.compact .h-nav { opacity: 0; visibility: hidden; }
 
 /* Chuyển trang mượt (View Transitions API, trình duyệt không hỗ trợ thì chuyển bình thường) */
 ::view-transition-old(root) { animation: vtOut .18s var(--ease) both; }
@@ -330,8 +339,6 @@ a.ph, button.ph { display: block; }
 /* Thanh tiến độ miễn phí giao */
 .ship-bar { display: block; margin-top: 10px; height: 6px; border-radius: var(--r); background: var(--stone-2); overflow: hidden; }
 .ship-bar i { display: block; height: 100%; background: var(--forest); transition: width .4s var(--ease); }
-/* Màn chờ khi app đang nạp dữ liệu */
-.boot { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #ffc517; color: #121212; font: 700 64px/1 "Oswald", "Arial Narrow", sans-serif; text-transform: uppercase; }
 .h-cart { border: 0; cursor: pointer; }
 @media (max-width: 1200px) { .h-nav { gap: 4px 20px; font-size: 16px; } }
 /* Màn hình nhỏ: chỉ giữ các mục chính, quầy hàng xem trong "Tất cả quầy" */
@@ -387,3 +394,9 @@ a.ph, button.ph { display: block; }
 .sugg-all { margin-top: 4px; padding: 12px; border: 0; border-radius: var(--r); background: var(--stone); color: var(--forest); font-weight: 600; }
 .sugg-all:hover { background: var(--stone-2); }
 .search input::-webkit-search-cancel-button, .search input::-webkit-calendar-picker-indicator { display: none; -webkit-appearance: none; }
+
+/* Màn hình cảm ứng: chạm vào thẻ sẽ giữ trạng thái :hover, ảnh bị phóng/nghiêng mãi sau khi chạm.
+   Chỉ giữ hiệu ứng phóng ảnh cho thiết bị có chuột. */
+@media (hover: none) {
+  :is(.p-card, .aisle, .pick, .home-recipe, .ship, .rec, .cook-card, .post-card):hover img { transform: none !important; }
+}

@@ -4,7 +4,7 @@
     <img src="/img/cut/dua-hau.png" alt="" width="640" height="640" fetchpriority="high">
   </div>
   <div class="hero-copy">
-    <h1 class="hero-h" id="hero-title"><span class="nowrap">Chợ sáng nay,</span><br><span class="nowrap">giao trước bữa tối</span></h1>
+    <h1 class="hero-h" id="hero-title"><span class="nowrap">Đi chợ liền tay,</span><br><span class="nowrap">giao ngay trước tối</span></h1>
     <p class="lead" fmReveal="1">Rau củ, trái cây, thịt cá chọn lọc mỗi sáng cho bữa cơm nhà ở TP.HCM. Đặt trước 16:00, có hàng trong <span class="nowrap">1–2 giờ</span>.</p>
     <div class="hero-cta" fmReveal="2">
       <a class="btn btn-ink" routerLink="/san-pham">Đi chợ ngay</a>
@@ -22,7 +22,7 @@
 <div class="marquee">
   @for (copy of [1, 2]; track copy) {
     <ul [attr.aria-hidden]="copy === 2 ? 'true' : null">
-      @for (m of marquee(); track m) { <li>{{ m }}</li> }
+      @for (m of marquee; track m) { <li>{{ m }}</li> }
     </ul>
   }
 </div>
@@ -99,22 +99,22 @@
   </div>
 </section>
 
-<!-- Meal Planner: mảng xanh lá, chữ đen -->
+<!-- Meal Planner: nền xanh đậm, tiêu đề vàng, ba món mẫu -->
 <section class="mp band" aria-labelledby="h-mp">
-  <div class="mp-in">
-    <div class="mp-copy">
-      <h2 class="h2" id="h-mp" fmReveal>Có gì trong bếp, nấu món đó</h2>
-      <p class="lead" fmReveal="1">Chọn những nguyên liệu bạn đang có, Meal Planner gợi ý món phù hợp từ {{ recipeCount() }} công thức. Món nào còn thiếu nguyên liệu, một nút là thêm đủ vào giỏ.</p>
-      <a class="btn btn-ink" routerLink="/meal-planner" fmReveal="2">Mở Meal Planner</a>
+  <div class="mp-head">
+    <h2 class="h2" id="h-mp" fmReveal>Có gì trong bếp,<br>nấu món đó</h2>
+    <div fmReveal="1">
+      <p class="lead">Chọn nguyên liệu bạn đang có. Meal Planner tìm món phù hợp từ {{ recipeCount() }} công thức và giúp thêm phần còn thiếu vào giỏ.</p>
+      <a class="btn" routerLink="/meal-planner">Mở Meal Planner</a>
     </div>
-    <div class="mp-media" fmReveal>
-      <img src="/img/bep.jpg" alt="Hai người cùng nấu ăn trong bếp" width="900" height="600" loading="lazy">
-      <div class="mp-ui" role="group" aria-label="Ví dụ gợi ý của Meal Planner">
-        <p class="small muted">Bạn đang có rau muống, trứng gà ta, cà chua</p>
-        <div class="mp-rec"><div><b>Thịt heo xào rau muống</b><p class="small muted">30 phút · thiếu ba chỉ heo 250&nbsp;g</p></div><a class="btn btn-forest btn-sm" routerLink="/meal-planner" [queryParams]="{ mon: 'rec-003', co: have }">Xem món</a></div>
-        <div class="mp-rec"><div><b>Trứng gà xào cà chua</b><p class="small muted">20 phút · đủ nguyên liệu</p></div><a class="btn btn-forest btn-sm" routerLink="/meal-planner" [queryParams]="{ mon: 'rec-001', co: have }">Xem món</a></div>
-      </div>
-    </div>
+  </div>
+  <div class="recipe-rail">
+    @for (r of homeRecipes(); track r.id; let i = $index) {
+      <a class="home-recipe" routerLink="/meal-planner" [queryParams]="{ mon: r.id, co: have }" [fmReveal]="i || ''">
+        <img [src]="r.imageUrl" [fmImg]="r.name" alt="" width="600" height="450" loading="lazy">
+        <div><p class="small">{{ r.prepTimeMinutes + r.cookTimeMinutes }} phút · {{ r.servings }} người ăn</p><h3>{{ r.name }}</h3><span class="link">Xem món và nguyên liệu</span></div>
+      </a>
+    }
   </div>
 </section>
 

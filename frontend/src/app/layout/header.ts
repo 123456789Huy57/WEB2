@@ -1,6 +1,7 @@
-import { Component, DestroyRef, computed, effect, inject, signal } from '@angular/core';
+import { Component, DestroyRef, ElementRef, computed, effect, inject, signal, viewChild } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CartService } from '../core/cart.service';
 import { AuthService } from '../core/auth.service';
 import { UiService } from '../core/ui.service';
@@ -11,7 +12,7 @@ import { ImgFallbackDirective } from '../shared/img-fallback.directive';
 @Component({
   selector: 'fm-header',
   imports: [RouterLink, RouterLinkActive, FormsModule, VndPipe, ImgFallbackDirective],
-  host: { class: 'header band', '[class.compact]': 'compact()' },
+  host: { class: 'header band', '[class.compact]': 'compact()', '[style.--nav-h]': 'navH() + "px"' },
   template: `
     <div class="h-row">
       <a class="logo" routerLink="/">FreshMart</a>
@@ -49,7 +50,7 @@ import { ImgFallbackDirective } from '../shared/img-fallback.directive';
         </button>
       </nav>
     </div>
-    <nav class="h-nav" aria-label="Quầy hàng">
+    <nav class="h-nav" aria-label="Quầy hàng" #navEl>
       @for (n of nav; track n.c) {
         <a class="nav-cat" routerLink="/san-pham" [queryParams]="{ c: n.c }" routerLinkActive #rla="routerLinkActive" [attr.aria-current]="rla.isActive ? 'page' : null">{{ n.label }}</a>
       }
@@ -66,6 +67,9 @@ export class Header {
   protected auth = inject(AuthService);
   protected ui = inject(UiService);
   protected compact = signal(false);
+  /** Chiều cao hàng menu quầy (px), dùng trong CSS để trượt header lên đúng bằng hàng menu */
+  protected navH = signal(0);
+  private navEl = viewChild.required<ElementRef<HTMLElement>>('navEl');
   private router = inject(Router);
   protected ps = inject(ProductService);
   /** Ô tìm kiếm: gợi ý ngay khi gõ từ 2 ký tự */
@@ -83,14 +87,20 @@ export class Header {
     let first = true;
     effect(() => { this.cart.bumps(); if (first) { first = false; return; } this.bump.set(true); });
     // Ô tìm kiếm hiển thị đúng từ khóa đang xem ở trang Sản phẩm
-    this.router.events.subscribe(e => {
+    // Header bị gỡ khi vào /admin và tạo lại khi quay ra, nên phải hủy đăng ký theo component
+    this.router.events.pipe(takeUntilDestroyed()).subscribe(e => {
       if (e instanceof NavigationEnd) { this.term.set(this.router.parseUrl(e.urlAfterRedirects).queryParams['q'] ?? ''); this.open.set(false); }
     });
     // Cuộn xuống quá 240px thì ẩn hàng menu quầy, cuộn lên thì hiện lại
     let last = 0;
     const onScroll = () => {
       const y = window.scrollY;
-      if (Math.abs(y - last) > 8) { this.compact.set(y > 240 && y > last); last = y; }
+      if (Math.abs(y - last) <= 8) return;
+      const hide = y > 240 && y > last;
+      // Chỉ đo chiều cao menu lúc chuyển sang thu gọn, không đo ở mọi lần cuộn
+      if (hide && !this.compact()) this.navH.set(this.navEl().nativeElement.offsetHeight);
+      this.compact.set(hide);
+      last = y;
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     inject(DestroyRef).onDestroy(() => window.removeEventListener('scroll', onScroll));
