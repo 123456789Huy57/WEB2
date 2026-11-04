@@ -1,0 +1,85 @@
+/* Đi chợ theo quầy. Nền khu là kem để nghỉ mắt giữa Bảng giá (chanh) và Meal Planner (xanh đậm);
+   màu chỉ nằm trong banner, đổi mượt theo quầy (--ac-bg).
+   Quầy .dark (nền xanh đậm) thì chữ kem, nút vàng. */
+.ac { --ac-bg: var(--yellow); display: block; background: var(--paper); color: var(--ink); padding-block: var(--sec-y); }
+
+.ac-head { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 24px; }
+/* Tiêu đề: dòng nhỏ xanh đậm, dòng lớn chữ đen có vệt bút dạ màu của quầy đang xem chạy ngang chân chữ, đổi màu cùng banner */
+.ac-head .duo-h span:first-child { color: var(--forest); }
+.ac-head .duo-h span:last-child { color: var(--ink); }
+.ac-hl { padding: 0 .14em; background: none; color: inherit; box-shadow: inset 0 -.5em var(--ac-bg); transition: box-shadow .6s var(--ease); }
+
+/* Banner bìa tạp chí: ba lớp chồng nhau trong một khung
+   1. tên quầy khổng lồ ở trên (z 1)   2. ảnh quầy đang xem đè lên nửa dưới của chữ (z 2), quầy trước/sau mờ ở hai mép (z 0)
+   3. mô tả, nút và mũi tên ở đáy (z 3) */
+.ac-banner {
+  position: relative; overflow: clip; touch-action: pan-y; container-type: inline-size;
+  border-radius: 16px; background: var(--ac-bg); color: var(--ink);
+  transition: background-color .6s var(--ease), color .4s;
+}
+.dark .ac-banner { color: var(--cream); }
+.dark .ac-banner :focus-visible { outline-color: var(--yellow); }
+
+/* Cỡ chữ tên quầy tính theo số ký tự (--len) để tên ngắn hay dài đều phủ gần hết bề ngang banner */
+.ac-giant { position: absolute; z-index: 1; left: 48px; right: 48px; top: clamp(16px, 2.4cqw, 36px); display: block; color: inherit; text-decoration: none; text-align: center; }
+.ac-giant h3 { font-family: var(--display); font-weight: 700; font-size: clamp(36px, calc(86cqw / (var(--len) * .47)), 230px); line-height: var(--lh-head); letter-spacing: -0.01em; text-transform: uppercase; white-space: nowrap; animation: acIn .5s var(--ease) both; }
+@keyframes acIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+/* Khung ảnh là link vào quầy đang xem; không dùng transform để ảnh con xếp lớp chung với tên quầy */
+.ac-stage { position: absolute; left: 24%; right: 24%; top: 36%; bottom: 13%; display: block; cursor: pointer; -webkit-user-drag: none; }
+/* --fit: tỉ lệ riêng của từng quầy (Aisle.fit) */
+.ac-stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; scale: var(--fit, 1); pointer-events: none; user-select: none; transition: transform .7s var(--ease), scale .5s var(--ease), opacity .5s, filter .5s; }
+.ac-stage img[data-pos="cur"] { z-index: 2; }
+.ac-stage:hover img[data-pos="cur"] { scale: calc(var(--fit, 1) * 1.04); }
+.ac-stage img[data-pos="prev"] { z-index: 0; transform: translateX(-92%) scale(.6); opacity: .5; filter: blur(3px); }
+.ac-stage img[data-pos="next"] { z-index: 0; transform: translateX(92%) scale(.6); opacity: .5; filter: blur(3px); }
+.ac-stage img[data-pos="off"] { z-index: 0; transform: scale(.3); opacity: 0; }
+
+/* Đáy banner: mô tả, nút vào quầy, mũi tên */
+.ac-foot { display: flex; }
+.ac-desc { max-width: 32ch; font-size: 17px; color: inherit; text-decoration: none; animation: acIn .5s .05s var(--ease) both; }
+.ac-btn { flex: none; justify-self: start; background: var(--ink); color: var(--cream); }
+.ac-btn:hover { background: var(--forest); }
+.dark .ac-btn { background: var(--yellow); color: var(--ink); }
+.dark .ac-btn:hover { background: var(--cream); }
+.ac-nav { display: flex; gap: 12px; margin-left: auto; }
+.ac-arrow { display: grid; place-items: center; width: 56px; height: 56px; border: 0; border-radius: 50%; background: transparent; color: inherit; box-shadow: inset 0 0 0 2px currentColor; cursor: pointer; transition: background-color .2s; }
+.ac-arrow:hover { background: rgb(18 18 18 / .08); }
+.dark .ac-arrow:hover { background: rgb(254 252 245 / .14); }
+.ac-arrow svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Màn hình rộng: cả khu cao đúng --sec-h như khu Tươi từ chợ, banner lấp phần còn lại dưới tiêu đề.
+   Banner đo được cả chiều cao (container-type: size) nên chữ khổng lồ không cao quá 40% banner */
+@media (min-width: 901px) {
+  .ac { display: flex; flex-direction: column; height: var(--sec-h); }
+  .ac-banner { flex: 1; min-height: 0; container-type: size; }
+  .ac-giant { top: 3cqh; }
+  .ac-giant h3 { font-size: clamp(36px, calc(86cqw / (var(--len) * .47)), 40cqh); }
+  .ac-stage { left: 24%; right: 24%; top: 42%; bottom: 3%; }
+  /* Quầy trước/sau nép sát hai mép và nâng lên, không nằm sau dòng mô tả */
+  .ac-stage img[data-pos="prev"] { transform: translate(-90%, -42%) scale(.5); }
+  .ac-stage img[data-pos="next"] { transform: translate(90%, -42%) scale(.5); }
+  /* Mô tả trên nút ở góc trái, mũi tên góc phải; phần giữa để trống cho ảnh và không chặn cú bấm vào ảnh */
+  .ac-foot { position: absolute; z-index: 3; left: 40px; right: 40px; bottom: 32px; display: grid; grid-template-columns: minmax(0, 28ch) 1fr auto; grid-template-areas: "desc . nav" "btn . nav"; gap: 14px 24px; align-items: end; pointer-events: none; }
+  .ac-foot > * { pointer-events: auto; }
+  .ac-desc { grid-area: desc; }
+  .ac-btn { grid-area: btn; }
+  .ac-nav { grid-area: nav; }
+}
+@media (max-width: 900px) {
+  /* Trên điện thoại các lớp xếp theo dòng chảy: tên quầy, ảnh (đè nhẹ lên tên), mô tả, nút, mũi tên */
+  .ac-banner { height: auto; padding: 20px 20px 24px; }
+  /* Khung tên quầy cao cố định (vừa tên ngắn nhất, chữ to nhất) để banner không nhảy chiều cao khi đổi quầy */
+  .ac-giant { position: relative; left: auto; right: auto; top: auto; height: 33cqw; display: flex; align-items: flex-end; justify-content: center; }
+  .ac-giant h3 { font-size: clamp(30px, calc(86cqw / (var(--len) * .47)), 26cqw); }
+  .ac-stage { position: relative; left: auto; right: auto; top: auto; bottom: auto; height: clamp(200px, 60vw, 380px); margin-top: -2cqw; }
+  .ac-foot { flex-wrap: wrap; align-items: center; gap: 16px 12px; margin-top: 12px; }
+  .ac-desc { flex-basis: 100%; min-height: 2lh; font-size: 17px; }
+  .ac-nav { flex-basis: 100%; justify-content: flex-end; }
+  .ac-stage img[data-pos="prev"] { transform: translateX(-72%) scale(.5); }
+  .ac-stage img[data-pos="next"] { transform: translateX(72%) scale(.5); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ac-banner, .ac-stage img { transition: none; }
+  .ac-giant h3, .ac-desc { animation: none; }
+}

@@ -179,36 +179,35 @@
 </section>
 
 
-<!-- Quầy hàng: ô đầu lớn, các ô sau đổi màu nền để không thành một lưới thẻ giống nhau -->
-<section class="sec band aisle-sec" aria-labelledby="h-aisle">
-  <div class="aisle-head">
-    <h2 class="duo-h" id="h-aisle" fmReveal><span>Đi chợ</span><span>theo quầy</span></h2>
-    <p fmReveal="1">{{ ps.all().length }} sản phẩm trong {{ ps.categories().length }} quầy, từ rau sáng nay tới gạo, mì và gia vị cho cả tháng.</p>
-    <a class="btn btn-ink" routerLink="/san-pham" fmReveal="1">Xem cả {{ ps.categories().length }} quầy</a>
-  </div>
-  <div class="aisles">
-    @for (a of aisles(); track a.id; let i = $index) {
-      <a class="aisle" [class.banner]="a.banner" routerLink="/san-pham" [queryParams]="{ c: a.id }" [fmReveal]="i % 4 || ''">
-        <img [src]="'/img/' + a.img" alt="" loading="lazy" [attr.width]="a.banner ? 1400 : 640" [attr.height]="a.banner ? 700 : 640">
-        <!-- Banner đã in sẵn tên quầy trong ảnh: tên chỉ dành cho trình đọc màn hình -->
-        <span class="nm" [class.sr]="a.banner">{{ a.name }}</span>
-      </a>
-    }
-  </div>
-</section>
+<!-- Đi chợ theo quầy: component riêng (aisle-carousel.ts) -->
+<fm-aisle-carousel />
 
-<!-- Meal Planner: nền xanh đậm, tiêu đề hai dòng căn giữa (kem / vàng), ba món mẫu -->
+<!-- Meal Planner: nền xanh đậm, tiêu đề hai dòng căn giữa (kem / vàng). Hàng "Trong bếp có" là ba nguyên liệu mẫu;
+     mỗi món mẫu ghi rõ nấu được ngay hay còn thiếu gì, đúng như cách Meal Planner gợi ý -->
 <section class="mp band" aria-labelledby="h-mp">
   <div class="mp-head">
     <h2 class="duo-h" id="h-mp" fmReveal><span>Có gì trong bếp,</span><span>nấu món đó</span></h2>
     <p class="lead" fmReveal="1">Chọn nguyên liệu bạn đang có. Meal Planner tìm món phù hợp từ {{ recipeCount() }} công thức và giúp thêm phần còn thiếu vào giỏ.</p>
-    <a class="btn" routerLink="/meal-planner" fmReveal="1">Mở Meal Planner</a>
+    <div class="mp-pantry" fmReveal="1">
+      <span class="mp-label">Trong bếp có</span>
+      <ul>
+        @for (n of haveNames(); track n) {
+          <li class="mp-chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>{{ n }}</li>
+        }
+      </ul>
+      <a class="btn" routerLink="/meal-planner" [queryParams]="{ co: have }">Mở Meal Planner</a>
+    </div>
   </div>
   <div class="recipe-rail">
-    @for (r of homeRecipes(); track r.id; let i = $index) {
-      <a class="home-recipe" routerLink="/meal-planner" [queryParams]="{ mon: r.id, co: have }" [fmReveal]="i || ''">
-        <img [src]="r.imageUrl" [fmImg]="r.name" alt="" width="600" height="450" loading="lazy">
-        <div><p class="small">{{ r.prepTimeMinutes + r.cookTimeMinutes }} phút · {{ r.servings }} người ăn</p><h3>{{ r.name }}</h3><span class="link">Xem món và nguyên liệu</span></div>
+    @for (x of homeRecipes(); track x.r.id; let i = $index) {
+      <a class="home-recipe" routerLink="/meal-planner" [queryParams]="{ mon: x.r.id, co: have }" [fmReveal]="i || ''">
+        <img [src]="x.r.imageUrl" [fmImg]="x.r.name" alt="" width="600" height="450" loading="lazy">
+        <span class="mp-badge" [class.ready]="!x.missing.length">{{ x.missing.length ? 'Thiếu ' + x.missing.length + ' nguyên liệu' : 'Nấu được ngay' }}</span>
+        <div>
+          <p class="small">{{ x.r.prepTimeMinutes + x.r.cookTimeMinutes }} phút · {{ x.r.servings }} người ăn</p>
+          <h3>{{ x.r.name }}</h3>
+          <p class="mp-need">{{ x.missing.length ? 'Cần thêm: ' + x.missing.join(', ') : 'Đủ nguyên liệu trong bếp' }}</p>
+        </div>
       </a>
     }
   </div>

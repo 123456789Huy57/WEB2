@@ -45,6 +45,8 @@
   --gut-r: max(var(--gut), env(safe-area-inset-right, 0px));
   --gap-sec: clamp(96px, 11vw, 168px);
   --sec-y: clamp(56px, 6vw, 88px);   /* khoảng trống trên và dưới của mọi khu ở trang chủ: các khu cách đều nhau */
+  --sec-box: min(620px, 92vw);         /* chiều cao phần nội dung của một khu trang chủ (bằng vòng tròn khu Tươi từ chợ) */
+  --sec-h: calc(var(--sec-box) + 2 * var(--sec-y)); /* chiều cao cả khu trên màn hình rộng */
   --header-h: 150px;         /* chiều cao header dính, dùng cho phần tử sticky bên dưới */
   /* Hình khối: góc gần vuông, cùng một bán kính cho nút, ô nhập, thẻ */
   --r: 3px;

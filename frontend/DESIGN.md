@@ -89,6 +89,7 @@ Tất cả chỉ dùng CSS, không dùng thư viện animation. Khi người dù
 | Tab và chip | `.tab`, `.chip`. Trạng thái đang chọn: nền đen chữ kem |
 | Thẻ sản phẩm | `fm-product-card` (`.p-card`): ô ảnh kem, nút "+" đen ở góc, giá bằng Oswald |
 | Bảng giá | `.board-sec` (chỉ có ở trang chủ) |
+| Đi chợ theo quầy | `fm-aisle-carousel`: nền kem, banner bo góc đổi màu theo quầy (vàng, xanh đậm, chanh, xanh lá lặp lại). Trạng thái băng chuyền nằm trong class `Carousel` (`shared/carousel.ts`) |
 | Dải chữ chạy | `.marquee` |
 | Thanh thông báo | `.notice` (trong `app.ts`) |
 
