@@ -21,7 +21,7 @@ import { VoucherService } from '../../core/voucher.service';
           <form class="auth-form" (ngSubmit)="login()" novalidate>
             <h1 class="h2">Chào bạn quay lại</h1>
             <p class="muted">{{ admin() ? 'Trang quản trị cần tài khoản admin.' : 'Đăng nhập để xem đơn hàng, mã đã lưu và món yêu thích.' }}</p>
-            <div class="field"><label for="in-email">Email hoặc số điện thoại</label><input id="in-email" name="email" type="text" autocomplete="username" required [(ngModel)]="email"></div>
+            <div class="field"><label for="in-email">Tài khoản</label><input id="in-email" name="email" type="text" autocomplete="username" required [(ngModel)]="email"></div>
             <div class="field"><label for="in-pw">Mật khẩu</label><input id="in-pw" name="pw" type="password" autocomplete="current-password" required [(ngModel)]="password"></div>
             <p class="err small" aria-live="polite">{{ err() }}</p>
             <label class="check"><input type="checkbox" name="rememberMe" [(ngModel)]="rememberMe"> Ghi nhớ đăng nhập 7 ngày</label><a class="link" routerLink="/quen-mat-khau">Quên mật khẩu?</a><button class="btn btn-forest" type="submit" [disabled]="busy()">{{ busy() ? 'Đang xử lý…' : 'Đăng nhập' }}</button>

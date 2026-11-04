@@ -44,7 +44,13 @@ async function login(req, res) {
   if (typeof body.password !== 'string' || !body.password.length || Buffer.byteLength(body.password, 'utf8') > 72) v.bad('Mật khẩu không hợp lệ.');
   const password = body.password;
   if (body.rememberMe !== undefined) v.boolean(body.rememberMe, 'rememberMe');
-  const user = identifier.includes('@') ? await users.findByEmail(v.email(identifier)) : await users.findByPhone(v.phone(identifier));
+  const user = identifier.includes('@')
+    ? await users.findByEmail(v.email(identifier))
+    : /^0\d{9}$/.test(identifier)
+      ? await users.findByPhone(identifier)
+      : env.nodeEnv === 'development'
+        ? await users.users().findOne({ username: identifier, role: 'admin' })
+        : null;
   const valid = await bcrypt.compare(password, user?.passwordHash || await dummyHash);
   if (!valid || !user || user.isActive === false) throw new HttpError(401, 'INVALID_CREDENTIALS', 'Tài khoản hoặc mật khẩu chưa đúng.');
   res.json(await beginSession(req, user, body.rememberMe));
