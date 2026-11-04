@@ -24,6 +24,7 @@ const POSTS: Post[] = [
       'Măng cụt chọn trái vỏ tím sẫm, cuống còn xanh, bóp nhẹ thấy hơi mềm. Trái cứng như gỗ là để lâu, múi dễ bị trong.',
       'Dưa hấu gõ nghe tiếng đanh, mặt dưới có vệt vàng là chín. Cuống khô và hơi quăn là dấu hiệu tốt.',
       'Cam sành vỏ hơi sần, cầm nặng tay là nhiều nước. Đừng chọn trái quá to vì thường vỏ dày.',
+      'Măng cụt để nơi thoáng mát, ăn trong 2–3 ngày. Dưa hấu muốn cắt nửa thì ghi chú khi đặt hàng; sau khi cắt, bọc kín và để ngăn mát.',
       'Mua vừa đủ ăn trong 3–4 ngày, trái cây đúng mùa luôn có hàng mới mỗi sáng.'
     ],
     shop: { label: 'Xem quầy trái cây', link: '/san-pham', q: { c: 'fruits' } }

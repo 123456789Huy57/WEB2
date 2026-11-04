@@ -1,3 +1,29 @@
+/* Hero trượt: hai trang xếp ngang trong .hs-track, đổi trang bằng translateX (chỉ dùng transform nên mượt, không đẩy layout).
+   touch-action: pan-y để vuốt dọc vẫn cuộn trang, chỉ vuốt ngang mới đổi trang. */
+.hs { position: relative; overflow: hidden; touch-action: pan-y; }
+.hs-track { display: flex; transition: transform .7s var(--ease); }
+.hs-slide { flex: 0 0 100%; min-width: 0; }
+.hs-video { position: relative; overflow: hidden; display: grid; place-items: center; min-height: clamp(560px, calc(100svh - 160px), 820px); padding: 64px var(--gut-r) 96px var(--gut-l); color: var(--cream); text-align: center; }
+.hs-video video, .hs-video::after { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hs-video video { object-fit: cover; }
+/* Lớp tối mờ để chữ trắng đọc rõ trên mọi khung hình */
+.hs-video::after { content: ""; background: rgb(18 18 18 / .42); }
+.hs-copy { position: relative; z-index: 1; max-width: 920px; }
+.hs-copy h2 { font-family: var(--display); font-weight: 700; font-size: clamp(40px, 5.6vw, 96px); line-height: var(--lh-head); text-transform: uppercase; }
+.hs-copy p { margin: 20px auto 0; max-width: 40ch; font-size: var(--t-lead); }
+.hs-copy .btn { margin-top: 32px; background: var(--yellow); color: var(--ink); }
+.hs-copy .btn:hover { background: var(--cream); }
+.hs :focus-visible { outline-color: var(--yellow); }
+.hero :focus-visible { outline-color: var(--ink); }
+/* Chừa chỗ bên phải cho các nút 01/02/tạm dừng, chữ tự xuống dòng nếu hẹp */
+.hs-credit { position: absolute; left: var(--gut-l); bottom: 20px; z-index: 1; max-width: calc(100% - var(--gut-l) - var(--gut-r) - 170px); margin: 0; font-size: 12px; line-height: 1.4; text-align: left; color: rgb(254 252 245 / .75); }
+.hs-credit a { text-decoration: underline; }
+.hs-ctrl { position: absolute; right: var(--gut-r); bottom: 20px; z-index: 2; display: flex; gap: 6px; }
+.hs-ctrl button { display: grid; place-items: center; min-width: 44px; height: 44px; padding: 0 10px; border: 0; border-radius: var(--r); background: var(--ink); color: var(--cream); font-family: var(--display); font-size: 16px; font-weight: 600; cursor: pointer; }
+.hs-ctrl button[aria-current="true"] { background: var(--cream); color: var(--ink); }
+.hs-ctrl svg { width: 18px; height: 18px; fill: currentColor; }
+@media (max-width: 900px) { .hs-video { min-height: 520px; } .hs-ctrl { bottom: 12px; } }
+
 /* Hero: nền vàng, dưa hấu bị mép trái và mép dưới cắt, tiêu đề in đứng canh phải */
 .hero { position: relative; overflow: hidden; background: var(--yellow); color: var(--ink); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); grid-template-rows: 1fr auto; min-height: clamp(560px, calc(100svh - 160px), 820px); }
 .hero-media { grid-column: 1; grid-row: 1 / 3; position: relative; margin-left: calc(-1 * var(--gut-l)); }
@@ -25,21 +51,48 @@
 
 /* Vì sao chọn FreshMart: túi giấy giữa, bốn lý do hai bên, đáy túi chạm dải chữ chạy.
  */
-.why { padding-top: clamp(72px, 8vw, 120px); text-align: center; }
-.why-h { font-family: var(--display); font-weight: 600; text-transform: uppercase; line-height: var(--lh-head); }
-.why-h span { display: block; }
-.why-h span:first-child { font-size: var(--t-head); color: var(--ink); }
-.why-h span:last-child { font-size: var(--t-display); color: var(--forest); }
-.why-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: clamp(32px, 5vw, 80px); margin-top: clamp(64px, 7vw, 104px); }
-.why-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 56px; padding-bottom: 8%; }
+/* Gói gọn khu + dải chữ chạy trong một màn hình laptop (khoảng 780px dưới header) */
+.why { padding-top: var(--sec-y); text-align: center; }
+.why-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: clamp(32px, 5vw, 80px); margin-top: 40px; }
+.why-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 44px; padding-bottom: 8%; }
 .why-list li { display: flex; flex-direction: column; gap: 14px; }
 .why-l li { align-items: flex-end; text-align: right; }
 .why-r li { align-items: flex-start; text-align: left; }
 .why-list svg { width: 40px; height: 40px; fill: none; stroke: var(--forest); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .why-list p { max-width: 17ch; font-family: var(--display); font-weight: 600; font-size: clamp(18px, 1.5vw, 22px); line-height: var(--lh-head); text-transform: uppercase; color: var(--forest); }
 /* Mép đáy ảnh túi không phẳng sau khi tách nền: hạ túi xuống 3% và cho dải chữ chạy nằm đè lên để giấu mép */
-.bag { align-self: end; width: clamp(260px, 30vw, 440px); height: auto; transform: translateY(3%); }
-.why + .marquee { position: relative; z-index: 1; }
+.bag { align-self: end; width: clamp(240px, 26vw, 380px); height: auto; transform: translateY(3%); }
+/* Dải chữ chạy dưới khu Vì sao chọn: cùng công thức với dải ở khu Bảng giá (chữ kem, chấm vàng) nhưng nền xanh lá vừa,
+   sáng hơn một bậc để tách khỏi khu Vòng cam kết nền xanh đậm ngay bên dưới */
+.why + .marquee { position: relative; z-index: 1; background: var(--green); color: var(--cream); }
+.why + .marquee li::after { background: var(--yellow); }
+
+/* Vòng cam kết: nền xanh đậm, tiêu đề kem ở giữa, vòng chữ vàng, vòng ngoài 20 icon rau củ quả chia đều (mỗi icon nằm trên một "nan" xoay --i × 18°) */
+.ring-sec { background: var(--forest); padding-block: var(--sec-y); overflow-x: clip; view-timeline-name: --ring; }
+.ring { position: relative; width: min(620px, 92vw); aspect-ratio: 1; margin: 0 auto; }
+.ring-food { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; }
+.spoke { position: absolute; inset: 0; rotate: calc(var(--i) * 18deg); }
+.spoke svg { position: absolute; top: 0; left: 50%; width: 10%; height: auto; translate: -50% 0; }
+.ring-text { position: absolute; inset: 9%; width: 82%; height: 82%; overflow: visible; }
+.ring-text text { font-family: var(--display); font-size: 30px; font-weight: 700; letter-spacing: .04em; fill: var(--yellow); }
+.ring-title { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; font-family: var(--display); font-size: clamp(26px, 3.8vw, 48px); font-weight: 700; line-height: var(--lh-head); text-transform: uppercase; color: var(--cream); }
+/* Ba dòng là ba khối xếp chồng; chữ nối "đến" nhỏ hơn và cách đều dòng trên, dòng dưới */
+.ring-title > span { display: block; }
+.ring-title > .ring-mid { font-size: .6em; line-height: 1; margin-block: .15em; }
+@keyframes ring-cw { to { rotate: 180deg; } }
+@keyframes ring-ccw { to { rotate: -120deg; } }
+@keyframes ring-spin { to { rotate: 360deg; } }
+/* Có hỗ trợ animation-timeline: xoay theo vị trí cuộn của khu này. Không hỗ trợ (Firefox): xoay chậm liên tục. Bật giảm chuyển động: đứng yên. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .ring-food { animation: ring-cw linear both; animation-timeline: --ring; animation-range: cover 0% cover 100%; }
+    .ring-text { animation: ring-ccw linear both; animation-timeline: --ring; animation-range: cover 0% cover 100%; }
+  }
+  @supports not (animation-timeline: view()) {
+    .ring-food { animation: ring-spin 60s linear infinite; }
+    .ring-text { animation: ring-spin 80s linear infinite reverse; }
+  }
+}
 @media (max-width: 900px) {
   .why-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "l r" "bag bag"; gap: 40px 24px; margin-top: 48px; }
   .why-l { grid-area: l; } .why-r { grid-area: r; }
@@ -48,134 +101,172 @@
   .bag { grid-area: bag; justify-self: center; width: clamp(240px, 64vw, 340px); margin-top: 48px; }
 }
 
-/* Bảng giá sáng nay: nền đen, giá vàng */
-.board-sec { background: var(--ink); color: var(--cream); padding-block: clamp(80px, 9vw, 136px); }
-.board-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px 32px; margin-bottom: 40px; }
-.board-head .h2 { font-size: clamp(48px, 7vw, 120px); }
-.board-head p { margin-top: 12px; color: var(--on-ink-muted); }
-.board-sec .tab { background: var(--forest-line); color: var(--cream); }
-.board-sec .tab:hover { background: #3a3a37; }
-.board-sec .tab[aria-selected="true"] { background: var(--yellow); color: var(--ink); }
-.board { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-.board li { display: grid; grid-template-columns: 84px minmax(0, 1fr) auto auto; gap: 20px; align-items: center; padding: 14px 18px 14px 14px; background: #1d1d1c; border-radius: var(--r); transition: background-color .2s; animation: rowIn .45s var(--ease) both; }
-.board li:hover { background: #262624; }
-.board li:nth-child(2) { animation-delay: .04s; } .board li:nth-child(3) { animation-delay: .08s; } .board li:nth-child(4) { animation-delay: .12s; }
+/* Thang đo chung của trang chủ: mọi khu cách trên dưới var(--sec-y), tiêu đề khu cùng cỡ .h2 (var(--t-head)), tiêu đề cách nội dung 40px */
+fm-home > .sec { padding-block: var(--sec-y); }
+
+/* Bảng giá sáng nay: nền xanh lá chanh, tiêu đề hai dòng căn giữa,
+   nút quầy viền xanh, mỗi mặt hàng là thẻ kem viền xanh bo góc (cùng độ bo 12px với biển báo khu Giao hàng).
+   Hai bên là icon rau củ trang trí, dùng lại bộ icon của khu Vòng cam kết. */
+.board-sec { position: relative; overflow: clip; background: var(--lime); color: var(--ink); padding-block: var(--sec-y); }
+.board-head { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 32px; }
+.board-head p { margin-top: 10px; }
+.board-head .tabs { justify-content: center; gap: 10px; margin-top: 20px; }
+.board-sec .tab { background: transparent; color: var(--forest); box-shadow: inset 0 0 0 1.5px var(--forest); border-radius: 6px; padding: 0 22px; }
+.board-sec .tab:hover { background: rgb(28 110 85 / .1); }
+.board-sec .tab[aria-selected="true"] { background: var(--forest); color: var(--cream); }
+.board { position: relative; z-index: 1; list-style: none; max-width: 1160px; margin: 0 auto; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+.board li { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 22px 14px 14px; background: var(--paper); border-radius: 12px; box-shadow: inset 0 0 0 2px var(--forest); animation: rowIn .45s var(--ease) both; }
+.board li:nth-child(2) { animation-delay: .05s; } .board li:nth-child(3) { animation-delay: .1s; } .board li:nth-child(4) { animation-delay: .15s; }
 @keyframes rowIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-.board .ph { width: 84px; height: 84px; background: var(--cream); }
-.board .ph img { padding: 6%; }
-.board b { display: block; font-weight: 500; font-size: 17px; }
-.board b a:hover { color: var(--yellow); }
-.board li .small { color: var(--on-ink-muted); }
-.board .r { text-align: right; }
-.board .price { font-size: clamp(36px, 3.6vw, 60px); line-height: 1; font-weight: 600; color: var(--yellow); }
-.board .was { font-size: var(--t-small); color: var(--on-ink-muted); }
-.board .was .off { margin-left: 6px; color: var(--lime); }
-.board .add-btn { background: var(--cream); color: var(--ink); }
-.board .add-btn:hover { background: var(--yellow); }
-.board .stepper { background: var(--yellow); color: var(--ink); }
-.board .stepper button:hover { background: rgba(18, 18, 18, .12); }
-.board-note { color: var(--on-ink-muted); }
-@media (max-width: 960px) { .board { grid-template-columns: 1fr; } }
-@media (max-width: 480px) {
-  .board li { grid-template-columns: 60px minmax(0, 1fr) auto; grid-template-rows: auto auto; gap: 4px 12px; padding: 12px; }
-  .board .ph { width: 60px; height: 60px; grid-row: 1 / 3; }
-  .board li > div:nth-child(2) { grid-column: 2; grid-row: 1 / 3; }
-  .board .r { grid-column: 3; grid-row: 1; }
-  .board li > :last-child { grid-column: 3; grid-row: 2; justify-self: end; }
-  .board .price { font-size: 26px; }
-  .board .add-btn { width: 42px; height: 42px; }
+.board .bt { font-family: var(--display); font-size: clamp(22px, 1.9vw, 28px); font-weight: 600; line-height: var(--lh-head); text-transform: uppercase; color: var(--forest); }
+.board .bt a:hover { color: var(--ink); }
+.board .bnote { margin-top: 2px; color: var(--muted); }
+.board .pic { position: relative; display: flex; align-items: center; justify-content: center; width: 100%; height: clamp(140px, 13vw, 180px); margin: 14px 0 16px; }
+.board .pic img { max-width: 82%; max-height: 100%; object-fit: contain; transition: transform .5s var(--ease); }
+.board li:hover .pic img { transform: scale(1.06) rotate(-3deg); }
+/* Huy hiệu % giảm: tròn đỏ, hơi nghiêng, góc trên bên phải ảnh */
+.board .badge { position: absolute; top: 0; right: 2%; display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%; background: var(--sale); color: var(--cream); font-family: var(--display); font-size: 17px; font-weight: 600; rotate: -10deg; }
+/* Hàng dưới cùng: nhãn giá nền lá chanh nhạt, giá gốc gạch ngang, nút thêm vào giỏ màu xanh dồn sang phải */
+.board .buy { display: flex; align-items: center; gap: 8px; width: 100%; margin-top: auto; text-align: left; }
+.board .price { padding: 5px 10px; border-radius: 6px; background: rgb(210 224 125 / .55); font-family: var(--display); font-size: 21px; font-weight: 600; line-height: 1.2; color: var(--forest); white-space: nowrap; }
+.board .price small { font-size: 13px; font-weight: 500; }
+.board .orig { display: flex; flex-direction: column; line-height: 1.2; color: var(--muted); }
+.board .orig small { font-size: 11px; }
+.board .orig s { font-size: 13px; white-space: nowrap; }
+.board .buy fm-add-control { margin-left: auto; }
+.board .add-btn { background: var(--forest); color: var(--cream); border-radius: 6px; }
+.board .add-btn:hover { background: var(--forest-hover); }
+.board .stepper { background: var(--forest); color: var(--cream); }
+.board .stepper button:hover { background: rgb(254 252 245 / .14); }
+.board-note { position: relative; z-index: 1; margin-top: 24px; text-align: center; }
+/* Icon trang trí to, bám sát hai mép và bị mép cắt bớt: trái có lá rau, chấm gia vị, cà rốt; phải có chấm gia vị, cà chua, lát dưa leo */
+.bdeco { position: absolute; z-index: 0; pointer-events: none; }
+.bd-leaf { left: -46px; top: 24%; width: 190px; height: 190px; rotate: 20deg; }
+.bd-dots1 { left: 2.5%; top: 60%; width: 64px; height: 64px; }
+/* Cà rốt và dưa leo nhét vào hai góc dưới, phần đuôi khuất sau dải chữ chạy */
+.bd-carrot { left: -54px; bottom: 18px; width: 210px; height: 210px; rotate: -8deg; }
+.bd-dots2 { right: 2%; top: 28%; width: 70px; height: 70px; rotate: 180deg; }
+.bd-tomato { right: -44px; top: 44%; width: 150px; height: 150px; }
+.bd-cucumber { right: -60px; bottom: 14px; width: 180px; height: 180px; }
+/* Thêm vài icon nhỏ hai bên tiêu đề và hai góc trên */
+.bd-corn { left: 3%; top: 7%; width: 84px; height: 84px; rotate: -28deg; }
+.bd-lime { left: 21%; top: 12%; width: 64px; height: 64px; rotate: -12deg; }
+.bd-chili { right: 21%; top: 10%; width: 70px; height: 70px; rotate: 24deg; }
+.bd-orange { right: 4%; top: 7%; width: 84px; height: 84px; }
+.bd-mushroom { right: 1.5%; top: 64%; width: 70px; height: 70px; rotate: 12deg; }
+/* Dải chữ chạy cuối khu: nền xanh đậm chữ kem, chấm vàng; trải hết bề ngang, dính sát đáy khu */
+.board-marquee { position: relative; z-index: 1; margin: var(--sec-y) calc(-1 * var(--gut-r)) calc(-1 * var(--sec-y)) calc(-1 * var(--gut-l)); background: var(--forest); color: var(--cream); }
+@media (max-width: 1280px) { .bdeco { display: none; } }
+@media (max-width: 600px) {
+  .board { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .board li { padding: 16px 10px 12px; }
+  .board .bt { font-size: 19px; }
+  .board .pic { height: 110px; margin: 10px 0; }
+  .board .badge { width: 42px; height: 42px; font-size: 13px; right: 0; }
+  .board .buy { flex-wrap: wrap; justify-content: center; text-align: center; gap: 6px; }
+  .board .price { font-size: 19px; padding: 4px 8px; }
+  .board .orig { align-items: center; }
+  .board .buy fm-add-control { margin-left: 0; }
 }
 
-/* Quầy hàng: ô đầu tiên chiếm 2×2, nền các ô luân phiên vàng, lá chanh, kem */
-.aisles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(220px, 21vw); gap: 12px; }
+/* Đi chợ theo quầy: nền kem như khu Vì sao chọn, tiêu đề hai dòng căn giữa, nút đen như khu giao hàng.
+   Ô đầu tiên chiếm 2×2, nền các ô luân phiên vàng, lá chanh, kem */
+.aisle-sec { background: var(--paper); }
+.aisle-head { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 40px; }
+.aisle-head p { margin-top: 12px; max-width: 56ch; color: var(--muted); }
+.aisle-head .btn { margin-top: 20px; }
+.aisles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(140px, 10.5vw); gap: 12px; }
 .aisle { position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; padding: 20px 22px; border-radius: var(--r); background: var(--stone); }
 .aisle:nth-child(1) { grid-column: span 2; grid-row: span 2; background: var(--yellow); }
 .aisle:nth-child(2), .aisle:nth-child(7) { background: var(--lime); }
+/* 8 ô trên lưới 4 cột: ô đầu 2×2 nên còn dư 1 chỗ, ô cuối trải 2 cột cho lưới kín */
+.aisle:last-child { grid-column: span 2; }
 /* Ảnh .png đã tách nền nên không cần multiply; giữ màu thật của rau củ trên nền vàng */
 .aisle img[src$=".png"] { mix-blend-mode: normal; }
 .aisle img { position: absolute; right: -8%; top: -6%; width: 78%; max-width: none; mix-blend-mode: multiply; transition: transform .5s var(--ease); }
 .aisle:nth-child(1) img { width: 80%; right: -6%; top: -4%; }
 .aisle:hover img { transform: scale(1.07) rotate(-4deg); }
 .aisle .nm { position: relative; font-family: var(--display); font-weight: 600; font-size: clamp(24px, 2.2vw, 34px); line-height: var(--lh-head); text-transform: uppercase; }
-.aisle:nth-child(1) .nm { font-size: clamp(40px, 5vw, 84px); }
-.aisle .ct { position: relative; margin-top: 4px; font-weight: 500; }
+.aisle:nth-child(1) .nm { font-size: clamp(36px, 4vw, 64px); }
+/* Ô Rau củ, Trái cây, Thịt dùng banner 2:1 đã in sẵn tên: ảnh phủ kín ô, không phóng nghiêng */
+.aisle.banner { padding: 0; }
+.aisle.banner img { inset: 0; width: 100%; height: 100%; object-fit: cover; mix-blend-mode: normal; }
+.aisle.banner:hover img { transform: scale(1.03); }
 @media (max-width: 900px) {
   .aisles { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 44vw; }
   .aisle { padding: 14px 16px; }
   /* 2 cột: ô đầu và ô cuối trải hết chiều ngang để lưới không bị lẻ một ô */
   .aisle:nth-child(1) { grid-row: span 1; }
   .aisle img { right: 0; }
-  .aisle:nth-child(1) img, .aisle:last-child img { width: 46%; right: 2%; top: -4%; }
+  .aisle:last-child img { width: 46%; right: 2%; top: -4%; }
+  /* Điện thoại: 3 banner rộng hết hàng để không cắt mất tên quầy in trong ảnh */
+  .aisle.banner { grid-column: span 2; }
+  .aisle.banner img { inset: 0; width: 100%; height: 100%; }
   .aisle:last-child { grid-column: span 2; }
 }
 
-/* Chọn sao cho ngon: ảnh lớn trên mảng màu, bài thứ hai đảo bên */
-.pick-title { margin-bottom: 48px; }
-.picks { display: flex; flex-direction: column; gap: 12px; }
-.pick { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 0; align-items: stretch; background: var(--stone); border-radius: var(--r); overflow: hidden; }
-.pick:nth-child(2) { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
-.pick:nth-child(2) .pick-media { order: 2; background: var(--paper); }
-.pick-media { display: flex; align-items: center; justify-content: center; background: var(--lime); aspect-ratio: 16 / 10; overflow: hidden; }
-.pick-media img { width: 72%; mix-blend-mode: multiply; transition: transform .6s var(--ease); }
-.pick:hover .pick-media img { transform: scale(1.05) rotate(3deg); }
-.pick-body { padding: clamp(28px, 4vw, 64px); display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
-.pick-body .h3 { font-size: clamp(36px, 3.4vw, 56px); font-weight: 600; line-height: var(--lh-head); }
-.pick-body p { margin-top: 16px; max-width: 46ch; line-height: 1.65; }
-.pick-row { margin-top: 24px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 12px; }
-.pick-row .price { font-size: 40px; font-weight: 600; }
-.pick-body .btn { margin-top: 20px; }
-@media (max-width: 860px) {
-  .pick, .pick:nth-child(2) { grid-template-columns: 1fr; }
-  .pick:nth-child(2) .pick-media { order: 0; }
-}
-
-/* Meal Planner: nền xanh đậm, tiêu đề vàng, ba món mẫu lấy từ recipes.json */
-.mp { background: var(--forest); color: var(--on-forest); margin-top: var(--gap-sec); padding-block: clamp(64px, 7vw, 104px); }
+/* Meal Planner: nền xanh đậm, tiêu đề hai dòng căn giữa như các khu giới thiệu khác (dòng nhỏ kem, dòng lớn vàng), ba món mẫu lấy từ recipes.json */
+.mp { background: var(--forest); color: var(--on-forest); padding-block: var(--sec-y); }
 .mp :focus-visible { outline-color: var(--yellow); }
-.mp-head { display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: center; margin-bottom: 48px; }
-.mp .h2 { color: var(--yellow); }
-.mp .lead { max-width: 44ch; }
+.mp-head { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 40px; }
+.mp .duo-h span:first-child { color: var(--cream); }
+.mp .duo-h span:last-child { color: var(--yellow); }
+.mp .lead { margin-top: 16px; max-width: 52ch; }
 .mp .btn { margin-top: 24px; background: var(--yellow); color: var(--ink); }
 .recipe-rail { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
 .home-recipe { background: var(--paper); color: var(--ink); border-radius: var(--r); overflow: hidden; }
-.home-recipe img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform .5s var(--ease); }
+.home-recipe img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; transition: transform .5s var(--ease); }
 .home-recipe:hover img { transform: scale(1.04); }
-.home-recipe > div { padding: 24px; }
-.home-recipe h3 { font-family: var(--display); font-size: 30px; font-weight: 500; line-height: 1.3; margin: 10px 0 24px; }
+.home-recipe > div { padding: 20px 24px; }
+.home-recipe h3 { font-family: var(--display); font-size: 30px; font-weight: 500; line-height: 1.3; margin: 8px 0 16px; }
 @media (max-width: 1000px) {
-  .mp-head { gap: 32px; }
   .recipe-rail { gap: 16px; }
   .home-recipe > div { padding: 18px; }
   .home-recipe h3 { font-size: 25px; }
 }
 /* Điện thoại: các món xếp thành dải vuốt ngang */
 @media (max-width: 760px) {
-  .mp-head { grid-template-columns: 1fr; gap: 24px; margin-bottom: 32px; }
+  .mp-head { margin-bottom: 32px; }
   .recipe-rail { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 18px; }
   .home-recipe { flex: 0 0 84%; scroll-snap-align: start; }
 }
 
-/* Ưu đãi: nền kem đậm, đồng hồ đếm ngược in lớn */
-.tone { background: var(--stone); padding-block: clamp(80px, 9vw, 136px); }
-.deal-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 20px 40px; margin-bottom: 44px; }
-.deal-head p { margin-top: 14px; }
-.clock { display: flex; flex-direction: column; align-items: flex-end; margin: 0; }
-.clock b { font-family: var(--display); font-weight: 600; font-size: clamp(48px, 6vw, 96px); line-height: 1; color: var(--forest); }
-.tone .ph, .tone .vouchers li { background: var(--paper); }
-.tone .vouchers .btn[aria-pressed="true"] { background: var(--stone); }
-.tone + .sec { padding-top: clamp(80px, 9vw, 136px); }
-.mp + .tone { margin-top: 0; }
-.home-v { display: block; margin-top: 64px; }
-/* Máy tính bảng: 4 sản phẩm ưu đãi xếp 2 × 2 thay vì 3 + 1 */
-@media (min-width: 641px) and (max-width: 1000px) { .tone .p-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 640px) { .clock { align-items: flex-start; } }
 
-/* Giao hàng */
-.ship { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 56px; align-items: center; }
-.ship-media { overflow: hidden; border-radius: var(--r); }
-.ship-media img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform 1.2s var(--ease); }
-.ship:hover .ship-media img { transform: scale(1.03); }
-.ship-facts { margin: 32px 0 36px; display: flex; flex-direction: column; gap: 26px; }
-.ship-facts dt { font-family: var(--display); font-size: clamp(40px, 3.6vw, 60px); font-weight: 600; line-height: 1; color: var(--forest); }
-.ship-facts dd { margin: 8px 0 0; max-width: 42ch; }
-@media (max-width: 900px) { .ship { grid-template-columns: 1fr; gap: 32px; } }
+/* Giao hàng – "con đường giao hàng": nền vàng (khác footer xanh), ba biển báo dựng trên cột,
+   xe chạy trên dải đường nhựa đen có vạch kẻ. Cả khu gói gọn trong một màn hình laptop (khoảng 780px cao).
+   --tw là bề ngang xe; cột biển báo cao hơn nóc xe một chút để xe chạy ngang qua chân cột mà không che mặt biển. */
+.ship { --tw: min(30vw, 440px); --road: clamp(48px, 4.5vw, 64px); background: var(--yellow); color: var(--ink); padding-top: var(--sec-y); overflow-x: clip; view-timeline-name: --ship; }
+.ship-head { text-align: center; }
+.ship-head .btn { margin-top: 18px; }
+.ship-scene { position: relative; margin-top: clamp(28px, 3vw, 40px); }
+/* Hai hàng: hàng 1 là mặt biển, hàng 2 là cột. Mỗi biển dùng subgrid nên ba mặt biển luôn cao bằng nhau (bằng mặt biển nhiều chữ nhất) */
+.signs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: auto 1fr; column-gap: clamp(20px, 3vw, 48px); max-width: 1080px; margin: 0 auto; }
+.sign { display: grid; grid-row: span 2; grid-template-rows: subgrid; justify-items: center; }
+/* Cột biển báo: nằm ở hàng 2, tự kéo dài tới mép đường */
+.sign::after { content: ""; min-height: calc(var(--tw) * .47); width: 7px; background: var(--ink); }
+/* Mặt biển: nền đen, viền kem bên trong như biển chỉ đường */
+.sign-face { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 320px; padding: 18px 22px 20px; border-radius: 10px; background: var(--ink); color: var(--cream); text-align: center; box-shadow: inset 0 0 0 5px var(--ink), inset 0 0 0 7px var(--cream); }
+.sign-face svg { width: 44px; height: 44px; fill: none; stroke: var(--yellow); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.sign-face dt { margin-top: 4px; font-family: var(--display); font-size: clamp(32px, 2.8vw, 42px); font-weight: 600; line-height: var(--lh-head); color: var(--yellow); }
+.sign-face dd { margin: 6px 0 0; max-width: 30ch; font-size: 15px; line-height: 1.5; }
+.truck { position: absolute; z-index: 1; left: calc(50% - var(--tw) / 2); bottom: calc(var(--road) * .3); width: var(--tw); height: auto; }
+/* Đường nhựa: vạch kẻ đứt quãng màu kem ở giữa */
+.road { height: var(--road); background: var(--ink) linear-gradient(90deg, var(--cream) 0 50%, transparent 50%) 0 50% / 72px 4px repeat-x; }
+/* Xe đậu ở mép phải trong lúc khu vàng hiện lên và nằm trọn trong màn hình. Khi người dùng cuộn tiếp (mép trên khu vàng bắt đầu đi qua đỉnh màn hình, exit 0%)
+   xe chạy sang trái, tới mép trái khi khu vàng đã cuộn đi khoảng một nửa (exit 55%) để vẫn còn nhìn thấy xe. */
+@keyframes drive-in { from { left: calc(100% - var(--tw) - var(--gut-r)); } to { left: var(--gut-l); } }
+/* Trình duyệt chưa hỗ trợ animation-timeline hoặc người dùng bật giảm chuyển động thì xe đứng yên ở giữa. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .truck { animation: drive-in linear both; animation-timeline: --ship; animation-range: exit 0% exit 55%; }
+  }
+}
+@media (max-width: 760px) {
+  .ship { --tw: 100%; }
+  .signs { grid-template-columns: 1fr; gap: 16px; }
+  .sign { display: block; grid-row: auto; }
+  .sign::after { display: none; }
+  .sign-face { max-width: none; }
+  .ship-scene { display: flex; flex-direction: column; }
+  .truck { position: relative; left: auto; bottom: auto; width: calc(100% - var(--gut-l) - var(--gut-r)); margin: 40px auto calc(var(--road) * -.7); animation: none; }
+}

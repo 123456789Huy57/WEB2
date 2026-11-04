@@ -24,7 +24,7 @@ import { RouterLink } from '@angular/router';
     </div>
     <div class="f-bottom">
       <p class="f-mark" aria-hidden="true">FreshMart</p>
-      <div class="f-base"><span>© 2026 FreshMart · Đồ án môn Phát triển web kinh doanh</span><span>Ảnh sản phẩm lấy từ dữ liệu đồ án, chỉ dùng minh họa</span></div>
+      <div class="f-base"><span>© 2026 FreshMart · Đồ án môn Phát triển web kinh doanh</span></div>
     </div>
   `
 })

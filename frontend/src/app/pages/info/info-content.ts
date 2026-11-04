@@ -1,4 +1,4 @@
-/** Nội dung các trang thông tin, viết lại từ Web1 (about, team, guide, partner, các chính sách). Số liệu thống nhất với giỏ hàng: miễn phí giao từ 300.000 đ, phí 20.000 đ. */
+/** Nội dung các trang thông tin, viết lại từ Web1 (about, team, guide, partner, các chính sách). Số liệu thống nhất với giỏ hàng: miễn phí giao từ 300.000 đ; dưới mức này phí tính theo khoảng cách, giỏ hàng tạm tính 20.000 đ. */
 export interface InfoBlock { h: string; p?: string; list?: string[]; rows?: [string, string][]; }
 export interface InfoPage { title: string; lead: string; group: 'about' | 'help'; blocks: InfoBlock[]; }
 
@@ -44,7 +44,7 @@ export const INFO: Record<string, InfoPage> = {
     lead: 'Giao trong 1–2 giờ ở nội thành TP.HCM cho đơn đặt trước 16:00.',
     blocks: [
       { h: 'Thời gian giao', rows: [['Nội thành TP.HCM', '1–2 giờ, đặt trước 16:00'], ['Đặt sau 16:00', 'Sáng hôm sau, chọn khung giờ khi thanh toán'], ['Tỉnh lân cận', '1–2 ngày']] },
-      { h: 'Phí giao', rows: [['Đơn từ 300.000 đ', 'Miễn phí'], ['Đơn dưới 300.000 đ', '20.000 đ'], ['Mã FREESHIP', 'Giảm đến 20.000 đ phí giao cho đơn từ 250.000 đ']] },
+      { h: 'Phí giao', rows: [['Đơn từ 300.000 đ', 'Miễn phí'], ['Đơn dưới 300.000 đ', 'Tính theo khoảng cách giao, tạm tính 20.000 đ khi đặt hàng'], ['Mã FREESHIP', 'Giảm đến 20.000 đ phí giao cho đơn từ 250.000 đ']] },
       { h: 'Khi nhận hàng', p: 'Hàng tươi sống được đóng túi giữ lạnh. Bạn kiểm tra trước khi thanh toán; thiếu hoặc dập hỏng thì báo shipper để đổi ngay hoặc trừ tiền.' }
     ]
   },

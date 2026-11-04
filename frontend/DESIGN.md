@@ -60,7 +60,7 @@ Có năm cỡ chữ: `--t-small` 14px, `--t-body` 16px, `--t-lead` 19px, `--t-he
 - **Góc gần vuông:** `--r: 3px`, dùng chung cho nút, ô nhập, thẻ, tab, chip. Không dùng nút bo tròn kiểu viên thuốc.
 - **Không dùng gradient. Không đổ bóng cho thứ nằm yên trên trang.** Chỉ những thứ nổi lên trên mới có bóng (`--shadow-float`): hộp thoại, giỏ trượt, ô gợi ý tìm kiếm, thông báo toast.
 - **Tách khối bằng bậc màu nền** (kem → kem đậm → đen), không dùng đường kẻ mảnh.
-- **Lề ngoài:** `--gut`, từ 16 đến 56px theo bề ngang màn hình. **Khoảng cách giữa các khu:** `--gap-sec`, từ 96 đến 168px.
+- **Lề ngoài:** `--gut`, từ 16 đến 56px theo bề ngang màn hình. **Khoảng cách giữa các khu:** ở trang chủ mọi khu dùng chung `--sec-y` (56–88px) cho khoảng trống trên và dưới, tiêu đề khu cùng cỡ `--t-head` (34–56px) và cách nội dung 40px; mỗi khu cố gói gọn khoảng một màn hình laptop. Các trang khác vẫn dùng `--gap-sec` (96–168px).
 
 ## 6. Ảnh
 

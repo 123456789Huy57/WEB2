@@ -1,7 +1,31 @@
-<!-- Hero: trái dưa hấu phóng thật to trên nền vàng, tiêu đề in đứng bên phải -->
-<section class="hero band" aria-labelledby="hero-title">
+<!-- Thứ tự trang chủ: xen kẽ khu giới thiệu và khu mua hàng.
+     Video (giới thiệu) → Vì sao chọn + dải chữ chạy (giới thiệu) → Bảng giá (mua) → Đi chợ theo quầy (mua) → Meal Planner (giới thiệu) → Giao hàng (giới thiệu) → footer -->
+<!-- Hero trượt 2 trang: trang 1 là video nền, video hết thì trượt sang trái để lộ trang 2 (hero vàng).
+     Vuốt ngang hoặc bấm nút số để đổi trang; muốn xem tiếp nội dung thì cuộn xuống như bình thường. -->
+<div class="hs" role="region" aria-roledescription="carousel" aria-label="Giới thiệu FreshMart"
+  (pointerdown)="swipeStart($event)" (pointerup)="swipeEnd($event)"
+  (keydown.arrowright)="go(1)" (keydown.arrowleft)="go(0)"
+  (mouseenter)="hold.set(true)" (mouseleave)="hold.set(false)" (focusin)="hold.set(true)" (focusout)="hold.set(false)">
+<div class="hs-track" [style.transform]="'translateX(' + slide() * -100 + '%)'">
+
+<!-- Trang 1: video chợ nổi phủ kín, chữ trắng ở giữa -->
+<section class="hs-slide hs-video" aria-roledescription="slide" aria-label="1 trên 2" aria-labelledby="hs-title" [inert]="slide() !== 0">
+  <video #vid muted [muted]="true" playsinline preload="auto" poster="/video/cho-noi.jpg" aria-hidden="true" (ended)="go(1)">
+    <source src="/video/cho-noi.mp4" type="video/mp4">
+  </video>
+  <div class="hs-copy">
+    <h2 id="hs-title">Rau củ, trái cây<br>tươi mỗi sáng</h2>
+    <p>Đặt trước 16:00, giao trong 1–2 giờ ở nội thành TP.HCM.</p>
+    <a class="btn" routerLink="/san-pham">Đi chợ ngay</a>
+  </div>
+  <!-- Giấy phép CC BY 3.0 bắt buộc ghi nguồn video -->
+  <p class="hs-credit">Video: <a href="https://commons.wikimedia.org/wiki/File:Mekong_Floating_Markets_,_Ho_Chi_Minh_,Vietnam.webm" target="_blank" rel="noopener">Mekong Floating Markets</a>, Le Monde en Vidéo, <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener">CC BY 3.0</a></p>
+</section>
+
+<!-- Trang 2: trái dưa hấu phóng thật to trên nền vàng, tiêu đề in đứng bên phải -->
+<section class="hs-slide hero band" aria-roledescription="slide" aria-label="2 trên 2" aria-labelledby="hero-title" [inert]="slide() !== 1">
   <div class="hero-media" aria-hidden="true">
-    <img src="/img/cut/dua-hau.png" alt="" width="640" height="640" fetchpriority="high">
+    <img src="/img/cut/dua-hau.png" alt="" width="640" height="640" fetchpriority="high" draggable="false">
   </div>
   <div class="hero-copy">
     <h1 class="hero-h" id="hero-title"><span class="nowrap">Đi chợ liền tay,</span><br><span class="nowrap">giao ngay trước tối</span></h1>
@@ -18,10 +42,24 @@
   </dl>
 </section>
 
+</div>
+<div class="hs-ctrl">
+  @for (n of [0, 1]; track n) {
+    <button class="hs-dot num" type="button" [attr.aria-current]="slide() === n" [attr.aria-label]="'Xem trang ' + (n + 1)" (click)="go(n)">0{{ n + 1 }}</button>
+  }
+  @if (slide() === 0) {
+    <button class="hs-play" type="button" (click)="togglePlay()" [attr.aria-label]="paused() ? 'Phát video' : 'Tạm dừng video'">
+      @if (paused()) { <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg> }
+      @else { <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg> }
+    </button>
+  }
+</div>
+</div>
+
 <!-- Vì sao chọn FreshMart: ảnh túi giấy in logo (đã tách nền) ở giữa, bốn lý do hai bên.
      Túi nằm sát dải chữ chạy bên dưới như đặt trên quầy. -->
 <section class="why band" aria-labelledby="h-why">
-  <h2 class="why-h" id="h-why"><span>Vì sao chọn</span><span>FreshMart?</span></h2>
+  <h2 class="duo-h" id="h-why"><span>Vì sao chọn</span><span>FreshMart?</span></h2>
   <div class="why-grid">
     <ul class="why-list why-l">
       <li>
@@ -36,8 +74,8 @@
     <img class="bag" src="/img/cut/tui-freshmart.webp" alt="Túi giấy FreshMart đựng cà rốt, xà lách, cà chua, rau bina và chuối" width="800" height="1007" loading="lazy">
     <ul class="why-list why-r">
       <li>
-        <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="21" r="13"/><path d="M20 13v8l5 4M16 4h8"/></svg>
-        <p>Giao trong 1–2 giờ ở nội thành TP.HCM</p>
+        <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M5 16 8 6h24l3 10"/><path d="M5 16a5 5 0 0 0 10 0 5 5 0 0 0 10 0 5 5 0 0 0 10 0"/><path d="M7 20v14h26V20M16 34v-9h8v9"/></svg>
+        <p>12 cửa hàng gần bạn tại TP.HCM</p>
       </li>
       <li>
         <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M6 17h28v4a12 12 0 0 1-12 12h-4A12 12 0 0 1 6 21z"/><path d="M3 17h34M15 11c0-3 3-3 3-6M23 11c0-3 3-3 3-6"/></svg>
@@ -56,13 +94,54 @@
   }
 </div>
 
+<!-- Vòng cam kết: tiêu đề ở giữa, vòng chữ cam kết chạy quanh, vòng ngoài là rau củ quả vẽ phẳng.
+     Khi cuộn trang, vòng rau củ xoay theo chiều kim đồng hồ, vòng chữ xoay ngược lại. -->
+<section class="ring-sec band" aria-labelledby="h-ring">
+  <svg width="0" height="0" class="sr" aria-hidden="true">
+    <symbol id="ic-tomato" viewBox="0 0 48 48"><circle cx="24" cy="27" r="16" fill="#d9452b"/><path d="M24 12 27 18 33 16 29 21 34 24 27 24 24 29 21 24 14 24 19 21 15 16 21 18Z" fill="#3a9a52"/></symbol>
+    <symbol id="ic-carrot" viewBox="0 0 48 48"><path d="M30 14 12 42c-1 2 1 3 3 2l26-22c3-3-6-12-11-8z" fill="#f08a24"/><path d="M20 30l4 3M16 36l3 2M25 24l4 3" stroke="#c96a12" stroke-width="2" stroke-linecap="round"/><path d="M34 14c2-6 6-9 10-9-1 4-4 8-8 10zM33 12c-1-5 0-9 3-11 1 4 0 8-1 11z" fill="#3a9a52"/></symbol>
+    <symbol id="ic-chili" viewBox="0 0 48 48"><path d="M14 14c4 0 6 3 6 8 0 10 6 18 16 20-12 4-24-4-25-18 0-6 1-10 3-10z" fill="#d9452b"/><path d="M14 14c0-4 2-7 6-8" stroke="#3a9a52" stroke-width="3" fill="none" stroke-linecap="round"/></symbol>
+    <symbol id="ic-lime" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="#3a9a52"/><circle cx="24" cy="24" r="15" fill="#c7e07a"/><path d="M24 10v28M10 24h28M14 14l20 20M34 14 14 34" stroke="#3a9a52" stroke-width="1.6"/><circle cx="24" cy="24" r="3" fill="#eef5c8"/></symbol>
+    <symbol id="ic-orange" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="#f08a24"/><circle cx="24" cy="24" r="15" fill="#ffc76a"/><path d="M24 10v28M10 24h28M14 14l20 20M34 14 14 34" stroke="#f08a24" stroke-width="1.6"/><circle cx="24" cy="24" r="3" fill="#fff1cf"/></symbol>
+    <symbol id="ic-leaf" viewBox="0 0 48 48"><path d="M8 40C8 22 20 8 42 6c0 20-12 34-34 34z" fill="#3a9a52"/><path d="M8 40 30 18" stroke="#c7e07a" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="ic-cucumber" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="#2f7a45"/><circle cx="24" cy="24" r="15" fill="#bfe39b"/><g fill="#eef8dc"><ellipse cx="24" cy="17" rx="1.6" ry="3"/><ellipse cx="24" cy="31" rx="1.6" ry="3"/><ellipse cx="18" cy="21" rx="3" ry="1.6"/><ellipse cx="30" cy="21" rx="3" ry="1.6"/><ellipse cx="18" cy="27" rx="3" ry="1.6"/><ellipse cx="30" cy="27" rx="3" ry="1.6"/></g></symbol>
+    <symbol id="ic-melon" viewBox="0 0 48 48"><g transform="translate(0 6)"><path d="M4 12a20 20 0 0 0 40 0z" fill="#3a9a52"/><path d="M8 12a16 16 0 0 0 32 0z" fill="#e5484d"/><g fill="#121212"><ellipse cx="18" cy="18" rx="1.4" ry="2.2"/><ellipse cx="24" cy="22" rx="1.4" ry="2.2"/><ellipse cx="30" cy="18" rx="1.4" ry="2.2"/></g></g></symbol>
+    <symbol id="ic-corn" viewBox="0 0 48 48"><path d="M24 6c6 0 9 8 9 18s-3 18-9 18-9-8-9-18 3-18 9-18z" fill="#ffc517"/><path d="M17 16h14M16 22h16M16 28h16M17 34h14M24 7v34M20 8v32M28 8v32" stroke="#e0a400" stroke-width="1.2"/><path d="M15 26c-3 8 0 16 9 18-4-6-6-12-9-18zM33 26c3 8 0 16-9 18 4-6 6-12 9-18z" fill="#3a9a52"/></symbol>
+    <symbol id="ic-mushroom" viewBox="0 0 48 48"><path d="M6 24a18 14 0 0 1 36 0z" fill="#b5764a"/><path d="M18 24h12v12a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4z" fill="#f3e6cc"/><circle cx="16" cy="18" r="2" fill="#f3e6cc"/><circle cx="28" cy="15" r="2.4" fill="#f3e6cc"/></symbol>
+    <symbol id="ic-eggplant" viewBox="0 0 48 48"><path d="M30 14c8 4 10 14 4 22s-18 10-24 4 0-14 8-20c4-3 8-8 12-6z" fill="#6b3a7a"/><path d="M26 12c3-2 9-2 12 2-3 2-7 2-10 1z" fill="#3a9a52"/><path d="M32 13l3-6" stroke="#3a9a52" stroke-width="2.5" stroke-linecap="round"/></symbol>
+    <symbol id="ic-dots" viewBox="0 0 48 48"><g fill="#e9d9a6"><circle cx="24" cy="10" r="2"/><circle cx="20" cy="18" r="2"/><circle cx="28" cy="18" r="2"/><circle cx="16" cy="26" r="2"/><circle cx="24" cy="26" r="2"/><circle cx="32" cy="26" r="2"/><circle cx="12" cy="34" r="2"/><circle cx="20" cy="34" r="2"/><circle cx="28" cy="34" r="2"/><circle cx="36" cy="34" r="2"/></g></symbol>
+  </svg>
+  <div class="ring">
+    <ul class="ring-food" aria-hidden="true">
+      @for (f of ringFood; track $index; let i = $index) {
+        <li class="spoke" [style.--i]="i"><svg viewBox="0 0 48 48"><use [attr.href]="'#ic-' + f"/></svg></li>
+      }
+    </ul>
+    <svg class="ring-text" viewBox="0 0 500 500" role="img" aria-label="Chọn lọc mỗi sáng. Tính tiền theo cân thực tế. Đổi trả trong 7 ngày.">
+      <defs><path id="ring-path" d="M250,50 a200,200 0 1,1 0,400 a200,200 0 1,1 0,-400"/></defs>
+      <text><textPath href="#ring-path" textLength="1240" lengthAdjust="spacing">CHỌN LỌC MỖI SÁNG • TÍNH TIỀN THEO CÂN THỰC TẾ • ĐỔI TRẢ TRONG 7 NGÀY •</textPath></text>
+    </svg>
+    <h2 class="ring-title" id="h-ring"><span>Tươi từ chợ</span><span class="ring-mid">đến</span><span>bữa cơm nhà</span></h2>
+  </div>
+</section>
+
 <!-- Bảng giá sáng nay: nền đen như tấm bảng ở chợ, giá in vàng -->
 <section class="board-sec band" id="bang-gia" aria-labelledby="h-board">
+  <!-- Icon rau củ trang trí hai bên (dùng lại bộ icon của khu Vòng cam kết) -->
+  <svg class="bdeco bd-leaf" aria-hidden="true"><use href="#ic-leaf"/></svg>
+  <svg class="bdeco bd-carrot" aria-hidden="true"><use href="#ic-carrot"/></svg>
+  <svg class="bdeco bd-dots1" aria-hidden="true"><use href="#ic-dots"/></svg>
+  <svg class="bdeco bd-tomato" aria-hidden="true"><use href="#ic-tomato"/></svg>
+  <svg class="bdeco bd-cucumber" aria-hidden="true"><use href="#ic-cucumber"/></svg>
+  <svg class="bdeco bd-dots2" aria-hidden="true"><use href="#ic-dots"/></svg>
+  <svg class="bdeco bd-corn" aria-hidden="true"><use href="#ic-corn"/></svg>
+  <svg class="bdeco bd-lime" aria-hidden="true"><use href="#ic-lime"/></svg>
+  <svg class="bdeco bd-orange" aria-hidden="true"><use href="#ic-orange"/></svg>
+  <svg class="bdeco bd-chili" aria-hidden="true"><use href="#ic-chili"/></svg>
+  <svg class="bdeco bd-mushroom" aria-hidden="true"><use href="#ic-mushroom"/></svg>
   <div class="board-head">
-    <div>
-      <h2 class="h2" id="h-board" fmReveal>Bảng giá sáng nay</h2>
-      <p fmReveal="1">{{ today }} · cập nhật lúc 6:00 sáng</p>
-    </div>
+    <h2 class="duo-h" id="h-board" fmReveal><span>Bảng giá</span><span>sáng nay</span></h2>
+    <p fmReveal="1">{{ today }} · cập nhật lúc 6:00 sáng · <a class="link" routerLink="/uu-dai">Xem tất cả ưu đãi</a></p>
     <div class="tabs" role="tablist" aria-label="Chọn quầy" fmReveal="1" (keydown.arrowright)="moveTab(1)" (keydown.arrowleft)="moveTab(-1)">
       @for (g of groups; track g.key) {
         <button class="tab" role="tab" type="button" [id]="'tab-' + g.key" aria-controls="board-panel"
@@ -70,72 +149,60 @@
       }
     </div>
   </div>
+  <!-- Mỗi mặt hàng một thẻ kem viền xanh: tên in hoa, ảnh đã tách nền, huy hiệu % giảm; dưới cùng là nhãn giá, giá gốc và nút thêm vào giỏ -->
   <ul class="board" id="board-panel" role="tabpanel" [attr.aria-labelledby]="'tab-' + group()">
     @for (row of board(); track row.p.id) {
       <li>
-        <a class="ph" [routerLink]="['/san-pham', row.p.id]" tabindex="-1"><img [fmImg]="row.name" [src]="ps.img(row.p)" alt=""></a>
-        <div><b><a [routerLink]="['/san-pham', row.p.id]">{{ row.name }}</a></b><span class="small">{{ row.note }}</span></div>
-        <div class="r">
-          <span class="price num">{{ ps.price(row.p) | vnd }}</span>
-          <div class="was num">
-            @if (ps.off(row.p)) { <s>{{ row.p.price | vnd }}</s><span class="off">−{{ ps.off(row.p) }}%</span> }
-            @else { / {{ ps.unit(row.p) }} }
-          </div>
+        <h3 class="bt"><a [routerLink]="['/san-pham', row.p.id]">{{ row.name }}</a></h3>
+        <p class="bnote small">{{ row.note }}</p>
+        <a class="pic" [routerLink]="['/san-pham', row.p.id]" tabindex="-1">
+          <img [src]="'/img/cut/bang-gia/' + row.cut + '.webp'" [fmImg]="row.name" alt="" loading="lazy">
+          @if (ps.off(row.p)) { <span class="badge num">−{{ ps.off(row.p) }}%</span> }
+        </a>
+        <div class="buy">
+          <span class="price num">{{ ps.price(row.p) | vnd }}<small>/{{ ps.unit(row.p) }}</small></span>
+          @if (ps.off(row.p)) { <span class="orig"><small>Giá gốc</small><s class="num">{{ row.p.price | vnd }}</s></span> }
+          <fm-add-control [product]="row.p" />
         </div>
-        <div><fm-add-control [product]="row.p" /></div>
       </li>
     }
   </ul>
   <p class="board-note small">Hàng cân ký tính theo cân thực tế lúc soạn đơn. Giá đã gồm VAT.</p>
+  <!-- Dải chữ chạy cuối khu Bảng giá; bản thứ hai ẩn với trình đọc màn hình -->
+  <div class="marquee board-marquee">
+    @for (copy of [1, 2]; track copy) {
+      <ul [attr.aria-hidden]="copy === 2 ? 'true' : null">
+        @for (m of boardMarquee; track $index) { <li>{{ m }}</li> }
+      </ul>
+    }
+  </div>
 </section>
 
+
 <!-- Quầy hàng: ô đầu lớn, các ô sau đổi màu nền để không thành một lưới thẻ giống nhau -->
-<section class="sec band" aria-labelledby="h-aisle">
-  <div class="sec-head">
-    <div><h2 class="h2" id="h-aisle" fmReveal>Đi chợ theo quầy</h2><p fmReveal="1">{{ ps.all().length }} sản phẩm trong {{ ps.categories().length }} quầy, từ rau sáng nay tới gạo, mì và gia vị cho cả tháng.</p></div>
-    <a class="link" routerLink="/san-pham" fmReveal>Xem cả {{ ps.categories().length }} quầy</a>
+<section class="sec band aisle-sec" aria-labelledby="h-aisle">
+  <div class="aisle-head">
+    <h2 class="duo-h" id="h-aisle" fmReveal><span>Đi chợ</span><span>theo quầy</span></h2>
+    <p fmReveal="1">{{ ps.all().length }} sản phẩm trong {{ ps.categories().length }} quầy, từ rau sáng nay tới gạo, mì và gia vị cho cả tháng.</p>
+    <a class="btn btn-ink" routerLink="/san-pham" fmReveal="1">Xem cả {{ ps.categories().length }} quầy</a>
   </div>
   <div class="aisles">
     @for (a of aisles(); track a.id; let i = $index) {
-      <a class="aisle" routerLink="/san-pham" [queryParams]="{ c: a.id }" [fmReveal]="i % 4 || ''">
-        <img [src]="'/img/' + a.img" alt="" loading="lazy" width="640" height="640">
-        <span class="nm">{{ a.name }}</span>
-        <span class="ct small">{{ a.count }} sản phẩm</span>
+      <a class="aisle" [class.banner]="a.banner" routerLink="/san-pham" [queryParams]="{ c: a.id }" [fmReveal]="i % 4 || ''">
+        <img [src]="'/img/' + a.img" alt="" loading="lazy" [attr.width]="a.banner ? 1400 : 640" [attr.height]="a.banner ? 700 : 640">
+        <!-- Banner đã in sẵn tên quầy trong ảnh: tên chỉ dành cho trình đọc màn hình -->
+        <span class="nm" [class.sr]="a.banner">{{ a.name }}</span>
       </a>
     }
   </div>
 </section>
 
-<!-- Chọn sao cho ngon: hai bài, ảnh và chữ đổi bên -->
-<section class="sec band" aria-labelledby="h-pick">
-  <h2 class="h2 pick-title" id="h-pick" fmReveal>Chọn sao cho ngon</h2>
-  <div class="picks">
-    @for (pk of picks(); track pk.p.id; let i = $index) {
-      <article class="pick">
-        <a class="pick-media" [routerLink]="['/san-pham', pk.p.id]" [attr.aria-label]="'Xem sản phẩm ' + pk.title" fmReveal><img [src]="ps.img(pk.p)" alt="" loading="lazy" width="640" height="640"></a>
-        <div class="pick-body">
-          <h3 class="h3" fmReveal>{{ pk.title }}</h3>
-          <p fmReveal="1">{{ pk.text }}</p>
-          <div class="pick-row" fmReveal="2">
-            <span class="price num">{{ ps.price(pk.p) | vnd }}</span>
-            @if (ps.off(pk.p)) { <s class="small muted num">{{ pk.p.price | vnd }}</s> }
-            <span class="small muted">/ {{ ps.unit(pk.p) }}</span>
-          </div>
-          <button class="btn btn-forest" type="button" (click)="addOne(pk.p)" fmReveal="2">Thêm vào giỏ</button>
-        </div>
-      </article>
-    }
-  </div>
-</section>
-
-<!-- Meal Planner: nền xanh đậm, tiêu đề vàng, ba món mẫu -->
+<!-- Meal Planner: nền xanh đậm, tiêu đề hai dòng căn giữa (kem / vàng), ba món mẫu -->
 <section class="mp band" aria-labelledby="h-mp">
   <div class="mp-head">
-    <h2 class="h2" id="h-mp" fmReveal>Có gì trong bếp,<br>nấu món đó</h2>
-    <div fmReveal="1">
-      <p class="lead">Chọn nguyên liệu bạn đang có. Meal Planner tìm món phù hợp từ {{ recipeCount() }} công thức và giúp thêm phần còn thiếu vào giỏ.</p>
-      <a class="btn" routerLink="/meal-planner">Mở Meal Planner</a>
-    </div>
+    <h2 class="duo-h" id="h-mp" fmReveal><span>Có gì trong bếp,</span><span>nấu món đó</span></h2>
+    <p class="lead" fmReveal="1">Chọn nguyên liệu bạn đang có. Meal Planner tìm món phù hợp từ {{ recipeCount() }} công thức và giúp thêm phần còn thiếu vào giỏ.</p>
+    <a class="btn" routerLink="/meal-planner" fmReveal="1">Mở Meal Planner</a>
   </div>
   <div class="recipe-rail">
     @for (r of homeRecipes(); track r.id; let i = $index) {
@@ -147,33 +214,35 @@
   </div>
 </section>
 
-<!-- Ưu đãi: đồng hồ đếm ngược in lớn -->
-<section class="tone band" aria-labelledby="h-deal">
-  <div class="deal-head">
-    <div>
-      <h2 class="h2" id="h-deal" fmReveal>Ưu đãi tuần này</h2>
-      <p fmReveal="1">Lưu mã voucher để dùng khi thanh toán. <a class="link" routerLink="/uu-dai">Xem tất cả ưu đãi</a></p>
-    </div>
-    <p class="clock" fmReveal="1"><b class="num" role="timer">{{ clock() }}</b><span class="small">còn lại của giá giảm hôm nay</span></p>
+<!-- Giao hàng: "con đường giao hàng" trên nền vàng. Ba con số là ba biển báo bên đường,
+     xe FreshMart (ảnh đã tách nền) chạy trên dải đường nhựa và lái vào từ trái khi cuộn tới. -->
+<section class="ship" aria-labelledby="h-ship">
+  <div class="band ship-head">
+    <h2 class="duo-h" id="h-ship" fmReveal><span>Giao trước</span><span>bữa tối</span></h2>
+    <a class="btn btn-ink" routerLink="/cua-hang" fmReveal="1">Xem 12 cửa hàng</a>
   </div>
-  <div class="p-grid">
-    @for (p of deals(); track p.id) { <fm-product-card [product]="p" /> }
-  </div>
-  <fm-voucher-list class="home-v" [list]="homeVouchers()" />
-</section>
-
-<!-- Giao hàng: ảnh lớn, ba con số -->
-<section class="sec band" aria-labelledby="h-ship">
-  <div class="ship">
-    <div class="ship-media" fmReveal><img src="/img/giao-hang.jpg" alt="Nhân viên FreshMart giao túi rau củ cho khách" width="1400" height="933" loading="lazy"></div>
-    <div class="ship-body">
-      <h2 class="h2" id="h-ship" fmReveal>Giao trước bữa tối</h2>
-      <dl class="ship-facts">
-        <div fmReveal><dt class="num">1–2 giờ</dt><dd>Nội thành TP.HCM cho đơn đặt trước 16:00. Tỉnh lân cận 1–2 ngày.</dd></div>
-        <div fmReveal="1"><dt class="num">0 đ</dt><dd>Phí giao cho đơn từ 300.000 đ trong nội thành, dưới mức này là 20.000 đ.</dd></div>
-        <div fmReveal="2"><dt class="num">7 ngày</dt><dd>Đổi trả hàng còn nguyên tem nhãn, hoàn tiền 100% trong 3–5 ngày làm việc.</dd></div>
-      </dl>
-      <a class="btn btn-ink" routerLink="/cua-hang" fmReveal>Xem 12 cửa hàng</a>
-    </div>
+  <div class="ship-scene">
+    <dl class="signs band">
+      <div class="sign">
+        <div class="sign-face">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="21" r="13"/><path d="M20 13v8l5 4M16 4h8"/></svg>
+          <dt class="num">1–2 giờ</dt><dd>Nội thành TP.HCM cho đơn đặt trước 16:00. Tỉnh lân cận 1–2 ngày.</dd>
+        </div>
+      </div>
+      <div class="sign">
+        <div class="sign-face">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M3 11h20v16H3zM23 16h8l6 6v5H23z"/><circle cx="10" cy="29" r="3"/><circle cx="30" cy="29" r="3"/></svg>
+          <dt class="num">0 đ</dt><dd>Phí giao hàng cho đơn từ 300.000 đ trong nội thành, dưới mức này phí sẽ được tính theo khoảng cách.</dd>
+        </div>
+      </div>
+      <div class="sign">
+        <div class="sign-face">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M8 15h18a8 8 0 0 1 0 16H14"/><path d="M14 9 8 15l6 6"/></svg>
+          <dt class="num">7 ngày</dt><dd>Đổi trả hàng còn nguyên tem nhãn, hoàn tiền 100% trong 3–5 ngày làm việc.</dd>
+        </div>
+      </div>
+    </dl>
+    <img class="truck" src="/img/cut/xe-freshmart.webp" alt="Xe tải giao hàng màu xanh in logo FreshMart, thùng xe vẽ rau củ" width="1200" height="648" loading="lazy">
+    <div class="road" aria-hidden="true"></div>
   </div>
 </section>
