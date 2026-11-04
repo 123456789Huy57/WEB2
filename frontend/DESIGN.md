@@ -90,6 +90,7 @@ Tất cả chỉ dùng CSS, không dùng thư viện animation. Khi người dù
 | Thẻ sản phẩm | `fm-product-card` (`.p-card`): ô ảnh kem, nút "+" đen ở góc, giá bằng Oswald |
 | Bảng giá | `.board-sec` (chỉ có ở trang chủ) |
 | Đi chợ theo quầy | `fm-aisle-carousel`: nền kem, banner bo góc đổi màu theo quầy (vàng, xanh đậm, chanh, xanh lá lặp lại). Trạng thái băng chuyền nằm trong class `Carousel` (`shared/carousel.ts`) |
+| Có gì trong bếp, nấu món đó | `fm-kitchen-match`: kệ 8 nguyên liệu bấm chọn (ô kem, đang chọn tô vàng) và thẻ công thức của món hợp nhất, dùng chung thuật toán `MealPlannerService.generate` với trang Meal Planner |
 | Dải chữ chạy | `.marquee` |
 | Thanh thông báo | `.notice` (trong `app.ts`) |
 

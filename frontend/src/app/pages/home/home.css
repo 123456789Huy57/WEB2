@@ -169,52 +169,7 @@ fm-home > .sec { padding-block: var(--sec-y); }
   .board .buy fm-add-control { margin-left: 0; }
 }
 
-/* Meal Planner: nền xanh đậm, tiêu đề hai dòng căn giữa như các khu giới thiệu khác (dòng nhỏ kem, dòng lớn vàng), ba món mẫu lấy từ recipes.json */
-.mp { background: var(--forest); color: var(--on-forest); padding-block: var(--sec-y); }
-.mp :focus-visible { outline-color: var(--yellow); }
-.mp-head { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 40px; }
-.mp .duo-h span:first-child { color: var(--cream); }
-.mp .duo-h span:last-child { color: var(--yellow); }
-.mp .lead { margin-top: 14px; max-width: 52ch; color: var(--on-forest-muted); }
-.mp .btn { background: var(--yellow); color: var(--ink); }
-.mp .btn:hover { background: var(--cream); }
-/* "Trong bếp có": nhãn, ba chip nguyên liệu viền kem có dấu tích vàng, nút mở Meal Planner, chung một hàng */
-.mp-pantry { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 16px; margin-top: 22px; }
-.mp-pantry ul { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 0; padding: 0; list-style: none; }
-.mp-label, .mp-chip, .mp-badge { font-family: var(--display); font-weight: 500; letter-spacing: .02em; text-transform: uppercase; }
-.mp-label { font-size: 17px; color: var(--on-forest-muted); }
-.mp-chip { display: inline-flex; align-items: center; gap: 6px; height: 42px; padding: 0 16px 0 12px; border-radius: 6px; box-shadow: inset 0 0 0 1.5px var(--cream); color: var(--cream); font-size: 17px; }
-.mp-chip svg { width: 18px; height: 18px; fill: none; stroke: var(--yellow); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
-.recipe-rail { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
-/* Thẻ món: bo góc như banner Đi chợ theo quầy; nhãn trên ảnh cho biết nấu được ngay (vàng) hay còn thiếu (kem) */
-.home-recipe { position: relative; background: var(--paper); color: var(--ink); border-radius: 16px; overflow: hidden; }
-.home-recipe img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; transition: transform .5s var(--ease); }
-.home-recipe:hover img { transform: scale(1.04); }
-.mp-badge { position: absolute; top: 14px; left: 14px; z-index: 1; padding: 7px 12px; border-radius: 6px; background: var(--cream); color: var(--ink); font-size: 15px; line-height: 1.2; }
-.mp-badge.ready { background: var(--yellow); }
-.home-recipe > div { padding: 18px 22px 20px; }
-.home-recipe h3 { font-family: var(--display); font-size: 28px; font-weight: 500; line-height: 1.3; margin: 6px 0 8px; text-underline-offset: 6px; }
-.home-recipe:hover h3 { text-decoration: underline; text-decoration-thickness: 2px; }
-.mp-need { color: var(--muted); }
-/* Màn hình rộng: cả khu cao đúng --sec-h như khu Tươi từ chợ; ảnh món co giãn lấp phần còn lại */
-@media (min-width: 901px) {
-  .mp { display: flex; flex-direction: column; height: var(--sec-h); }
-  .mp-head { margin-bottom: 28px; }
-  .mp .recipe-rail { flex: 1; min-height: 0; }
-  .home-recipe { display: flex; flex-direction: column; min-height: 0; }
-  .home-recipe img { flex: 1; min-height: 0; height: auto; aspect-ratio: auto; }
-}
-@media (max-width: 1000px) {
-  .recipe-rail { gap: 16px; }
-  .home-recipe > div { padding: 18px; }
-  .home-recipe h3 { font-size: 25px; }
-}
-/* Điện thoại: các món xếp thành dải vuốt ngang */
-@media (max-width: 760px) {
-  .mp-head { margin-bottom: 32px; }
-  .recipe-rail { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 18px; }
-  .home-recipe { flex: 0 0 84%; scroll-snap-align: start; }
-}
+/* Có gì trong bếp, nấu món đó: component riêng (kitchen-match.ts) */
 
 
 /* Giao hàng – "con đường giao hàng": nền vàng (khác footer xanh), ba biển báo dựng trên cột,

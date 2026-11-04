@@ -182,36 +182,8 @@
 <!-- Đi chợ theo quầy: component riêng (aisle-carousel.ts) -->
 <fm-aisle-carousel />
 
-<!-- Meal Planner: nền xanh đậm, tiêu đề hai dòng căn giữa (kem / vàng). Hàng "Trong bếp có" là ba nguyên liệu mẫu;
-     mỗi món mẫu ghi rõ nấu được ngay hay còn thiếu gì, đúng như cách Meal Planner gợi ý -->
-<section class="mp band" aria-labelledby="h-mp">
-  <div class="mp-head">
-    <h2 class="duo-h" id="h-mp" fmReveal><span>Có gì trong bếp,</span><span>nấu món đó</span></h2>
-    <p class="lead" fmReveal="1">Chọn nguyên liệu bạn đang có. Meal Planner tìm món phù hợp từ {{ recipeCount() }} công thức và giúp thêm phần còn thiếu vào giỏ.</p>
-    <div class="mp-pantry" fmReveal="1">
-      <span class="mp-label">Trong bếp có</span>
-      <ul>
-        @for (n of haveNames(); track n) {
-          <li class="mp-chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>{{ n }}</li>
-        }
-      </ul>
-      <a class="btn" routerLink="/meal-planner" [queryParams]="{ co: have }">Mở Meal Planner</a>
-    </div>
-  </div>
-  <div class="recipe-rail">
-    @for (x of homeRecipes(); track x.r.id; let i = $index) {
-      <a class="home-recipe" routerLink="/meal-planner" [queryParams]="{ mon: x.r.id, co: have }" [fmReveal]="i || ''">
-        <img [src]="x.r.imageUrl" [fmImg]="x.r.name" alt="" width="600" height="450" loading="lazy">
-        <span class="mp-badge" [class.ready]="!x.missing.length">{{ x.missing.length ? 'Thiếu ' + x.missing.length + ' nguyên liệu' : 'Nấu được ngay' }}</span>
-        <div>
-          <p class="small">{{ x.r.prepTimeMinutes + x.r.cookTimeMinutes }} phút · {{ x.r.servings }} người ăn</p>
-          <h3>{{ x.r.name }}</h3>
-          <p class="mp-need">{{ x.missing.length ? 'Cần thêm: ' + x.missing.join(', ') : 'Đủ nguyên liệu trong bếp' }}</p>
-        </div>
-      </a>
-    }
-  </div>
-</section>
+<!-- Có gì trong bếp, nấu món đó: Meal Planner thu nhỏ, component riêng (kitchen-match.ts) -->
+<fm-kitchen-match />
 
 <!-- Giao hàng: "con đường giao hàng" trên nền vàng. Ba con số là ba biển báo bên đường,
      xe FreshMart (ảnh đã tách nền) chạy trên dải đường nhựa và lái vào từ trái khi cuộn tới. -->

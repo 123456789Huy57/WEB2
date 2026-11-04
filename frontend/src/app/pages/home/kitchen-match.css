@@ -1,0 +1,78 @@
+/* Có gì trong bếp, nấu món đó: nền xanh đậm, tiêu đề kem/vàng như các khu giới thiệu khác.
+   Thân khu chia hai cột: kệ nguyên liệu (hình vẽ phẳng trên đĩa tròn, đĩa đang chọn tô vàng) và món hợp nhất đặt thẳng trên nền xanh:
+   ảnh món cắt tròn có vành kem như cái đĩa, tên món chữ lớn, dòng nguyên liệu nối bằng dấu + như một phép cộng ra món. */
+.km { display: block; background: var(--forest); color: var(--on-forest); padding-block: var(--sec-y); }
+.km :focus-visible { outline-color: var(--yellow); }
+.km-head { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 32px; }
+.km-head .duo-h span:first-child { color: var(--cream); }
+.km-head .duo-h span:last-child { color: var(--yellow); }
+.km-head p { margin-top: 12px; max-width: 56ch; color: var(--on-forest-muted); }
+.km-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+/* Đĩa tròn đựng hình nguyên liệu, dùng chung cho kệ và dòng công thức */
+.km-disc { display: grid; place-items: center; width: 100%; aspect-ratio: 1; border-radius: 50%; background: rgb(254 252 245 / .1); transition: background-color .25s, transform .3s var(--ease); }
+.km-ic { width: 68%; height: 68%; }
+.km-name { font-family: var(--display); font-weight: 500; line-height: 1.25; letter-spacing: .02em; text-align: center; text-transform: uppercase; transition: color .25s; }
+
+.km-body { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 4vw, 64px); align-items: center; }
+
+/* Kệ nguyên liệu: đĩa mờ trên nền xanh; đĩa đang chọn tô vàng, hình nghiêng nhẹ như vừa được nhặt lên */
+.km-shelf { display: flex; flex-direction: column; gap: 28px; }
+.km-shelf ul { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px 14px; margin: 0; padding: 0; list-style: none; }
+.km-ing { display: grid; justify-items: center; gap: 8px; width: 100%; padding: 0; border: 0; background: none; color: var(--cream); cursor: pointer; }
+.km-ing .km-disc { width: min(100%, 96px); }
+.km-ing:hover .km-disc { background: rgb(254 252 245 / .2); }
+.km-ing:active .km-disc { transform: scale(.94); }
+.km-ing.on .km-disc { background: var(--yellow); transform: rotate(-8deg); }
+.km-ing .km-name { min-height: 2lh; font-size: 15px; }
+.km-ing.on .km-name { color: var(--yellow); }
+.km-open { align-self: flex-start; background: var(--yellow); color: var(--ink); }
+.km-open:hover { background: var(--cream); }
+
+/* Món hợp nhất */
+.km-dish { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: clamp(28px, 3.4vw, 52px); }
+/* Đĩa: ảnh món cắt tròn, vành kem; mỗi lần đổi món đĩa xoay nhẹ vào chỗ */
+.km-plate { display: block; width: clamp(220px, 23vw, 340px); aspect-ratio: 1; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 10px var(--cream); animation: kmPlate .6s var(--ease) both; }
+.km-plate img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--ease); }
+.km-plate:hover img { transform: scale(1.06); }
+@keyframes kmPlate { from { opacity: 0; transform: rotate(-24deg) scale(.9); } to { opacity: 1; transform: none; } }
+.km-recipe { animation: kmIn .5s .08s var(--ease) both; }
+@keyframes kmIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.km-recipe h3 { font-family: var(--display); font-size: clamp(30px, 3vw, 46px); font-weight: 600; line-height: var(--lh-head); text-transform: uppercase; }
+.km-recipe h3 a { color: var(--cream); text-decoration: none; text-underline-offset: 8px; }
+.km-recipe h3 a:hover { text-decoration: underline; text-decoration-thickness: 3px; }
+.km-meta { margin-top: 4px; color: var(--on-forest-muted); }
+
+/* Phép cộng nguyên liệu: vòng tròn kem có ảnh, nối bằng dấu +; thứ bếp chưa có thì viền đứt và mờ */
+.km-formula { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 10px 0; margin: 22px 0 0; padding: 0; list-style: none; }
+.km-formula li { position: relative; display: grid; justify-items: center; gap: 6px; width: 84px; }
+.km-formula li + li { margin-left: 28px; }
+.km-formula li + li::before { content: "+"; position: absolute; left: -28px; top: 20px; width: 28px; font-family: var(--display); font-size: 28px; font-weight: 600; line-height: 36px; text-align: center; color: var(--yellow); }
+.km-formula .km-disc { width: 76px; background: var(--cream); }
+.km-formula .km-name { font-size: 14px; }
+/* Thứ bếp chưa có: đĩa rỗng viền đứt, hình mờ, tên in vàng */
+.km-formula .need .km-disc { background: none; outline: 2px dashed rgb(254 252 245 / .6); outline-offset: -2px; }
+.km-formula .need .km-ic { opacity: .45; }
+.km-formula .need .km-name { color: var(--yellow); }
+.km-verdict { margin-top: 18px; font-family: var(--display); font-size: 22px; font-weight: 500; letter-spacing: .02em; text-transform: uppercase; color: var(--on-forest-muted); }
+.km-verdict.ready { color: var(--yellow); }
+.km-alt { margin-top: 10px; color: var(--on-forest-muted); font-size: 15px; }
+.km-alt .link { color: var(--cream); }
+.km-empty { padding: 48px 0; color: var(--on-forest-muted); text-align: center; }
+
+/* Màn hình rộng: cả khu cao đúng --sec-h như các khu khác */
+@media (min-width: 901px) {
+  .km { display: flex; flex-direction: column; height: var(--sec-h); }
+  .km-body { flex: 1; min-height: 0; }
+}
+@media (max-width: 900px) {
+  .km-body { grid-template-columns: 1fr; gap: 40px; }
+  .km-shelf ul { gap: 14px 8px; }
+  .km-ing .km-name { font-size: 13px; }
+  .km-dish { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  .km-plate { width: min(72vw, 300px); }
+  .km-formula { justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .km-plate, .km-recipe { animation: none; }
+  .km-disc, .km-plate img { transition: none; }
+}

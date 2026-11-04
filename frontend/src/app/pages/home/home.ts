@@ -1,12 +1,12 @@
 import { AfterViewInit, Component, DestroyRef, ElementRef, ViewEncapsulation, computed, inject, signal, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ProductService } from '../../core/product.service';
-import { DataService } from '../../core/data.service';
 import { VndPipe } from '../../shared/vnd.pipe';
 import { AddControl } from '../../shared/add-control';
 import { RevealDirective } from '../../shared/reveal.directive';
 import { ImgFallbackDirective } from '../../shared/img-fallback.directive';
 import { AisleCarousel } from './aisle-carousel';
+import { KitchenMatch } from './kitchen-match';
 
 type GroupKey = 'rau-cu' | 'trai-cay' | 'thit-ca';
 /** Bảng giá sáng nay: mỗi quầy chọn vài mặt hàng: [mã sản phẩm, tên gọn, ghi chú cân/quy cách, ảnh đã tách nền trong public/img/cut/bang-gia] */
@@ -18,28 +18,17 @@ const BOARD: Record<GroupKey, [string, string, string, string][]> = {
 
 @Component({
   selector: 'fm-home',
-  imports: [RouterLink, VndPipe, AddControl, RevealDirective, ImgFallbackDirective, AisleCarousel],
+  imports: [RouterLink, VndPipe, AddControl, RevealDirective, ImgFallbackDirective, AisleCarousel, KitchenMatch],
   encapsulation: ViewEncapsulation.None,
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
 export class Home implements AfterViewInit {
   protected ps = inject(ProductService);
-  private data = inject(DataService);
 
   protected groups: { key: GroupKey; label: string }[] = [{ key: 'rau-cu', label: 'Rau, củ' }, { key: 'trai-cay', label: 'Trái cây' }, { key: 'thit-ca', label: 'Thịt, cá, trứng' }];
   protected group = signal<GroupKey>('rau-cu');
   protected board = computed(() => BOARD[this.group()].map(([id, name, note, cut]) => ({ p: this.ps.get(id)!, name, note, cut })).filter(r => r.p));
-  /** Nguyên liệu mẫu "trong bếp đang có" ở khu Meal Planner (cũng truyền sang trang Meal Planner qua ?co=) */
-  protected have = 'ing-trung-ga-ta,ing-ca-chua,ing-rau-muong';
-  private haveIds = new Set(this.have.split(','));
-  private ingName = computed(() => new Map(this.data.ingredients().map(i => [i.id, i.name])));
-  protected haveNames = computed(() => [...this.haveIds].map(id => this.ingName().get(id)).filter(Boolean));
-  protected recipeCount = computed(() => this.data.recipes().length);
-  /** Ba món mẫu ở khu Meal Planner, kèm những nguyên liệu còn thiếu so với bếp mẫu */
-  protected homeRecipes = computed(() => this.data.recipes()
-    .filter(r => ['rec-001', 'rec-002', 'rec-003'].includes(r.id))
-    .map(r => ({ r, missing: r.ingredients.filter(l => !this.haveIds.has(l.ingredientId)).map(l => this.ingName().get(l.ingredientId) ?? '') })));
   /** Dải chữ chạy dưới hero */
   /** Vòng rau củ quả quanh khu cam kết: tên icon trong sprite SVG (#ic-...), 20 món chia đều 360° */
   protected ringFood = ['tomato', 'leaf', 'lime', 'carrot', 'dots', 'cucumber', 'chili', 'orange', 'corn', 'mushroom',
