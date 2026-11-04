@@ -50,7 +50,7 @@ export class AdminShell {
   protected navOpen = signal(false);
   protected pending = computed(() => this.orders.all().filter(o => o.status === 'pending').length);
   protected nav = [
-    { path: '/admin', label: 'Tổng quan' }, { path: '/admin/don-hang', label: 'Đơn hàng' }, { path: '/admin/san-pham', label: 'Sản phẩm' },
+    { path: '/admin', label: 'Tổng quan' }, { path: '/admin/don-hang', label: 'Đơn hàng' }, { path: '/admin/san-pham', label: 'Sản phẩm' }, { path: '/admin/danh-muc', label: 'Danh mục' },
     { path: '/admin/ton-kho', label: 'Tồn kho' }, { path: '/admin/voucher', label: 'Voucher' }, { path: '/admin/khach-hang', label: 'Khách hàng' }
   ];
   protected async logout(): Promise<void> {

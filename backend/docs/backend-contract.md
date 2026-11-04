@@ -43,7 +43,7 @@ Origin khi browser gửi request phải khớp FRONTEND_ORIGIN. Postman/CLI khô
 |---|---|---|---|
 | GET | `/auth/session` | Không | `{user,csrfToken}`; user null nếu guest |
 | POST | `/auth/register` | fullName, email, phone, password | 201 `{user,csrfToken}`; tự đăng nhập customer |
-| POST | `/auth/login` | email, password, rememberMe? boolean | 200 `{user,csrfToken}` |
+| POST | `/auth/login` | identifier (email/phone) hoặc email, password, rememberMe? boolean | 200 `{user,csrfToken}` |
 | POST | `/auth/logout` | `{}` | 204, hủy session |
 | GET | `/users/me` | Cần login | User hiện tại |
 | PATCH | `/users/me` | Một hoặc nhiều: fullName, phone, address | User đã cập nhật |
@@ -64,9 +64,9 @@ Origin khi browser gửi request phải khớp FRONTEND_ORIGIN. Postman/CLI khô
 | PATCH | `/admin/categories/:id` | Một phần Category fields | Category |
 | DELETE | `/admin/categories/:id` | Không | Category active=false; 409 nếu còn sản phẩm đang bán |
 
-User có id, fullName, email, phone, address, role (`customer|admin`), isActive, createdAt, updatedAt. Email chuẩn hóa lowercase, phone 10 số bắt đầu bằng 0; email/phone unique. Password ít nhất 8 ký tự, tối đa 72 byte UTF-8; không trim password. Chỉ seed script có quyền tạo admin; body role/isActive/passwordHash bị từ chối khi đăng ký/cập nhật hồ sơ. Quên mật khẩu qua email/OTP và social login chưa thuộc MVP.
+User có id, fullName, email, phone, address, role (`customer|admin`), isActive, createdAt, updatedAt. Email chuẩn hóa lowercase, phone 10 số bắt đầu bằng 0; email/phone unique. Password ít nhất 8 ký tự, tối đa 72 byte UTF-8; không trim password. Chỉ seed script có quyền tạo admin; body role/isActive/passwordHash bị từ chối khi đăng ký/cập nhật hồ sơ. Đã có khôi phục qua email một lần theo mục bổ sung dưới đây; OTP qua SMS và social login không thuộc phần A của bảng phân công.
 
-Product giữ tên trường frontend: name, slug, brand, category, subcategory, description, price, sale_price, unit, image_url, gallery, origin, badges, nutrition, netWeightGram, unitWeightGram, sellUnit, tags, active. Tạo mới bắt buộc name, category và price dương; unit mặc định Kg; sale_price mặc định 0 và nếu có phải nhỏ hơn price. ID do server cấp. Không gửi id, stock, sold_count, rating, review_count, categoryName hoặc img vào API ghi. categoryName/subcategoryName do server suy ra. Khi có hàng tồn, không được đổi đơn vị bán. PATCH cập nhật một phần, không dùng PUT thay toàn bộ sản phẩm. Ảnh dùng URL HTTP(S) hoặc đường dẫn bắt đầu `/`; API upload để sau.
+Product giữ tên trường frontend: name, slug, brand, category, subcategory, description, price, sale_price, unit, image_url, gallery, origin, badges, nutrition, netWeightGram, unitWeightGram, sellUnit, tags, active. Tạo mới bắt buộc name, category và price dương; unit mặc định Kg; sale_price mặc định 0 và nếu có phải nhỏ hơn price. ID do server cấp. Không gửi id, stock, sold_count, rating, review_count, categoryName hoặc img vào API ghi. categoryName/subcategoryName do server suy ra. Khi có hàng tồn, không được đổi đơn vị bán. PATCH cập nhật một phần, không dùng PUT thay toàn bộ sản phẩm. Ảnh dùng URL HTTP(S) hoặc đường dẫn bắt đầu `/`; Upload dùng POST /admin/uploads theo mục bổ sung.
 
 Category ghi name, slug, description, sortOrder, active, subcategories (`[{id,name}]`). ID do server cấp. Giữ các mã cũ để không phá recipe/product mapping. Không gỡ danh mục con đang được sản phẩm sử dụng.
 
@@ -179,3 +179,16 @@ API kho do B tạo: GET /admin/inventory (phân trang, q?, lowStock?), POST /adm
 6. Kiểm thử đặt đồng thời, idempotency, đổi giá/kho sau quote, rollback và hủy đúng một lần.
 
 API phần B trả 404 cho tới khi B mount router thật. Không thêm mock endpoint trả thành công giả.
+
+## 10. Bổ sung hoàn thiện phần A
+
+- POST `/auth/forgot-password`: body `{email}`, cần cookie/CSRF; 202 `{message,delivery}` giống nhau với tài khoản có/không tồn tại. Delivery `outbox` là thư thử, không gửi tới email thật; `smtp` dùng cấu hình của nhóm. Có giới hạn tần suất riêng.
+- POST `/auth/reset-password`: body `{token,newPassword}`, cần cookie/CSRF; 204 thành công. Token ngẫu nhiên chỉ lưu SHA-256 trong User, sống 20 phút, dùng đúng một lần bằng update nguyên tử. Token sai/hết hạn/đã dùng/tài khoản bị khóa trả 400 RESET_TOKEN_INVALID. Yêu cầu mới thay mã cũ. Đổi mật khẩu bình thường hoặc khóa/mở tài khoản cũng làm mã reset cũ mất hiệu lực.
+- POST `/admin/uploads`: admin + CSRF; multipart/form-data với đúng một field file `image`. PNG/JPEG/WebP, tối đa 2 MB và 20 triệu pixel; xác minh/giải mã ảnh, bỏ metadata và chuyển WebP, kích thước tối đa 1600×1600. Trả 201 `{imageUrl:"/images/uploads/UUID.webp"}`. MIME giả/nội dung lỗi trả 400, quá dung lượng trả 413. Không sử dụng tên file người dùng làm đường dẫn.
+- API upload không tự sửa Product; Angular đưa imageUrl vào lần lưu sản phẩm. File local là lưu trữ của môi trường chạy, không commit Git. Triển khai nhiều máy cần chọn shared/object storage trước khi vận hành.
+- PATCH product cho phép `netWeightGram:null` hoặc `unitWeightGram:null` để bỏ trường tùy chọn; không ảnh hưởng stock.
+- Audit ghi method/path, actorId, status và thời gian cho API ghi; giữ 90 ngày bằng TTL index. Không ghi body/query/password/token/cookie hoặc secret SMTP.
+
+Các bổ sung này không đổi contract session/giỏ/đơn/kho của B. Danh sách kiểm tra bàn giao ở [part-a-handoff.md](part-a-handoff.md).
+
+Login hỗ trợ email hoặc số điện thoại trong field `identifier`; field `email` cũ vẫn tương thích. Không gửi cả hai field trong cùng request.

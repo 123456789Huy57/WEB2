@@ -6,9 +6,10 @@ function publicUser(user) {
 }
 const findById = id => users().findOne({ id });
 const findByEmail = email => users().findOne({ email });
+const findByPhone = phone => users().findOne({ phone });
 const insert = user => users().insertOne(user);
 async function update(id, patch) {
   const user = await users().findOneAndUpdate({ id }, { $set: { ...patch, updatedAt: new Date().toISOString() } }, { returnDocument: 'after' });
   return user && publicUser(user);
 }
-module.exports = { users, safeProjection, publicUser, findById, findByEmail, insert, update };
+module.exports = { users, safeProjection, publicUser, findById, findByEmail, findByPhone, insert, update };

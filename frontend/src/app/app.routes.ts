@@ -3,6 +3,8 @@ import { adminGuard, authGuard, guestGuard } from './core/auth.guard';
 
 /** Mỗi trang tải riêng (lazy) để trang chủ mở nhanh. Đường dẫn tiếng Việt không dấu. */
 export const routes: Routes = [
+  { path: 'quen-mat-khau', title: 'Quên mật khẩu · FreshMart', loadComponent: () => import('./pages/login/password-recovery').then(m => m.PasswordRecovery) },
+  { path: 'dat-lai-mat-khau', title: 'Đặt lại mật khẩu · FreshMart', data: { resetMode: true }, loadComponent: () => import('./pages/login/password-recovery').then(m => m.PasswordRecovery) },
   { path: '', title: 'FreshMart · Đi chợ liền tay, giao ngay trước tối', loadComponent: () => import('./pages/home/home').then(m => m.Home) },
   { path: 'san-pham', title: 'Sản phẩm · FreshMart', loadComponent: () => import('./pages/catalog/catalog').then(m => m.Catalog) },
   { path: 'san-pham/:id', title: 'Sản phẩm · FreshMart', loadComponent: () => import('./pages/product/product').then(m => m.ProductPage) },

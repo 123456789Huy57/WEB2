@@ -28,6 +28,16 @@ async function productFilter(query, admin = false) {
   if (filter.price?.$gte > filter.price?.$lte) v.bad('Giá tối thiểu phải nhỏ hơn giá tối đa.');
   return filter;
 }
+async function decorateProducts(items) {
+  const ids = [...new Set(items.map(p => p.category))];
+  const entries = await categories().find({ id: { $in: ids } }).toArray();
+  const byId = new Map(entries.map(c => [c.id, c]));
+  return items.map(p => {
+    const category = byId.get(p.category);
+    if (!category) return p;
+    return { ...p, categoryName: category.name, ...(p.subcategory ? { subcategoryName: category.subcategories?.find(s => s.id === p.subcategory)?.name || '' } : {}) };
+  });
+}
 async function listProducts(query, admin = false) {
   const filter = await productFilter(query, admin);
   const sorts = { name: { name: 1, id: 1 }, price_asc: { price: 1, id: 1 }, price_desc: { price: -1, id: 1 }, newest: { createdAt: -1, id: 1 } };
@@ -36,13 +46,14 @@ async function listProducts(query, admin = false) {
   const cursor = products().find(filter, { projection }).sort(sorts[sort]);
   if (query.page !== undefined || query.pageSize !== undefined) {
     const { page, pageSize } = v.page(query);
-    return { items: await cursor.skip((page - 1) * pageSize).limit(pageSize).toArray(), page, pageSize, total: await products().countDocuments(filter) };
+    return { items: await decorateProducts(await cursor.skip((page - 1) * pageSize).limit(pageSize).toArray()), page, pageSize, total: await products().countDocuments(filter) };
   }
-  return cursor.toArray();
+  return decorateProducts(await cursor.toArray());
 }
 async function findProduct(filter, admin = false, options = {}) {
   if (!admin) Object.assign(filter, await productFilter({}, false));
-  return products().findOne(filter, { ...options, projection });
+  const result = await products().findOne(filter, { ...options, projection });
+  return result ? (await decorateProducts([result]))[0] : null;
 }
 function findCategory(id) { return categories().findOne({ id }, { projection }); }
 function listCategories(admin = false) {

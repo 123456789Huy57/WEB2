@@ -2,6 +2,9 @@ const { before, after, test } = require('node:test');
 const assert = require('node:assert/strict');
 const { once } = require('node:events');
 const bcrypt = require('bcryptjs');
+const fs = require('node:fs/promises');
+const path = require('node:path');
+const os = require('node:os');
 process.env.NODE_ENV = 'test';
 process.env.MONGODB_URI = process.env.MONGODB_TEST_URI || 'mongodb://127.0.0.1:27017';
 process.env.MONGODB_DB = `freshmart_part_a_test_${process.pid}_${Date.now()}`;
@@ -10,7 +13,8 @@ const env = require('../src/config/env');
 const db = require('../src/config/database');
 const { ensureIndexes } = require('../src/config/indexes');
 const { createApp } = require('../src/app');
-let server, base;
+let server, base, artifacts;
+process.env.MAIL_TRANSPORT = 'outbox';
 class Client {
   cookie = ''; token = '';
   async request(method, path, body, extra = {}) {
@@ -26,6 +30,9 @@ class Client {
   session() { return this.request('GET', '/api/auth/session'); }
 }
 before(async () => {
+  artifacts = await fs.mkdtemp(path.join(os.tmpdir(), 'freshmart-part-a-'));
+  process.env.MAIL_OUTBOX_DIR = path.join(artifacts, 'mail');
+  process.env.UPLOAD_DIR = path.join(artifacts, 'images');
   await db.connectDatabase(env.mongodbUri, env.mongodbDb);
   await ensureIndexes();
   server = createApp().listen(0, '127.0.0.1');
@@ -36,6 +43,7 @@ after(async () => {
   if (server?.listening) await new Promise(resolve => server.close(resolve));
   if (db.databaseStatus() === 'connected') await db.getDatabase().dropDatabase();
   await db.disconnectDatabase();
+  if (artifacts) await fs.rm(artifacts, { recursive: true, force: true });
 });
 
 test('Part A through real HTTP, cookies and an isolated MongoDB database', async t => {
@@ -149,4 +157,86 @@ test('Part A through real HTTP, cookies and an isolated MongoDB database', async
     assert.equal((await guest.request('POST', '/api/auth/logout', {})).status, 204);
     assert.equal((await guest.request('GET', '/api/users/me')).status, 401);
   });
+  await t.test('remember me and safe single-use password recovery work end to end', async () => {
+    await guest.session();
+    const unknown = await guest.request('POST', '/api/auth/forgot-password', { email: 'missing@example.com' });
+    const known = await guest.request('POST', '/api/auth/forgot-password', { email: account.email });
+    assert.equal(known.status, 202); assert.deepEqual(known.data, unknown.data);
+    assert.equal(known.data.delivery, 'outbox');
+    const readToken = async () => {
+      const names = (await fs.readdir(process.env.MAIL_OUTBOX_DIR)).sort();
+      const mail = JSON.parse(await fs.readFile(path.join(process.env.MAIL_OUTBOX_DIR, names.at(-1)), 'utf8'));
+      assert.equal(mail.to, 'customer@example.com');
+      return new URL(mail.text.match(/https?:\/\/[^\s]+/)[0]).searchParams.get('token');
+    };
+    const expired = await readToken();
+    const stored = await db.getDatabase().collection('users').findOne({ id: user.id });
+    assert.notEqual(stored.resetTokenHash, expired);
+    await db.getDatabase().collection('users').updateOne({ id: user.id }, { $set: { resetExpiresAt: new Date(Date.now() - 1000) } });
+    assert.equal((await guest.request('POST', '/api/auth/reset-password', { token: expired, newPassword: 'RecoveryPassword123' })).status, 400);
+    await guest.request('POST', '/api/auth/forgot-password', { email: account.email });
+    const token = await readToken();
+    const results = await Promise.all([1, 2].map(() => guest.request('POST', '/api/auth/reset-password', { token, newPassword: 'RecoveryPassword123' })));
+    assert.deepEqual(results.map(r => r.status).sort(), [204, 400]);
+    await guest.session();
+    const login = await guest.request('POST', '/api/auth/login', { email: account.email, password: 'RecoveryPassword123', rememberMe: true });
+    assert.equal(login.status, 200);
+    const phoneClient = new Client(); await phoneClient.session();
+    assert.equal((await phoneClient.request('POST', '/api/auth/login', { identifier: account.phone, password: 'RecoveryPassword123' })).status, 200);
+    const expires = login.headers.get('set-cookie').match(/Expires=([^;]+)/)[1];
+    assert.ok(new Date(expires).getTime() - Date.now() > 6 * 24 * 60 * 60 * 1000);
+    const ownProfile = await guest.request('GET', '/api/users/me');
+    assert.ok(!JSON.stringify(ownProfile.data).includes('resetToken'));
+    await guest.request('POST', '/api/auth/forgot-password', { email: account.email });
+    const blockedToken = await readToken();
+    await admin.request('PATCH', `/api/admin/users/${user.id}/status`, { isActive: false });
+    assert.equal((await guest.request('POST', '/api/auth/reset-password', { token: blockedToken, newPassword: 'ShouldNotWork123' })).status, 400);
+    await admin.request('PATCH', `/api/admin/users/${user.id}/status`, { isActive: true });
+  });
+  await t.test('image upload requires admin, rejects spoofed/oversized images and writes safe WebP', async () => {
+    const sharp = require('sharp');
+    const image = await sharp({ create: { width: 2, height: 2, channels: 3, background: '#ffffff' } }).png().toBuffer();
+    async function upload(client, data, type = 'image/png', twice = false) {
+      const body = new FormData(); body.append('image', new Blob([data], { type }), '../../untrusted.html');
+      if (twice) body.append('image', new Blob([data], { type }), 'second.png');
+      const response = await fetch(base + '/api/admin/uploads', { method: 'POST', headers: { Cookie: client.cookie, 'X-CSRF-Token': client.token }, body });
+      return { status: response.status, data: await response.json() };
+    }
+    const visitor = new Client(); await visitor.session();
+    assert.equal((await upload(visitor, image)).status, 401);
+    await guest.session();
+    await guest.request('POST', '/api/auth/login', { email: account.email, password: 'RecoveryPassword123' });
+    assert.equal((await upload(guest, image)).status, 403);
+    assert.equal((await upload(admin, Buffer.from('<svg><script>bad()</script></svg>'))).status, 400);
+    assert.equal((await upload(admin, Buffer.alloc(2 * 1024 * 1024 + 1))).status, 413);
+    assert.equal((await upload(admin, image, 'image/png', true)).status, 400);
+    const result = await upload(admin, image);
+    assert.equal(result.status, 201);
+    assert.match(result.data.imageUrl, /^\/images\/uploads\/[a-f0-9-]+\.webp$/);
+    const response = await fetch(base + result.data.imageUrl);
+    assert.equal(response.status, 200);
+    assert.equal((await sharp(Buffer.from(await response.arrayBuffer())).metadata()).format, 'webp');
+    assert.equal((await fs.readdir(process.env.UPLOAD_DIR)).length, 1);
+  });
+  await t.test('category edits, optional attributes and audit logs complete the A handoff', async () => {
+    const subcategories = [{ id: 'sub-one', name: 'Rau xanh' }];
+    assert.equal((await admin.request('PATCH', `/api/admin/categories/${category.id}`, { active: true, name: 'Danh mục đổi tên', subcategories })).status, 200);
+    const updated = await admin.request('PATCH', `/api/admin/products/${product.id}`, { active: true, subcategory: 'sub-one', nutrition: { protein: 2.5 }, netWeightGram: 500 });
+    assert.equal(updated.status, 200); assert.equal(updated.data.netWeightGram, 500);
+    assert.equal((await admin.request('PATCH', `/api/admin/categories/${category.id}`, { subcategories: [] })).status, 409);
+    await admin.request('PATCH', `/api/admin/categories/${category.id}`, { name: 'Tên danh mục mới', subcategories: [{ id: 'sub-one', name: 'Tên loại mới' }] });
+    const shown = await new Client().request('GET', `/api/products/${product.id}`);
+    assert.equal(shown.data.categoryName, 'Tên danh mục mới');
+    assert.equal(shown.data.subcategoryName, 'Tên loại mới');
+    const cleared = await admin.request('PATCH', `/api/admin/products/${product.id}`, { netWeightGram: null });
+    assert.equal(cleared.status, 200); assert.ok(!('netWeightGram' in cleared.data));
+    const categories = await new Client().request('GET', '/api/categories');
+    assert.equal(categories.data.find(c => c.id === category.id).productCount, 1);
+    const logs = await db.getDatabase().collection('auditLogs').find({}).toArray();
+    assert.ok(logs.some(log => log.action === 'POST /api/auth/login'));
+    assert.ok(logs.some(log => log.action === 'POST /api/admin/uploads'));
+    assert.ok(logs.every(log => Object.keys(log).every(key => ['_id', 'action', 'actorId', 'status', 'createdAt'].includes(key))));
+    assert.ok(!JSON.stringify(logs).includes('RecoveryPassword123'));
+  });
+
 });

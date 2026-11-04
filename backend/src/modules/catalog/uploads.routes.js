@@ -1,0 +1,33 @@
+const router = require('express').Router();
+const fileUpload = require('express-fileupload');
+const sharp = require('sharp');
+const { randomUUID } = require('node:crypto');
+const fs = require('node:fs/promises');
+const path = require('node:path');
+const { requireAuth, requireAdmin } = require('../../middleware/auth');
+const { HttpError } = require('../../lib/http-error');
+const uploadDirectory = () => path.resolve(process.env.UPLOAD_DIR || path.join(__dirname, '../../../public/images/uploads'));
+router.post('/admin/uploads', requireAuth, requireAdmin, fileUpload({
+  limits: { fileSize: 2 * 1024 * 1024, files: 2, fields: 0 },
+  abortOnLimit: true,
+  limitHandler: (req, res) => res.status(413).json({ error: { code: 'UPLOAD_TOO_LARGE', message: 'Ảnh tối đa 2 MB.' } }),
+}), async (req, res) => {
+  const file = req.files?.image;
+  if (!file || Array.isArray(file) || Object.keys(req.files).length !== 1) throw new HttpError(400, 'IMAGE_REQUIRED', 'Chọn một ảnh PNG, JPEG hoặc WebP.');
+  if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.mimetype) || file.truncated) throw new HttpError(400, 'IMAGE_INVALID', 'Chỉ nhận ảnh PNG, JPEG hoặc WebP.');
+  const data = file.data;
+  const raster = data.subarray(0, 8).equals(Buffer.from('89504e470d0a1a0a', 'hex')) || (data[0] === 0xff && data[1] === 0xd8 && data[2] === 0xff) || (data.subarray(0, 4).toString() === 'RIFF' && data.subarray(8, 12).toString() === 'WEBP');
+  if (!raster) throw new HttpError(400, 'IMAGE_INVALID', 'Nội dung ảnh không hợp lệ.');
+  let buffer;
+  try {
+    const image = sharp(file.data, { limitInputPixels: 20000000, failOn: 'warning' });
+    const metadata = await image.metadata();
+    if (!['jpeg', 'png', 'webp'].includes(metadata.format) || (metadata.pages || 1) !== 1) throw new Error('Unsupported image');
+    buffer = await image.rotate().resize({ width: 1600, height: 1600, fit: 'inside', withoutEnlargement: true }).webp({ quality: 85 }).toBuffer();
+  } catch { throw new HttpError(400, 'IMAGE_INVALID', 'Nội dung ảnh không hợp lệ hoặc kích thước quá lớn.'); }
+  const name = `${randomUUID()}.webp`;
+  await fs.mkdir(uploadDirectory(), { recursive: true });
+  await fs.writeFile(path.join(uploadDirectory(), name), buffer, { flag: 'wx' });
+  res.status(201).json({ imageUrl: `/images/uploads/${name}` });
+});
+module.exports = { router, uploadDirectory };

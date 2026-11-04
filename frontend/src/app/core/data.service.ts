@@ -56,10 +56,22 @@ export class DataService {
   }
   async saveProduct(p: Product): Promise<void> {
     const fields: (keyof Product)[] = ['name', 'slug', 'brand', 'category', 'subcategory', 'description', 'price', 'sale_price', 'unit', 'image_url', 'gallery', 'origin', 'badges', 'nutrition', 'netWeightGram', 'unitWeightGram', 'sellUnit', 'tags', 'active'];
-    const payload = Object.fromEntries(fields.filter(key => p[key] !== undefined).map(key => [key, p[key]]));
+    const payload: Record<string, unknown> = Object.fromEntries(fields.filter(key => p[key] !== undefined).map(key => [key, p[key]]));
+    for (const key of ['netWeightGram', 'unitWeightGram'] as const) if (Object.hasOwn(p, key) && p[key] === undefined) payload[key] = null;
     const exists = this.products().some(item => item.id === p.id);
     const saved = await firstValueFrom(exists ? this.http.patch<Product>(`/api/admin/products/${p.id}`, payload) : this.http.post<Product>('/api/admin/products', payload));
     this.products.update(items => exists ? items.map(item => item.id === saved.id ? saved : item) : [saved, ...items]);
+  }
+  async getUser(id: string): Promise<User> {
+    return firstValueFrom(this.http.get<User>(`/api/admin/users/${id}`));
+  }
+  async saveCategory(id: string | null, payload: Partial<Category>): Promise<void> {
+    await firstValueFrom(id ? this.http.patch<Category>(`/api/admin/categories/${id}`, payload) : this.http.post<Category>('/api/admin/categories', payload));
+    await this.load(true);
+  }
+  async uploadImage(file: File): Promise<string> {
+    const body = new FormData(); body.append('image', file);
+    return (await firstValueFrom(this.http.post<{ imageUrl: string }>('/api/admin/uploads', body))).imageUrl;
   }
   async setUserActive(id: string, isActive: boolean): Promise<void> {
     const user = await firstValueFrom(this.http.patch<User>(`/api/admin/users/${id}/status`, { isActive }));

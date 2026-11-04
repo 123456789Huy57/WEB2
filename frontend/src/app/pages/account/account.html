@@ -40,7 +40,15 @@
           <div class="field"><label for="p-phone">Số điện thoại</label><input id="p-phone" name="phone" type="tel" autocomplete="tel" [(ngModel)]="profile.phone"></div>
           <div class="field full"><label for="p-email">Email</label><input id="p-email" name="email" type="email" [value]="auth.user()?.email" disabled></div>
           <div class="field full"><label for="p-addr">Địa chỉ giao hàng mặc định</label><input id="p-addr" name="address" autocomplete="street-address" [(ngModel)]="profile.address"></div>
-          <div class="full"><button class="btn btn-forest" type="submit">Lưu thông tin</button></div>
+          <div class="full"><button class="btn btn-forest" type="submit" [disabled]="profileBusy()">{{ profileBusy() ? 'Đang lưu…' : 'Lưu thông tin' }}</button></div>
+        </form>
+        <form class="form-grid prof" (ngSubmit)="changePassword()" style="margin-top:32px">
+          <h2 class="h3 full">Đổi mật khẩu</h2>
+          <div class="field full"><label for="pw-current">Mật khẩu hiện tại</label><input id="pw-current" name="currentPassword" type="password" autocomplete="current-password" required [(ngModel)]="passwordForm.current"></div>
+          <div class="field"><label for="pw-next">Mật khẩu mới</label><input id="pw-next" name="newPassword" type="password" autocomplete="new-password" minlength="8" required [(ngModel)]="passwordForm.next"></div>
+          <div class="field"><label for="pw-confirm">Nhập lại mật khẩu mới</label><input id="pw-confirm" name="confirmPassword" type="password" autocomplete="new-password" required [(ngModel)]="passwordForm.confirm"></div>
+          <p class="err small full" role="status">{{ passwordError() }}</p>
+          <div class="full"><button class="btn btn-forest" type="submit" [disabled]="passwordBusy()">{{ passwordBusy() ? 'Đang xử lý…' : 'Đổi mật khẩu' }}</button></div>
         </form>
       }
     }

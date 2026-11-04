@@ -44,6 +44,10 @@ export class Account {
   protected savedVouchers = computed(() => this.vs.saved().map(c => this.vs.find(c)).filter((v): v is Voucher => !!v));
 
   private u = this.auth.user();
+  protected passwordForm = { current: '', next: '', confirm: '' };
+  protected passwordBusy = signal(false);
+  protected passwordError = signal('');
+  protected profileBusy = signal(false);
   protected profile = { fullName: this.u?.fullName ?? '', phone: this.u?.phone ?? '', address: this.u?.address ?? '' };
 
   protected buyAgain(o: OrderView): void {
@@ -56,8 +60,24 @@ export class Account {
   }
   protected useVoucher(code: string): void { this.cart.setVoucher(code); this.router.navigateByUrl('/gio-hang'); }
   protected async saveProfile(): Promise<void> {
+    if (this.profileBusy()) return;
+    this.profileBusy.set(true);
     try { await this.auth.update({ ...this.profile, fullName: this.profile.fullName.trim() }); this.toast.show('Đã lưu thông tin'); }
     catch (error) { this.toast.show(apiMessage(error)); }
+    finally { this.profileBusy.set(false); }
+  }
+  protected async changePassword(): Promise<void> {
+    if (this.passwordBusy()) return;
+    this.passwordError.set('');
+    if (this.passwordForm.next.length < 8) { this.passwordError.set('Mật khẩu mới cần ít nhất 8 ký tự'); return; }
+    if (this.passwordForm.next !== this.passwordForm.confirm) { this.passwordError.set('Hai mật khẩu mới chưa trùng nhau'); return; }
+    this.passwordBusy.set(true);
+    try {
+      await this.auth.changePassword(this.passwordForm.current, this.passwordForm.next);
+      this.toast.show('Đã đổi mật khẩu. Vui lòng đăng nhập lại.');
+      this.router.navigateByUrl('/dang-nhap');
+    } catch (error) { this.passwordError.set(apiMessage(error)); }
+    finally { this.passwordBusy.set(false); }
   }
   protected async logout(): Promise<void> {
     try { await this.auth.logout(); this.router.navigateByUrl('/'); } catch (error) { this.toast.show(apiMessage(error)); }

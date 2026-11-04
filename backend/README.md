@@ -1,6 +1,6 @@
 # Backend FreshMart
 
-Phần A đã có auth/session, phân quyền, hồ sơ, quản lý khách hàng và catalog MongoDB. Phần B triển khai giỏ/đơn/voucher/kho theo [hợp đồng backend v1](docs/backend-contract.md). Dùng Node.js 22+, Express, CommonJS, MongoClient, Morgan, Nodemon và express-session.
+Phần A đã hoàn thành theo [bảng bàn giao](docs/part-a-handoff.md): auth/session, phân quyền, hồ sơ, khách hàng, catalog, upload ảnh và khôi phục mật khẩu. Phần B triển khai giỏ/đơn/voucher/kho theo [hợp đồng backend v1](docs/backend-contract.md). Dùng Node.js 22+, Express, CommonJS, MongoClient, Morgan, Nodemon và express-session.
 
 ## Chạy local
 
@@ -40,6 +40,7 @@ Mật khẩu ít nhất 8 ký tự và tối đa 72 byte UTF-8, lưu bằng bcry
 | `npm run test:integration` | Kiểm tra phần A với MongoDB local trong DB thử riêng, xóa sau khi chạy |
 | `npm run seed:catalog` | Nhập products/categories còn thiếu |
 | `npm run seed:admin` | Tạo admin từ cấu hình riêng |
+| `npm run mail:inbox` | Xem thư khôi phục thử local, không gửi email thật |
 
 Integration test dùng `MONGODB_TEST_URI` nếu có, mặc định MongoDB local; luôn tạo tên DB thử mới, không dùng DB làm việc của nhóm.
 
@@ -59,7 +60,7 @@ Integration test dùng `MONGODB_TEST_URI` nếu có, mặc định MongoDB local
 
 Frontend đã có dev proxy `/api/**` → localhost:3000, interceptor cookie/CSRF và gọi API phần A. Chạy backend trước, sau đó `cd frontend` và `npm ci`, `npm start`. Auth không dùng localStorage/users.json; catalog lấy dữ liệu MongoDB. Public API trả mảng mặc định; admin user API trả phân trang.
 
-Các phần giỏ, voucher, công thức và đơn thuộc B/content vẫn có dữ liệu demo. Các thao tác checkout, đổi trạng thái đơn và thay stock demo đã chặn để tránh giả lập ghi vào dữ liệu thật; B nối API rồi bật lại. Upload ảnh, OTP/email reset, social login, loyalty và thanh toán online chưa nằm trong MVP.
+Các phần giỏ, voucher, công thức và đơn thuộc B/content vẫn có dữ liệu demo. Các thao tác checkout, đổi trạng thái đơn và thay stock demo đã chặn để tránh giả lập ghi vào dữ liệu thật; B nối API rồi bật lại. Upload ảnh và email reset đã có. OTP SMS, social login, loyalty và thanh toán online nằm ngoài phần A theo bảng phân công.
 
 Session dùng cookie HttpOnly/SameSite=Lax, 1 giờ hoặc 7 ngày nếu rememberMe. Có DB thì lưu collection sessions; MemoryStore chỉ cho local chưa cấu hình DB. Production yêu cầu URI/secret, HTTPS; nếu có reverse proxy phải cấu hình trust proxy theo hạ tầng. Admin/user role và trạng thái được kiểm tra từ DB trên mỗi request cần quyền.
 
@@ -72,3 +73,11 @@ Import `docs/freshmart.postman_collection.json`. Folder Starter kiểm tra serve
 ```
 
 Xem [phân công](docs/backend-task-assignment.md) và [đối chiếu môn học](docs/team-guide.md) để biết phạm vi hai người.
+
+## Thư khôi phục và ảnh tải lên
+
+Mặc định development dùng MAIL_TRANSPORT=outbox; thư lưu private trong `.local-mail`, xem bằng `npm run mail:inbox`. Link chỉ dùng một lần và hết hạn sau 20 phút. Đây là hộp thư thử, không phải email đã gửi tới người dùng. Muốn gửi email thật, chuyển MAIL_TRANSPORT=smtp rồi điền MAIL_FROM và các trường SMTP trong .env. Không dùng outbox ở production.
+
+Ảnh upload chỉ admin được phép gửi, tối đa 2 MB, được kiểm tra và chuyển WebP trước khi lưu trong `public/images/uploads`. Thư thử và ảnh tải lên đều không được commit. Có thể dùng MAIL_OUTBOX_DIR/UPLOAD_DIR để chỉ định thư mục riêng; integration tests luôn dùng thư mục tạm và tự xóa.
+
+Giao diện phần A bổ sung `/admin/danh-muc`, quên/đặt lại mật khẩu, đổi mật khẩu trong hồ sơ, remember-me và chi tiết khách hàng. Logs bảo mật trong collection auditLogs không chứa nội dung nhạy cảm và hết hạn sau 90 ngày.

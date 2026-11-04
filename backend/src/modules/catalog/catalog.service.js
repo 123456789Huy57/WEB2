@@ -34,7 +34,10 @@ async function productData(body, old) {
   }
   if (body.active !== undefined) p.active = v.boolean(body.active, 'active');
   for (const key of ['gallery', 'badges', 'tags']) if (body[key] !== undefined) p[key] = v.strings(body[key], key);
-  for (const key of ['netWeightGram', 'unitWeightGram']) if (body[key] !== undefined) p[key] = v.number(body[key], key, 0.001, 10000000);
+  for (const key of ['netWeightGram', 'unitWeightGram']) {
+    if (body[key] === null) delete p[key];
+    else if (body[key] !== undefined) p[key] = v.number(body[key], key, 0.001, 10000000);
+  }
   if (body.nutrition !== undefined) {
     v.object(body.nutrition, ['energy_kcal', 'protein', 'fat', 'carbohydrates', 'sugars', 'fiber', 'salt']);
     p.nutrition = Object.fromEntries(Object.entries(body.nutrition).map(([key, value]) => [key, v.number(value, key, 0, 1000000)]));
@@ -60,6 +63,7 @@ async function updateProduct(id, body) {
   const patch = Object.fromEntries([...productFields, 'categoryName', 'subcategoryName', 'updatedAt'].filter(key => p[key] !== undefined).map(key => [key, p[key]]));
   const update = { $set: patch };
   if (body.image_url !== undefined && body.image_url !== old.image_url) update.$unset = { img: '' };
+  for (const key of ['netWeightGram', 'unitWeightGram']) if (body[key] === null) update.$unset = { ...update.$unset, [key]: '' };
   const filter = { id };
   if (body.unit !== undefined && body.unit.toLowerCase() !== old.unit.toLowerCase()) filter.stock = 0;
   const updated = await model.products().findOneAndUpdate(filter, update, { returnDocument: 'after', projection: { _id: 0 } });

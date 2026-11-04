@@ -1,12 +1,12 @@
 import { Component, ViewEncapsulation, inject, input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
 import { VoucherService } from '../../core/voucher.service';
 
 @Component({
   selector: 'fm-login',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   styleUrl: './login.css',
   encapsulation: ViewEncapsulation.None,
   template: `
@@ -21,10 +21,10 @@ import { VoucherService } from '../../core/voucher.service';
           <form class="auth-form" (ngSubmit)="login()" novalidate>
             <h1 class="h2">Chào bạn quay lại</h1>
             <p class="muted">{{ admin() ? 'Trang quản trị cần tài khoản admin.' : 'Đăng nhập để xem đơn hàng, mã đã lưu và món yêu thích.' }}</p>
-            <div class="field"><label for="in-email">Email</label><input id="in-email" name="email" type="email" autocomplete="email" required [(ngModel)]="email"></div>
+            <div class="field"><label for="in-email">Email hoặc số điện thoại</label><input id="in-email" name="email" type="text" autocomplete="username" required [(ngModel)]="email"></div>
             <div class="field"><label for="in-pw">Mật khẩu</label><input id="in-pw" name="pw" type="password" autocomplete="current-password" required [(ngModel)]="password"></div>
             <p class="err small" aria-live="polite">{{ err() }}</p>
-            <button class="btn btn-forest" type="submit">Đăng nhập</button>
+            <label class="check"><input type="checkbox" name="rememberMe" [(ngModel)]="rememberMe"> Ghi nhớ đăng nhập 7 ngày</label><a class="link" routerLink="/quen-mat-khau">Quên mật khẩu?</a><button class="btn btn-forest" type="submit" [disabled]="busy()">{{ busy() ? 'Đang xử lý…' : 'Đăng nhập' }}</button>
           </form>
         } @else {
           <form class="auth-form" (ngSubmit)="register()" novalidate>
@@ -35,7 +35,7 @@ import { VoucherService } from '../../core/voucher.service';
             <div class="field"><label for="up-email">Email</label><input id="up-email" name="email" type="email" autocomplete="email" required [(ngModel)]="email"></div>
             <div class="field"><label for="up-pw">Mật khẩu</label><input id="up-pw" name="pw" type="password" autocomplete="new-password" required [(ngModel)]="password"><span class="hint">Ít nhất 8 ký tự</span></div>
             <p class="err small" aria-live="polite">{{ err() }}</p>
-            <button class="btn btn-forest" type="submit">Tạo tài khoản</button>
+            <button class="btn btn-forest" type="submit" [disabled]="busy()">{{ busy() ? 'Đang xử lý…' : 'Tạo tài khoản' }}</button>
           </form>
         }
       </div>
@@ -50,6 +50,8 @@ export class Login {
   private vs = inject(VoucherService);
   private router = inject(Router);
   protected signup = signal(false);
+  protected busy = signal(false);
+  protected rememberMe = false;
   protected err = signal('');
   protected email = '';
   protected password = '';
@@ -57,7 +59,10 @@ export class Login {
   protected phone = '';
 
   protected async login(): Promise<void> {
-    const r = await this.auth.login(this.email, this.password);
+    if (this.busy()) return;
+    this.busy.set(true);
+    const r = await this.auth.login(this.email, this.password, this.rememberMe);
+    this.busy.set(false);
     if (!r.ok) { this.err.set(r.msg); return; }
     this.router.navigateByUrl((this.next()?.startsWith('/') && !this.next()?.startsWith('//') ? this.next() : undefined) || (r.user?.role === 'admin' ? '/admin' : '/tai-khoan'));
   }
@@ -67,7 +72,10 @@ export class Login {
     if (!/^0\d{9}$/.test(phone)) return this.err.set('Số điện thoại gồm 10 số, bắt đầu bằng 0');
     if (!/^\S+@\S+\.\S+$/.test(email)) return this.err.set('Email chưa đúng định dạng');
     if (this.password.length < 8) return this.err.set('Mật khẩu cần ít nhất 8 ký tự');
+    if (this.busy()) return;
+    this.busy.set(true);
     const r = await this.auth.register({ fullName: name, phone, email, password: this.password });
+    this.busy.set(false);
     if (!r.ok) return this.err.set(r.msg);
     if (!this.vs.isSaved('WELCOME10')) this.vs.toggleSave('WELCOME10');
     this.router.navigateByUrl((this.next()?.startsWith('/') && !this.next()?.startsWith('//') ? this.next() : undefined) || '/tai-khoan');

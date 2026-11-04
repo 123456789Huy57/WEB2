@@ -38,14 +38,15 @@ async function register(req, res) {
   res.status(201).json(await beginSession(req, user));
 }
 async function login(req, res) {
-  const body = v.object(req.body, ['email', 'password', 'rememberMe']);
-  const email = v.email(body.email);
+  const body = v.object(req.body, ['email', 'identifier', 'password', 'rememberMe']);
+  if (body.email !== undefined && body.identifier !== undefined) v.bad('Chỉ gửi email hoặc identifier.');
+  const identifier = v.text(body.identifier ?? body.email, 'Email hoặc số điện thoại', 3, 254);
   if (typeof body.password !== 'string' || !body.password.length || Buffer.byteLength(body.password, 'utf8') > 72) v.bad('Mật khẩu không hợp lệ.');
   const password = body.password;
   if (body.rememberMe !== undefined) v.boolean(body.rememberMe, 'rememberMe');
-  const user = await users.findByEmail(email);
+  const user = identifier.includes('@') ? await users.findByEmail(v.email(identifier)) : await users.findByPhone(v.phone(identifier));
   const valid = await bcrypt.compare(password, user?.passwordHash || await dummyHash);
-  if (!valid || !user || user.isActive === false) throw new HttpError(401, 'INVALID_CREDENTIALS', 'Email hoặc mật khẩu chưa đúng.');
+  if (!valid || !user || user.isActive === false) throw new HttpError(401, 'INVALID_CREDENTIALS', 'Tài khoản hoặc mật khẩu chưa đúng.');
   res.json(await beginSession(req, user, body.rememberMe));
 }
 async function logout(req, res) {

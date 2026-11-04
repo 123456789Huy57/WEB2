@@ -1,14 +1,15 @@
 # Phân công backend FreshMart
 
-**Cập nhật phần A:** Auth, user, catalog và phần Angular tương ứng đã triển khai. Session/API/quy tắc mới chốt ở [hợp đồng backend v1](backend-contract.md) là nguồn chuẩn; MVP giỏ trong session, logout xóa giỏ, checkout cần login và chỉ COD. Các mục dưới đây là phân công và ghi chú nền tảng.
+**Phần A đã hoàn thành:** xem [bàn giao phần A](part-a-handoff.md). Hợp đồng tích hợp chính thức ở [backend-contract.md](backend-contract.md). Phần B chưa triển khai giỏ/đơn/kho.
+
 Phân công cho hai người theo phương án ban đầu: A phụ trách tài khoản, bảo mật và catalog; B phụ trách giao dịch, khuyến mãi và vận hành. Ưu tiên hoàn thành luồng mua hàng COD trước, sau đó bổ sung các tính năng mở rộng.
 
-## Khung đã có
+## Trạng thái hiện tại
 
-- Express chạy được qua `npm run dev`, dùng CommonJS, MongoDB native driver, Morgan và Nodemon.
-- Có cấu hình cookie/session, kết nối MongoDB, xử lý lỗi và thư mục module.
-- Có API đọc sản phẩm/danh mục, lệnh seed catalog và collection Postman mẫu.
-- Chưa có đăng nhập, phân quyền, API ghi catalog, giỏ hàng hoặc đặt hàng. Frontend vẫn dùng JSON/localStorage cho đến khi nối API.
+- Có backend Express/MongoDB, auth/session/phân quyền, profile/customer và CRUD catalog.
+- Angular đã nối phần A, bao gồm danh mục, upload ảnh, đổi/quên mật khẩu và chi tiết khách hàng.
+- Khôi phục mật khẩu dùng hộp thư local để thử; cấu hình SMTP khi có dịch vụ email thật.
+- Giỏ, checkout, đơn, voucher và kho là phần B triển khai tiếp theo hợp đồng.
 
 ## Người A phụ trách tài khoản bảo mật và catalog
 
@@ -33,7 +34,7 @@ Thư mục chính: `src/modules/cart`, `src/modules/vouchers`, `src/modules/orde
 | Thứ tự | ND cần làm | Notes |
 |---|---|---|
 | 1 | Cùng A chốt giỏ hàng, checkout, phí ship, voucher, kho và trạng thái đơn | Chốt khách có được checkout không, lúc trừ/hoàn kho, điều kiện hủy và cách xác nhận COD đã thanh toán. |
-| 2 | API giỏ khách, giỏ tài khoản và hợp nhất sau đăng nhập | Giỏ khách dùng `req.session.cart`; giỏ tài khoản lưu MongoDB nếu cần giữ sau logout. Chống trùng khi merge; kiểm tra bước mua 0.5 kg hoặc từng đơn vị. |
+| 2 | API giỏ khách, giỏ tài khoản và hợp nhất sau đăng nhập | Giỏ guest/user cùng dùng `req.session.cart` theo hợp đồng v1; login giữ giỏ, logout xóa giỏ. Giỏ tài khoản giữ qua logout là phần sau. Chống trùng khi merge; kiểm tra bước mua 0.5 kg hoặc từng đơn vị. |
 | 3 | Checkout COD và tạo đơn hàng | Server lấy giá hiện tại, tính tổng và phí ship. Tạo đơn, trừ kho và xử lý voucher trong cùng transaction khi áp dụng; chống tạo đơn trùng. |
 | 4 | API lịch sử, chi tiết, hủy đơn và mua lại cho khách | Kiểm tra quyền sở hữu đơn. Lưu tên/giá sản phẩm và địa chỉ tại thời điểm đặt; mua lại phải kiểm tra giá và tồn kho mới. |
 | 5 | Quản lý đơn và cập nhật trạng thái cho admin | Dùng cùng bộ trạng thái với Angular: pending, confirmed, preparing, shipping, delivered, cancelled. Chốt riêng các bước được phép hủy. |

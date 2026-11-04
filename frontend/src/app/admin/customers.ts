@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, ElementRef, computed, inject, signal, viewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { User } from '../core/models';
 import { apiMessage } from '../core/auth.service';
@@ -18,14 +18,27 @@ import { VndPipe } from '../shared/vnd.pipe';
       <thead><tr><th>Khách hàng</th><th>Liên hệ</th><th>Ngày tham gia</th><th class="r">Số đơn</th><th class="r">Đã chi</th><th>Vai trò</th><th>Trạng thái</th><th></th></tr></thead>
       <tbody>
         @for (u of list(); track u.id) {
-          <tr><td class="nm">{{ u.fullName }}</td><td>{{ u.email }}<br><span class="small muted num">{{ u.phone }}</span></td><td class="num">{{ u.createdAt ? (u.createdAt | date: 'dd/MM/yyyy') : '—' }}</td><td class="r num">{{ u.orders }}</td><td class="r num">{{ u.spent | vnd }}</td><td><span class="pill" [class.on]="u.role === 'admin'">{{ u.role === 'admin' ? 'Quản trị' : 'Khách' }}</span></td><td>{{ u.isActive === false ? 'Đã khóa' : 'Hoạt động' }}</td><td>@if (u.role !== 'admin') { <button class="link-btn" type="button" [disabled]="changing()" (click)="toggle(u)">{{ u.isActive === false ? 'Mở khóa' : 'Khóa' }}</button> }</td></tr>
+          <tr><td class="nm">{{ u.fullName }}</td><td>{{ u.email }}<br><span class="small muted num">{{ u.phone }}</span></td><td class="num">{{ u.createdAt ? (u.createdAt | date: 'dd/MM/yyyy') : '—' }}</td><td class="r num">{{ u.orders }}</td><td class="r num">{{ u.spent | vnd }}</td><td><span class="pill" [class.on]="u.role === 'admin'">{{ u.role === 'admin' ? 'Quản trị' : 'Khách' }}</span></td><td>{{ u.isActive === false ? 'Đã khóa' : 'Hoạt động' }}</td><td><button class="link-btn" type="button" (click)="showDetails(u)" style="margin-right:12px">Chi tiết</button>@if (u.role !== 'admin') { <button class="link-btn" type="button" [disabled]="changing()" (click)="toggle(u)">{{ u.isActive === false ? 'Mở khóa' : 'Khóa' }}</button> }</td></tr>
         } @empty { <tr><td colspan="8" class="empty-row">Không tìm thấy khách hàng.</td></tr> }
       </tbody>
     </table></div></div>
+    <dialog class="adm-dlg" style="padding:28px" #detailDialog aria-labelledby="customer-detail-title">
+      @if (selected(); as user) {
+        <h2 class="h3" id="customer-detail-title">{{ user.fullName }}</h2>
+        <dl><dt>Email</dt><dd>{{ user.email }}</dd><dt>Số điện thoại</dt><dd>{{ user.phone }}</dd><dt>Địa chỉ mặc định</dt><dd>{{ user.address || 'Chưa có địa chỉ' }}</dd><dt>Vai trò</dt><dd>{{ user.role === 'admin' ? 'Quản trị' : 'Khách hàng' }}</dd><dt>Trạng thái</dt><dd>{{ user.isActive === false ? 'Đã khóa' : 'Hoạt động' }}</dd><dt>Ngày đăng ký</dt><dd>{{ user.createdAt | date: 'dd/MM/yyyy HH:mm' }}</dd></dl>
+      }
+      <div class="acts"><button class="btn btn-stone" type="button" (click)="detailDialog.close()">Đóng</button></div>
+    </dialog>
   `
 })
 export class AdminCustomers {
   private data = inject(DataService);
+  protected selected = signal<User | null>(null);
+  protected detailDialog = viewChild.required<ElementRef<HTMLDialogElement>>('detailDialog');
+  protected async showDetails(user: User): Promise<void> {
+    try { this.selected.set(await this.data.getUser(user.id)); this.detailDialog().nativeElement.showModal(); }
+    catch (error) { this.toast.show(apiMessage(error)); }
+  }
   private orders = inject(OrderService);
   protected q = signal('');
   protected changing = signal(false);

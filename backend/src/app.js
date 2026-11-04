@@ -20,6 +20,7 @@ function createApp() {
   app.use(express.urlencoded({ extended: false, limit: '1mb' }));
   app.use(cookieParser());
   app.use(createSessionMiddleware());
+  app.use('/images/uploads', express.static(require('./modules/catalog/uploads.routes').uploadDirectory(), { dotfiles: 'deny' }));
   app.use('/images', express.static(path.join(__dirname, '../public/images'), { dotfiles: 'deny' }));
 
   app.get('/', (req, res) => res.json({ service: 'freshmart-backend', health: '/api/health' }));
@@ -27,9 +28,11 @@ function createApp() {
   app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', service: 'freshmart-backend', database: databaseStatus() });
   });
+  app.use('/api', require('./middleware/audit').audit);
   app.use('/api', require('./middleware/csrf').requireCsrf);
   app.use('/api', require('./modules/auth/auth.routes'));
   app.use('/api', require('./modules/users/users.routes'));
+  app.use('/api', require('./modules/catalog/uploads.routes').router);
   app.use('/api', require('./modules/catalog/catalog.routes'));
   // B mounts cart, vouchers, orders and inventory routers here (global CSRF applies).
   app.use(notFound);

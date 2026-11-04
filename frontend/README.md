@@ -90,7 +90,7 @@ public/
 
 ## Ghép với Backend Express và MongoDB
 
-Phần A đã nối: AuthService, API interceptor, DataService, login, profile và admin products. Session được khôi phục trước khi Angular vào route; customer không tải danh sách user hoặc sản phẩm ẩn.
+Phần A đã nối: AuthService, API interceptor, DataService, login/remember-me, đổi/quên mật khẩu, profile, admin products/categories/customers và upload ảnh. Session được khôi phục trước khi Angular vào route; customer không tải danh sách user hoặc sản phẩm ẩn.
 
 Phần B nối theo [backend-contract.md](../backend/docs/backend-contract.md): CartService → /api/cart, OrderService → /api/orders và /api/users/me/orders, admin order/inventory theo các endpoint trong hợp đồng. Không dùng catalog PATCH để trừ/hoàn kho. Giữ thuật toán Meal Planner hiện tại và đổi thao tác mua nguyên liệu sang Cart API khi B hoàn thành.
 
@@ -100,3 +100,9 @@ Phần B nối theo [backend-contract.md](../backend/docs/backend-contract.md): 
 - Tên món, giá, tiêu đề dùng chữ có chân (`.h2`, `.h3`, `.price`). Nội dung dùng Be Vietnam Pro.
 - Không đổ bóng, không gradient. Tách khối bằng khoảng trắng hoặc nền đá `--stone`.
 - Chữ trên giao diện viết như người bán hàng nói: “Thêm vào giỏ”, “Cần mua thêm 2 nguyên liệu”.
+
+## Chức năng phần A đã hoàn thiện
+
+Quản lý danh mục/danh mục con ở `/admin/danh-muc`. Trong form sản phẩm có upload PNG/JPEG/WebP, gallery, dinh dưỡng và khối lượng; stock chỉ đọc. Admin khách hàng có Chi tiết và Khóa/Mở. Trang tài khoản có đổi mật khẩu; trang đăng nhập có ghi nhớ 7 ngày và Quên mật khẩu.
+
+Khôi phục local dùng hộp thư thử của backend (`npm run mail:inbox`), không gửi email thật. Cấu hình SMTP khi nhóm có dịch vụ gửi thư. Xem [bàn giao A](../backend/docs/part-a-handoff.md) để kiểm tra toàn bộ các mục.

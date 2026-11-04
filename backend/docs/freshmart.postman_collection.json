@@ -28,6 +28,14 @@
     {
       "key": "adminPassword",
       "value": ""
+    },
+    {
+      "key": "resetToken",
+      "value": ""
+    },
+    {
+      "key": "newPassword",
+      "value": ""
     }
   ],
   "item": [
@@ -476,6 +484,96 @@
                 "exec": [
                   "pm.test(\"HTTP 204\", () => pm.response.to.have.status(204));",
                   "pm.collectionVariables.unset(\"csrfToken\");"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Recovery - dev inbox or configured SMTP",
+      "description": "Chạy yêu cầu khôi phục trước. Local: xem npm run mail:inbox rồi điền resetToken. Không chạy reset nếu chưa có token hợp lệ.",
+      "item": [
+        {
+          "name": "Get session and CSRF token",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/auth/session"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+                  "if (pm.response.code === 200 || pm.response.code === 201) { const data = pm.response.json(); if(data.csrfToken) pm.collectionVariables.set(\"csrfToken\", data.csrfToken); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Request password recovery",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/auth/forgot-password",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-CSRF-Token",
+                "value": "{{csrfToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{userEmail}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 202\", () => pm.response.to.have.status(202));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Reset with one-use token",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/auth/reset-password",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-CSRF-Token",
+                "value": "{{csrfToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"{{resetToken}}\",\n  \"newPassword\": \"{{newPassword}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 204\", () => pm.response.to.have.status(204));"
                 ]
               }
             }

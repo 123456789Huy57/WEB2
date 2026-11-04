@@ -21,9 +21,11 @@ async function changePassword(req, res) {
   if (!(await bcrypt.compare(current, user.passwordHash))) throw new HttpError(400, 'PASSWORD_MISMATCH', 'Mật khẩu hiện tại chưa đúng.');
   const passwordHash = await bcrypt.hash(next, 12);
   // All sessions, including the current one, must log in again.
-  const result = await users.users().updateOne({ id: user.id, passwordHash: user.passwordHash }, { $set: { passwordHash, updatedAt: new Date().toISOString() }, $inc: { authVersion: 1 } });
+  const result = await users.users().updateOne({ id: user.id, passwordHash: user.passwordHash }, { $set: { passwordHash, updatedAt: new Date().toISOString() }, $inc: { authVersion: 1 }, $unset: { resetTokenHash: '', resetExpiresAt: '' } });
   if (!result.matchedCount) throw new HttpError(409, 'ACCOUNT_CHANGED', 'Tài khoản đã thay đổi. Đăng nhập lại.');
   await new Promise((resolve, reject) => req.session.destroy(error => error ? reject(error) : resolve()));
+  const env = require('../../config/env');
+  res.clearCookie(env.sessionCookieName, { path: '/', httpOnly: true, sameSite: 'lax', secure: env.nodeEnv === 'production' });
   res.status(204).end();
 }
 async function list(req, res) {
@@ -48,7 +50,7 @@ async function setActive(req, res) {
   const user = await users.findById(id);
   if (!user) throw new HttpError(404, 'USER_NOT_FOUND', 'Không tìm thấy tài khoản.');
   if (user.role === 'admin') throw new HttpError(403, 'ADMIN_ACCOUNT_PROTECTED', 'Không khóa tài khoản quản trị qua API khách hàng.');
-  const result = await users.users().findOneAndUpdate({ id }, { $set: { isActive: active, updatedAt: new Date().toISOString() }, $inc: { authVersion: 1 } }, { returnDocument: 'after' });
+  const result = await users.users().findOneAndUpdate({ id }, { $set: { isActive: active, updatedAt: new Date().toISOString() }, $inc: { authVersion: 1 }, $unset: { resetTokenHash: '', resetExpiresAt: '' } }, { returnDocument: 'after' });
   res.json(users.publicUser(result));
 }
 module.exports = { me, updateMe, changePassword, list, show, setActive };
