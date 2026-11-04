@@ -1,93 +1,74 @@
 # Backend FreshMart
 
-Khung backend bám theo slide chương VI–VIII và code `LearnAngular/my-server`, `LearnAngular/my-server-mongodb`: Node.js, Express, CommonJS (`require/module.exports`), MongoDB native driver (`MongoClient`), Morgan, Nodemon và cookie/session. Frontend Angular gọi API JSON qua HttpClient service.
+Phần A đã có auth/session, phân quyền, hồ sơ, quản lý khách hàng và catalog MongoDB. Phần B triển khai giỏ/đơn/voucher/kho theo [hợp đồng backend v1](docs/backend-contract.md). Dùng Node.js 22+, Express, CommonJS, MongoClient, Morgan, Nodemon và express-session.
 
 ## Chạy local
 
-Yêu cầu Node.js 22 trở lên. Trong thư mục `backend`:
-
 ```bash
+cd backend
 npm ci
 cp .env.example .env
-npm run dev
 ```
 
-- `npm run dev`: Nodemon tự khởi động lại khi sửa code.
-- `npm start`: chạy server bằng Node.
-- `npm test`: kiểm tra health, CORS, lỗi và cookie/session.
-- `npm run seed:catalog`: nhập sản phẩm/danh mục mẫu vào MongoDB đã cấu hình.
-
-Mở `http://localhost:3000/api/health`. Có thể để trống `MONGODB_URI` để kiểm tra HTTP server local. Khi đó API dữ liệu trả 503 và session chỉ lưu tạm trong RAM. `status: ok` chỉ nói HTTP server đang hoạt động; `database` thể hiện kết nối đã được khởi tạo, không phải kiểm tra readiness trực tiếp.
-
-## Cấu hình MongoDB và session
-
-Điền `MONGODB_URI` (local ví dụ `mongodb://127.0.0.1:27017` hoặc URI Atlas), `MONGODB_DB=freshmart` và `SESSION_SECRET` trong `.env`. Tạo secret riêng:
+Điền `MONGODB_URI` (local: `mongodb://127.0.0.1:27017`), `MONGODB_DB=freshmart` và `SESSION_SECRET` riêng trong `.env`. Tạo secret bằng:
 
 ```bash
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+npm run seed:catalog
+npm run dev
 ```
 
-Không commit `.env` hoặc secret. Nếu cấu hình URI nhưng không kết nối được, server dừng. Khi có MongoDB, session lưu trong collection `sessions`; khi chưa có DB, MemoryStore chỉ dành cho thử khung local. Thiếu secret trong development sẽ dùng secret tạm thay đổi sau restart. Production bắt buộc MongoDB và secret, dùng HTTPS cho cookie Secure. Nếu triển khai sau reverse proxy, nhóm cần cấu hình trust proxy phù hợp hạ tầng trước khi bật login.
+Seed chỉ thêm sản phẩm/danh mục chưa có, giữ mã demo và không ghi đè giá/tồn kho đã sửa. Không tự import tài khoản/mật khẩu Web1. Khi chưa có MongoDB, chỉ dùng health API và session guest để kiểm tra khung; dữ liệu/auth cần DB. `GET /api/health` là HTTP liveness, không phải kiểm tra readiness trực tiếp.
 
-Cookie `freshmart.sid` chỉ giữ session ID, có HttpOnly, SameSite=Lax, hết hạn sau 1 giờ. Auth chưa triển khai. A cần xác thực mật khẩu hash, regenerate session khi login và destroy khi logout; không đưa mật khẩu vào cookie hoặc trả mật khẩu đã giải mã về Angular. B dùng `req.session.cart` cho giỏ khách và phối hợp A giữ giỏ qua regenerate/merge. Chi tiết trong `docs/team-guide.md`.
+## Tài khoản quản trị
 
-## Cấu trúc và phân công
+Điền `DEV_ADMIN_EMAIL`, `DEV_ADMIN_PHONE`, `DEV_ADMIN_PASSWORD`, `DEV_ADMIN_NAME` trong `.env` rồi chạy:
 
-```text
-backend/
-  src/
-    app.js                 Middleware, static images, mount router
-    server.js              Kết nối MongoDB, mở/đóng server
-    config/                env, database, session
-    middleware/            Xử lý lỗi; auth/role/validation sẽ bổ sung
-    modules/
-      auth/                A
-      users/               A
-      catalog/             A: routes, controller, model mẫu đọc MongoDB
-      cart/                B
-      vouchers/            B
-      orders/              B
-      inventory/           B
-  public/images/           Vị trí ảnh static, chưa có API upload
-  scripts/seed-catalog.js   Import categories/products từ frontend
-  tests/                   Kiểm thử khung
-  docs/                    Quy ước API, đối chiếu bài học, Postman collection
+```bash
+npm run seed:admin
 ```
 
-Luồng mẫu: route → controller → model → MongoDB. Khi checkout hoặc voucher phức tạp, thêm service nghiệp vụ trong module đó. Không bắt buộc mọi module phải có đủ các lớp ngay khi còn trống. Giữ một backend chung; mỗi người sửa module của mình.
+Mật khẩu ít nhất 8 ký tự và tối đa 72 byte UTF-8, lưu bằng bcrypt hash. Script chỉ tạo tài khoản mới; không ghi đè/nâng quyền tài khoản đã có. Không có tài khoản hay mật khẩu admin mặc định. Khách tự đăng ký trên giao diện. Không commit `.env` hoặc thông tin đăng nhập.
 
-## API đã có
+## Các lệnh
 
-| Method | URL | Kết quả |
-|---|---|---|
-| GET | `/` | Thông tin server |
-| GET | `/api/health` | Trạng thái HTTP và khởi tạo DB |
-| GET | `/api/products` | Mảng sản phẩm đang bán từ MongoDB |
-| GET | `/api/products/:id` | Sản phẩm theo mã như `p-0053` |
-| GET | `/api/products/slug/:slug` | Sản phẩm theo slug hiện có |
-| GET | `/api/categories` | Mảng danh mục theo sortOrder |
+| Lệnh | Mục đích |
+|---|---|
+| `npm run dev` | Nodemon tự khởi động lại khi sửa code |
+| `npm start` | Chạy server bằng Node |
+| `npm test` | Kiểm tra HTTP, session và quy tắc dùng chung |
+| `npm run test:integration` | Kiểm tra phần A với MongoDB local trong DB thử riêng, xóa sau khi chạy |
+| `npm run seed:catalog` | Nhập products/categories còn thiếu |
+| `npm run seed:admin` | Tạo admin từ cấu hình riêng |
 
-Giữ tên trường Angular hiện có như `sale_price`, `image_url`, `category`, `active`. Seed dùng `_id` string bằng `id`, giữ các mã `p-...`; không ép mã demo thành ObjectId. Với dữ liệu mới, thống nhất tiếp quy tắc cấp ID trước khi làm POST. Seed chỉ thêm mã chưa có, không ghi đè giá/tồn kho đã sửa; không import users hoặc mật khẩu demo. Seed không tự chạy khi khởi động server; kiểm tra URI và tên DB trước khi chạy lệnh import.
+Integration test dùng `MONGODB_TEST_URI` nếu có, mặc định MongoDB local; luôn tạo tên DB thử mới, không dùng DB làm việc của nhóm.
 
-Chưa có auth, admin CRUD, checkout, upload hoặc API nghiệp vụ khác. Frontend FreshMart hiện vẫn đọc JSON/localStorage cho đến khi team nối từng service.
+## Điểm nối cho B
 
-## Nối Angular
+- Đọc [backend-contract.md](docs/backend-contract.md) trước khi code: đây là nguồn chuẩn về session, API giỏ/đơn, tiền, trạng thái và stock.
+- A: `src/modules/auth`, `users`, `catalog`; B: `cart`, `vouchers`, `orders`, `inventory`.
+- B dùng middleware `requireAuth`/`requireAdmin`; sau đó lấy user từ `req.user`.
+- Toàn bộ API ghi `/api` cần cookie và X-CSRF-Token; token lấy từ GET /api/auth/session và thay sau login/register.
+- MVP giỏ trong session cho guest và user; login giữ giỏ guest, logout xóa giỏ. Checkout cần login, chỉ COD.
+- A sở hữu thông tin/giá sản phẩm. Product mới stock=0, catalog PATCH từ chối stock/counters. B cập nhật stock qua inventory service trong cùng transaction với đơn.
+- `src/config/commerce.js` chứa phí ship, giá bán, bước quantity và ma trận trạng thái đã chốt.
+- `catalog.service.checkoutProducts(productIds, mongoSession)` hỗ trợ đọc trong cùng transaction. Dùng `getMongoClient()` để mở transaction; cần replica set/Atlas phù hợp.
+- Router/controller/model tách theo module; thêm service cho nghiệp vụ nhiều bước. Mount router B sau middleware chung trong `src/app.js`.
 
-`FRONTEND_ORIGIN` mặc định `http://localhost:4200`. Khi gọi trực tiếp backend, dùng `{ withCredentials: true }` cho các API session. Có thể thêm `src/proxy.conf.json` phía Angular và cấu hình `proxyConfig` cho `serve`, như bài LearnAngular; mẫu cho builder hiện tại:
+## Frontend và phiên đăng nhập
 
-```json
-{
-  "/api/**": { "target": "http://localhost:3000", "secure": false },
-  "/images/**": { "target": "http://localhost:3000", "secure": false }
-}
-```
+Frontend đã có dev proxy `/api/**` → localhost:3000, interceptor cookie/CSRF và gọi API phần A. Chạy backend trước, sau đó `cd frontend` và `npm ci`, `npm start`. Auth không dùng localStorage/users.json; catalog lấy dữ liệu MongoDB. Public API trả mảng mặc định; admin user API trả phân trang.
 
-Frontend config chưa được sửa trong lần chỉnh khung này. Kiểm thử API trước bằng collection trong `docs`, sau đó nối HttpClient. CORS/proxy chỉ hỗ trợ kết nối; quyền truy cập vẫn phải kiểm tra trên backend.
+Các phần giỏ, voucher, công thức và đơn thuộc B/content vẫn có dữ liệu demo. Các thao tác checkout, đổi trạng thái đơn và thay stock demo đã chặn để tránh giả lập ghi vào dữ liệu thật; B nối API rồi bật lại. Upload ảnh, OTP/email reset, social login, loyalty và thanh toán online chưa nằm trong MVP.
 
-## Kiểm tra bằng Postman
+Session dùng cookie HttpOnly/SameSite=Lax, 1 giờ hoặc 7 ngày nếu rememberMe. Có DB thì lưu collection sessions; MemoryStore chỉ cho local chưa cấu hình DB. Production yêu cầu URI/secret, HTTPS; nếu có reverse proxy phải cấu hình trust proxy theo hạ tầng. Admin/user role và trạng thái được kiểm tra từ DB trên mỗi request cần quyền.
 
-Import `docs/freshmart.postman_collection.json` vào Postman. Folder `Starter` chạy khi server chưa có DB; folder `Catalog - requires seeded MongoDB` cần cấu hình và seed DB trước. Có thể chạy folder Starter bằng CLI đã cài trên máy:
+## Postman
+
+Import `docs/freshmart.postman_collection.json`. Folder Starter kiểm tra server; các folder auth/catalog cần DB. Postman phải giữ cookie jar và lấy token trước khi gửi request ghi. Có thể chạy Starter trên máy này:
 
 ```bash
 /Users/quynhlu/.local/bin/postman collection run docs/freshmart.postman_collection.json -i Starter --no-report-events
 ```
+
+Xem [phân công](docs/backend-task-assignment.md) và [đối chiếu môn học](docs/team-guide.md) để biết phạm vi hai người.

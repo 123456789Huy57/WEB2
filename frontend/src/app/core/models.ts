@@ -12,7 +12,7 @@ export interface Product {
   netWeightGram?: number; unitWeightGram?: number; sellUnit?: string; tags?: string[];
 }
 export interface Category {
-  id: string; slug: string; name: string; description: string; productCount: number; sortOrder: number;
+  id: string; slug: string; name: string; description: string; active?: boolean; productCount: number; sortOrder: number;
   subcategories: { id: string; name: string }[];
 }
 export interface Voucher {
@@ -37,8 +37,7 @@ export interface Store { id: string; name: string; address: string; phone: strin
 
 export interface CartLine { id: string; qty: number; }
 export type Role = 'customer' | 'admin';
-export interface User { id: string; fullName: string; email: string; phone: string; address: string; role: Role; createdAt?: string; }
-export interface UserRecord extends User { password: string; }
+export interface User { id: string; fullName: string; email: string; phone: string; address: string; role: Role; isActive?: boolean; createdAt?: string; }
 export type PaymentMethod = 'cod' | 'bank' | 'momo';
 export type OrderStatus = 'pending' | 'confirmed' | 'preparing' | 'shipping' | 'delivered' | 'cancelled';
 export interface OrderItem { id: string; qty: number; price: number; }

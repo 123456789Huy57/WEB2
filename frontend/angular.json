@@ -33,6 +33,7 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": { "proxyConfig": "src/proxy.conf.json" },
           "configurations": {
             "production": { "buildTarget": "freshmart:build:production" },
             "development": { "buildTarget": "freshmart:build:development" }

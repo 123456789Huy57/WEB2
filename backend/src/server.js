@@ -5,6 +5,7 @@ const { createApp } = require('./app');
 async function start() {
   if (env.mongodbUri) {
     await connectDatabase(env.mongodbUri, env.mongodbDb);
+    await require('./config/indexes').ensureIndexes();
     console.log('MongoDB connected. Sessions use MongoDB.');
   } else {
     console.log('No MONGODB_URI: local starter only. Database APIs return 503; sessions use temporary memory.');

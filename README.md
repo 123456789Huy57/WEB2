@@ -5,7 +5,7 @@
 | Thư mục | Nội dung | Nhóm phụ trách |
 |---|---|---|
 | `frontend/` | Angular 20: cửa hàng, Meal Planner, tài khoản, tra cứu đơn, khu quản trị | Frontend |
-| `backend/` | Node.js + Express + MongoDB native driver; khung server, session và API đọc catalog | Backend |
+| `backend/` | Express + MongoDB: auth/session, user, catalog; hợp đồng giỏ/đơn/kho cho B | Backend |
 
 ## Chạy frontend
 
@@ -28,6 +28,8 @@ npm run dev
 ```
 
 Health API: `http://localhost:3000/api/health`. Điền MongoDB URI và session secret trong `.env` để dùng database/session bền. Xem [backend/README.md](backend/README.md) để import catalog và [hướng dẫn nhóm](backend/docs/team-guide.md) để chia việc theo bài học.
+
+Hợp đồng A/B đã chốt: [backend/docs/backend-contract.md](backend/docs/backend-contract.md). Phần A và Angular tương ứng đã nối API; phần B tiếp tục giỏ, COD, đơn và kho.
 
 ## Cách làm việc nhóm
 

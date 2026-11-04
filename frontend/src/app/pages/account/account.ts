@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../core/auth.service';
+import { AuthService, apiMessage } from '../../core/auth.service';
 import { OrderService, OrderView } from '../../core/order.service';
 import { ProductService } from '../../core/product.service';
 import { CartService } from '../../core/cart.service';
@@ -51,12 +51,15 @@ export class Account {
     ok.forEach(l => this.cart.add(l.p.id, Math.min(l.qty, l.p.stock)));
     this.toast.show(ok.length < o.lines.length ? `Đã thêm ${ok.length}/${o.lines.length} sản phẩm, số còn lại tạm hết hàng` : `Đã thêm ${ok.length} sản phẩm của đơn ${o.orderCode} vào giỏ`);
   }
-  protected async cancelOrder(o: OrderView): Promise<void> {
-    if (!(await this.cf.ask(`Hủy đơn ${o.orderCode}?`, 'Đơn chưa được soạn nên bạn hủy được ngay. Nếu đã chuyển khoản, FreshMart hoàn tiền trong 3–5 ngày làm việc.', 'Hủy đơn'))) return;
-    this.orderSvc.setStatus(o.orderCode, 'cancelled');
-    this.toast.show(`Đã hủy đơn ${o.orderCode}`);
+  protected async cancelOrder(_o: OrderView): Promise<void> {
+    this.toast.show('Quản lý đơn hàng đang được hoàn thiện.');
   }
   protected useVoucher(code: string): void { this.cart.setVoucher(code); this.router.navigateByUrl('/gio-hang'); }
-  protected saveProfile(): void { this.auth.update({ ...this.profile, fullName: this.profile.fullName.trim() }); this.toast.show('Đã lưu thông tin'); }
-  protected logout(): void { this.auth.logout(); this.router.navigateByUrl('/'); }
+  protected async saveProfile(): Promise<void> {
+    try { await this.auth.update({ ...this.profile, fullName: this.profile.fullName.trim() }); this.toast.show('Đã lưu thông tin'); }
+    catch (error) { this.toast.show(apiMessage(error)); }
+  }
+  protected async logout(): Promise<void> {
+    try { await this.auth.logout(); this.router.navigateByUrl('/'); } catch (error) { this.toast.show(apiMessage(error)); }
+  }
 }

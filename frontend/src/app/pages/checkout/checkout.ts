@@ -71,32 +71,6 @@ export class Checkout {
   }
 
   protected submit(): void {
-    this.tried.set(true);
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      const first = (['name', 'phone', 'email', 'address'] as const).find(k => this.form.controls[k].invalid);
-      document.getElementById({ name: 'f-name', phone: 'f-phone', email: 'f-email', address: 'f-addr' }[first!])?.focus();
-      this.toast.show('Kiểm tra lại thông tin người nhận');
-      return;
-    }
-    // Tồn kho có thể đã thay đổi từ lúc bỏ vào giỏ
-    const over = this.cart.lines().filter(l => l.qty > l.p.stock);
-    if (over.length) {
-      over.forEach(l => this.cart.set(l.p.id, l.p.stock));
-      this.toast.show(`${this.ps.shortName(over[0].p)} chỉ còn ${this.ps.qty(over[0].p.stock)} ${this.ps.unit(over[0].p)}, giỏ hàng đã được cập nhật`);
-      return;
-    }
-    this.sending.set(true);
-    const v = this.form.getRawValue();
-    const total = this.t().total;
-    // Khi có backend: this.http.post('/api/orders', ...) thay cho dòng dưới
-    setTimeout(() => {
-      const t = this.t();
-      const o = this.orders.place(v, this.cart.lines().map(l => ({ id: l.p.id, qty: l.qty })), { ship: t.ship, disc: t.disc, voucherCode: t.voucher?.code }, this.auth.user());
-      this.cart.clear();
-      this.done.set({ code: o.orderCode, total, slot: v.slot, payment: PAYMENT_LABEL[v.payment], firstName: v.name.trim().split(' ').slice(-1)[0], phone: v.phone, guest: !this.auth.user() });
-      this.sending.set(false);
-      window.scrollTo(0, 0);
-    }, 600);
+    this.toast.show('Đặt hàng đang được hoàn thiện. Vui lòng quay lại sau.');
   }
 }

@@ -63,7 +63,7 @@
           @if (t().voucher) { <div><span>Mã {{ t().voucher!.code }}</span><span class="num">−{{ t().disc | vnd }}</span></div> }
           <div class="total"><span>Tổng cộng</span><b class="num">{{ t().total | vnd }}</b></div>
         </div>
-        <button class="btn btn-forest w100" type="submit" [disabled]="sending()">{{ sending() ? 'Đang gửi đơn…' : 'Đặt hàng' }}</button>
+        <button class="btn btn-forest w100" type="submit" [disabled]="true">Đặt hàng đang được hoàn thiện</button>
         <p class="small muted" style="margin-top:14px">Bấm đặt hàng là bạn đồng ý với chính sách giao hàng và đổi trả của FreshMart.</p>
       </aside>
     </form>

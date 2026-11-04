@@ -29,7 +29,7 @@ function createSessionMiddleware() {
     });
   }
   // Without MongoDB, MemoryStore is used only for local starter checks.
-  // No login/cart endpoints are implemented by this configuration.
+  // Auth endpoints use this same middleware; B adds cart routes.
   return session(options);
 }
 

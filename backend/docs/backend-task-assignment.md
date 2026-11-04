@@ -1,5 +1,6 @@
 # Phân công backend FreshMart
 
+**Cập nhật phần A:** Auth, user, catalog và phần Angular tương ứng đã triển khai. Session/API/quy tắc mới chốt ở [hợp đồng backend v1](backend-contract.md) là nguồn chuẩn; MVP giỏ trong session, logout xóa giỏ, checkout cần login và chỉ COD. Các mục dưới đây là phân công và ghi chú nền tảng.
 Phân công cho hai người theo phương án ban đầu: A phụ trách tài khoản, bảo mật và catalog; B phụ trách giao dịch, khuyến mãi và vận hành. Ưu tiên hoàn thành luồng mua hàng COD trước, sau đó bổ sung các tính năng mở rộng.
 
 ## Khung đã có

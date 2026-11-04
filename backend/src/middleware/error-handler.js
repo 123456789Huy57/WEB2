@@ -10,6 +10,12 @@ function errorHandler(error, req, res, next) {
   if (error.type === 'entity.too.large') {
     return res.status(413).json({ error: { code: 'PAYLOAD_TOO_LARGE', message: 'Request body is too large.' } });
   }
+  if (error instanceof require('../lib/http-error').HttpError) {
+    return res.status(error.status).json({ error: { code: error.code, message: error.message, ...(error.details ? { details: error.details } : {}) } });
+  }
+  if (error.code === 11000) {
+    return res.status(409).json({ error: { code: 'DUPLICATE_VALUE', message: 'Email, số điện thoại hoặc slug đã được sử dụng.' } });
+  }
   if (error.code === 'DATABASE_UNAVAILABLE' && error.status === 503) {
     return res.status(503).json({ error: { code: error.code, message: error.message } });
   }

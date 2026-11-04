@@ -12,6 +12,7 @@ const { notFound, errorHandler } = require('./middleware/error-handler');
 function createApp() {
   const app = express();
   app.disable('x-powered-by');
+  app.use('/api', (req, res, next) => { res.set('Cache-Control', 'no-store'); next(); });
   app.use(helmet());
   app.use(cors({ origin: env.frontendOrigin, credentials: true }));
   if (env.nodeEnv !== 'test') app.use(morgan('dev'));
@@ -26,8 +27,11 @@ function createApp() {
   app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', service: 'freshmart-backend', database: databaseStatus() });
   });
+  app.use('/api', require('./middleware/csrf').requireCsrf);
+  app.use('/api', require('./modules/auth/auth.routes'));
+  app.use('/api', require('./modules/users/users.routes'));
   app.use('/api', require('./modules/catalog/catalog.routes'));
-  // A/B mount their auth, users, cart, vouchers, orders and inventory routers here.
+  // B mounts cart, vouchers, orders and inventory routers here (global CSRF applies).
   app.use(notFound);
   app.use(errorHandler);
   return app;

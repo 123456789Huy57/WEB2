@@ -1,5 +1,6 @@
 # Hướng dẫn chia việc backend
 
+**Cập nhật phần A:** Auth, user, catalog và phần Angular tương ứng đã triển khai. Session/API/quy tắc mới chốt ở [hợp đồng backend v1](backend-contract.md) là nguồn chuẩn; MVP giỏ trong session, logout xóa giỏ, checkout cần login và chỉ COD. Các mục dưới đây là phân công và ghi chú nền tảng.
 ## Đối chiếu môn học
 
 Đã đọc nội dung văn bản của 8 bộ slide được cung cấp (702 slide) và đối chiếu code thực hành trong LearnAngular.
@@ -26,7 +27,7 @@ Mongoose xuất hiện trong danh sách thư viện của slide VII, nhưng truy
 - A: auth, users, catalog; bổ sung hash password, login/logout, profile và kiểm tra customer/admin.
 - B: cart, vouchers, orders, inventory; giỏ khách trong req.session.cart chỉ chứa productId và quantity, không tin giá client.
 - Cùng thống nhất: ID, status `preparing` như Angular hiện tại, phí ship, guest checkout, giá/stock và response.
-- API admin chưa mở. Khi bổ sung POST/PUT/DELETE phải gắn auth, role, ownership và validation.
+- API admin phần A đã có auth/role/validation; phần B phải dùng cùng middleware khi bổ sung endpoint.
 - Không coi việc có cookie/session middleware là đã hoàn thành đăng nhập/phân quyền.
 
 Mỗi module có routes, controller, model khi cần. Controller nhận req/res; model gọi collection. Service bổ sung cho nghiệp vụ nhiều bước như checkout; các truy vấn cùng giao dịch phải nhận chung MongoDB session.
@@ -41,7 +42,7 @@ Trước khi thêm API ghi dùng cookie, nhóm bổ sung kiểm tra Origin/CSRF 
 
 Seed chỉ nhập products/categories bằng mã string hiện có, không đổi field names hoặc import mật khẩu. Product model không trả _id nội bộ. Sau này nếu dùng ObjectId cho order/user mới, API vẫn cần id string nhất quán và quan hệ productId giữ cùng kiểu mã đã chọn.
 
-API đọc mẫu trả mảng hoặc object JSON cho HttpClient. Lỗi có `{ error: { code, message } }`. Chưa có pagination/filter nâng cao. Không thay API đang đọc JSON của Angular cho đến khi frontend được nối theo từng luồng.
+API đọc trả mảng hoặc object JSON cho HttpClient; có query phân trang/lọc theo hợp đồng. Lỗi có `{ error: { code, message } }`. Auth/catalog Angular đã nối API; B nối tiếp giỏ, đơn và kho theo từng luồng.
 
 ## Mốc tiếp theo
 

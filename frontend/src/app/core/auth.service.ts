@@ -1,43 +1,52 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
+import { User } from './models';
 import { DataService } from './data.service';
-import { User, UserRecord } from './models';
 import { store } from './storage';
 
-/**
- * Đăng nhập tạm phía trình duyệt để chạy được frontend (đối chiếu users.json + tài khoản đăng ký mới).
- * Nhóm Backend thay bằng POST /api/auth/login trả JWT, mật khẩu băm bằng bcrypt; giao diện không phải sửa.
- */
+type AuthResponse = { user: User | null; csrfToken: string };
+export function apiMessage(error: unknown): string {
+  return error instanceof HttpErrorResponse ? error.error?.error?.message || 'Không kết nối được máy chủ. Vui lòng thử lại.' : 'Thao tác chưa hoàn thành. Vui lòng thử lại.';
+}
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  private http = inject(HttpClient);
   private data = inject(DataService);
-  readonly user = signal<User | null>(store.get<User | null>('user', null));
+  readonly user = signal<User | null>(null);
+  readonly csrfToken = signal('');
   readonly isAdmin = computed(() => this.user()?.role === 'admin');
-
-  login(email: string, password: string): { ok: boolean; msg: string; user?: User } {
-    const e = email.trim().toLowerCase();
-    const u = this.data.users().find(x => x.email === e);
-    if (!u || u.password !== password) return { ok: false, msg: 'Email hoặc mật khẩu chưa đúng' };
-    const safe = strip(u);
-    this.setUser(safe);
-    return { ok: true, msg: '', user: safe };
+  async restore(): Promise<void> {
+    // Remove the old Web1 identity/password cache. The server session is authoritative.
+    store.remove('user'); store.remove('users');
+    const response = await firstValueFrom(this.http.get<AuthResponse>('/api/auth/session'));
+    this.accept(response);
   }
-  register(d: { fullName: string; phone: string; email: string; password: string }): { ok: boolean; msg: string } {
-    const email = d.email.trim().toLowerCase();
-    if (this.data.users().some(u => u.email === email)) return { ok: false, msg: 'Email này đã có tài khoản. Bạn đăng nhập nhé.' };
-    this.data.addUser({ id: 'u-' + Date.now(), fullName: d.fullName, phone: d.phone, email, password: d.password, address: '', role: 'customer', createdAt: new Date().toISOString() });
-    return this.login(email, d.password);
+  private accept(response: AuthResponse): void {
+    this.user.set(response.user); this.csrfToken.set(response.csrfToken);
   }
-  update(patch: Partial<User>): void {
-    const u = this.user();
-    if (!u) return;
-    this.data.updateUser(u.id, patch);
-    this.setUser({ ...u, ...patch });
+  async login(email: string, password: string): Promise<{ ok: boolean; msg: string; user?: User }> {
+    return this.authenticate('/api/auth/login', { email, password });
   }
-  logout(): void { this.setUser(null); }
-  private setUser(u: User | null): void { this.user.set(u); store.set('user', u); }
-}
-
-function strip(u: UserRecord): User {
-  const { password: _pw, ...safe } = u;
-  return safe;
+  async register(data: { fullName: string; phone: string; email: string; password: string }): Promise<{ ok: boolean; msg: string; user?: User }> {
+    return this.authenticate('/api/auth/register', data);
+  }
+  private async authenticate(url: string, body: object): Promise<{ ok: boolean; msg: string; user?: User }> {
+    try {
+      if (!this.csrfToken()) await this.restore();
+      const response = await firstValueFrom(this.http.post<AuthResponse>(url, body));
+      this.accept(response);
+      await this.data.load(this.isAdmin());
+      return { ok: true, msg: '', user: response.user ?? undefined };
+    } catch (error) { return { ok: false, msg: apiMessage(error) }; }
+  }
+  async update(patch: Pick<User, 'fullName' | 'phone' | 'address'>): Promise<void> {
+    const user = await firstValueFrom(this.http.patch<User>('/api/users/me', patch));
+    this.user.set(user);
+  }
+  async logout(): Promise<void> {
+    await firstValueFrom(this.http.post('/api/auth/logout', {}));
+    this.user.set(null); this.csrfToken.set('');
+    await this.data.load(false);
+  }
 }

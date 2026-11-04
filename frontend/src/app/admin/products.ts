@@ -1,6 +1,7 @@
 import { Component, ElementRef, computed, inject, signal, viewChild } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { apiMessage } from '../core/auth.service';
 import { DataService } from '../core/data.service';
 import { ProductService } from '../core/product.service';
 import { ToastService } from '../core/toast.service';
@@ -65,7 +66,7 @@ const PAGE = 20;
           <div class="field"><label for="pf-price">Giá (đ)</label><input id="pf-price" type="number" min="0" step="500" formControlName="price">@if (bad('price')) { <span class="err">Giá phải lớn hơn 0</span> }</div>
           <div class="field"><label for="pf-sale">Giá giảm (đ, 0 = không giảm)</label><input id="pf-sale" type="number" min="0" step="500" formControlName="sale_price">@if (saleBad()) { <span class="err">Giá giảm phải thấp hơn giá gốc</span> }</div>
           <div class="field"><label for="pf-unit">Đơn vị bán</label><select id="pf-unit" formControlName="unit"><option>Kg</option><option>Gói</option><option>Hộp</option><option>Chai</option><option>Khay</option><option>Trái</option><option>Bó</option><option>Lon</option><option>Túi</option><option>Bao</option></select></div>
-          <div class="field"><label for="pf-stock">Tồn kho</label><input id="pf-stock" type="number" min="0" step="0.5" formControlName="stock">@if (bad('stock')) { <span class="err">Tồn kho không âm</span> }</div>
+          <div class="field"><label for="pf-stock">Tồn kho</label><input id="pf-stock" type="number" min="0" step="0.5" formControlName="stock" readonly><span class="hint">Tồn kho được quản lý riêng tại mục Tồn kho.</span>@if (bad('stock')) { <span class="err">Tồn kho không âm</span> }</div>
           <div class="field full"><label for="pf-img">Link ảnh</label><input id="pf-img" formControlName="image_url" placeholder="https://..."></div>
           <div class="field full"><label for="pf-desc">Mô tả</label><textarea id="pf-desc" formControlName="description"></textarea></div>
           <label class="check full"><input type="checkbox" formControlName="active"> Đang bán (hiện ở cửa hàng)</label>
@@ -114,7 +115,7 @@ export class AdminProducts {
       : { name: '', category: this.cat() || 'vegetables', brand: '', price: 0, sale_price: 0, unit: 'Kg', stock: 0, image_url: '', description: '', active: true });
     this.dlg().nativeElement.showModal();
   }
-  protected save(): void {
+  protected async save(): Promise<void> {
     this.tried.set(true);
     if (this.form.invalid || this.saleBad()) return;
     const v = this.form.getRawValue();
@@ -128,13 +129,15 @@ export class AdminProducts {
       img: v.image_url.trim() && v.image_url !== old?.image_url ? undefined : old?.img,
       description: v.description.trim() || `${v.name.trim()} chọn lọc, giao nhanh trong ngày.`, active: v.active
     } as Product;
-    this.data.saveProduct(p);
-    this.dlg().nativeElement.close();
-    this.toast.show(old ? `Đã lưu ${this.ps.shortName(p)}` : `Đã thêm ${this.ps.shortName(p)}`);
+    try {
+      await this.data.saveProduct(p);
+      this.dlg().nativeElement.close();
+      this.toast.show(old ? `Đã lưu ${this.ps.shortName(p)}` : `Đã thêm ${this.ps.shortName(p)}`);
+    } catch (error) { this.toast.show(apiMessage(error)); }
   }
-  protected toggleActive(p: Product): void {
-    this.data.saveProduct({ ...p, active: p.active === false });
-    this.toast.show(p.active === false ? `Đã hiện ${this.ps.shortName(p)} trên cửa hàng` : `Đã ẩn ${this.ps.shortName(p)} khỏi cửa hàng`);
+  protected async toggleActive(p: Product): Promise<void> {
+    try { await this.data.saveProduct({ ...p, active: p.active === false }); this.toast.show('Đã cập nhật trạng thái sản phẩm'); }
+    catch (error) { this.toast.show(apiMessage(error)); }
   }
 }
 
