@@ -3,15 +3,16 @@ import { DataService } from '../../core/data.service';
 import { ProductService } from '../../core/product.service';
 import { CartService } from '../../core/cart.service';
 import { ToastService } from '../../core/toast.service';
-import { DIFF_LABEL, INGREDIENT_GROUPS, MEAL_LABEL, MealPlannerService, PlannerFilters, PlannerResult } from '../../core/meal-planner.service';
+import { DIFF_LABEL, INGREDIENT_GROUPS, MEAL_LABEL, MealPlannerService, PlannerFilters, PlannerResult, PurchaseLine } from '../../core/meal-planner.service';
 import { Recipe } from '../../core/models';
+import { DecimalPipe } from '@angular/common';
 import { norm, store } from '../../core/storage';
 import { VndPipe } from '../../shared/vnd.pipe';
 import { ImgFallbackDirective } from '../../shared/img-fallback.directive';
 
 @Component({
   selector: 'fm-meal-planner',
-  imports: [VndPipe, ImgFallbackDirective],
+  imports: [VndPipe, ImgFallbackDirective, DecimalPipe],
   templateUrl: './meal-planner.html',
   styleUrl: './meal-planner.css',
   encapsulation: ViewEncapsulation.None
@@ -68,14 +69,40 @@ export class MealPlanner implements AfterViewInit {
   private dlg = viewChild.required<ElementRef<HTMLDialogElement>>('dlg');
   protected current = signal<Recipe | null>(null);
   protected unchecked = signal<string[]>([]);
-  protected purchase = computed(() => { const r = this.current(); return r ? r.ingredients.map(l => this.mp.purchase(l, this.f().servings, r)) : []; });
+  protected manualQty = signal<Record<string, number>>({});
+  protected selectedProducts = signal<Record<string, string>>({});
+  protected purchase = computed(() => { const r = this.current(); return r ? r.ingredients.map(l => this.mp.purchase(l, this.f().servings, r, this.selectedProducts()[l.ingredientId])) : []; });
   protected missing = computed(() => this.purchase().filter(x => !this.isSel(x.line.ingredientId)));
-  protected chosen = computed(() => this.missing().filter(x => x.product && !this.unchecked().includes(x.line.ingredientId)));
-  protected chosenTotal = computed(() => this.chosen().reduce((s, x) => s + x.total, 0));
+  protected chosen = computed(() => this.missing().filter(x => x.product && !this.unchecked().includes(x.line.ingredientId) && (!x.manual || this.manualQuantity(x) > 0)));
+  protected chosenTotal = computed(() => this.chosen().reduce((s, x) => s + (x.manual ? this.manualQuantity(x) * this.ps.price(x.product!) : x.total), 0));
+
+  protected manualQuantity(item: PurchaseLine): number {
+    const p = item.product;
+    return p ? this.manualQty()[item.line.ingredientId] ?? this.ps.step(p) : 0;
+  }
+  protected setManualQuantity(id: string, value: number): void {
+    if (Number.isFinite(value) && value >= 0) this.manualQty.update(x => ({ ...x, [id]: value }));
+  }
+  protected quantityToAdd(item: PurchaseLine): number {
+    const p = item.product;
+    if (!p) return 0;
+    if (!item.manual) return item.cartQty;
+    const step = this.ps.step(p), requested = this.manualQuantity(item);
+    return Math.max(0, Math.floor(Math.min(requested, p.stock) / step + 1e-9) * step);
+  }
+  protected purchaseTotal(item: PurchaseLine): number {
+    return item.manual && item.product ? this.quantityToAdd(item) * this.ps.price(item.product) : item.total;
+  }
+  protected chooseProduct(ingredientId: string, productId: string): void {
+    this.selectedProducts.update(x => ({ ...x, [ingredientId]: productId }));
+  }
 
   protected open(id: string): void {
     this.current.set(this.mp.recipe(id) ?? null);
-    this.unchecked.set([]);
+    this.manualQty.set({});
+    this.selectedProducts.set({});
+    // Gia vị, hàng bán theo thùng/bao và lượng chưa quy đổi được cần khách chủ động xác nhận.
+    this.unchecked.set(this.purchase().filter(x => x.bulk || x.manual || x.ingredient?.categoryId === 'condiments').map(x => x.line.ingredientId));
     this.dlg().nativeElement.showModal();
     this.dlg().nativeElement.scrollTop = 0;
   }
@@ -88,10 +115,10 @@ export class MealPlanner implements AfterViewInit {
   protected toggleBuy(id: string): void {
     this.unchecked.update(u => (u.includes(id) ? u.filter(x => x !== id) : [...u, id]));
   }
-  protected addMissing(): void {
+  protected async addMissing(): Promise<void> {
     const items = this.chosen();
-    items.forEach(x => this.cart.add(x.product!.id, x.cartQty));
-    this.toast.show(`Đã thêm ${items.length} sản phẩm còn thiếu của “${this.current()!.name}” vào giỏ`);
+    for (const item of items) await this.cart.add(item.product!.id, this.quantityToAdd(item));
+    this.toast.show(`Đã xử lý ${items.length} sản phẩm còn thiếu của “${this.current()!.name}” vào giỏ`);
     this.dlg().nativeElement.close();
   }
 }

@@ -70,11 +70,11 @@ export class CartService {
       await this.refresh();
     });
   }
-  add(id: string, qty?: number): void {
+  add(id: string, qty?: number): Promise<void> {
     const p = this.products.get(id), amount = qty ?? (p ? this.products.step(p) : 1);
     const q = this.qty(id) + amount;
     this.optimistic(id, q);
-    this.enqueue(async () => { await firstValueFrom(this.http.post('/api/cart/items', { productId: id, quantity: amount })); await this.refresh(); });
+    return this.enqueue(async () => { await firstValueFrom(this.http.post('/api/cart/items', { productId: id, quantity: amount })); await this.refresh(); });
   }
   /** Tăng / giảm một nấc (0,5 kg hoặc 1 đơn vị) */
   nudge(id: string, dir: 1 | -1): void { const p = this.products.get(id); this.set(id, this.qty(id) + dir * (p ? this.products.step(p) : 1)); }
@@ -96,13 +96,14 @@ export class CartService {
     this.state.set(s);
     this.bumps.update(n => n + 1);
   }
-  private enqueue(work: () => Promise<void>): void {
+  private enqueue(work: () => Promise<void>): Promise<void> {
     const seq = ++this.sequence;
     this.queue = this.queue.then(work).catch(async error => {
       this.error.set(this.message(error));
       this.toast.show(this.message(error));
       await this.refresh().catch(() => {});
     }).then(() => { if (seq === this.sequence && !this.error()) this.error.set(''); });
+    return this.queue;
   }
   private async refresh(): Promise<void> {
     const response = await firstValueFrom(this.http.get<any>('/api/cart'));

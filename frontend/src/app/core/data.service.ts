@@ -26,10 +26,10 @@ export class DataService {
         products: this.http.get<Product[]>(admin ? '/api/admin/products' : '/api/products'),
         categories: this.http.get<Category[]>(admin ? '/api/admin/categories' : '/api/categories'),
         vouchers: this.http.get<Voucher[]>(admin ? '/api/admin/vouchers' : '/api/vouchers'),
-        recipes: this.http.get<Recipe[]>('/data/recipes.json'),
-        ingredients: this.http.get<Ingredient[]>('/data/ingredients.json'),
-        map: this.http.get<IngredientProductMap>('/data/ingredient-product-map.json'),
-        stores: this.http.get<Store[]>('/data/stores.json'),
+        recipes: this.http.get<Recipe[]>('/api/recipes'),
+        ingredients: this.http.get<Ingredient[]>('/api/ingredients'),
+        map: this.http.get<IngredientProductMap>('/api/ingredient-products'),
+        stores: this.http.get<Store[]>('/api/stores'),
         users: admin ? this.http.get<Page<User>>('/api/admin/users?pageSize=100') : of(null)
       }));
       this.products.set(d.products);
