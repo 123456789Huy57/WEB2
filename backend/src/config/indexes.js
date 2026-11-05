@@ -31,6 +31,8 @@ async function ensureIndexes() {
     db.collection('ingredientProducts').createIndex({ ingredientId: 1 }, { unique: true }),
     db.collection('stores').createIndex({ id: 1 }, { unique: true }),
     db.collection('recipeCooks').createIndex({ day: 1, recipeId: 1 }),
+    db.collection('reviews').createIndex({ productId: 1, userId: 1 }, { unique: true }),
+    db.collection('reviews').createIndex({ productId: 1, createdAt: -1 }),
   ]);
 }
 module.exports = { ensureIndexes };

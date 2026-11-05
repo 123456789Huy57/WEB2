@@ -172,6 +172,17 @@ const collections = {
     },
   },
 
+  reviews: {
+    schema: {
+      required: ['id', 'productId', 'userId', 'orderId', 'rating', 'createdAt'],
+      properties: {
+        id: str, productId: str, userId: str, orderId: str, userName: str,
+        rating: { bsonType: 'number', minimum: 1, maximum: 5 }, comment: { bsonType: 'string', maxLength: 1000 },
+        hidden: bool, createdAt: str, updatedAt: str,
+      },
+    },
+  },
+
   stores: {
     schema: { required: ['id', 'name', 'address'], properties: { id: str, name: str, address: str, phone: str, hours: str } },
   },

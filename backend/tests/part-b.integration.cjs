@@ -291,3 +291,49 @@ test('Meal Planner API và tab Cộng đồng', async t => {
     assert.deepEqual(r.ingredients[0], { ingredientId: 'ing-trung', name: 'Trứng', count: 3 });
   });
 });
+
+test('Đánh giá sản phẩm', async t => {
+  const admin = await new Client().start();
+  await admin.post('/api/auth/login', { identifier: 'admin@example.com', password: 'adminpass123' });
+  const buyer = await new Client().register(40), stranger = await new Client().register(41);
+  await buyer.post('/api/cart/items', { productId: 'p-kg', quantity: 0.5 });
+  const { data: o } = await order(buyer);
+  const review = (c, body) => c.post('/api/products/p-kg/reviews', body);
+
+  await t.test('chưa nhận hàng thì chưa được đánh giá', async () => {
+    assert.equal((await buyer.get('/api/products/p-kg/reviews/me')).data.canReview, false);
+    assert.equal((await review(buyer, { rating: 5 })).data.error.code, 'REVIEW_NOT_ALLOWED');
+    assert.equal((await new Client().start().then(g => g.post('/api/products/p-kg/reviews', { rating: 5 }))).status, 401);
+  });
+
+  await t.test('đã giao: đánh giá, sửa lại, điểm trung bình cập nhật vào sản phẩm', async () => {
+    for (const [s, e] of [['confirmed', 'pending'], ['preparing', 'confirmed'], ['shipping', 'preparing'], ['delivered', 'shipping']]) {
+      await admin.patch(`/api/admin/orders/${o.id}/status`, { status: s, expectedStatus: e });
+    }
+    assert.equal((await buyer.get('/api/products/p-kg/reviews/me')).data.canReview, true);
+    assert.equal((await review(buyer, { rating: 6 })).status, 400);
+    const r = await review(buyer, { rating: 4, comment: 'Cá tươi' });
+    assert.equal(r.status, 201, JSON.stringify(r.data));
+    assert.equal((await review(buyer, { rating: 2, comment: 'Lần sau hơi ươn' })).status, 200, 'sửa lại, không tạo đánh giá thứ hai');
+    const list = (await stranger.get('/api/products/p-kg/reviews')).data;
+    assert.equal(list.count, 1);
+    assert.equal(list.average, 2);
+    assert.deepEqual(list.distribution, [0, 1, 0, 0, 0]);
+    assert.equal(list.items[0].userId, undefined, 'không lộ userId');
+    assert.equal(list.items[0].userName, '40');
+    assert.equal((await review(stranger, { rating: 1 })).data.error.code, 'REVIEW_NOT_ALLOWED');
+    const p = await db.getDatabase().collection('products').findOne({ id: 'p-kg' });
+    assert.equal(p.rating, 2);
+    assert.equal(p.review_count, 1);
+  });
+
+  await t.test('admin ẩn đánh giá; khách xóa đánh giá của mình', async () => {
+    const id = (await buyer.get('/api/products/p-kg/reviews/me')).data.review.id;
+    assert.equal((await stranger.request('PATCH', `/api/admin/reviews/${id}`, { hidden: true })).status, 403);
+    await admin.request('PATCH', `/api/admin/reviews/${id}`, { hidden: true });
+    assert.equal((await stranger.get('/api/products/p-kg/reviews')).data.count, 0);
+    await admin.request('PATCH', `/api/admin/reviews/${id}`, { hidden: false });
+    assert.equal((await buyer.del('/api/products/p-kg/reviews/me')).data.count, 0);
+    assert.equal((await db.getDatabase().collection('products').findOne({ id: 'p-kg' })).rating, -1);
+  });
+});
