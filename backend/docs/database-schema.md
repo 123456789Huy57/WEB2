@@ -20,6 +20,9 @@ Database `freshmart`. Bám theo `backend-contract.md` v1: ID là chuỗi, tiền
 | `ingredients` | Meal Planner | Mới | Nguyên liệu (75 loại) |
 | `ingredientProducts` | Meal Planner | Mới | Nguyên liệu nào mua bằng sản phẩm nào |
 | `stores` | Chung | Mới | Danh sách cửa hàng |
+| `recipeCooks` | Meal Planner | Mới | Lượt "nấu" món, dùng cho tab Cộng đồng |
+| `reviews` | Đánh giá | Mới | Đánh giá sản phẩm của khách đã nhận hàng |
+| `payments` | Thanh toán | Mới | Giao dịch VNPay / cổng giả lập |
 
 Giỏ hàng **không** có collection riêng: nằm trong `sessions` ở trường `cart` (contract mục 2).
 
@@ -42,9 +45,15 @@ erDiagram
   ingredients ||--o{ RECIPE_LINE : "dùng trong"
   ingredients ||--|| ingredientProducts : "mua bằng"
   ingredientProducts }o--o{ products : "productIds"
+  recipes ||--o{ recipeCooks : "được nấu"
+  users ||--o{ recipeCooks : "nấu"
+  products ||--o{ reviews : "được đánh giá"
+  users ||--o{ reviews : "viết"
+  orders ||--o{ reviews : "chứng minh đã mua"
+  orders ||--o{ payments : "thanh toán"
 ```
 
-GitHub tự vẽ sơ đồ trên. Muốn đưa vào báo cáo: mở file trên GitHub và chụp màn hình, hoặc dán khối mermaid vào https://mermaid.live để xuất ảnh.
+Bản đầy đủ có các trường chính: [erd.png](erd.png) (nguồn: [erd.mmd](erd.mmd), sửa rồi vẽ lại bằng `npx @mermaid-js/mermaid-cli -i erd.mmd -o erd.png`). GitHub tự vẽ sơ đồ quan hệ bên trên. Muốn đưa vào báo cáo: mở file trên GitHub và chụp màn hình, hoặc dán khối mermaid vào https://mermaid.live để xuất ảnh.
 
 Quy tắc nhúng/tách: `items` và `history` nhúng trong đơn vì luôn đi cùng đơn và có giới hạn; `inventoryMovements` và `voucherUsages` tách riêng vì tăng mãi và cần tra cứu độc lập.
 
@@ -128,6 +137,33 @@ Index: `{operationId:1}` unique; `{productId:1, createdAt:-1}`; `{orderId:1}`.
 ```
 
 Index: `{userId:1, code:1}` unique.
+
+## recipeCooks (tab Cộng đồng)
+
+```json
+{ "id": "2026-11-05:rec-003:u-UUID", "recipeId": "rec-003", "actorKey": "u-UUID | s-<hash session>", "day": "2026-11-05", "servings": 2, "at": "ISO" }
+```
+
+`_id` gồm ngày + món + người nên mỗi người chỉ tính một lượt cho một món mỗi ngày. Index: `{day:1, recipeId:1}`.
+
+## reviews
+
+```json
+{ "id": "rv-UUID", "productId": "p-0053", "userId": "u-UUID", "userName": "Lan", "orderId": "ord-UUID",
+  "rating": 5, "comment": "", "hidden": false, "createdAt": "ISO", "updatedAt": "ISO" }
+```
+
+Chỉ tạo được khi khách có đơn `delivered` chứa sản phẩm. `products.rating` và `products.review_count` được tính lại từ bảng này sau mỗi thay đổi (`rating = -1` khi chưa có đánh giá). Index: `{productId:1, userId:1}` unique; `{productId:1, createdAt:-1}`.
+
+## payments
+
+```json
+{ "id": "pay-UUID", "orderId": "ord-UUID", "orderCode": "FM-...", "userId": "u-UUID", "provider": "vnpay | mock",
+  "txnRef": "FM20261105...", "amount": 125000, "status": "pending | paid | failed | refund_required",
+  "responseCode": "00", "transactionNo": "", "paidAt": "ISO", "createdAt": "ISO" }
+```
+
+Mỗi lần bấm thanh toán là một giao dịch mới (`txnRef` unique). Kết quả chỉ được ghi một lần (cập nhật có điều kiện `status: pending`). Đơn bị hủy trong lúc khách đang trả tiền thì giao dịch chuyển `refund_required` để admin hoàn tiền. Index: `{txnRef:1}` unique; `{orderId:1, createdAt:-1}`.
 
 ## products — phần liên quan tới B
 
