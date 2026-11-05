@@ -15,7 +15,7 @@ Database `freshmart`. Bám theo `backend-contract.md` v1: ID là chuỗi, tiền
 | `vouchers` | B | Mới | Mã giảm giá |
 | `voucherUsages` | B | Mới | Mỗi lần dùng voucher cho một đơn |
 | `inventoryMovements` | B | Mới | Lịch sử tăng/giảm tồn kho |
-| `savedVouchers` | B | Tùy chọn | Voucher khách đã lưu |
+| `savedVouchers` | B | Mới (đã chốt làm) | Voucher khách đã lưu |
 
 Giỏ hàng **không** có collection riêng: nằm trong `sessions` ở trường `cart` (contract mục 2).
 
@@ -59,17 +59,28 @@ Index: `{id:1}` unique; `{orderCode:1}` unique; `{userId:1, idempotencyKey:1}` u
 
 ## vouchers
 
-Cấu trúc theo `public/data/vouchers.json` của frontend, thêm `createdAt`, `updatedAt`.
+Cấu trúc theo `public/data/vouchers.json` của frontend, thêm `audience`, `perUserLimit`, `createdAt`, `updatedAt`.
 
 ```json
 { "id": "v-001", "code": "WELCOME10", "title": "", "description": "",
   "category": "product", "discountType": "percent", "discountValue": 10,
   "minOrderValue": 100000, "maxDiscountValue": 50000,
+  "audience": "new_customer", "perUserLimit": 1,
   "usageLimit": 1000, "usedCount": 0,
   "startDate": "2026-01-01", "endDate": "2026-12-31", "isActive": true }
 ```
 
-`code` lưu chữ hoa, unique. Tăng `usedCount` bằng cập nhật có điều kiện `usedCount < usageLimit` trong cùng transaction với đơn.
+`code` lưu chữ hoa, unique.
+
+Ba loại giới hạn, kết hợp được với nhau:
+
+| Trường | Ý nghĩa | Ví dụ |
+|---|---|---|
+| `audience` | Ai được dùng: `all` (mọi khách đã đăng nhập) hoặc `new_customer` (khách chưa có đơn nào không bị hủy) | `WELCOME10`: chỉ khách mới |
+| `usageLimit` | Tổng số lượt của toàn hệ thống; `null` là không giới hạn | "Chỉ 500 suất" |
+| `perUserLimit` | Số lần mỗi khách được dùng; mặc định 1 | Mỗi người dùng 1 lần |
+
+Khi khách đăng ký tài khoản mới, voucher `new_customer` tự hiện trong "Ưu đãi của tôi" nhưng vẫn được kiểm tra lại lúc đặt đơn. Tăng `usedCount` bằng cập nhật có điều kiện `usedCount < usageLimit` trong cùng transaction với đơn.
 
 Index: `{id:1}` unique; `{code:1}` unique.
 
@@ -118,8 +129,12 @@ Index: `{userId:1, code:1}` unique.
 | Tồn kho ban đầu | Sản phẩm mới `stock=0` | Nhập qua API điều chỉnh kho khi có; tạm thời seed số liệu thử |
 | Công thức, nguyên liệu, ánh xạ | JSON tĩnh trong frontend | Chuyển lên MongoDB nếu làm Meal Planner API (giai đoạn sau) |
 
-## Việc cần chốt với Đồng
+## Đã chốt
 
-1. `savedVouchers` có làm trong MVP không.
-2. Có giới hạn lượt dùng mỗi người (`perUserLimit`) hay chỉ giới hạn tổng.
-3. Thời điểm tăng `sold_count`.
+1. Làm `savedVouchers` trong MVP.
+2. Voucher có 3 lớp giới hạn: `audience`, `usageLimit` (tổng suất), `perUserLimit` (mỗi khách).
+3. `sold_count` tăng khi đơn chuyển sang `delivered`; hủy đơn đã giao không xảy ra vì `delivered` là trạng thái cuối.
+
+## Cần Đồng xác nhận khi làm API
+
+Hủy đơn có dùng voucher thì hoàn lượt: giảm `usedCount` và xóa bản ghi `voucherUsages` trong cùng transaction với hoàn kho.
