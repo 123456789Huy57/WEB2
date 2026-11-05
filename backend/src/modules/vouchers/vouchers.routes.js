@@ -1,0 +1,11 @@
+const router = require('express').Router();
+const c = require('./vouchers.controller');
+const { requireAuth, requireAdmin } = require('../../middleware/auth');
+router.get('/vouchers', c.list);
+router.get('/users/me/vouchers', requireAuth, c.listSaved);
+router.post('/users/me/vouchers/:code', requireAuth, c.save);
+router.delete('/users/me/vouchers/:code', requireAuth, c.removeSaved);
+router.get('/admin/vouchers', requireAuth, requireAdmin, c.listAdmin);
+router.post('/admin/vouchers', requireAuth, requireAdmin, c.create);
+router.patch('/admin/vouchers/:id', requireAuth, requireAdmin, c.update);
+module.exports = router;

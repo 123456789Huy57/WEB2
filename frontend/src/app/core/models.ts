@@ -19,6 +19,7 @@ export interface Voucher {
   id: string; code: string; title: string; description: string;
   category: 'product' | 'shipping'; discountType: 'percent' | 'fixed'; discountValue: number;
   minOrderValue: number; maxDiscountValue?: number | null; startDate: string; endDate: string; isActive: boolean;
+  audience?: 'all' | 'new_customer'; perUserLimit?: number | null; usageLimit?: number | null; usedCount?: number;
 }
 export interface RecipeLine { productId: string; ingredientId: string; quantity: number; unit: string; }
 export interface Recipe {
@@ -40,12 +41,15 @@ export type Role = 'customer' | 'admin';
 export interface User { id: string; fullName: string; email: string; phone: string; address: string; role: Role; isActive?: boolean; createdAt?: string; }
 export type PaymentMethod = 'cod' | 'bank' | 'momo';
 export type OrderStatus = 'pending' | 'confirmed' | 'preparing' | 'shipping' | 'delivered' | 'cancelled';
-export interface OrderItem { id: string; qty: number; price: number; }
+export interface OrderItem {
+  id: string; qty: number; price: number;
+  productNameSnapshot?: string; unitSnapshot?: string; lineTotal?: number;
+}
 export interface Order {
-  orderCode: string; createdAt: string; updatedAt?: string; status: OrderStatus; items: OrderItem[];
+  id: string; orderCode: string; createdAt: string; updatedAt?: string; status: OrderStatus; items: OrderItem[];
   /** Có khi khách đăng nhập lúc đặt; khách vãng lai tra cứu bằng mã đơn + số điện thoại */
   userId?: string;
-  shippingFee: number; discount: number; voucherCode?: string; paymentMethod: PaymentMethod;
+  subtotal: number; total: number; shippingFee: number; discount: number; voucherCode?: string; paymentMethod: 'cod';
   customer?: CheckoutInfo;
 }
 export interface CheckoutInfo { name: string; phone: string; email: string; address: string; note: string; slot: string; payment: PaymentMethod; }

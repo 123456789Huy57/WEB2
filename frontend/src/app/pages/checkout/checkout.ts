@@ -6,6 +6,7 @@ import { ProductService } from '../../core/product.service';
 import { VoucherService } from '../../core/voucher.service';
 import { AuthService } from '../../core/auth.service';
 import { OrderService, PAYMENT_LABEL } from '../../core/order.service';
+import { apiMessage } from '../../core/auth.service';
 import { ToastService } from '../../core/toast.service';
 import { PaymentMethod } from '../../core/models';
 import { VndPipe } from '../../shared/vnd.pipe';
@@ -70,7 +71,18 @@ export class Checkout {
     return c.invalid && (c.touched || this.tried());
   }
 
-  protected submit(): void {
-    this.toast.show('Đặt hàng đang được hoàn thiện. Vui lòng quay lại sau.');
+  protected async submit(): Promise<void> {
+    this.tried.set(true);
+    this.form.markAllAsTouched();
+    if (this.form.invalid || this.sending()) return;
+    this.sending.set(true);
+    try {
+      const info = this.form.getRawValue();
+      const order = await this.orders.place(info, this.cart.voucherCode());
+      await this.cart.load();
+      this.done.set({ code: order.orderCode, total: order.total, slot: info.slot, payment: PAYMENT_LABEL.cod,
+        firstName: info.name.trim().split(/\s+/).at(-1) || info.name, phone: info.phone, guest: false });
+    } catch (error) { this.toast.show(apiMessage(error)); }
+    finally { this.sending.set(false); }
   }
 }

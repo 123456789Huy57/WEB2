@@ -21,7 +21,7 @@ Chạy/cấu hình backend theo [hướng dẫn backend](../backend/README.md), 
 
 Frontend đã có dev proxy, cookie và CSRF interceptor. Login/profile/catalog admin dùng API; JSON/localStorage không còn là nguồn chuẩn của tài khoản và sản phẩm. Reset dữ liệu mẫu trên giao diện chỉ xóa dữ liệu demo ở trình duyệt, không xóa MongoDB.
 
-Checkout, sửa stock và đổi trạng thái đơn đang chặn để chờ API phần B; đơn/voucher/giỏ hiện có vẫn là dữ liệu demo. Hợp đồng MVP chốt member-only checkout và COD. B nối API rồi bật chức năng tương ứng.
+Giỏ, quote, voucher, checkout COD, lịch sử đơn, trạng thái đơn và điều chỉnh kho đã nối API phần B. Hợp đồng MVP yêu cầu đăng nhập khi đặt hàng và chỉ hỗ trợ COD. Công thức/nguyên liệu vẫn đọc JSON tĩnh.
 
 ## Các màn hình
 
@@ -31,7 +31,7 @@ Checkout, sửa stock và đổi trạng thái đơn đang chặn để chờ AP
 | `/san-pham?c=vegetables&q=...` | Danh sách, lọc theo quầy, loại, giá, giảm giá; sắp xếp | `pages/catalog` |
 | `/san-pham/:id` | Chi tiết sản phẩm, dinh dưỡng, yêu thích | `pages/product` |
 | `/gio-hang` | Giỏ hàng, mã giảm giá, miễn phí giao từ 300.000 đ | `pages/cart` |
-| `/thanh-toan` | Thanh toán (Reactive Forms), chờ API COD phần B | `pages/checkout` |
+| `/thanh-toan` | Thanh toán COD bằng API phần B (Reactive Forms) | `pages/checkout` |
 | `/meal-planner` | Chọn nguyên liệu → tiêu chí → gợi ý món → thêm phần còn thiếu vào giỏ | `pages/meal-planner` |
 | `/uu-dai` | Mã giảm giá, sản phẩm đang giảm | `pages/offers` |
 | `/cua-hang` | 12 cửa hàng, tìm theo quận | `pages/stores` |
@@ -73,7 +73,7 @@ src/
     admin/                 Khu quản trị (route con của /admin, khung riêng không có header cửa hàng)
     core/                  Service + kiểu dữ liệu (không có giao diện)
       models.ts            Interface Product, Recipe, Order… khớp JSON Web1
-      data.service.ts      Đọc JSON. ĐỔI BASE THÀNH API KHI CÓ BACKEND
+      data.service.ts      Nạp catalog/voucher từ API và nội dung Meal Planner từ JSON
       product.service.ts   Giá, % giảm, tìm kiếm không dấu
       cart.service.ts      Giỏ hàng (signal), phí giao, áp mã
       voucher.service.ts   Kiểm tra và tính mã giảm giá (giữ công thức Web1)
@@ -92,7 +92,7 @@ public/
 
 Phần A đã nối: AuthService, API interceptor, DataService, login/remember-me, đổi/quên mật khẩu, profile, admin products/categories/customers và upload ảnh. Session được khôi phục trước khi Angular vào route; customer không tải danh sách user hoặc sản phẩm ẩn.
 
-Phần B nối theo [backend-contract.md](../backend/docs/backend-contract.md): CartService → /api/cart, OrderService → /api/orders và /api/users/me/orders, admin order/inventory theo các endpoint trong hợp đồng. Không dùng catalog PATCH để trừ/hoàn kho. Giữ thuật toán Meal Planner hiện tại và đổi thao tác mua nguyên liệu sang Cart API khi B hoàn thành.
+Phần B gọi các API trong [backend-contract.md](../backend/docs/backend-contract.md): CartService dùng /api/cart và /api/checkout/quote; OrderService dùng /api/orders và /api/users/me/orders; màn admin dùng API order, inventory và voucher. Không dùng catalog PATCH để đổi stock. Thuật toán Meal Planner hiện giữ nguyên, nhưng thao tác thêm nguyên liệu thiếu đã đi qua Cart API.
 
 ## Quy ước giao diện
 

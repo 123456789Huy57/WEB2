@@ -94,7 +94,7 @@ export class AdminVouchers {
     if (v) this.form.controls.code.disable(); else this.form.controls.code.enable();
     this.dlg().nativeElement.showModal();
   }
-  protected save(): void {
+  protected async save(): Promise<void> {
     this.tried.set(true); this.form.markAllAsTouched();
     if (this.form.invalid || this.codeErr() || this.formErr()) return;
     const f = this.form.getRawValue();
@@ -102,11 +102,13 @@ export class AdminVouchers {
     const v: Voucher = {
       id: old?.id ?? 'v-' + Date.now().toString(36), code: f.code.trim().toUpperCase(), title: f.title.trim(), description: old?.description ?? f.title.trim(),
       category: f.category, discountType: f.discountType, discountValue: f.discountValue, minOrderValue: f.minOrderValue,
-      maxDiscountValue: f.maxDiscountValue || null, startDate: f.startDate, endDate: f.endDate, isActive: f.isActive
+      maxDiscountValue: f.maxDiscountValue || null, startDate: f.startDate, endDate: f.endDate, isActive: f.isActive,
+      audience: old?.audience ?? 'all', perUserLimit: old?.perUserLimit ?? 1, usageLimit: old?.usageLimit ?? null
     };
-    this.data.saveVoucher(v);
+    try { await this.data.saveVoucher(v); }
+    catch (error: any) { this.toast.show(error?.error?.error?.message || 'Không lưu được voucher.'); return; }
     this.dlg().nativeElement.close();
     this.toast.show(old ? `Đã lưu mã ${v.code}` : `Đã tạo mã ${v.code}`);
   }
-  protected toggle(v: Voucher): void { this.data.saveVoucher({ ...v, isActive: !v.isActive }); this.toast.show(v.isActive ? `Đã tắt mã ${v.code}` : `Đã bật mã ${v.code}`); }
+  protected async toggle(v: Voucher): Promise<void> { try { await this.data.saveVoucher({ ...v, isActive: !v.isActive }); this.toast.show((v.isActive ? 'Đã tắt mã ' : 'Đã bật mã ') + v.code); } catch (error: any) { this.toast.show(error?.error?.error?.message || 'Không cập nhật được voucher.'); } }
 }

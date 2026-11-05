@@ -62,6 +62,7 @@ export class AuthService {
   async logout(): Promise<void> {
     await firstValueFrom(this.http.post('/api/auth/logout', {}));
     this.user.set(null); this.csrfToken.set('');
+    await this.restore();
     await this.data.load(false);
   }
 }

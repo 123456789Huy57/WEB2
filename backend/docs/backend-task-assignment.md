@@ -1,6 +1,6 @@
 # Phân công backend FreshMart
 
-**Phần A đã hoàn thành:** xem [bàn giao phần A](part-a-handoff.md). Hợp đồng tích hợp chính thức ở [backend-contract.md](backend-contract.md). Phần B chưa triển khai giỏ/đơn/kho.
+**Phần A đã hoàn thành:** xem [bàn giao phần A](part-a-handoff.md). Hợp đồng tích hợp chính thức ở [backend-contract.md](backend-contract.md). Phần B đã có API backend và đã nối vào các màn Angular tương ứng; cần kiểm tra luồng ghi đơn trên môi trường dùng thử trước khi bàn giao.
 
 Phân công cho hai người theo phương án ban đầu: A phụ trách tài khoản, bảo mật và catalog; B phụ trách giao dịch, khuyến mãi và vận hành. Ưu tiên hoàn thành luồng mua hàng COD trước, sau đó bổ sung các tính năng mở rộng.
 
@@ -71,10 +71,10 @@ Nền tảng phần A nằm trên nhánh `main` (trước đây là `lu`). B t�
 - **Transaction:** dùng native MongoDB và cùng Mongo session cho đơn, kho, lượt dùng voucher và lịch sử biến động liên quan. Cần MongoDB replica set hoặc Atlas để chạy transaction; kiểm tra cấu hình máy trước khi làm checkout, không bỏ transaction để chạy trên standalone.
 - **Máy của B:** tự tạo `.env` và tài khoản admin theo README. Tài khoản `admin / 123` hiện chỉ là dữ liệu local trên máy A, không tự xuất hiện khi clone repo. Secret, dữ liệu session và hộp thư local không đưa lên Git.
 
-### Angular đang chờ B nối API
+### Trạng thái tích hợp Angular phần B
 
-- `core/cart.service.ts`, `core/order.service.ts` và phần voucher vẫn còn dữ liệu demo/localStorage; B thay bằng API theo contract. Auth, profile và catalog đã nối API thật.
-- Checkout, cập nhật trạng thái đơn và điều chỉnh kho hiện đang chặn thao tác chưa có API. Chỉ mở lại khi backend tương ứng hoạt động; sửa `DataService.adjustStock` để gọi API kho riêng, không đưa `stock` vào API sửa sản phẩm.
+- CartService và OrderService hiện gọi API; voucher được tải/lưu qua API. Công thức và nguyên liệu vẫn dùng JSON tĩnh.
+- Checkout COD, cập nhật trạng thái đơn và điều chỉnh kho đã nối API riêng. Không cập nhật stock qua API catalog.
 - Luồng mua nguyên liệu thiếu từ Meal Planner phải thêm vào cùng giỏ API. Dashboard phải lấy đơn thật; màn tra cứu công khai cũ cần chuyển sang lịch sử/chi tiết đơn của người đang đăng nhập.
 
 **Thứ tự bắt đầu:** giỏ → báo giá → đặt COD và transaction kho → lịch sử/hủy đơn → admin trạng thái/điều chỉnh kho → voucher/dashboard. Khi bàn giao, kiểm tra ít nhất: hai người mua sản phẩm cuối, gửi lại cùng khóa tạo đơn, rollback khi lỗi, hủy hai lần, customer gọi API admin và xem đơn người khác. Ghi cách chạy/kiểm thử cùng API mới trong tài liệu.

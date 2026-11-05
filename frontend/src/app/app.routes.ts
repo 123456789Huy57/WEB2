@@ -15,7 +15,7 @@ export const routes: Routes = [
   { path: 'cua-hang', title: 'Cửa hàng · FreshMart', loadComponent: () => import('./pages/stores/stores').then(m => m.Stores) },
   { path: 'dang-nhap', title: 'Đăng nhập · FreshMart', canActivate: [guestGuard], loadComponent: () => import('./pages/login/login').then(m => m.Login) },
   { path: 'tai-khoan', title: 'Tài khoản · FreshMart', canActivate: [authGuard], loadComponent: () => import('./pages/account/account').then(m => m.Account) },
-  { path: 'tra-cuu-don', title: 'Tra cứu đơn hàng · FreshMart', loadComponent: () => import('./pages/order-lookup/order-lookup').then(m => m.OrderLookup) },
+  { path: 'tra-cuu-don', redirectTo: 'tai-khoan', pathMatch: 'full' },
   { path: 'so-sanh', title: 'So sánh sản phẩm · FreshMart', loadComponent: () => import('./pages/compare/compare').then(m => m.Compare) },
   { path: 'thong-tin/:slug', loadComponent: () => import('./pages/info/info').then(m => m.Info) },
   { path: 'blog', title: 'Blog ẩm thực · FreshMart', loadComponent: () => import('./pages/blog/blog').then(m => m.Blog) },

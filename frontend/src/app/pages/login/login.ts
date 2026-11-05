@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
 import { VoucherService } from '../../core/voucher.service';
+import { OrderService } from '../../core/order.service';
 
 @Component({
   selector: 'fm-login',
@@ -48,6 +49,7 @@ export class Login {
   readonly admin = input<string>();
   private auth = inject(AuthService);
   private vs = inject(VoucherService);
+  private orders = inject(OrderService);
   private router = inject(Router);
   protected signup = signal(false);
   protected busy = signal(false);
@@ -64,6 +66,8 @@ export class Login {
     const r = await this.auth.login(this.email, this.password, this.rememberMe);
     this.busy.set(false);
     if (!r.ok) { this.err.set(r.msg); return; }
+    await this.orders.load(r.user?.role === 'admin');
+    await this.vs.loadSaved();
     this.router.navigateByUrl((this.next()?.startsWith('/') && !this.next()?.startsWith('//') ? this.next() : undefined) || (r.user?.role === 'admin' ? '/admin' : '/tai-khoan'));
   }
   protected async register(): Promise<void> {
@@ -77,6 +81,8 @@ export class Login {
     const r = await this.auth.register({ fullName: name, phone, email, password: this.password });
     this.busy.set(false);
     if (!r.ok) return this.err.set(r.msg);
+    await this.orders.load(false);
+    await this.vs.loadSaved();
     if (!this.vs.isSaved('WELCOME10')) this.vs.toggleSave('WELCOME10');
     this.router.navigateByUrl((this.next()?.startsWith('/') && !this.next()?.startsWith('//') ? this.next() : undefined) || '/tai-khoan');
   }

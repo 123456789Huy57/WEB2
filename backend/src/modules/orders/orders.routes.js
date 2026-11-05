@@ -1,0 +1,12 @@
+const router = require('express').Router();
+const c = require('./orders.controller');
+const { requireAuth, requireAdmin } = require('../../middleware/auth');
+router.post('/orders', requireAuth, c.create);
+router.get('/users/me/orders', requireAuth, c.listMine);
+router.get('/users/me/orders/:id', requireAuth, c.getMine);
+router.post('/users/me/orders/:id/cancel', requireAuth, c.cancelMine);
+router.get('/admin/orders', requireAuth, requireAdmin, c.listAdmin);
+router.get('/admin/orders/:id', requireAuth, requireAdmin, c.getAdmin);
+router.patch('/admin/orders/:id/status', requireAuth, requireAdmin, c.status);
+router.get('/admin/dashboard', requireAuth, requireAdmin, c.dashboard);
+module.exports = router;
