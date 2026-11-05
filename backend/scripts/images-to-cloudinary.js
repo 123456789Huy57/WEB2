@@ -14,6 +14,23 @@ async function pool(items, size, fn) {
   await Promise.all(Array.from({ length: size }, async () => { while (i < items.length) { const item = items[i++]; await fn(item); } }));
 }
 
+// Xử lý ảnh gốc hỏng: ảnh phụ (gallery) thì bỏ khỏi danh sách; ảnh nguyên liệu thì dùng ảnh sản phẩm tương ứng.
+// Ảnh công thức hỏng thì giữ nguyên, giao diện tự hiện chữ cái thay ảnh. Trả về true nếu đã xử lý.
+async function replaceDead(db, job) {
+  if (job.col === 'products' && job.field.startsWith('gallery.')) {
+    await db.collection('products').updateOne({ id: job.id }, { $pull: { gallery: job.url } });
+    return true;
+  }
+  if (job.col === 'ingredients') {
+    const map = await db.collection('ingredientProducts').findOne({ ingredientId: job.id });
+    for (const pid of [map?.preferredProductId, ...(map?.productIds || [])].filter(Boolean)) {
+      const p = await db.collection('products').findOne({ id: pid }, { projection: { image_url: 1 } });
+      if (p?.image_url?.includes('res.cloudinary.com')) { await db.collection('ingredients').updateOne({ id: job.id }, { $set: { imageUrl: p.image_url } }); return true; }
+    }
+  }
+  return false;
+}
+
 async function main() {
   if (!DRY && !cloudinary.configured()) throw new Error('Điền CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET trong backend/.env trước.');
   const db = await connectDatabase(env.mongodbUri, env.mongodbDb);
@@ -26,7 +43,7 @@ async function main() {
   for (const x of await db.collection('recipes').find({}, { projection: { id: 1, imageUrl: 1 } }).toArray()) if (isRemote(x.imageUrl)) jobs.push({ col: 'recipes', id: x.id, field: 'imageUrl', url: x.imageUrl, publicId: `recipes/${safeId(x.id)}` });
   console.log(`Cần chuyển ${jobs.length} ảnh.`);
   if (DRY || !jobs.length) return;
-  let done = 0, failed = 0;
+  let done = 0, failed = 0, fixed = 0;
   await pool(jobs, 5, async job => {
     try {
       const url = await cloudinary.upload(job.url, { publicId: job.publicId, overwrite: false });
@@ -34,12 +51,14 @@ async function main() {
       await db.collection(job.col).updateOne({ id: job.id }, { $set: { [job.field]: url }, ...(job.field === 'image_url' ? { $unset: { img: '' } } : {}) });
       done++;
     } catch (error) {
+      // Ảnh gốc đã chết (404/không tải được): web vốn cũng không hiện được ảnh này.
+      if (/Cloudinary 40[04]/.test(error.message) && await replaceDead(db, job)) { fixed++; return; }
       failed++;
       console.log(`  bỏ qua ${job.col}/${job.id} (${job.field}): ${error.message}`);
     }
     if ((done + failed) % 50 === 0) console.log(`  ${done + failed}/${jobs.length}`);
   });
-  console.log(`Xong: ${done} ảnh đã lên Cloudinary, ${failed} ảnh lỗi (chạy lại để thử tiếp).`);
+  console.log(`Xong: ${done} ảnh đã lên Cloudinary, ${fixed} ảnh gốc hỏng đã được thay/bỏ, ${failed} ảnh còn lỗi.`);
 }
 
 main().catch(error => { console.error('LỖI:', error.message.replace(/\/\/[^@/]*@/g, '//***@')); process.exitCode = 1; }).finally(disconnectDatabase);
