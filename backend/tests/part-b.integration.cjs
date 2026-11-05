@@ -211,3 +211,50 @@ test('Phần B qua HTTP thật', async t => {
     await assert.rejects(db.getDatabase().collection('orders').insertOne({ id: 'bad' }), /validation/i);
   });
 });
+
+test('Voucher API và dashboard', async t => {
+  const admin = await new Client().start();
+  await admin.post('/api/auth/login', { identifier: 'admin@example.com', password: 'adminpass123' });
+  const c = await new Client().register(20);
+
+  await t.test('khách xem, lưu, bỏ lưu voucher; mã khách mới tự hiện', async () => {
+    const pub = await c.get('/api/vouchers');
+    assert.ok(pub.data.some(x => x.code === 'ONE'));
+    assert.equal(pub.data.find(x => x.code === 'SOLD').remaining, 0);
+    let mine = await c.get('/api/users/me/vouchers');
+    assert.deepEqual(mine.data.map(x => x.code), ['NEWBIE'], 'chưa đặt đơn nên có mã khách mới');
+    mine = await c.post('/api/users/me/vouchers', { code: 'one' });
+    assert.ok(mine.data.find(x => x.code === 'ONE').saved);
+    assert.equal((await c.post('/api/users/me/vouchers', { code: 'ONE' })).status, 200, 'lưu lại không lỗi');
+    assert.equal((await c.post('/api/users/me/vouchers', { code: 'NOPE' })).status, 404);
+    mine = await c.del('/api/users/me/vouchers/ONE');
+    assert.ok(!mine.data.some(x => x.code === 'ONE'));
+  });
+
+  await t.test('admin tạo, sửa, tắt voucher; không đổi mã, không hạ suất dưới lượt đã dùng', async () => {
+    const body = { code: 'flash50', title: 'Flash 50K', category: 'product', discountType: 'fixed', discountValue: 50000, minOrderValue: 200000, usageLimit: 500, startDate: '2020-01-01', endDate: '2099-12-31' };
+    const r = await admin.post('/api/admin/vouchers', body);
+    assert.equal(r.status, 201, JSON.stringify(r.data));
+    assert.equal(r.data.code, 'FLASH50');
+    assert.equal(r.data.remaining, 500);
+    assert.equal((await admin.post('/api/admin/vouchers', body)).data.error.code, 'VOUCHER_EXISTS');
+    assert.equal((await admin.post('/api/admin/vouchers', { ...body, code: 'PCT', discountType: 'percent', discountValue: 150 })).status, 400);
+    assert.equal((await admin.patch(`/api/admin/vouchers/${r.data.id}`, { code: 'OTHER' })).data.error.code, 'VOUCHER_CODE_LOCKED');
+    assert.equal((await admin.patch('/api/admin/vouchers/SOLD', { usageLimit: null })).data.remaining, null, 'bỏ giới hạn suất');
+    assert.equal((await admin.patch('/api/admin/vouchers/ONE', { isActive: false })).data.isActive, false);
+    assert.equal((await c.post('/api/checkout/quote', { voucherCode: 'ONE' })).data.error.code, 'VOUCHER_INACTIVE');
+    assert.equal((await c.get('/api/admin/vouchers')).status, 403);
+  });
+
+  await t.test('dashboard trả số liệu đúng cấu trúc', async () => {
+    const d = (await admin.get('/api/admin/dashboard')).data;
+    assert.ok(d.orders >= 1 && d.revenue > 0);
+    assert.equal(d.last7Days.length, 7);
+    assert.ok(d.last7Days.at(-1).revenue > 0, 'có doanh thu hôm nay');
+    assert.ok(d.topProducts[0].qty > 0);
+    assert.ok(d.statusCounts.delivered >= 1);
+    assert.ok(d.collected > 0, 'đơn đã giao tính vào đã thu');
+    assert.ok(d.lowStock.some(p => p.id === 'p-last'));
+    assert.equal((await c.get('/api/admin/dashboard')).status, 403);
+  });
+});

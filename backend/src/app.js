@@ -38,6 +38,8 @@ function createApp() {
   app.use('/api', require('./modules/cart/cart.routes'));
   app.use('/api', require('./modules/orders/orders.routes'));
   app.use('/api', require('./modules/inventory/inventory.routes'));
+  app.use('/api', require('./modules/vouchers/vouchers.routes'));
+  app.use('/api', require('./modules/dashboard/dashboard.routes'));
   app.use(notFound);
   app.use(errorHandler);
   return app;

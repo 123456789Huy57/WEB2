@@ -71,3 +71,80 @@ async function release({ orderId, session, now }) {
 }
 
 module.exports = { evaluate, consume, release, normalizeCode, todayVN, publicVoucher, vouchers, usages };
+
+// ---- API voucher: danh sách công khai, voucher của tôi, quản trị ----
+const v = require('../../lib/validation');
+const saved = () => getDatabase().collection('savedVouchers');
+const DATE = /^\d{4}-\d{2}-\d{2}$/;
+const withRemaining = voucher => ({ ...publicVoucher(voucher), remaining: voucher.usageLimit == null ? null : Math.max(0, voucher.usageLimit - voucher.usedCount) });
+const runningFilter = () => { const today = todayVN(); return { isActive: true, startDate: { $lte: today }, endDate: { $gte: today } }; };
+
+async function listPublic() {
+  return (await vouchers().find(runningFilter()).sort({ endDate: 1 }).toArray()).map(withRemaining);
+}
+
+// "Ưu đãi của tôi": mã đã lưu + mã khách mới (tự có khi chưa đặt đơn nào), kèm số lượt mình đã dùng.
+async function listMine(userId) {
+  const codes = (await saved().find({ userId }).toArray()).map(s => s.code);
+  const isNew = !(await orders().countDocuments({ userId, status: { $ne: 'cancelled' } }, { limit: 1 }));
+  const list = await vouchers().find({ ...runningFilter(), $or: [{ code: { $in: codes } }, ...(isNew ? [{ audience: 'new_customer' }] : [])] }).toArray();
+  const used = new Map((await usages().aggregate([{ $match: { userId } }, { $group: { _id: '$voucherId', n: { $sum: 1 } } }]).toArray()).map(u => [u._id, u.n]));
+  return list.map(x => ({ ...withRemaining(x), saved: codes.includes(x.code), usedByMe: used.get(x.id) || 0 }));
+}
+
+async function save(userId, code) {
+  const normalized = normalizeCode(code);
+  if (!normalized) v.bad('Thiếu mã.');
+  const voucher = await vouchers().findOne({ code: normalized, ...runningFilter() });
+  if (!voucher) fail('VOUCHER_NOT_FOUND', 'Mã không tồn tại hoặc đã hết hạn.', 404);
+  await saved().updateOne({ userId, code: normalized }, { $setOnInsert: { userId, code: normalized, savedAt: new Date().toISOString() } }, { upsert: true });
+  return listMine(userId);
+}
+
+async function unsave(userId, code) {
+  await saved().deleteOne({ userId, code: normalizeCode(code) });
+  return listMine(userId);
+}
+
+function voucherData(body, old) {
+  v.object(body, ['code', 'title', 'description', 'category', 'discountType', 'discountValue', 'minOrderValue', 'maxDiscountValue', 'audience', 'perUserLimit', 'usageLimit', 'startDate', 'endDate', 'isActive']);
+  if (old && body.code !== undefined && normalizeCode(body.code) !== old.code) fail('VOUCHER_CODE_LOCKED', 'Không đổi mã sau khi tạo. Hãy tắt mã cũ và tạo mã mới.', 400);
+  const x = { ...(old || { audience: 'all', perUserLimit: 1, usageLimit: null, usedCount: 0, minOrderValue: 0, maxDiscountValue: null, description: '', isActive: true }) };
+  if (!old) { x.code = normalizeCode(body.code); if (!x.code) v.bad('Thiếu mã.'); x.id = `v-${x.code.toLowerCase()}`; }
+  if (body.title !== undefined) x.title = v.text(body.title, 'Tên hiển thị', 2, 100);
+  if (body.description !== undefined) x.description = v.text(body.description, 'Mô tả', 0, 500);
+  if (body.category !== undefined) { if (!['product', 'shipping'].includes(body.category)) v.bad('Loại voucher không hợp lệ.'); x.category = body.category; }
+  if (body.discountType !== undefined) { if (!['percent', 'fixed'].includes(body.discountType)) v.bad('Kiểu giảm không hợp lệ.'); x.discountType = body.discountType; }
+  if (body.discountValue !== undefined) x.discountValue = v.number(body.discountValue, 'Mức giảm', 1, 100000000, true);
+  if (body.minOrderValue !== undefined) x.minOrderValue = v.number(body.minOrderValue, 'Đơn tối thiểu', 0, 1000000000, true);
+  if (body.maxDiscountValue !== undefined) x.maxDiscountValue = body.maxDiscountValue ? v.number(body.maxDiscountValue, 'Giảm tối đa', 1, 1000000000, true) : null;
+  if (body.audience !== undefined) { if (!['all', 'new_customer'].includes(body.audience)) v.bad('Đối tượng không hợp lệ.'); x.audience = body.audience; }
+  if (body.perUserLimit !== undefined) x.perUserLimit = v.number(body.perUserLimit, 'Lượt mỗi khách', 1, 1000, true);
+  if (body.usageLimit !== undefined) x.usageLimit = body.usageLimit ? v.number(body.usageLimit, 'Tổng suất', 1, 10000000, true) : null;
+  for (const k of ['startDate', 'endDate']) if (body[k] !== undefined) { if (typeof body[k] !== 'string' || !DATE.test(body[k])) v.bad('Ngày phải dạng YYYY-MM-DD.'); x[k] = body[k]; }
+  if (body.isActive !== undefined) x.isActive = v.boolean(body.isActive, 'isActive');
+  for (const k of ['title', 'category', 'discountType', 'discountValue', 'startDate', 'endDate']) if (x[k] === undefined) v.bad(`Thiếu ${k}.`);
+  if (x.discountType === 'percent' && x.discountValue > 100) v.bad('Giảm phần trăm tối đa 100.');
+  if (x.startDate > x.endDate) v.bad('Ngày kết thúc phải sau ngày bắt đầu.');
+  if (x.usageLimit !== null && x.usageLimit < x.usedCount) v.bad(`Tổng suất không được nhỏ hơn số lượt đã dùng (${x.usedCount}).`);
+  x.updatedAt = new Date().toISOString();
+  if (!old) x.createdAt = x.updatedAt;
+  return x;
+}
+
+const listAdmin = async () => (await vouchers().find({}).sort({ createdAt: -1, code: 1 }).toArray()).map(withRemaining);
+async function create(body) {
+  const x = voucherData(body);
+  try { await vouchers().insertOne({ _id: x.id, ...x }); } catch (error) { if (error.code === 11000) fail('VOUCHER_EXISTS', 'Mã này đã tồn tại.'); throw error; }
+  return withRemaining(x);
+}
+async function update(id, body) {
+  const old = await vouchers().findOne({ id: v.id(id) });
+  if (!old) fail('VOUCHER_NOT_FOUND', 'Không tìm thấy voucher.', 404);
+  const { _id, usedCount, ...patch } = voucherData(body, old);
+  // Không ghi đè usedCount: lượt dùng chỉ đổi qua đặt/hủy đơn.
+  const next = await vouchers().findOneAndUpdate({ id: old.id }, { $set: patch }, { returnDocument: 'after' });
+  return withRemaining(next);
+}
+
+Object.assign(module.exports, { listPublic, listMine, save, unsave, listAdmin, create, update });
