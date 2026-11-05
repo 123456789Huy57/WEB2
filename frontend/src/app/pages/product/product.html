@@ -79,6 +79,10 @@
       </div>
     </section>
   }
+  <section class="sec band" aria-labelledby="h-rv">
+    <div class="sec-head"><h2 class="h2" id="h-rv">Đánh giá</h2></div>
+    <fm-product-reviews [productId]="p.id" />
+  </section>
   <section class="sec band" aria-labelledby="h-rel">
     <div class="sec-head"><h2 class="h2" id="h-rel">Cùng quầy</h2><a class="link" routerLink="/san-pham" [queryParams]="{ c: p.category }">Xem cả quầy</a></div>
     <div class="p-grid">

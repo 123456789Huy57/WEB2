@@ -10,10 +10,11 @@ import { MEAL_LABEL, MealPlannerService } from '../../core/meal-planner.service'
 import { VndPipe } from '../../shared/vnd.pipe';
 import { ProductCard } from '../../shared/product-card';
 import { ImgFallbackDirective } from '../../shared/img-fallback.directive';
+import { ProductReviews } from '../../shared/product-reviews';
 
 @Component({
   selector: 'fm-product',
-  imports: [RouterLink, VndPipe, ProductCard, ImgFallbackDirective],
+  imports: [RouterLink, VndPipe, ProductCard, ImgFallbackDirective, ProductReviews],
   templateUrl: './product.html',
   styleUrl: './product.css',
   encapsulation: ViewEncapsulation.None
