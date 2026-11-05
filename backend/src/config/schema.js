@@ -165,6 +165,13 @@ const collections = {
     },
   },
 
+  recipeCooks: {
+    schema: {
+      required: ['id', 'recipeId', 'actorKey', 'day', 'at'],
+      properties: { id: str, recipeId: str, actorKey: str, day: { bsonType: 'string', pattern: '^\\d{4}-\\d{2}-\\d{2}$' }, servings: positive, at: str },
+    },
+  },
+
   stores: {
     schema: { required: ['id', 'name', 'address'], properties: { id: str, name: str, address: str, phone: str, hours: str } },
   },

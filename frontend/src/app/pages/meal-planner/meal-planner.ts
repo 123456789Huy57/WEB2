@@ -1,4 +1,6 @@
 import { AfterViewInit, Component, ElementRef, ViewEncapsulation, computed, inject, input, signal, viewChild } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 import { DataService } from '../../core/data.service';
 import { ProductService } from '../../core/product.service';
 import { CartService } from '../../core/cart.service';
@@ -8,6 +10,13 @@ import { Recipe } from '../../core/models';
 import { norm, store } from '../../core/storage';
 import { VndPipe } from '../../shared/vnd.pipe';
 import { ImgFallbackDirective } from '../../shared/img-fallback.directive';
+
+/** Tab Cộng đồng: món được nấu nhiều nhất hôm nay (hoặc 7 ngày nếu hôm nay chưa có ai) */
+interface Trending {
+  period: 'today' | 'week'; day: string; cooks: number;
+  recipes: { recipeId: string; name: string; imageUrl: string; mealType: Recipe['mealType']; count: number }[];
+  ingredients: { ingredientId: string; name: string; count: number }[];
+}
 
 @Component({
   selector: 'fm-meal-planner',
@@ -26,6 +35,32 @@ export class MealPlanner implements AfterViewInit {
   private cart = inject(CartService);
   private toast = inject(ToastService);
   private data = inject(DataService);
+  private http = inject(HttpClient);
+
+  // Tab: tự chọn nguyên liệu / xem cộng đồng đang nấu gì
+  protected tab = signal<'pick' | 'community'>('pick');
+  protected trend = signal<Trending | null>(null);
+  protected async showCommunity(): Promise<void> {
+    this.tab.set('community');
+    try { this.trend.set(await firstValueFrom(this.http.get<Trending>('/api/recipes/trending'))); }
+    catch { this.trend.set({ period: 'today', day: '', cooks: 0, recipes: [], ingredients: [] }); }
+  }
+  /** Bấm nguyên liệu hot: chọn sẵn rồi quay về tab tự chọn */
+  protected useHot(id: string): void {
+    if (!this.isSel(id)) this.toggle(id);
+    this.tab.set('pick');
+    this.toast.show(`Đã chọn ${this.mp.ingredient(id)?.name ?? 'nguyên liệu'}. Bấm “Gợi ý món” để xem món hợp.`);
+  }
+  /** Ghi một lượt nấu cho tab Cộng đồng (mỗi người một lượt/món/ngày, server tự chặn bấm lặp) */
+  private async cooked(r: Recipe): Promise<void> {
+    try { await firstValueFrom(this.http.post(`/api/recipes/${r.id}/cook`, { servings: this.f().servings })); } catch { /* không chặn việc mua hàng */ }
+  }
+  protected async cookNow(): Promise<void> {
+    const r = this.current();
+    if (!r) return;
+    await this.cooked(r);
+    this.toast.show(`Chúc bạn nấu ${r.name} ngon miệng!`);
+  }
 
   protected groups = INGREDIENT_GROUPS;
   protected meal = MEAL_LABEL;
@@ -89,9 +124,10 @@ export class MealPlanner implements AfterViewInit {
     this.unchecked.update(u => (u.includes(id) ? u.filter(x => x !== id) : [...u, id]));
   }
   protected async addMissing(): Promise<void> {
-    const items = this.chosen(), name = this.current()!.name;
+    const items = this.chosen(), recipe = this.current()!, name = recipe.name;
     this.dlg().nativeElement.close();
     const added = await this.cart.addMany(items.map(x => ({ id: x.product!.id, qty: x.cartQty })));
+    if (added) void this.cooked(recipe);
     this.toast.show(added === items.length ? `Đã thêm ${added} sản phẩm còn thiếu của “${name}” vào giỏ` : `Đã thêm ${added}/${items.length} sản phẩm của “${name}”, số còn lại tạm hết hàng`);
   }
 }

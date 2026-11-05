@@ -88,7 +88,8 @@ export class MealPlannerService {
   purchase(line: RecipeLine, servings: number, r: Recipe): PurchaseLine {
     const ing = this.ingredient(line.ingredientId);
     const p = this.productFor(line.ingredientId);
-    const scale = Math.max(1, servings / (r.servings || servings));
+    // Định lượng công thức tính cho r.servings người; quy theo số người ăn bạn chọn (tăng hoặc giảm).
+    const scale = servings / (r.servings || servings);
     const q = (line.quantity || 0) * scale;
     const need = `${+q.toFixed(1)} ${line.unit}`;
     if (!p) return { line, ingredient: ing, product: null, need, cartQty: 0, total: 0 };

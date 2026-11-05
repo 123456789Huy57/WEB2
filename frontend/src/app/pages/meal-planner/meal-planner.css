@@ -91,3 +91,8 @@
 
 .ing-grid { max-height: 620px; overflow: auto; padding-right: 4px; }
 @media (max-width: 760px) { .ing-grid { max-height: 460px; } }
+
+/* Tab Từ bếp của bạn / Cộng đồng hôm nay */
+.mp-tabs { display: flex; gap: 10px; flex-wrap: wrap; padding-top: 32px; padding-bottom: 0; }
+.mp-tabs + .band { padding-top: 32px; }
+.mp-community .rec-grid { margin-top: 8px; }

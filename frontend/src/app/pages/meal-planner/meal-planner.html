@@ -5,7 +5,47 @@
   </div>
 </section>
 
-<section class="band mp-tool" #tool>
+<nav class="band mp-tabs" aria-label="Cách tìm món">
+  <button type="button" class="chip" [attr.aria-pressed]="tab() === 'pick'" (click)="tab.set('pick')">Từ bếp của bạn</button>
+  <button type="button" class="chip" [attr.aria-pressed]="tab() === 'community'" (click)="showCommunity()">Cộng đồng hôm nay</button>
+</nav>
+
+@if (tab() === 'community') {
+  <section class="band mp-community" aria-labelledby="h-comm">
+    <div class="sec-head">
+      <div>
+        <h2 class="h3" id="h-comm">{{ trend()?.period === 'week' ? 'Được nấu nhiều trong 7 ngày qua' : 'Hôm nay mọi người nấu gì?' }}</h2>
+        <p class="muted">Chưa biết nên mua gì? Xem món đang được nấu nhiều và nguyên liệu đang “hot”.@if (trend()?.cooks) { · {{ trend()!.cooks }} lượt nấu }</p>
+      </div>
+    </div>
+    @if (trend(); as tr) {
+      @if (tr.ingredients.length) {
+        <div class="chips" style="margin-bottom:24px" aria-label="Nguyên liệu được dùng nhiều">
+          @for (i of tr.ingredients; track i.ingredientId) {
+            <button class="chip" type="button" (click)="useHot(i.ingredientId)">{{ i.name }} <span class="muted num">· {{ i.count }}</span></button>
+          }
+        </div>
+      }
+      <div class="rec-grid">
+        @for (x of tr.recipes; track x.recipeId; let i = $index) {
+          <button class="rec" type="button" (click)="open(x.recipeId)">
+            <span class="img"><img [fmImg]="x.name" [src]="x.imageUrl" alt="" loading="lazy"></span>
+            <span class="m num">#{{ i + 1 }} · {{ meal[x.mealType] }} · {{ x.count }} người nấu</span>
+            <span class="h3">{{ x.name }}</span>
+          </button>
+        } @empty {
+          <div class="empty" style="grid-column:1/-1">
+            <p class="h3">Chưa có ai nấu món nào gần đây.</p>
+            <p class="muted">Hãy là người đầu tiên: chọn nguyên liệu bạn có, mở một món và thêm phần còn thiếu vào giỏ.</p>
+            <button class="btn btn-forest" type="button" style="margin-top:12px" (click)="tab.set('pick')">Chọn nguyên liệu</button>
+          </div>
+        }
+      </div>
+    } @else { <p class="muted">Đang tải…</p> }
+  </section>
+}
+
+<section class="band mp-tool" #tool [hidden]="tab() !== 'pick'">
   <div class="mp-pick">
     <div class="mp-pick-head">
       <h2 class="h3">Bạn đang có gì?</h2>
@@ -69,7 +109,7 @@
   </aside>
 </section>
 
-@if (results(); as res) {
+@if (results(); as res) { @if (tab() === 'pick') {
   <section class="band sec mp-results" #resultsEl aria-labelledby="h-res">
     <div class="sec-head">
       <div><h2 class="h2" id="h-res">Món hợp với bếp của bạn</h2>@if (res.length) { <p>Tìm thấy {{ res.length }} món, xếp theo số nguyên liệu bạn đã có.</p> }</div>
@@ -96,7 +136,7 @@
       }
     </div>
   </section>
-}
+} }
 
 <dialog class="rec-dlg" #dlg aria-labelledby="d-name" (click)="$event.target === dlg && dlg.close()" (close)="current.set(null)">
   @if (current(); as r) {
@@ -140,6 +180,7 @@
           } @else {
             <p class="h">Bạn đã có đủ nguyên liệu.</p>
             <p class="small muted">Vào bếp thôi, cách làm ở ngay bên dưới.</p>
+            <button class="btn btn-forest" type="button" (click)="cookNow()">Tôi nấu món này hôm nay</button>
           }
         </div>
         <h3 class="f-h d-h">Cách làm</h3>

@@ -258,3 +258,36 @@ test('Voucher API và dashboard', async t => {
     assert.equal((await c.get('/api/admin/dashboard')).status, 403);
   });
 });
+
+test('Meal Planner API và tab Cộng đồng', async t => {
+  const database = db.getDatabase();
+  const recipe = (id, ings) => ({ _id: id, id, slug: id, name: `Món ${id}`, mealType: 'dinner', servings: 2, prepTimeMinutes: 5, cookTimeMinutes: 10, difficulty: 'easy', imageUrl: '', ingredients: ings.map(i => ({ ingredientId: i, productId: 'p-a', quantity: 100, unit: 'g' })), steps: ['Nấu'], nutrition: { calories: 300, protein: 20, carbs: 30, fat: 10 }, tags: [], isActive: true });
+  await database.collection('recipes').insertMany([recipe('rec-1', ['ing-trung', 'ing-ca']), recipe('rec-2', ['ing-trung'])]);
+  await database.collection('ingredients').insertMany([{ _id: 'ing-trung', id: 'ing-trung', slug: 'trung', name: 'Trứng', defaultUnit: 'quả' }, { _id: 'ing-ca', id: 'ing-ca', slug: 'ca', name: 'Cá', defaultUnit: 'g' }]);
+  await database.collection('ingredientProducts').insertOne({ _id: 'ing-trung', ingredientId: 'ing-trung', preferredProductId: 'p-a', productIds: ['p-a'] });
+
+  await t.test('đọc công thức, nguyên liệu, ánh xạ sản phẩm', async () => {
+    const g = await new Client().start();
+    assert.equal((await g.get('/api/recipes')).data.length, 2);
+    assert.equal((await g.get('/api/recipes/rec-1')).data.name, 'Món rec-1');
+    assert.equal((await g.get('/api/recipes/nope')).status, 404);
+    assert.equal((await g.get('/api/ingredients')).data.length, 2);
+    assert.equal((await g.get('/api/ingredient-products')).data['ing-trung'].preferredProductId, 'p-a');
+  });
+
+  await t.test('cộng đồng: mỗi người một lượt/món/ngày, xếp hạng món và nguyên liệu hot', async () => {
+    const empty = (await new Client().get('/api/recipes/trending')).data;
+    assert.equal(empty.recipes.length, 0);
+    const a = await new Client().start(), b = await new Client().register(30), c = await new Client().start();
+    assert.equal((await a.post('/api/recipes/rec-1/cook', { servings: 2 })).status, 201);
+    assert.equal((await a.post('/api/recipes/rec-1/cook', { servings: 4 })).status, 200, 'bấm lại không cộng thêm');
+    await b.post('/api/recipes/rec-1/cook');
+    await c.post('/api/recipes/rec-2/cook');
+    assert.equal((await c.post('/api/recipes/nope/cook')).status, 404);
+    const r = (await a.get('/api/recipes/trending')).data;
+    assert.equal(r.period, 'today');
+    assert.equal(r.cooks, 3);
+    assert.deepEqual(r.recipes.map(x => [x.recipeId, x.count]), [['rec-1', 2], ['rec-2', 1]]);
+    assert.deepEqual(r.ingredients[0], { ingredientId: 'ing-trung', name: 'Trứng', count: 3 });
+  });
+});
