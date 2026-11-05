@@ -48,7 +48,7 @@ Thư mục chính: `src/modules/cart`, `src/modules/vouchers`, `src/modules/orde
 
 ## Ghi chú bàn giao cho người B
 
-Nền tảng phần A nằm trên nhánh `lu`. B tạo nhánh riêng từ bản mới nhất của `origin/lu`. Đọc [bàn giao phần A](part-a-handoff.md), chạy theo [README backend](../README.md), rồi dùng [backend-contract.md](backend-contract.md) làm chuẩn method, URL, body, response và quy tắc nghiệp vụ. File này tóm tắt công việc; contract là tài liệu chi tiết khi nối code.
+Nền tảng phần A nằm trên nhánh `main` (trước đây là `lu`). B tạo nhánh riêng từ bản mới nhất của `origin/main`. Đọc [bàn giao phần A](part-a-handoff.md), chạy theo [README backend](../README.md), rồi dùng [backend-contract.md](backend-contract.md) làm chuẩn method, URL, body, response và quy tắc nghiệp vụ. File này tóm tắt công việc; contract là tài liệu chi tiết khi nối code.
 
 ### Những phần dùng lại từ A
 
