@@ -10,6 +10,21 @@ async function ensureIndexes() {
     db.collection('products').createIndex({ slug: 1 }, { unique: true }),
     db.collection('categories').createIndex({ id: 1 }, { unique: true }),
     db.collection('categories').createIndex({ slug: 1 }, { unique: true }),
+    db.collection('products').createIndex({ stock: 1 }),
+    db.collection('orders').createIndex({ id: 1 }, { unique: true }),
+    db.collection('orders').createIndex({ orderCode: 1 }, { unique: true }),
+    db.collection('orders').createIndex({ userId: 1, idempotencyKey: 1 }, { unique: true }),
+    db.collection('orders').createIndex({ userId: 1, createdAt: -1 }),
+    db.collection('orders').createIndex({ status: 1, createdAt: -1 }),
+    db.collection('orders').createIndex({ createdAt: -1 }),
+    db.collection('vouchers').createIndex({ id: 1 }, { unique: true }),
+    db.collection('vouchers').createIndex({ code: 1 }, { unique: true }),
+    db.collection('voucherUsages').createIndex({ orderId: 1 }, { unique: true }),
+    db.collection('voucherUsages').createIndex({ voucherId: 1, userId: 1 }),
+    db.collection('inventoryMovements').createIndex({ operationId: 1 }, { unique: true }),
+    db.collection('inventoryMovements').createIndex({ productId: 1, createdAt: -1 }),
+    db.collection('inventoryMovements').createIndex({ orderId: 1 }),
+    db.collection('savedVouchers').createIndex({ userId: 1, code: 1 }, { unique: true }),
   ]);
 }
 module.exports = { ensureIndexes };
