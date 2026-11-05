@@ -39,6 +39,8 @@ Mật khẩu ít nhất 8 ký tự và tối đa 72 byte UTF-8, lưu bằng bcry
 | `npm start` | Chạy server bằng Node |
 | `npm test` | Kiểm tra HTTP, session và quy tắc dùng chung |
 | `npm run test:integration` | Kiểm tra phần A với MongoDB local trong DB thử riêng, xóa sau khi chạy |
+| `npm run db:setup` | Dựng database: collection, luật kiểm tra, index, dữ liệu mẫu (leader chạy) |
+| `npm run check:db` | Kiểm tra kết nối MongoDB, in lý do nếu lỗi |
 | `npm run seed:catalog` | Nhập products/categories còn thiếu |
 | `npm run seed:admin` | Tạo admin từ cấu hình riêng |
 | `npm run seed:vouchers` | Nhập voucher còn thiếu, gán loại khách mới/mọi khách |

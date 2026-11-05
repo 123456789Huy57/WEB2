@@ -25,6 +25,11 @@ async function ensureIndexes() {
     db.collection('inventoryMovements').createIndex({ productId: 1, createdAt: -1 }),
     db.collection('inventoryMovements').createIndex({ orderId: 1 }),
     db.collection('savedVouchers').createIndex({ userId: 1, code: 1 }, { unique: true }),
+    db.collection('recipes').createIndex({ id: 1 }, { unique: true }),
+    db.collection('recipes').createIndex({ slug: 1 }, { unique: true }),
+    db.collection('ingredients').createIndex({ id: 1 }, { unique: true }),
+    db.collection('ingredientProducts').createIndex({ ingredientId: 1 }, { unique: true }),
+    db.collection('stores').createIndex({ id: 1 }, { unique: true }),
   ]);
 }
 module.exports = { ensureIndexes };
