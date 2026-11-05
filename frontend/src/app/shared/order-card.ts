@@ -44,10 +44,13 @@ import { ImgFallbackDirective } from './img-fallback.directive';
       </div>
     }
     <div class="o-bot">
-      <span class="small muted">{{ o().lines.length }} sản phẩm · {{ pay[o().paymentMethod] }}</span>
+      <span class="small muted">{{ o().lines.length }} sản phẩm · {{ payLabel[o().paymentMethod] }}{{ o().paymentMethod === 'vnpay' ? (o().paymentStatus === 'paid' ? ' · đã thanh toán' : ' · chưa thanh toán') : '' }}</span>
       <div class="o-act">
         <span class="price num">{{ o().total | vnd }}</span>
         <button class="btn btn-paper btn-sm" type="button" (click)="open.set(!open())" [attr.aria-expanded]="open()">{{ open() ? 'Thu gọn' : 'Chi tiết' }}</button>
+        @if (orders.canPay(o())) {
+          <button class="btn btn-forest btn-sm" type="button" (click)="pay()">Thanh toán</button>
+        }
         @if (orders.canCancel(o())) {
           <button class="btn btn-paper btn-sm" type="button" (click)="cancel.emit(o())">Hủy đơn</button>
         }
@@ -63,8 +66,9 @@ export class OrderCard {
   protected ps = inject(ProductService);
   protected orders = inject(OrderService);
   protected status = ORDER_STATUS;
-  protected pay = PAYMENT_LABEL;
+  protected payLabel = PAYMENT_LABEL;
   protected flow = STATUS_FLOW;
   protected open = signal(false);
   protected stepIndex = computed(() => STATUS_FLOW.indexOf(this.o().status));
+  protected async pay(): Promise<void> { try { await this.orders.pay(this.o()); } catch { /* lỗi đã hiện ở trang */ } }
 }

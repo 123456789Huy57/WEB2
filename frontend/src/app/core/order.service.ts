@@ -11,7 +11,7 @@ export const ORDER_STATUS: Record<OrderStatus, string> = {
 };
 /** Thứ tự trạng thái để admin chuyển bước tiếp theo */
 export const STATUS_FLOW: OrderStatus[] = ['pending', 'confirmed', 'preparing', 'shipping', 'delivered'];
-export const PAYMENT_LABEL = { cod: 'Tiền mặt khi nhận', bank: 'Chuyển khoản', momo: 'Ví MoMo' } as const;
+export const PAYMENT_LABEL = { cod: 'Tiền mặt khi nhận', vnpay: 'VNPay' } as const;
 
 /** Đơn kèm các dòng dựng từ bản chụp lúc đặt (giá/tên không đổi theo catalog hiện tại) */
 export interface OrderView extends Order { lines: { p: Product; qty: number; price: number }[]; }
@@ -81,8 +81,15 @@ export class OrderService {
     const updated = await firstValueFrom(this.http.patch<Order>(`/api/admin/orders/${o.id}/status`, { status, expectedStatus: o.status }));
     this.replace(updated);
   }
-  /** Khách chỉ hủy được khi cửa hàng chưa bắt đầu soạn hàng */
-  canCancel(o: Order): boolean { return o.status === 'pending' || o.status === 'confirmed'; }
+  /** Khách chỉ hủy được khi cửa hàng chưa bắt đầu soạn hàng, và đơn chưa thanh toán online */
+  canCancel(o: Order): boolean { return (o.status === 'pending' || o.status === 'confirmed') && o.paymentStatus !== 'paid'; }
+  /** Đơn VNPay chưa thanh toán: còn thanh toán tiếp được */
+  canPay(o: Order): boolean { return o.paymentMethod === 'vnpay' && o.paymentStatus !== 'paid' && o.status !== 'cancelled'; }
+  /** Tạo giao dịch rồi chuyển trình duyệt sang cổng thanh toán */
+  async pay(o: Pick<Order, 'id'>): Promise<void> {
+    const r = await firstValueFrom(this.http.post<{ payUrl: string }>(`/api/users/me/orders/${o.id}/payments`, {}));
+    window.location.href = r.payUrl;
+  }
   async cancel(o: Order): Promise<void> {
     this.replace(await firstValueFrom(this.http.post<Order>(`/api/users/me/orders/${o.id}/cancel`, {})));
   }

@@ -18,9 +18,10 @@ async function start() {
     console.log(`FreshMart API: http://localhost:${env.port}/api/health`);
   });
   server.on('error', async error => {
-    console.error('Server could not start:', error.code || error.name);
-    await disconnectDatabase();
-    process.exitCode = 1;
+    if (error.code === 'EADDRINUSE') console.error(`Cổng ${env.port} đang được dùng: có backend khác đang chạy. Tắt Terminal cũ (Ctrl + C) rồi chạy lại.`);
+    else console.error('Server could not start:', error.code || error.name);
+    await disconnectDatabase().catch(() => {});
+    process.exit(1);
   });
   let closing = false;
   function shutdown() {

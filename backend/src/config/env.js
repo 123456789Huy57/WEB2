@@ -26,4 +26,12 @@ module.exports = {
   temporarySessionSecret: !configuredSecret,
   sessionCookieName: 'freshmart.sid',
   sessionMaxAge: 60 * 60 * 1000,
+  // Địa chỉ backend mà trình duyệt/cổng thanh toán gọi tới (để tạo return URL)
+  backendUrl: (process.env.BACKEND_URL || `http://localhost:${port}`).replace(/\/$/, ''),
+  payment: {
+    provider: process.env.PAYMENT_PROVIDER || (process.env.VNPAY_TMN_CODE ? 'vnpay' : 'mock'),
+    vnpTmnCode: process.env.VNPAY_TMN_CODE?.trim() || '',
+    vnpHashSecret: process.env.VNPAY_HASH_SECRET?.trim() || '',
+    vnpUrl: process.env.VNPAY_URL || 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html',
+  },
 };

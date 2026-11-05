@@ -36,7 +36,7 @@ function parseOrderBody(body) {
     note: c.note === undefined ? '' : v.text(c.note, 'Ghi chú', 0, 500),
     slot: c.slot === undefined ? '' : v.text(c.slot, 'Giờ nhận', 0, 60),
   };
-  if (!PAYMENT_METHODS.includes(body.paymentMethod)) throw new HttpError(400, 'PAYMENT_METHOD_UNSUPPORTED', 'Hiện chỉ hỗ trợ thanh toán khi nhận hàng (COD).');
+  if (!PAYMENT_METHODS.includes(body.paymentMethod)) throw new HttpError(400, 'PAYMENT_METHOD_UNSUPPORTED', 'Chỉ hỗ trợ thanh toán khi nhận hàng (COD) hoặc VNPay.');
   return { customer, paymentMethod: body.paymentMethod, voucherCode: vouchers.normalizeCode(body.voucherCode) };
 }
 
@@ -129,6 +129,7 @@ async function changeStatus({ orderId, to, expectedStatus, actor, ownerId }) {
       if (!order) throw new HttpError(404, 'ORDER_NOT_FOUND', 'Không tìm thấy đơn hàng.');
       if (ownerId && order.status === 'cancelled' && to === 'cancelled') { result = order; return; } // hủy lần hai: trả lại đơn
       if (expectedStatus && order.status !== expectedStatus) throw new HttpError(409, 'ORDER_CHANGED', 'Đơn vừa được cập nhật bởi người khác. Tải lại để xem trạng thái mới.', [{ status: order.status }]);
+      if (ownerId && order.paymentStatus === 'paid') throw new HttpError(409, 'ORDER_PAID_CONTACT_SUPPORT', 'Đơn đã thanh toán online. Liên hệ cửa hàng để hủy và hoàn tiền.');
       const allowed = ownerId ? (to === 'cancelled' && CUSTOMER_CANCEL_STATUSES.includes(order.status)) : TRANSITIONS[order.status].includes(to);
       if (!allowed) throw new HttpError(409, 'ORDER_STATUS_INVALID', `Không thể chuyển đơn từ "${order.status}" sang "${to}".`);
       const set = { status: to, updatedAt: now };

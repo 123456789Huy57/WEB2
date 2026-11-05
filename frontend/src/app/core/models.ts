@@ -41,7 +41,7 @@ export interface Store { id: string; name: string; address: string; phone: strin
 
 export type Role = 'customer' | 'admin';
 export interface User { id: string; fullName: string; email: string; phone: string; address: string; role: Role; isActive?: boolean; createdAt?: string; }
-export type PaymentMethod = 'cod' | 'bank' | 'momo';
+export type PaymentMethod = 'cod' | 'vnpay';
 export type OrderStatus = 'pending' | 'confirmed' | 'preparing' | 'shipping' | 'delivered' | 'cancelled';
 /** Dòng đơn lưu bản chụp tên/giá lúc đặt (backend-contract mục 6) */
 export interface OrderItem {

@@ -10,6 +10,7 @@ process.env.NODE_ENV = 'test';
 process.env.MONGODB_URI = process.env.MONGODB_TEST_URI || process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017';
 process.env.MONGODB_DB = `fm_test_b_${Date.now().toString(36)}`; // Atlas giới hạn tên DB 38 ký tự
 process.env.SESSION_SECRET = 'freshmart-integration-test-only-secret';
+process.env.PAYMENT_PROVIDER = 'mock'; // test luôn dùng cổng giả lập, kể cả khi .env đã có mã VNPay
 const env = require('../src/config/env');
 const db = require('../src/config/database');
 const { ensureIndexes } = require('../src/config/indexes');
@@ -335,5 +336,48 @@ test('Đánh giá sản phẩm', async t => {
     await admin.request('PATCH', `/api/admin/reviews/${id}`, { hidden: false });
     assert.equal((await buyer.del('/api/products/p-kg/reviews/me')).data.count, 0);
     assert.equal((await db.getDatabase().collection('products').findOne({ id: 'p-kg' })).rating, -1);
+  });
+});
+
+test('Thanh toán online qua cổng giả lập (cùng định dạng VNPay)', async t => {
+  const c = await new Client().register(50), other = await new Client().register(51);
+  const follow = async url => { const r = await fetch(url, { redirect: 'manual' }); return { status: r.status, location: r.headers.get('location'), text: r.status === 200 ? await r.text() : '' }; };
+  const payLinks = html => [...html.matchAll(/href="([^"]+)"/g)].map(m => m[1].replace(/&amp;/g, '&').replace(/&#38;/g, '&'));
+
+  await t.test('đặt đơn VNPay, sang cổng, thanh toán thành công, đơn chuyển đã thanh toán', async () => {
+    await c.post('/api/cart/items', { productId: 'p-a', quantity: 1 });
+    const { data: o } = await order(c, { paymentMethod: 'vnpay' });
+    assert.equal(o.paymentStatus, 'unpaid');
+    assert.equal((await other.post(`/api/users/me/orders/${o.id}/payments`)).status, 404, 'không thanh toán đơn người khác');
+    const p = await c.post(`/api/users/me/orders/${o.id}/payments`);
+    assert.equal(p.status, 201, JSON.stringify(p.data));
+    assert.equal(p.data.provider, 'mock');
+    const page = await follow(p.data.payUrl.replace(/^http:\/\/localhost:\d+/, base));
+    assert.equal(page.status, 200);
+    const [okLink, cancelLink] = payLinks(page.text);
+    const tampered = await follow(okLink.replace(/^http:\/\/localhost:\d+/, base).replace(/vnp_Amount=\d+/, 'vnp_Amount=100'));
+    assert.match(tampered.location, /ok=0/, 'sửa số tiền bị từ chối');
+    const done = await follow(okLink.replace(/^http:\/\/localhost:\d+/, base));
+    assert.match(done.location, /\/thanh-toan\/ket-qua\?ok=1/);
+    assert.equal((await c.get(`/api/users/me/orders/${o.id}`)).data.paymentStatus, 'paid');
+    assert.match((await follow(okLink.replace(/^http:\/\/localhost:\d+/, base))).location, /ok=1/, 'gọi lại vẫn báo đã thanh toán, không ghi hai lần');
+    assert.match((await follow(cancelLink.replace(/^http:\/\/localhost:\d+/, base))).location, /ok=1/, 'giao dịch đã xong thì nút hủy không đổi được');
+    assert.equal((await c.post(`/api/users/me/orders/${o.id}/payments`)).data.error.code, 'ORDER_ALREADY_PAID');
+    assert.equal((await c.post(`/api/users/me/orders/${o.id}/cancel`)).data.error.code, 'ORDER_PAID_CONTACT_SUPPORT');
+  });
+
+  await t.test('hủy giao dịch: đơn vẫn chưa thanh toán, thanh toán lại được; đơn COD không tạo giao dịch', async () => {
+    await c.post('/api/cart/items', { productId: 'p-a', quantity: 1 });
+    const { data: o } = await order(c, { paymentMethod: 'vnpay' });
+    const p = await c.post(`/api/users/me/orders/${o.id}/payments`);
+    const [, cancelLink] = payLinks((await follow(p.data.payUrl.replace(/^http:\/\/localhost:\d+/, base))).text);
+    assert.match((await follow(cancelLink.replace(/^http:\/\/localhost:\d+/, base))).location, /ok=0/);
+    assert.equal((await c.get(`/api/users/me/orders/${o.id}`)).data.paymentStatus, 'unpaid');
+    assert.equal((await c.post(`/api/users/me/orders/${o.id}/payments`)).status, 201, 'thanh toán lại');
+    const ipn = await (await fetch(`${base}/api/payments/vnpay/ipn?vnp_TxnRef=x&vnp_SecureHash=bad`)).json();
+    assert.equal(ipn.RspCode, '97');
+    await c.post('/api/cart/items', { productId: 'p-a', quantity: 1 });
+    const { data: cod } = await order(c);
+    assert.equal((await c.post(`/api/users/me/orders/${cod.id}/payments`)).data.error.code, 'PAYMENT_NOT_ONLINE');
   });
 });

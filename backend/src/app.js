@@ -42,6 +42,7 @@ function createApp() {
   app.use('/api', require('./modules/dashboard/dashboard.routes'));
   app.use('/api', require('./modules/recipes/recipes.routes'));
   app.use('/api', require('./modules/reviews/reviews.routes'));
+  app.use('/api', require('./modules/payments/payments.routes'));
   app.use(notFound);
   app.use(errorHandler);
   return app;

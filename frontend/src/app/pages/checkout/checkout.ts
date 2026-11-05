@@ -86,6 +86,11 @@ export class Checkout {
     try {
       const f = this.form.getRawValue();
       const o = await this.orders.place(f, this.t().voucher ? this.cart.voucherCode() : '');
+      // Đơn đã giữ hàng; thanh toán online thì chuyển sang cổng, kết quả quay về /thanh-toan/ket-qua.
+      if (o.paymentMethod === 'vnpay') {
+        try { await this.orders.pay(o); return; }
+        catch (error) { this.toast.show(`Đã tạo đơn ${o.orderCode} nhưng chưa mở được cổng thanh toán. Thanh toán lại trong Tài khoản.`); }
+      }
       this.done.set({ code: o.orderCode, total: o.total, slot: f.slot, payment: PAYMENT_LABEL[o.paymentMethod], firstName: f.name.trim().split(/\s+/).pop() ?? '', phone: f.phone, guest: false });
       window.scrollTo({ top: 0 });
     } catch (error) {

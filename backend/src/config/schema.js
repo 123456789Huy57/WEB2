@@ -71,7 +71,7 @@ const collections = {
         },
         subtotal: money, shippingFee: money, productDiscount: money, shippingDiscount: money, discount: money, total: money,
         voucherCode: strOrNull,
-        paymentMethod: { enum: ['cod'] }, paymentStatus: { enum: ['unpaid', 'paid'] }, paidAt: strOrNull,
+        paymentMethod: { enum: ['cod', 'vnpay'] }, paymentStatus: { enum: ['unpaid', 'paid'] }, paidAt: strOrNull,
         status: { enum: ORDER_STATUSES },
         history: {
           bsonType: 'array',
@@ -179,6 +179,16 @@ const collections = {
         id: str, productId: str, userId: str, orderId: str, userName: str,
         rating: { bsonType: 'number', minimum: 1, maximum: 5 }, comment: { bsonType: 'string', maxLength: 1000 },
         hidden: bool, createdAt: str, updatedAt: str,
+      },
+    },
+  },
+
+  payments: {
+    schema: {
+      required: ['id', 'orderId', 'userId', 'provider', 'txnRef', 'amount', 'status', 'createdAt'],
+      properties: {
+        id: str, orderId: str, orderCode: str, userId: str, provider: { enum: ['vnpay', 'mock'] }, txnRef: str, amount: positive,
+        status: { enum: ['pending', 'paid', 'failed', 'refund_required'] }, responseCode: str, transactionNo: str, paidAt: str, createdAt: str, updatedAt: str,
       },
     },
   },

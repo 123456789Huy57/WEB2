@@ -31,7 +31,7 @@ import { VndPipe } from '../shared/vnd.pipe';
             <td class="num">{{ o.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
             <td>{{ o.customer.name }}<br><span class="small muted num">{{ o.customer.phone }}</span></td>
             <td class="r num">{{ o.total | vnd }}</td>
-            <td>{{ pay[o.paymentMethod] }}</td>
+            <td>{{ pay[o.paymentMethod] }}<br><span class="small" [class.muted]="o.paymentStatus !== 'paid'">{{ o.paymentStatus === 'paid' ? 'Đã thanh toán' : 'Chưa thanh toán' }}</span></td>
             <td>
               <select [value]="o.status" (change)="set(o, $any($event.target).value, $any($event.target))" [attr.aria-label]="'Trạng thái đơn ' + o.orderCode">
                 @for (s of statusKeys; track s) { <option [value]="s" [selected]="s === o.status">{{ st[s] }}</option> }
