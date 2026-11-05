@@ -167,7 +167,7 @@
                 <label class="b-row">
                   <input type="checkbox" [checked]="!unchecked().includes(x.line.ingredientId)" (change)="toggleBuy(x.line.ingredientId)">
                   <span class="ph"><img [fmImg]="pr.name" [src]="ps.img(pr)" alt=""></span>
-                  <span class="nm">{{ ps.shortName(pr) }}<span class="q num" style="display:block">{{ ps.qty(x.cartQty) }} {{ ps.unit(pr) }} · dùng {{ x.need }}</span></span>
+                  <span class="nm">{{ ps.shortName(pr) }}<span class="q num" style="display:block">{{ ps.qty(x.cartQty) }} {{ ps.unit(pr) }} · dùng {{ x.need }}@if (x.bulk) { · bán nguyên {{ ps.unit(pr) }}, bỏ chọn sẵn }</span></span>
                   <span class="num">{{ x.total | vnd }}</span>
                 </label>
               } @else {

@@ -14,6 +14,8 @@ export interface PlannerResult { recipe: Recipe; score: number; matched: number;
 export interface PurchaseLine {
   line: RecipeLine; ingredient?: Ingredient; product: Product | null;
   need: string; cartQty: number; total: number;
+  /** Sản phẩm bán nguyên thùng/bao/combo: không tự chọn mua, khách tự tick nếu muốn */
+  bulk?: boolean;
 }
 
 export const MEAL_LABEL: Record<Recipe['mealType'], string> = { breakfast: 'Bữa sáng', lunch: 'Bữa trưa', dinner: 'Bữa tối', snack: 'Ăn vặt' };
@@ -84,25 +86,41 @@ export class MealPlannerService {
       .slice(0, 12);
   }
 
-  /** Quy đổi lượng trong công thức (theo số người ăn) ra số lượng sản phẩm cần cho vào giỏ */
+  /** Quy đổi lượng trong công thức (theo số người ăn) ra số lượng sản phẩm cần cho vào giỏ.
+   *  Có nhiều sản phẩm cùng nguyên liệu thì chọn cách mua rẻ nhất cho đúng lượng cần. */
   purchase(line: RecipeLine, servings: number, r: Recipe): PurchaseLine {
     const ing = this.ingredient(line.ingredientId);
-    const p = this.productFor(line.ingredientId);
     // Định lượng công thức tính cho r.servings người; quy theo số người ăn bạn chọn (tăng hoặc giảm).
     const scale = servings / (r.servings || servings);
     const q = (line.quantity || 0) * scale;
     const need = `${+q.toFixed(1)} ${line.unit}`;
-    if (!p) return { line, ingredient: ing, product: null, need, cartQty: 0, total: 0 };
-    const u = String(line.unit || '').toLowerCase();
+    const options = this.candidates(line.ingredientId).map(p => this.quote(p, q, line.unit, ing));
+    if (!options.length) return { line, ingredient: ing, product: null, need, cartQty: 0, total: 0 };
+    const best = options.sort((a, b) => Number(a.bulk) - Number(b.bulk) || a.total - b.total)[0];
+    return { line, ingredient: ing, need, ...best };
+  }
+
+  /** Mọi sản phẩm còn hàng dùng được cho nguyên liệu (ưu tiên sản phẩm được chỉ định trước) */
+  private candidates(ingredientId: string): Product[] {
+    const e = this.data.ingredientMap()[ingredientId];
+    if (!e) return [];
+    const ids = [...new Set([e.preferredProductId, ...(e.productIds ?? [])].filter((x): x is string => !!x))];
+    return ids.map(id => this.products.get(id)).filter((p): p is Product => !!p && p.stock > 0 && p.active !== false);
+  }
+
+  private quote(p: Product, q: number, recipeUnit: string, ing?: Ingredient): { product: Product; cartQty: number; total: number; bulk: boolean } {
+    const u = String(recipeUnit || '').toLowerCase();
     const su = this.products.unit(p);
     const w = p.netWeightGram || p.unitWeightGram || ing?.unitWeightGram || 0;
-    let conv = 1;
-    if (u === 'g' && su === 'kg') conv = q / 1000;
+    let conv = 1; // mặc định: một đơn vị bán (chai, gói, hộp) đủ cho lượng nhỏ như ml, muỗng, lát
+    if (u === su) conv = q; // cùng đơn vị đếm: 2 cây xà lách → 2 cây
+    else if (u === 'g' && su === 'kg') conv = q / 1000;
     else if (u === 'g' && w) conv = q / w;
     else if (u === 'kg') conv = su === 'kg' ? q : (q * 1000) / (w || 1000);
     else if (su === 'kg' && ing?.unitWeightGram) conv = (q * ing.unitWeightGram) / 1000;
     const step = this.products.step(p);
     const cartQty = Math.max(step, Math.ceil(conv / step - 1e-9) * step);
-    return { line, ingredient: ing, product: p, need, cartQty, total: Math.round(cartQty * this.products.price(p)) };
+    const bulk = /^(thùng|bao|combo|lốc)$/.test(su) || /^(thùng|combo|\d+\s*(túi|hộp|gói|chai|lon))\b/i.test(p.name.trim());
+    return { product: p, cartQty, total: Math.round(cartQty * this.products.price(p)), bulk };
   }
 }

@@ -110,7 +110,8 @@ export class MealPlanner implements AfterViewInit {
 
   protected open(id: string): void {
     this.current.set(this.mp.recipe(id) ?? null);
-    this.unchecked.set([]);
+    // Không tự chọn: hàng bán nguyên thùng/bao (thùng sữa 48 hộp) và gia vị (nhà thường có sẵn). Khách tự tick nếu cần.
+    this.unchecked.set(this.purchase().filter(x => x.bulk || x.ingredient?.categoryId === 'condiments').map(x => x.line.ingredientId));
     this.dlg().nativeElement.showModal();
     this.dlg().nativeElement.scrollTop = 0;
   }

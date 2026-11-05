@@ -1,6 +1,6 @@
 # Hợp đồng backend FreshMart v1
 
-Trạng thái: đã chốt để A và B triển khai thống nhất. API phần A đã có mã nguồn và kiểm thử; API giỏ, voucher, đơn và kho bên dưới là hợp đồng cho B, chưa được triển khai. Nếu cần đổi hợp đồng, cập nhật tài liệu và cả hai bên gọi API trong cùng một thay đổi.
+Trạng thái: đã chốt để A và B triển khai thống nhất. API phần A và phần B đều đã có mã nguồn và kiểm thử (xem [bàn giao phần B](part-b-handoff.md)). Nếu cần đổi hợp đồng, cập nhật tài liệu và cả hai bên gọi API trong cùng một thay đổi.
 
 ## 1. Nền tảng và định dạng
 

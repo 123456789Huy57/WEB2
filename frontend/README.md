@@ -1,7 +1,7 @@
 # FreshMart · Web2 (Angular)
 
 Frontend Angular 20 của đồ án FreshMart, chuyển từ bản Web1 (HTML/CSS/JS thuần).
-Tài khoản, hồ sơ và catalog gọi Express/MongoDB. Công thức, voucher và các phần B còn dùng dữ liệu demo trong lúc nối backend.
+Mọi dữ liệu (tài khoản, catalog, giỏ, đơn, voucher, Meal Planner, đánh giá) đọc/ghi qua Express/MongoDB. File trong `public/data` chỉ dùng làm dữ liệu mẫu cho `npm run db:setup`.
 
 ## Chạy thử
 
@@ -21,7 +21,7 @@ Chạy/cấu hình backend theo [hướng dẫn backend](../backend/README.md), 
 
 Frontend đã có dev proxy, cookie và CSRF interceptor. Login/profile/catalog admin dùng API; JSON/localStorage không còn là nguồn chuẩn của tài khoản và sản phẩm. Reset dữ liệu mẫu trên giao diện chỉ xóa dữ liệu demo ở trình duyệt, không xóa MongoDB.
 
-Checkout, sửa stock và đổi trạng thái đơn đang chặn để chờ API phần B; đơn/voucher/giỏ hiện có vẫn là dữ liệu demo. Hợp đồng MVP chốt member-only checkout và COD. B nối API rồi bật chức năng tương ứng.
+Checkout COD/VNPay, điều chỉnh kho và đổi trạng thái đơn đã nối API phần B.
 
 ## Các màn hình
 
@@ -37,7 +37,9 @@ Checkout, sửa stock và đổi trạng thái đơn đang chặn để chờ AP
 | `/cua-hang` | 12 cửa hàng, tìm theo quận | `pages/stores` |
 | `/dang-nhap` | Đăng nhập, tạo tài khoản | `pages/login` |
 | `/tai-khoan` | Đơn của mình kèm tiến trình giao, hủy đơn, mua lại; yêu thích; mã đã lưu; thông tin | `pages/account` |
-| `/tra-cuu-don?ma=&sdt=` | Tra cứu demo cũ; không thuộc API công khai của MVP | `pages/order-lookup` |
+| `/tra-cuu-don?ma=` | Tìm nhanh một đơn trong tài khoản đang đăng nhập | `pages/order-lookup` |
+| `/thanh-toan/ket-qua` | Kết quả thanh toán VNPay, thanh toán lại | `pages/checkout/payment-result` |
+| `/admin/danh-gia` | Ẩn/hiện đánh giá | `admin/reviews` |
 | `/so-sanh` | So sánh tối đa 3 sản phẩm theo giá và dinh dưỡng | `pages/compare` |
 | `/thong-tin/:slug` | Giới thiệu, đội ngũ, đối tác, hướng dẫn mua hàng, giao hàng, đổi trả, bảo mật | `pages/info` |
 | `/blog`, `/blog/:slug` | Blog ẩm thực | `pages/blog` |

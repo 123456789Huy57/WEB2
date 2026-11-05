@@ -41,6 +41,15 @@ async function seed(db) {
   await insertMissing(db, 'ingredientProducts', Object.entries(map).map(([ingredientId, v]) => ({ ...v, ingredientId, productIds: v.productIds || [] })), 'ingredientId');
 }
 
+// Sửa dữ liệu đã biết là sai trong bản cũ. Mỗi lệnh chỉ đổi khi dữ liệu còn đúng như bản cũ, nên chạy lại không ghi đè chỉnh sửa của nhóm.
+async function patchKnownData(db) {
+  const r = await db.collection('ingredientProducts').updateOne(
+    { ingredientId: 'ing-gao-thom', preferredProductId: 'p-0132' },
+    { $set: { preferredProductId: 'p-0130', productIds: ['p-0130', 'p-0127', 'p-0132'] } },
+  );
+  console.log(`  gạo cho Meal Planner: ${r.modifiedCount ? 'đổi sang túi 5kg thay cho bao 25kg' : 'đã đúng'}`);
+}
+
 async function main() {
   if (!env.mongodbUri) throw new Error('MONGODB_URI đang trống trong backend/.env.');
   const db = await connectDatabase(env.mongodbUri, env.mongodbDb);
@@ -52,6 +61,8 @@ async function main() {
   console.log('   xong');
   console.log('3. Dữ liệu mẫu còn thiếu');
   await seed(db);
+  console.log('4. Sửa dữ liệu đã biết');
+  await patchKnownData(db);
   console.log('Hoàn tất.');
 }
 
