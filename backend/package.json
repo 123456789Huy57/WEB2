@@ -13,6 +13,7 @@
     "test": "node --test",
     "seed:catalog": "node scripts/seed-catalog.js",
     "seed:admin": "node scripts/seed-admin.js",
+    "check:db": "node scripts/check-db.js",
     "seed:vouchers": "node scripts/seed-vouchers.js",
     "test:integration": "node --test tests/part-a.integration.cjs",
     "mail:inbox": "node scripts/mail-inbox.js"
