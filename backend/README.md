@@ -10,11 +10,12 @@ npm ci
 cp .env.example .env
 ```
 
-Điền `MONGODB_URI` (local: `mongodb://127.0.0.1:27017`), `MONGODB_DB=freshmart` và `SESSION_SECRET` riêng trong `.env`. Tạo secret bằng:
+Cả nhóm dùng chung MongoDB Atlas theo [hướng dẫn](docs/mongodb-atlas.md). Điền `MONGODB_URI` (local: `mongodb://127.0.0.1:27017`), `MONGODB_DB=freshmart` và `SESSION_SECRET` riêng trong `.env`. Tạo secret bằng:
 
 ```bash
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 npm run seed:catalog
+npm run seed:vouchers
 npm run dev
 ```
 
@@ -40,6 +41,7 @@ Mật khẩu ít nhất 8 ký tự và tối đa 72 byte UTF-8, lưu bằng bcry
 | `npm run test:integration` | Kiểm tra phần A với MongoDB local trong DB thử riêng, xóa sau khi chạy |
 | `npm run seed:catalog` | Nhập products/categories còn thiếu |
 | `npm run seed:admin` | Tạo admin từ cấu hình riêng |
+| `npm run seed:vouchers` | Nhập voucher còn thiếu, gán loại khách mới/mọi khách |
 | `npm run mail:inbox` | Xem thư khôi phục thử local, không gửi email thật |
 
 Integration test dùng `MONGODB_TEST_URI` nếu có, mặc định MongoDB local; luôn tạo tên DB thử mới, không dùng DB làm việc của nhóm.
