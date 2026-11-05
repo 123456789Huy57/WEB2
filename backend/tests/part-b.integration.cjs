@@ -332,6 +332,10 @@ test('Đánh giá sản phẩm', async t => {
     const id = (await buyer.get('/api/products/p-kg/reviews/me')).data.review.id;
     assert.equal((await stranger.request('PATCH', `/api/admin/reviews/${id}`, { hidden: true })).status, 403);
     await admin.request('PATCH', `/api/admin/reviews/${id}`, { hidden: true });
+    const adminList = (await admin.get('/api/admin/reviews?hidden=true')).data;
+    assert.equal(adminList.total, 1);
+    assert.equal(adminList.items[0].productName, 'SP p-kg');
+    assert.equal((await stranger.get('/api/admin/reviews')).status, 403);
     assert.equal((await stranger.get('/api/products/p-kg/reviews')).data.count, 0);
     await admin.request('PATCH', `/api/admin/reviews/${id}`, { hidden: false });
     assert.equal((await buyer.del('/api/products/p-kg/reviews/me')).data.count, 0);

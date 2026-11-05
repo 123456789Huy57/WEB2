@@ -71,6 +71,25 @@ router.delete('/products/:id/reviews/me', requireAuth, async (req, res) => {
   res.json(await syncProduct(productId));
 });
 
+// Admin xem mọi đánh giá (kể cả đã ẩn), lọc theo số sao / trạng thái / từ khóa.
+router.get('/admin/reviews', requireAuth, requireAdmin, async (req, res) => {
+  const { page, pageSize } = v.page(req.query);
+  const filter = {};
+  if (req.query.rating !== undefined) filter.rating = v.number(Number(req.query.rating), 'rating', 1, 5, true);
+  if (req.query.hidden === 'true') filter.hidden = true;
+  if (req.query.hidden === 'false') filter.hidden = { $ne: true };
+  if (req.query.q !== undefined) { const regex = { $regex: v.searchRegex(req.query.q), $options: 'i' }; filter.$or = [{ comment: regex }, { userName: regex }, { productId: regex }]; }
+  const [items, total] = await Promise.all([
+    reviews().aggregate([
+      { $match: filter }, { $sort: { createdAt: -1 } }, { $skip: (page - 1) * pageSize }, { $limit: pageSize },
+      { $lookup: { from: 'products', localField: 'productId', foreignField: 'id', as: 'p' } },
+      { $project: { _id: 0, userId: 0, id: 1, productId: 1, userName: 1, orderId: 1, rating: 1, comment: 1, createdAt: 1, hidden: { $ifNull: ['$hidden', false] }, productName: { $first: '$p.name' } } },
+    ]).toArray(),
+    reviews().countDocuments(filter),
+  ]);
+  res.json({ items, page, pageSize, total });
+});
+
 // Admin ẩn/hiện đánh giá vi phạm (không xóa hẳn để còn đối chiếu).
 router.patch('/admin/reviews/:id', requireAuth, requireAdmin, async (req, res) => {
   const body = v.object(req.body, ['hidden']);
