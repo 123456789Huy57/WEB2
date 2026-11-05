@@ -1,10 +1,12 @@
 import { Component, ViewEncapsulation, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CartService } from '../../core/cart.service';
 import { ProductService } from '../../core/product.service';
 import { VoucherService } from '../../core/voucher.service';
-import { AuthService } from '../../core/auth.service';
+import { AuthService, apiMessage } from '../../core/auth.service';
 import { OrderService, PAYMENT_LABEL } from '../../core/order.service';
 import { ToastService } from '../../core/toast.service';
 import { PaymentMethod } from '../../core/models';
@@ -55,14 +57,19 @@ export class Checkout {
 
   /** Mã đã lưu lên đầu; mã chưa đủ điều kiện vẫn hiện nhưng không chọn được */
   protected voucherOptions = computed(() => {
-    const sub = this.cart.subtotal(), saved = this.vs.saved();
-    return [...this.vs.all()]
+    const sub = this.cart.subtotal(), saved = this.vs.saved(), ordered = this.orders.hasOrdered(this.auth.user());
+    const mine = new Map(this.vs.mine().map(v => [v.code, v]));
+    const list = [...this.vs.all().map(v => ({ ...v, ...mine.get(v.code) })), ...[...mine.values()].filter(v => !this.vs.all().some(x => x.code === v.code))];
+    return list
       .sort((a, b) => Number(saved.includes(b.code)) - Number(saved.includes(a.code)))
-      .map(v => { const r = this.vs.check(v, sub, this.cart.hasOrdered()); return { ...v, ok: r.ok, why: r.msg }; });
+      .map(v => { const r = this.vs.check(v, sub, ordered); return { ...v, ok: r.ok, why: r.msg }; });
   });
 
   constructor() {
-    if (!this.cart.lines().length) this.router.navigateByUrl('/gio-hang');
+    // Giỏ tải từ server: chỉ quay về giỏ khi đã chắc chắn giỏ trống.
+    void this.cart.load().then(() => { if (!this.cart.lines().length && !this.done()) this.router.navigateByUrl('/gio-hang'); });
+    // Sửa thông tin là một yêu cầu đặt đơn mới (khóa chống trùng mới).
+    this.form.valueChanges.pipe(takeUntilDestroyed()).subscribe(() => this.orders.resetAttempt());
   }
 
   protected bad(name: 'name' | 'phone' | 'email' | 'address'): boolean {
@@ -70,7 +77,21 @@ export class Checkout {
     return c.invalid && (c.touched || this.tried());
   }
 
-  protected submit(): void {
-    this.toast.show('Đặt hàng đang được hoàn thiện. Vui lòng quay lại sau.');
+  protected async submit(): Promise<void> {
+    this.tried.set(true); this.form.markAllAsTouched();
+    if (this.form.invalid || this.sending()) return;
+    if (!this.auth.user()) { this.router.navigate(['/dang-nhap'], { queryParams: { next: '/thanh-toan' } }); return; }
+    if (this.cart.issues().length) { this.toast.show('Giỏ có sản phẩm vừa hết hàng hoặc ngừng bán. Sửa giỏ trước khi đặt.'); this.router.navigateByUrl('/gio-hang'); return; }
+    this.sending.set(true);
+    try {
+      const f = this.form.getRawValue();
+      const o = await this.orders.place(f, this.t().voucher ? this.cart.voucherCode() : '');
+      this.done.set({ code: o.orderCode, total: o.total, slot: f.slot, payment: PAYMENT_LABEL[o.paymentMethod], firstName: f.name.trim().split(/\s+/).pop() ?? '', phone: f.phone, guest: false });
+      window.scrollTo({ top: 0 });
+    } catch (error) {
+      this.toast.show(apiMessage(error));
+      // Giá/tồn kho/voucher vừa đổi: tải lại giỏ để khách thấy số mới rồi bấm lại.
+      if (error instanceof HttpErrorResponse && error.status === 409) { this.orders.resetAttempt(); await this.cart.load(); }
+    } finally { this.sending.set(false); }
   }
 }

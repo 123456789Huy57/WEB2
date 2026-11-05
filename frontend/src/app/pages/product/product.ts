@@ -65,11 +65,12 @@ export class ProductPage {
     effect(() => { if (this.name()) this.title.setTitle(this.name() + ' · FreshMart'); });
   }
 
-  protected add(): void {
+  protected async add(): Promise<void> {
     const p = this.p()!;
     const before = this.cart.qty(p.id);
-    this.cart.add(p.id, this.qty());
+    await this.cart.add(p.id, this.qty());
     const added = this.cart.qty(p.id) - before;
+    if (added <= 0 && before < p.stock) return; // lỗi đã được báo bằng toast từ giỏ
     this.toast.show(added <= 0 ? `Giỏ đã có tối đa số lượng còn trong kho (${this.ps.qty(p.stock)} ${this.ps.unit(p)})`
       : added < this.qty() ? `Chỉ thêm được ${this.ps.qty(added)} ${this.ps.unit(p)} vì kho còn ${this.ps.qty(p.stock)} ${this.ps.unit(p)}`
       : `Đã thêm ${this.ps.qty(added)} ${this.ps.unit(p)} ${this.name()} vào giỏ`);

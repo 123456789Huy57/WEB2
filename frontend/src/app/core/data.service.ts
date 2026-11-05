@@ -25,8 +25,8 @@ export class DataService {
       const d = await firstValueFrom(forkJoin({
         products: this.http.get<Product[]>(admin ? '/api/admin/products' : '/api/products'),
         categories: this.http.get<Category[]>(admin ? '/api/admin/categories' : '/api/categories'),
-        // These B/content domains remain demo data until their APIs are implemented.
-        vouchers: this.http.get<Voucher[]>('/data/vouchers.json'),
+        vouchers: this.http.get<Voucher[]>(admin ? '/api/admin/vouchers' : '/api/vouchers'),
+        // Công thức, nguyên liệu, cửa hàng: còn đọc file tĩnh, sẽ chuyển sang API Meal Planner.
         recipes: this.http.get<Recipe[]>('/data/recipes.json'),
         ingredients: this.http.get<Ingredient[]>('/data/ingredients.json'),
         map: this.http.get<IngredientProductMap>('/data/ingredient-product-map.json'),
@@ -35,7 +35,7 @@ export class DataService {
       }));
       this.products.set(d.products);
       this.categories.set(d.categories);
-      this.vouchers.set(merge(d.vouchers, store.get<Record<string, Voucher>>('db.vouchers', {}), v => v.code));
+      this.vouchers.set(d.vouchers);
       this.recipes.set(d.recipes.filter(r => r.isActive !== false));
       this.ingredients.set(d.ingredients.filter(i => i.isActive !== false));
       this.ingredientMap.set(d.map); this.stores.set(d.stores);
@@ -77,17 +77,22 @@ export class DataService {
     const user = await firstValueFrom(this.http.patch<User>(`/api/admin/users/${id}/status`, { isActive }));
     this.users.update(items => items.map(item => item.id === id ? user : item));
   }
-  // B must replace this demo hook with the inventory/order APIs, never catalog PATCH.
-  adjustStock(_id: string, _delta: number): void { throw new Error('Inventory API is not implemented yet.'); }
-  saveVoucher(v: Voucher): void {
-    this.vouchers.update(items => items.some(item => item.code === v.code) ? items.map(item => item.code === v.code ? v : item) : [v, ...items]);
-    store.set('db.vouchers', { ...store.get<Record<string, Voucher>>('db.vouchers', {}), [v.code]: v });
+  /** Điều chỉnh tồn kho qua API kho (tăng/giảm, không đặt số tuyệt đối). Idempotency-Key chống bấm hai lần. */
+  async adjustStock(id: string, delta: number, reason = ''): Promise<number> {
+    const r = await firstValueFrom(this.http.post<{ productId: string; stock: number }>(`/api/admin/inventory/${id}/adjustments`, { quantityDelta: delta, reason }, { headers: { 'Idempotency-Key': crypto.randomUUID() } }));
+    this.products.update(items => items.map(p => p.id === id ? { ...p, stock: r.stock } : p));
+    return r.stock;
+  }
+  /** Tạo hoặc sửa voucher (admin). id có nghĩa là sửa. */
+  async saveVoucher(v: Partial<Voucher>, id?: string): Promise<Voucher> {
+    const { remaining, usedCount, saved, usedByMe, id: _id, ...body } = v;
+    if (id) delete body.code;
+    const r = await firstValueFrom(id ? this.http.patch<Voucher>(`/api/admin/vouchers/${id}`, body) : this.http.post<Voucher>('/api/admin/vouchers', body));
+    this.vouchers.update(items => items.some(x => x.id === r.id) ? items.map(x => x.id === r.id ? r : x) : [r, ...items]);
+    return r;
   }
   resetEdits(): void {
-    ['db.vouchers', 'orders', 'cart', 'compare'].forEach(key => store.remove(key));
+    ['db.vouchers', 'orders', 'cart', 'compare', 'voucher', 'savedVouchers'].forEach(key => store.remove(key));
     location.reload();
   }
-}
-function merge<T>(base: T[], edits: Record<string, T>, key: (value: T) => string): T[] {
-  return [...base.map(value => edits[key(value)] ?? value), ...Object.entries(edits).filter(([id]) => !base.some(value => key(value) === id)).map(([, value]) => value)];
 }

@@ -1,4 +1,5 @@
 import { Component, computed, inject, input, signal } from '@angular/core';
+import { apiMessage } from '../core/auth.service';
 import { DatePipe } from '@angular/common';
 import { OrderService, OrderView, ORDER_STATUS, PAYMENT_LABEL, STATUS_FLOW } from '../core/order.service';
 import { ProductService } from '../core/product.service';
@@ -28,7 +29,7 @@ import { VndPipe } from '../shared/vnd.pipe';
           <tr [class.dim]="o.status === 'cancelled'">
             <td class="num"><b>{{ o.orderCode }}</b></td>
             <td class="num">{{ o.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
-            <td>{{ o.customer?.name }}<br><span class="small muted num">{{ o.customer?.phone }}{{ o.userId ? '' : ' · khách vãng lai' }}</span></td>
+            <td>{{ o.customer.name }}<br><span class="small muted num">{{ o.customer.phone }}</span></td>
             <td class="r num">{{ o.total | vnd }}</td>
             <td>{{ pay[o.paymentMethod] }}</td>
             <td>
@@ -48,7 +49,7 @@ import { VndPipe } from '../shared/vnd.pipe';
                 <li class="muted"><span>Phí giao</span><span class="num">{{ o.shippingFee | vnd }}</span></li>
                 @if (o.discount) { <li class="muted"><span>Mã {{ o.voucherCode }}</span><span class="num">−{{ o.discount | vnd }}</span></li> }
               </ul>
-              <p class="small muted">{{ o.customer?.address }}@if (o.customer?.slot) { · Giờ nhận: {{ o.customer?.slot }} }@if (o.customer?.note) { · Ghi chú: {{ o.customer?.note }} }</p>
+              <p class="small muted">{{ o.customer.address }}@if (o.customer.slot) { · Giờ nhận: {{ o.customer.slot }} }@if (o.customer.note) { · Ghi chú: {{ o.customer.note }} }</p>
             </td></tr>
           }
         } @empty {
@@ -74,12 +75,14 @@ export class AdminOrders {
   protected tabs = computed(() => [{ key: 'all' as const, label: 'Tất cả', n: this.orders.all().length }, ...this.statusKeys.map(k => ({ key: k, label: ORDER_STATUS[k], n: this.orders.all().filter(o => o.status === k).length }))]);
   protected list = computed(() => {
     const k = norm(this.query() || this.q() || '');
-    return this.orders.all().filter(o => (this.filter() === 'all' || o.status === this.filter()) && (!k || norm(`${o.orderCode} ${o.customer?.name} ${o.customer?.phone}`).includes(k)));
+    return this.orders.all().filter(o => (this.filter() === 'all' || o.status === this.filter()) && (!k || norm(`${o.orderCode} ${o.customer.name} ${o.customer.phone}`).includes(k)));
   });
   protected next(o: OrderView): OrderStatus | null { const i = STATUS_FLOW.indexOf(o.status); return i > -1 && i < STATUS_FLOW.length - 1 ? STATUS_FLOW[i + 1] : null; }
   protected toggle(code: string): void { this.open.set(this.open() === code ? '' : code); }
-  protected async set(o: OrderView, _s: OrderStatus, el?: HTMLSelectElement): Promise<void> {
-    if (el) el.value = o.status;
-    this.toast.show('Quản lý đơn hàng đang được hoàn thiện.');
+  protected async set(o: OrderView, s: OrderStatus, el?: HTMLSelectElement): Promise<void> {
+    if (el) el.value = o.status; // chỉ đổi khi server xác nhận
+    if (s === 'cancelled' && !(await this.cf.ask('Hủy đơn?', `Đơn ${o.orderCode} sẽ bị hủy và hàng được trả lại kho.`, 'Hủy đơn'))) return;
+    try { await this.orders.setStatus(o.orderCode, s); this.toast.show(`Đơn ${o.orderCode}: ${ORDER_STATUS[s]}`); }
+    catch (error) { this.toast.show(apiMessage(error)); await this.orders.reload(); }
   }
 }

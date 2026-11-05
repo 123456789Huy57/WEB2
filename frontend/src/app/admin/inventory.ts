@@ -1,4 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
+import { apiMessage } from '../core/auth.service';
 import { DataService } from '../core/data.service';
 import { ProductService } from '../core/product.service';
 import { ToastService } from '../core/toast.service';
@@ -58,6 +59,16 @@ export class AdminInventory {
     const k = norm(this.q());
     return this.ps.all().filter(p => (!k || norm(p.name).includes(k)) && (!this.onlyLow() || p.stock <= 10)).sort((a, b) => a.stock - b.stock).slice(0, 60);
   });
-  protected add(_p: Product, _n: number): void { this.toast.show('Quản lý tồn kho đang được hoàn thiện.'); }
-  protected setTo(_p: Product, _v: string): void { this.toast.show('Quản lý tồn kho đang được hoàn thiện.'); }
+  protected async add(p: Product, n: number): Promise<void> { await this.adjust(p, n, 'Nhập thêm'); }
+  /** "Đặt lại số tồn": quy về một lần tăng/giảm so với số đang thấy (server không cho đặt số tuyệt đối). */
+  protected async setTo(p: Product, v: string): Promise<void> {
+    const target = Number(v);
+    if (!Number.isFinite(target) || target < 0) { this.toast.show('Số tồn không hợp lệ'); return; }
+    const delta = Math.round((target - p.stock) * 1000) / 1000;
+    if (delta) await this.adjust(p, delta, 'Kiểm kê');
+  }
+  private async adjust(p: Product, delta: number, reason: string): Promise<void> {
+    try { const stock = await this.data.adjustStock(p.id, delta, reason); this.toast.show(`${this.ps.shortName(p)}: còn ${this.ps.qty(stock)} ${this.ps.unit(p)}`); }
+    catch (error) { this.toast.show(apiMessage(error)); }
+  }
 }

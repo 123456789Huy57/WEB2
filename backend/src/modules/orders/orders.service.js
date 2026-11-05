@@ -27,13 +27,14 @@ function idempotencyKey(req) {
 
 function parseOrderBody(body) {
   v.object(body, ['customer', 'paymentMethod', 'voucherCode']);
-  const c = v.object(body.customer, ['name', 'phone', 'email', 'address', 'note']);
+  const c = v.object(body.customer, ['name', 'phone', 'email', 'address', 'note', 'slot']);
   const customer = {
     name: v.text(c.name, 'Họ tên', 2, 100),
     phone: v.phone(c.phone),
     email: c.email ? v.email(c.email) : '',
     address: v.text(c.address, 'Địa chỉ', 5, 300),
     note: c.note === undefined ? '' : v.text(c.note, 'Ghi chú', 0, 500),
+    slot: c.slot === undefined ? '' : v.text(c.slot, 'Giờ nhận', 0, 60),
   };
   if (!PAYMENT_METHODS.includes(body.paymentMethod)) throw new HttpError(400, 'PAYMENT_METHOD_UNSUPPORTED', 'Hiện chỉ hỗ trợ thanh toán khi nhận hàng (COD).');
   return { customer, paymentMethod: body.paymentMethod, voucherCode: vouchers.normalizeCode(body.voucherCode) };

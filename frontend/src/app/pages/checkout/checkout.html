@@ -10,7 +10,7 @@
           <legend class="h3">Người nhận</legend>
           <p class="small muted co-login">
             @if (auth.user(); as u) { Đang đặt hàng với tài khoản {{ u.email }}. }
-            @else { Đã có tài khoản? <a class="link" routerLink="/dang-nhap" [queryParams]="{ next: '/thanh-toan' }">Đăng nhập</a> để điền sẵn thông tin. }
+            @else { <a class="link" routerLink="/dang-nhap" [queryParams]="{ next: '/thanh-toan' }">Đăng nhập</a> hoặc đăng ký để đặt hàng. Giỏ hàng vẫn được giữ sau khi đăng nhập. }
           </p>
           <div class="form-grid">
             <div class="field"><label for="f-name">Họ và tên</label><input id="f-name" formControlName="name" autocomplete="name" [attr.aria-invalid]="bad('name')">@if (bad('name')) { <span class="err">Nhập họ tên người nhận</span> }</div>
@@ -35,8 +35,7 @@
           <legend class="h3">Thanh toán</legend>
           <div class="choices">
             <label class="choice"><input type="radio" formControlName="payment" value="cod"><span><b>Tiền mặt khi nhận hàng</b><span class="small muted">Trả cho shipper khi nhận, kiểm hàng trước khi trả</span></span></label>
-            <label class="choice"><input type="radio" formControlName="payment" value="bank"><span><b>Chuyển khoản ngân hàng</b><span class="small muted">Thông tin tài khoản hiện sau khi đặt hàng</span></span></label>
-            <label class="choice"><input type="radio" formControlName="payment" value="momo"><span><b>Ví MoMo</b><span class="small muted">Quét mã QR sau khi đặt hàng</span></span></label>
+            <div class="choice" aria-disabled="true" style="opacity:.55"><span><b>VNPay</b><span class="small muted">Sắp có</span></span></div>
           </div>
         </fieldset>
       </div>
@@ -63,7 +62,8 @@
           @if (t().voucher) { <div><span>Mã {{ t().voucher!.code }}</span><span class="num">−{{ t().disc | vnd }}</span></div> }
           <div class="total"><span>Tổng cộng</span><b class="num">{{ t().total | vnd }}</b></div>
         </div>
-        <button class="btn btn-forest w100" type="submit" [disabled]="true">Đặt hàng đang được hoàn thiện</button>
+        @if (!auth.user()) { <p class="small" style="margin:0 0 10px">Bạn cần <a class="link" routerLink="/dang-nhap" [queryParams]="{ next: '/thanh-toan' }">đăng nhập</a> để đặt hàng. Giỏ hàng vẫn được giữ.</p> }
+        <button class="btn btn-forest w100" type="submit" [disabled]="sending()">{{ sending() ? 'Đang đặt hàng…' : 'Đặt hàng · ' + (t().total | vnd) }}</button>
         <p class="small muted" style="margin-top:14px">Bấm đặt hàng là bạn đồng ý với chính sách giao hàng và đổi trả của FreshMart.</p>
       </aside>
     </form>

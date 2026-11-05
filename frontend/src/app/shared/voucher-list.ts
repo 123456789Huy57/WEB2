@@ -36,5 +36,8 @@ export class VoucherList {
   desc(v: Voucher): string {
     return `${v.title}, đơn từ ${vnd(v.minOrderValue)}` + (v.maxDiscountValue ? `, tối đa ${vnd(v.maxDiscountValue)}` : '') + ` · hạn ${v.endDate.split('-').reverse().join('/')}`;
   }
-  toggle(code: string): void { if (this.vs.toggleSave(code)) this.toast.show(`Đã lưu mã ${code}`); }
+  async toggle(code: string): Promise<void> {
+    const r = await this.vs.toggleSave(code);
+    this.toast.show(r === null ? 'Đăng nhập để lưu mã vào tài khoản' : r ? `Đã lưu mã ${code}` : `Đã bỏ lưu mã ${code}`);
+  }
 }

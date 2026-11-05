@@ -2,7 +2,6 @@ import { Component, ViewEncapsulation, inject, input, signal } from '@angular/co
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
-import { VoucherService } from '../../core/voucher.service';
 
 @Component({
   selector: 'fm-login',
@@ -47,7 +46,6 @@ export class Login {
   readonly next = input<string>();
   readonly admin = input<string>();
   private auth = inject(AuthService);
-  private vs = inject(VoucherService);
   private router = inject(Router);
   protected signup = signal(false);
   protected busy = signal(false);
@@ -77,7 +75,6 @@ export class Login {
     const r = await this.auth.register({ fullName: name, phone, email, password: this.password });
     this.busy.set(false);
     if (!r.ok) return this.err.set(r.msg);
-    if (!this.vs.isSaved('WELCOME10')) this.vs.toggleSave('WELCOME10');
     this.router.navigateByUrl((this.next()?.startsWith('/') && !this.next()?.startsWith('//') ? this.next() : undefined) || '/tai-khoan');
   }
 }

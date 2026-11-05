@@ -19,6 +19,10 @@ export interface Voucher {
   id: string; code: string; title: string; description: string;
   category: 'product' | 'shipping'; discountType: 'percent' | 'fixed'; discountValue: number;
   minOrderValue: number; maxDiscountValue?: number | null; startDate: string; endDate: string; isActive: boolean;
+  /** all: mọi khách đăng nhập; new_customer: chỉ khách chưa có đơn */
+  audience?: 'all' | 'new_customer'; perUserLimit?: number; usageLimit?: number | null; usedCount?: number;
+  /** Số suất còn lại; null = không giới hạn */
+  remaining?: number | null; saved?: boolean; usedByMe?: number;
 }
 export interface RecipeLine { productId: string; ingredientId: string; quantity: number; unit: string; }
 export interface Recipe {
@@ -35,17 +39,29 @@ export interface Ingredient {
 export interface IngredientProductMap { [ingredientId: string]: { preferredProductId?: string; productIds?: string[] } }
 export interface Store { id: string; name: string; address: string; phone: string; hours: string; }
 
-export interface CartLine { id: string; qty: number; }
 export type Role = 'customer' | 'admin';
 export interface User { id: string; fullName: string; email: string; phone: string; address: string; role: Role; isActive?: boolean; createdAt?: string; }
 export type PaymentMethod = 'cod' | 'bank' | 'momo';
 export type OrderStatus = 'pending' | 'confirmed' | 'preparing' | 'shipping' | 'delivered' | 'cancelled';
-export interface OrderItem { id: string; qty: number; price: number; }
+/** Dòng đơn lưu bản chụp tên/giá lúc đặt (backend-contract mục 6) */
+export interface OrderItem {
+  productId: string; productNameSnapshot: string; unitSnapshot: string; unitPriceSnapshot: number;
+  quantity: number; lineTotal: number; image_url?: string;
+}
+export interface OrderHistory { from: OrderStatus | null; to: OrderStatus; actorId?: string; at: string; }
 export interface Order {
-  orderCode: string; createdAt: string; updatedAt?: string; status: OrderStatus; items: OrderItem[];
-  /** Có khi khách đăng nhập lúc đặt; khách vãng lai tra cứu bằng mã đơn + số điện thoại */
-  userId?: string;
-  shippingFee: number; discount: number; voucherCode?: string; paymentMethod: PaymentMethod;
-  customer?: CheckoutInfo;
+  id: string; orderCode: string; userId: string; createdAt: string; updatedAt?: string;
+  status: OrderStatus; items: OrderItem[];
+  subtotal: number; shippingFee: number; productDiscount: number; shippingDiscount: number; discount: number; total: number;
+  voucherCode: string | null; paymentMethod: PaymentMethod; paymentStatus: 'unpaid' | 'paid'; paidAt?: string | null;
+  customer: { name: string; phone: string; email?: string; address: string; note?: string; slot?: string };
+  history: OrderHistory[];
 }
 export interface CheckoutInfo { name: string; phone: string; email: string; address: string; note: string; slot: string; payment: PaymentMethod; }
+/** Giỏ/báo giá do server tính (backend-contract mục 4) */
+export interface CartIssue { productId: string; code: string; available?: number; requested?: number; step?: number; }
+export interface ServerCart {
+  items: { productId: string; quantity: number; unitPrice: number; lineTotal: number; product: Partial<Product> & { id: string; name: string; unit: string } }[];
+  subtotal: number; shippingFee: number; productDiscount: number; shippingDiscount: number; discount: number; total: number;
+  voucherCode: string | null; issues?: CartIssue[];
+}

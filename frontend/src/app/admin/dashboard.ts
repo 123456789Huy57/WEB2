@@ -44,7 +44,7 @@ import { VndPipe } from '../shared/vnd.pipe';
           <thead><tr><th>Mã đơn</th><th>Khách</th><th>Thời gian</th><th class="r">Tổng</th><th>Trạng thái</th></tr></thead>
           <tbody>
             @for (o of orders.all().slice(0, 6); track o.orderCode) {
-              <tr><td class="num"><a class="link-btn" routerLink="/admin/don-hang" [queryParams]="{ q: o.orderCode }">{{ o.orderCode }}</a></td><td>{{ o.customer?.name }}</td><td class="num">{{ o.createdAt | date: 'dd/MM HH:mm' }}</td><td class="r num">{{ o.total | vnd }}</td><td><span class="pill" [class.on]="o.status === 'delivered'" [class.warn]="o.status === 'pending'">{{ st[o.status] }}</span></td></tr>
+              <tr><td class="num"><a class="link-btn" routerLink="/admin/don-hang" [queryParams]="{ q: o.orderCode }">{{ o.orderCode }}</a></td><td>{{ o.customer.name }}</td><td class="num">{{ o.createdAt | date: 'dd/MM HH:mm' }}</td><td class="r num">{{ o.total | vnd }}</td><td><span class="pill" [class.on]="o.status === 'delivered'" [class.warn]="o.status === 'pending'">{{ st[o.status] }}</span></td></tr>
             }
           </tbody>
         </table></div>

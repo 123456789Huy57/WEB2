@@ -50,13 +50,17 @@ export class Account {
   protected profileBusy = signal(false);
   protected profile = { fullName: this.u?.fullName ?? '', phone: this.u?.phone ?? '', address: this.u?.address ?? '' };
 
-  protected buyAgain(o: OrderView): void {
-    const ok = o.lines.filter(l => l.p.active !== false && l.p.stock > 0);
-    ok.forEach(l => this.cart.add(l.p.id, Math.min(l.qty, l.p.stock)));
-    this.toast.show(ok.length < o.lines.length ? `Đã thêm ${ok.length}/${o.lines.length} sản phẩm, số còn lại tạm hết hàng` : `Đã thêm ${ok.length} sản phẩm của đơn ${o.orderCode} vào giỏ`);
+  protected async buyAgain(o: OrderView): Promise<void> {
+    try {
+      const skipped = await this.orderSvc.reorder(o);
+      const added = o.lines.length - skipped.length;
+      this.toast.show(skipped.length ? `Đã thêm ${added}/${o.lines.length} sản phẩm, số còn lại tạm hết hàng` : `Đã thêm ${added} sản phẩm của đơn ${o.orderCode} vào giỏ`);
+    } catch (error) { this.toast.show(apiMessage(error)); }
   }
-  protected async cancelOrder(_o: OrderView): Promise<void> {
-    this.toast.show('Quản lý đơn hàng đang được hoàn thiện.');
+  protected async cancelOrder(o: OrderView): Promise<void> {
+    if (!(await this.cf.ask('Hủy đơn hàng?', `Đơn ${o.orderCode} sẽ bị hủy và hàng được trả lại kho.`, 'Hủy đơn'))) return;
+    try { await this.orderSvc.cancel(o); this.toast.show(`Đã hủy đơn ${o.orderCode}`); }
+    catch (error) { this.toast.show(apiMessage(error)); }
   }
   protected useVoucher(code: string): void { this.cart.setVoucher(code); this.router.navigateByUrl('/gio-hang'); }
   protected async saveProfile(): Promise<void> {

@@ -88,10 +88,10 @@ export class MealPlanner implements AfterViewInit {
   protected toggleBuy(id: string): void {
     this.unchecked.update(u => (u.includes(id) ? u.filter(x => x !== id) : [...u, id]));
   }
-  protected addMissing(): void {
-    const items = this.chosen();
-    items.forEach(x => this.cart.add(x.product!.id, x.cartQty));
-    this.toast.show(`Đã thêm ${items.length} sản phẩm còn thiếu của “${this.current()!.name}” vào giỏ`);
+  protected async addMissing(): Promise<void> {
+    const items = this.chosen(), name = this.current()!.name;
     this.dlg().nativeElement.close();
+    const added = await this.cart.addMany(items.map(x => ({ id: x.product!.id, qty: x.cartQty })));
+    this.toast.show(added === items.length ? `Đã thêm ${added} sản phẩm còn thiếu của “${name}” vào giỏ` : `Đã thêm ${added}/${items.length} sản phẩm của “${name}”, số còn lại tạm hết hàng`);
   }
 }
