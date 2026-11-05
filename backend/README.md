@@ -1,6 +1,6 @@
 # Backend FreshMart
 
-Phần A đã hoàn thành theo [bảng bàn giao](docs/part-a-handoff.md): auth/session, phân quyền, hồ sơ, khách hàng, catalog, upload ảnh và khôi phục mật khẩu. Phần B triển khai giỏ/đơn/voucher/kho theo [hợp đồng backend v1](docs/backend-contract.md). Dùng Node.js 22+, Express, CommonJS, MongoClient, Morgan, Nodemon và express-session.
+Phần A đã hoàn thành theo [bảng bàn giao](docs/part-a-handoff.md): auth/session, phân quyền, hồ sơ, khách hàng, catalog, upload ảnh và khôi phục mật khẩu. Phần B có API giỏ/đơn/voucher/kho theo [hợp đồng backend v1](docs/backend-contract.md); cần kiểm tra runtime với Atlas trước khi bàn giao. Dùng Node.js 22+, Express, CommonJS, MongoClient, Morgan, Nodemon và express-session.
 
 ## Chạy local
 
@@ -46,7 +46,7 @@ Mật khẩu ít nhất 8 ký tự và tối đa 72 byte UTF-8, lưu bằng bcry
 
 Integration test dùng `MONGODB_TEST_URI` nếu có, mặc định MongoDB local; luôn tạo tên DB thử mới, không dùng DB làm việc của nhóm.
 
-## Điểm nối cho B
+## Điểm nối phần B
 
 - Đọc [backend-contract.md](docs/backend-contract.md) trước khi code: đây là nguồn chuẩn về session, API giỏ/đơn, tiền, trạng thái và stock.
 - A: `src/modules/auth`, `users`, `catalog`; B: `cart`, `vouchers`, `orders`, `inventory`.

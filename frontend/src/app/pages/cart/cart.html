@@ -3,6 +3,23 @@
   @if (cart.lines().length) { <p class="num">{{ cart.lines().length }} sản phẩm · {{ t().sub | vnd }}</p> }
 </section>
 <section class="band">
+  @if (cart.issues().length) {
+    <div class="panel" role="alert" style="margin-bottom:16px">
+      <h2 class="h3">Một số món trong giỏ cần được cập nhật</h2>
+      <ul>
+        @for (issue of cart.issues(); track issue.productId) {
+          <li style="margin:8px 0">
+            @if (issue.code === 'OUT_OF_STOCK') {
+              Món này hiện chỉ còn {{ issue.available ?? 0 }}. Số lượng đã chọn: {{ issue.requested ?? 0 }}.
+            } @else {
+              Món này không còn được bán hoặc đã bị gỡ khỏi danh mục.
+            }
+            <button class="rm" type="button" (click)="remove(issue.productId)">Xóa món này</button>
+          </li>
+        }
+      </ul>
+    </div>
+  }
   @if (cart.lines().length) {
     <div class="split">
       <div>

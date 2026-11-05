@@ -1,9 +1,7 @@
 # Module orders
 
-Phụ trách: Người B.
+Phụ trách: Người B. Tạo đơn COD từ session cart, lưu snapshot, chống gửi trùng bằng Idempotency-Key, quản lý ownership và trạng thái. Các thay đổi đơn/kho/voucher dùng chung MongoDB transaction.
 
-Checkout COD, lịch sử đơn, hủy và chuyển trạng thái. Server tính tiền, snapshot item, chống trùng và cập nhật kho cùng transaction.
+Routes ánh xạ endpoint, controller nối HTTP với service; service điều phối cart, catalog, voucher và inventory.
 
-Khi triển khai, tạo `orders.routes.js`, `orders.controller.js` và `orders.model.js`. Thêm service nếu nghiệp vụ cần. Dùng `require/module.exports`; mount router trong `src/app.js`. Xem catalog để tham khảo MVC và `docs/team-guide.md` để thống nhất API.
-
-Hợp đồng hiện hành: [backend-contract.md](../../../docs/backend-contract.md).
+Hợp đồng hiện hành: docs/backend-contract.md.

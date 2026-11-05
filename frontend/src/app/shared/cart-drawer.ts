@@ -18,6 +18,19 @@ import { ImgFallbackDirective } from './img-fallback.directive';
         <button class="btn btn-stone round" type="button" aria-label="Đóng giỏ hàng" (click)="dlg.close()">×</button>
       </div>
       @if (cart.lines().length) {
+        @if (cart.issues().length) {
+          <div role="alert" class="dr-ship">
+            <b>Một số món cần cập nhật:</b>
+            <ul>
+              @for (issue of cart.issues(); track issue.productId) {
+                <li>
+                  {{ issue.code === 'OUT_OF_STOCK' ? 'Số lượng vượt tồn kho (còn ' + (issue.available ?? 0) + ')' : 'Sản phẩm không còn được bán' }}
+                  <button class="btn btn-paper" type="button" (click)="cart.set(issue.productId, 0)">Xóa món</button>
+                </li>
+              }
+            </ul>
+          </div>
+        }
         <div class="dr-ship">
           @if (need() > 0) { Mua thêm <b class="num">{{ need() | vnd }}</b> để được miễn phí giao hàng. }
           @else { <b>Đơn của bạn được miễn phí giao hàng.</b> }
@@ -47,6 +60,16 @@ import { ImgFallbackDirective } from './img-fallback.directive';
         </div>
       } @else {
         <div class="dr-empty">
+          @if (cart.issues().length) {
+            <div role="alert" class="dr-ship">
+              <b>Một số món không còn khả dụng:</b>
+              <ul>
+                @for (issue of cart.issues(); track issue.productId) {
+                  <li><button class="btn btn-paper" type="button" (click)="cart.set(issue.productId, 0)">Xóa món không khả dụng</button></li>
+                }
+              </ul>
+            </div>
+          }
           <p class="h3">Giỏ hàng đang trống.</p>
           <p class="muted">Ghé bảng giá sáng nay hoặc mở Meal Planner để biết hôm nay nấu gì.</p>
           <a class="btn btn-forest" routerLink="/san-pham">Đi chợ ngay</a>

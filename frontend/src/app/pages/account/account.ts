@@ -55,8 +55,9 @@ export class Account {
     ok.forEach(l => this.cart.add(l.p.id, Math.min(l.qty, l.p.stock)));
     this.toast.show(ok.length < o.lines.length ? `Đã thêm ${ok.length}/${o.lines.length} sản phẩm, số còn lại tạm hết hàng` : `Đã thêm ${ok.length} sản phẩm của đơn ${o.orderCode} vào giỏ`);
   }
-  protected async cancelOrder(_o: OrderView): Promise<void> {
-    this.toast.show('Quản lý đơn hàng đang được hoàn thiện.');
+  protected async cancelOrder(o: OrderView): Promise<void> {
+    try { await this.orderSvc.cancelOrder(o); this.toast.show('Đã hủy đơn hàng.'); }
+    catch (error) { this.toast.show(apiMessage(error)); }
   }
   protected useVoucher(code: string): void { this.cart.setVoucher(code); this.router.navigateByUrl('/gio-hang'); }
   protected async saveProfile(): Promise<void> {
@@ -80,6 +81,6 @@ export class Account {
     finally { this.passwordBusy.set(false); }
   }
   protected async logout(): Promise<void> {
-    try { await this.auth.logout(); this.router.navigateByUrl('/'); } catch (error) { this.toast.show(apiMessage(error)); }
+    try { await this.auth.logout(); await this.cart.load(); this.router.navigateByUrl('/'); } catch (error) { this.toast.show(apiMessage(error)); }
   }
 }

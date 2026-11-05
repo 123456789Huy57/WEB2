@@ -1,9 +1,7 @@
 # Module cart
 
-Phụ trách: Người B.
+Phụ trách: Người B. Giỏ guest và user đều nằm trong session do A thiết lập; module này kiểm tra product/quantity, trả trạng thái giỏ và quote server-side.
 
-Giỏ guest qua req.session.cart, giỏ tài khoản nếu chọn lưu bền, merge sau login. Thống nhất contract với A trước khi code.
+Routes ánh xạ endpoint HTTP, controller kiểm tra request và response, service giữ quy tắc nghiệp vụ và dùng catalog/voucher service. Session được lưu qua middleware chung, không tạo collection cart riêng.
 
-Khi triển khai, tạo `cart.routes.js`, `cart.controller.js` và `cart.model.js`. Thêm service nếu nghiệp vụ cần. Dùng `require/module.exports`; mount router trong `src/app.js`. Xem catalog để tham khảo MVC và `docs/team-guide.md` để thống nhất API.
-
-Hợp đồng hiện hành: [backend-contract.md](../../../docs/backend-contract.md).
+Hợp đồng hiện hành: docs/backend-contract.md.

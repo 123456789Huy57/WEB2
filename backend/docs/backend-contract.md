@@ -1,6 +1,6 @@
 # Hợp đồng backend FreshMart v1
 
-Trạng thái: đã chốt để A và B triển khai thống nhất. API phần A đã có mã nguồn và kiểm thử; API giỏ, voucher, đơn và kho bên dưới là hợp đồng cho B, chưa được triển khai. Nếu cần đổi hợp đồng, cập nhật tài liệu và cả hai bên gọi API trong cùng một thay đổi.
+Trạng thái: hợp đồng tích hợp A/B đã chốt. Phần A đã có mã nguồn và kiểm thử; các API giỏ, voucher, đơn và kho đã được triển khai trong module tương ứng. Cần kiểm tra runtime trên Atlas trước khi bàn giao.
 
 ## 1. Nền tảng và định dạng
 
@@ -178,7 +178,7 @@ API kho do B tạo: GET /admin/inventory (phân trang, q?, lowStock?), POST /adm
 5. Nối Angular cart/order/inventory; bỏ demo OrderService và bật lại checkout khi API đã chạy.
 6. Kiểm thử đặt đồng thời, idempotency, đổi giá/kho sau quote, rollback và hủy đúng một lần.
 
-API phần B trả 404 cho tới khi B mount router thật. Không thêm mock endpoint trả thành công giả.
+Các API B được mount trong app.js sau middleware session/CSRF dùng chung. Không thêm mock endpoint trả thành công giả.
 
 ## 10. Bổ sung hoàn thiện phần A
 

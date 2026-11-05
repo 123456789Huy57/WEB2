@@ -14,7 +14,11 @@ export interface PlannerResult { recipe: Recipe; score: number; matched: number;
 export interface PurchaseLine {
   line: RecipeLine; ingredient?: Ingredient; product: Product | null;
   need: string; cartQty: number; total: number;
+  bulk?: boolean;
+  manual?: boolean;
+  alternatives: PurchaseOption[];
 }
+export interface PurchaseOption { product: Product; cartQty: number; total: number; waste: number | null; bulk: boolean; manual: boolean; }
 
 export const MEAL_LABEL: Record<Recipe['mealType'], string> = { breakfast: 'Bữa sáng', lunch: 'Bữa trưa', dinner: 'Bữa tối', snack: 'Ăn vặt' };
 export const DIFF_LABEL: Record<Recipe['difficulty'], string> = { easy: 'Dễ', medium: 'Vừa', hard: 'Khó' };
@@ -35,15 +39,9 @@ export class MealPlannerService {
   recipe(id: string): Recipe | undefined { return this.data.recipes().find(r => r.id === id); }
   totalTime(r: Recipe): number { return (r.prepTimeMinutes || 0) + (r.cookTimeMinutes || 0); }
 
-  /** Sản phẩm trong kho dùng để mua nguyên liệu này (ưu tiên preferredProductId còn hàng) */
+  /** Sản phẩm còn hàng tương ứng nguyên liệu; ưu tiên cách mua ít lãng phí và có giá hợp lý. */
   productFor(ingredientId: string): Product | null {
-    const e = this.data.ingredientMap()[ingredientId];
-    if (!e) return null;
-    for (const id of [e.preferredProductId, ...(e.productIds ?? [])]) {
-      const p = this.products.get(id);
-      if (p && p.stock > 0) return p;
-    }
-    return null;
+    return this.candidates(ingredientId)[0] ?? null;
   }
   /** Các món dùng sản phẩm này (tra ngược bảng nguyên liệu → sản phẩm) */
   recipesWithProduct(productId: string, limit = 3): { recipe: Recipe; ingredientId: string }[] {
@@ -85,23 +83,38 @@ export class MealPlannerService {
   }
 
   /** Quy đổi lượng trong công thức (theo số người ăn) ra số lượng sản phẩm cần cho vào giỏ */
-  purchase(line: RecipeLine, servings: number, r: Recipe): PurchaseLine {
+  purchase(line: RecipeLine, servings: number, r: Recipe, selectedProductId?: string): PurchaseLine {
     const ing = this.ingredient(line.ingredientId);
-    const p = this.productFor(line.ingredientId);
-    const scale = Math.max(1, servings / (r.servings || servings));
+    const scale = servings / (r.servings || servings);
     const q = (line.quantity || 0) * scale;
     const need = `${+q.toFixed(1)} ${line.unit}`;
-    if (!p) return { line, ingredient: ing, product: null, need, cartQty: 0, total: 0 };
-    const u = String(line.unit || '').toLowerCase();
-    const su = this.products.unit(p);
+    const options = this.candidates(line.ingredientId).map(p => this.quote(p, q, line.unit, ing));
+    if (!options.length) return { line, ingredient: ing, product: null, need, cartQty: 0, total: 0, alternatives: [] };
+    const ordered = options.sort((a, b) => Number(a.bulk) - Number(b.bulk) || (a.waste ?? Infinity) - (b.waste ?? Infinity) || a.total - b.total);
+    const choice = ordered.find(x => x.product.id === selectedProductId) ?? ordered[0];
+    return { line, ingredient: ing, need, ...choice, alternatives: ordered };
+  }
+
+  private candidates(ingredientId: string): Product[] {
+    const e = this.data.ingredientMap()[ingredientId];
+    if (!e) return [];
+    return [...new Set([e.preferredProductId, ...(e.productIds ?? [])].filter((id): id is string => !!id))]
+      .map(id => this.products.get(id)).filter((p): p is Product => !!p && p.stock > 0 && p.active !== false);
+  }
+
+  private quote(p: Product, q: number, recipeUnit: string, ing?: Ingredient): PurchaseOption {
+    const u = String(recipeUnit || '').toLowerCase(), su = this.products.unit(p);
     const w = p.netWeightGram || p.unitWeightGram || ing?.unitWeightGram || 0;
-    let conv = 1;
-    if (u === 'g' && su === 'kg') conv = q / 1000;
-    else if (u === 'g' && w) conv = q / w;
-    else if (u === 'kg') conv = su === 'kg' ? q : (q * 1000) / (w || 1000);
-    else if (su === 'kg' && ing?.unitWeightGram) conv = (q * ing.unitWeightGram) / 1000;
+    let required: number | null = null;
+    if (u === su) required = q;
+    else if (u === 'g' && su === 'kg') required = q / 1000;
+    else if (u === 'g' && w) required = q / w;
+    else if (u === 'kg') required = su === 'kg' ? q : q * 1000 / (w || 1000);
+    else if (su === 'kg' && ing?.unitWeightGram) required = q * ing.unitWeightGram / 1000;
     const step = this.products.step(p);
-    const cartQty = Math.max(step, Math.ceil(conv / step - 1e-9) * step);
-    return { line, ingredient: ing, product: p, need, cartQty, total: Math.round(cartQty * this.products.price(p)) };
+    const cartQty = required === null ? 0 : Math.max(step, Math.ceil(required / step - 1e-9) * step);
+    const bulk = /^(thùng|bao|combo|lốc)$/i.test(su) || /^(thùng|combo|\d+\s*(túi|hộp|gói|chai|lon))\b/i.test(p.name.trim());
+    const waste = required === null ? null : Math.max(0, cartQty - required);
+    return { product: p, cartQty, total: Math.round(cartQty * this.products.price(p)), bulk, manual: required === null, waste };
   }
 }

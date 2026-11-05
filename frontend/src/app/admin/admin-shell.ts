@@ -5,6 +5,7 @@ import { OrderService } from '../core/order.service';
 import { DataService } from '../core/data.service';
 import { ToastService } from '../core/toast.service';
 import { ConfirmService } from '../core/confirm.service';
+import { CartService } from '../core/cart.service';
 
 @Component({
   selector: 'fm-admin-shell',
@@ -47,6 +48,7 @@ export class AdminShell {
   private router = inject(Router);
   private cf = inject(ConfirmService);
   private toast = inject(ToastService);
+  private cart = inject(CartService);
   protected navOpen = signal(false);
   protected pending = computed(() => this.orders.all().filter(o => o.status === 'pending').length);
   protected nav = [
@@ -54,7 +56,7 @@ export class AdminShell {
     { path: '/admin/ton-kho', label: 'Tồn kho' }, { path: '/admin/voucher', label: 'Voucher' }, { path: '/admin/khach-hang', label: 'Khách hàng' }
   ];
   protected async logout(): Promise<void> {
-    try { await this.auth.logout(); this.router.navigateByUrl('/'); } catch (error) { this.toast.show(apiMessage(error)); }
+    try { await this.auth.logout(); await this.cart.load(); this.router.navigateByUrl('/'); } catch (error) { this.toast.show(apiMessage(error)); }
   }
   protected async reset(): Promise<void> {
     if (await this.cf.ask('Khôi phục dữ liệu mẫu?', 'Chỉ xóa giỏ và các dữ liệu demo trên trình duyệt. Dữ liệu tài khoản, sản phẩm trên máy chủ được giữ lại.', 'Khôi phục')) this.data.resetEdits();

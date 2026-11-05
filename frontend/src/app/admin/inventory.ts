@@ -22,7 +22,7 @@ import { ImgFallbackDirective } from '../shared/img-fallback.directive';
       <label class="check"><input type="checkbox" [checked]="onlyLow()" (change)="onlyLow.set($any($event.target).checked)"> Chỉ hiện hàng sắp hết</label>
     </div>
     <div class="card"><div class="tbl-wrap"><table class="tbl">
-      <thead><tr><th></th><th>Sản phẩm</th><th>Quầy</th><th class="r">Còn</th><th>Nhập thêm</th><th>Đặt lại số tồn</th></tr></thead>
+      <thead><tr><th></th><th>Sản phẩm</th><th>Quầy</th><th class="r">Còn</th><th>Nhập thêm</th><th>Điều chỉnh (+/−)</th></tr></thead>
       <tbody>
         @for (p of list(); track p.id) {
           <tr>
@@ -35,8 +35,8 @@ import { ImgFallbackDirective } from '../shared/img-fallback.directive';
             </td>
             <td>
               <form style="display:flex;gap:6px" (submit)="$event.preventDefault(); setTo(p, $any(inp).value)">
-                <input #inp class="adm-input" type="number" min="0" step="0.5" style="width:96px;height:38px" [value]="p.stock" [attr.aria-label]="'Số tồn mới của ' + ps.shortName(p)">
-                <button class="btn btn-forest btn-sm" type="submit">Lưu</button>
+                <input #inp class="adm-input" type="number" step="0.5" style="width:96px;height:38px" value="0" [attr.aria-label]="'Số lượng điều chỉnh của ' + ps.shortName(p)">
+                <button class="btn btn-forest btn-sm" type="submit">Điều chỉnh</button>
               </form>
             </td>
           </tr>
@@ -58,6 +58,14 @@ export class AdminInventory {
     const k = norm(this.q());
     return this.ps.all().filter(p => (!k || norm(p.name).includes(k)) && (!this.onlyLow() || p.stock <= 10)).sort((a, b) => a.stock - b.stock).slice(0, 60);
   });
-  protected add(_p: Product, _n: number): void { this.toast.show('Quản lý tồn kho đang được hoàn thiện.'); }
-  protected setTo(_p: Product, _v: string): void { this.toast.show('Quản lý tồn kho đang được hoàn thiện.'); }
+  protected async add(p: Product, amount: number): Promise<void> {
+    try { await this.data.adjustStock(p.id, amount, 'Nhập thêm hàng'); this.toast.show('Đã cập nhật tồn kho.'); }
+    catch (error: any) { this.toast.show(error?.error?.error?.message || 'Không cập nhật được tồn kho.'); }
+  }
+  protected async setTo(p: Product, value: string): Promise<void> {
+    const delta = Number(value);
+    if (!Number.isFinite(delta) || delta === 0) { this.toast.show('Nhập số lượng điều chỉnh khác 0.'); return; }
+    try { await this.data.adjustStock(p.id, delta, 'Điều chỉnh tồn kho'); this.toast.show('Đã cập nhật tồn kho.'); }
+    catch (error: any) { this.toast.show(error?.error?.error?.message || 'Không cập nhật được tồn kho.'); }
+  }
 }

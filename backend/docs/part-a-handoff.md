@@ -33,7 +33,7 @@ Phần A theo bảng phân công đã hoàn thành cả backend và giao diện 
 3. `npm test`: kiểm tra khung và các luật dùng chung.
 4. `npm run test:integration`: kiểm tra phần A bằng database/thư mục thử riêng, tự xóa sau khi chạy.
 
-Không có mật khẩu admin mặc định. Dữ liệu người dùng/sản phẩm không lấy localStorage hoặc users.json làm nguồn chuẩn. Giỏ, voucher và đơn của phần B còn chờ nối API; các thao tác demo ghi stock/đặt đơn đang chặn.
+Không có mật khẩu admin mặc định. Dữ liệu người dùng/sản phẩm không lấy localStorage hoặc users.json làm nguồn chuẩn. Sau khi bàn giao phần A, người B đã triển khai API giỏ, voucher, đơn và kho theo hợp đồng; frontend đã nối các luồng chính.
 
 ## Email khôi phục
 

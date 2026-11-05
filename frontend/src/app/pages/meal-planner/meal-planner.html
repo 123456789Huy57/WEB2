@@ -127,9 +127,23 @@
                 <label class="b-row">
                   <input type="checkbox" [checked]="!unchecked().includes(x.line.ingredientId)" (change)="toggleBuy(x.line.ingredientId)">
                   <span class="ph"><img [fmImg]="pr.name" [src]="ps.img(pr)" alt=""></span>
-                  <span class="nm">{{ ps.shortName(pr) }}<span class="q num" style="display:block">{{ ps.qty(x.cartQty) }} {{ ps.unit(pr) }} · dùng {{ x.need }}</span></span>
-                  <span class="num">{{ x.total | vnd }}</span>
+                  <span class="nm">{{ ps.shortName(pr) }}@if (x.manual) {
+                    <span class="q" style="display:block">Không đủ dữ liệu quy đổi {{ x.need }} sang đơn vị bán. Nhập lượng muốn mua:</span>
+                    <input type="number" min="0" [max]="pr.stock" [step]="ps.step(pr)" [value]="manualQuantity(x)" [attr.aria-label]="'Số lượng mua ' + ps.shortName(pr)" (input)="setManualQuantity(x.line.ingredientId, +$any($event.target).value)">
+                  } @else {
+                    <span class="q num" style="display:block">{{ ps.qty(x.cartQty) }} {{ ps.unit(pr) }} · dùng {{ x.need }}@if (x.bulk) { · quy cách lớn, đã bỏ chọn }</span>
+                  }</span>
+                  <span class="num">{{ purchaseTotal(x) | vnd }}</span>
                 </label>
+                @if (x.alternatives.length > 1) {
+                  <label class="small">Chọn cách mua
+                    <select [value]="pr.id" (change)="chooseProduct(x.line.ingredientId, $any($event.target).value)">
+                      @for (option of x.alternatives; track option.product.id) {
+                        <option [value]="option.product.id">{{ ps.shortName(option.product) }}@if (option.manual) { · cần nhập lượng } @else { · {{ option.total | vnd }} }@if (option.waste !== null) { · dư khoảng {{ option.waste | number:'1.0-2' }} {{ x.line.unit }} }</option>
+                      }
+                    </select>
+                  </label>
+                }
               } @else {
                 <div class="b-row"><span></span><span></span><span class="nm">{{ x.ingredient?.name }}<span class="q" style="display:block">Chưa có sản phẩm phù hợp trong kho</span></span><span></span></div>
               }

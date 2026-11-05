@@ -34,7 +34,11 @@ function createApp() {
   app.use('/api', require('./modules/users/users.routes'));
   app.use('/api', require('./modules/catalog/uploads.routes').router);
   app.use('/api', require('./modules/catalog/catalog.routes'));
-  // B mounts cart, vouchers, orders and inventory routers here (global CSRF applies).
+  app.use('/api', require('./modules/cart/cart.routes'));
+  app.use('/api', require('./modules/vouchers/vouchers.routes'));
+  app.use('/api', require('./modules/orders/orders.routes'));
+  app.use('/api', require('./modules/inventory/inventory.routes'));
+  app.use('/api', require('./modules/recipes/recipes.routes'));
   app.use(notFound);
   app.use(errorHandler);
   return app;
