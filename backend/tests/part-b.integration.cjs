@@ -8,7 +8,7 @@ const bcrypt = require('bcryptjs');
 require('dotenv').config({ quiet: true });
 process.env.NODE_ENV = 'test';
 process.env.MONGODB_URI = process.env.MONGODB_TEST_URI || process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017';
-process.env.MONGODB_DB = `freshmart_part_b_test_${process.pid}_${Date.now()}`;
+process.env.MONGODB_DB = `fm_test_b_${Date.now().toString(36)}`; // Atlas giới hạn tên DB 38 ký tự
 process.env.SESSION_SECRET = 'freshmart-integration-test-only-secret';
 const env = require('../src/config/env');
 const db = require('../src/config/database');
