@@ -17,6 +17,7 @@
     "check:db": "node scripts/check-db.js",
     "audit:data": "node scripts/audit-data.js",
     "images:cloudinary": "node scripts/images-to-cloudinary.js",
+    "images:set": "node scripts/images-set.js",
     "seed:vouchers": "node scripts/seed-vouchers.js",
     "test:integration": "node --test tests/part-a.integration.cjs",
     "test:b": "node --test tests/part-b.integration.cjs",

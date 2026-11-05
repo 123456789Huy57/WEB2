@@ -48,6 +48,16 @@ async function patchKnownData(db) {
     { $set: { preferredProductId: 'p-0130', productIds: ['p-0130', 'p-0127', 'p-0132'] } },
   );
   console.log(`  gạo cho Meal Planner: ${r.modifiedCount ? 'đổi sang túi 5kg thay cho bao 25kg' : 'đã đúng'}`);
+  // 66 sản phẩm "mp-" dùng ảnh tạm theo danh mục (/assets/images/cat-*.jpg, file không tồn tại); ảnh thật nằm ở gallery[0].
+  const temp = await db.collection('products').find({ image_url: { $regex: '^/assets/' } }, { projection: { id: 1, gallery: 1 } }).toArray();
+  let moved = 0;
+  for (const p of temp) {
+    const [first, ...rest] = p.gallery || [];
+    if (!first) continue;
+    await db.collection('products').updateOne({ id: p.id, image_url: { $regex: '^/assets/' } }, { $set: { image_url: first, gallery: rest }, $unset: { img: '' } });
+    moved++;
+  }
+  console.log(`  ảnh chính dùng ảnh tạm: ${temp.length} sản phẩm, đã thay bằng ảnh thật ${moved}${temp.length - moved ? `, còn ${temp.length - moved} sản phẩm chưa có ảnh (dùng npm run images:set)` : ''}`);
 }
 
 async function main() {

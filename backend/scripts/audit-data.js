@@ -5,7 +5,7 @@ const { connectDatabase, disconnectDatabase } = require('../src/config/database'
 
 const isLocal = u => typeof u === 'string' && u.startsWith('/');
 async function reachable(url) {
-  if (!url) return false;
+  if (!url || url.startsWith('/assets/')) return false; // ảnh tạm theo danh mục: file không có trong dự án
   if (isLocal(url)) return true; // ảnh trong backend/public: không kiểm qua mạng
   try { const r = await fetch(url, { method: 'HEAD' }); return r.ok; } catch { return false; }
 }
