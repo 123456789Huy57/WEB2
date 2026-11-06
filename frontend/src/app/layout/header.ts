@@ -24,7 +24,7 @@ import { ImgFallbackDirective } from '../shared/img-fallback.directive';
         @if (open() && term().trim().length > 1) {
           <div class="sugg" id="q-list" role="listbox" aria-label="Gợi ý sản phẩm">
             @for (p of hits().slice(0, 6); track p.id) {
-              <a class="sugg-row" role="option" [routerLink]="['/san-pham', p.id]" (click)="open.set(false)">
+              <a class="sugg-row" role="option" [routerLink]="['/san-pham', p.slug || p.id]" (click)="open.set(false)">
                 <span class="ph"><img [fmImg]="p.name" [src]="ps.img(p)" alt=""></span>
                 <span class="sugg-nm">{{ ps.shortName(p) }}<span class="small muted">{{ ps.catName(p.category) }}</span></span>
                 <span class="num">{{ ps.price(p) | vnd }}</span>

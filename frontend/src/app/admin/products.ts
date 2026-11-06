@@ -45,7 +45,7 @@ const PAGE = 20;
             <td class="r" style="white-space:nowrap">
               <button class="link-btn" type="button" (click)="edit(p)">Sửa</button>
               <button class="link-btn" type="button" style="margin-left:12px" (click)="toggleActive(p)">{{ p.active === false ? 'Hiện' : 'Ẩn' }}</button>
-              <a class="link-btn" style="margin-left:12px" [routerLink]="['/san-pham', p.id]" target="_blank">Xem</a>
+              <a class="link-btn" style="margin-left:12px" [routerLink]="['/san-pham', p.slug || p.id]" target="_blank">Xem</a>
             </td>
           </tr>
         } @empty { <tr><td colspan="8" class="empty-row">Không có sản phẩm khớp bộ lọc.</td></tr> }

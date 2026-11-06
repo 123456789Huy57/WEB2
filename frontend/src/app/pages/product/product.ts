@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation, computed, effect, inject, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { Location } from '@angular/common';
 import { ProductService, cdnImage } from '../../core/product.service';
 import { CartService } from '../../core/cart.service';
 import { WishlistService } from '../../core/wishlist.service';
@@ -57,6 +58,7 @@ export class ProductPage {
     return rows.filter(r => r[1] != null).map(([label, v, unit]) => ({ label, value: String(v).replace('.', ','), unit }));
   });
   private recs = inject(RecommendationService);
+  private location = inject(Location);
   /** Gợi ý từ luật kết hợp (backend); chưa có hoặc lỗi thì dùng món bán chạy cùng quầy như trước. */
   protected alsoBought = signal<Recommendation[]>([]);
   protected related = computed(() => {
@@ -73,9 +75,15 @@ export class ProductPage {
   constructor() {
     effect(() => { this.id(); this.qty.set(1); this.imgIndex.set(0); });
     effect(() => {
-      const id = this.id();
+      const id = this.p()?.id;
       this.alsoBought.set([]);
-      void this.recs.alsoBought(id).then(list => { if (this.id() === id) this.alsoBought.set(list); });
+      if (id) void this.recs.alsoBought(id).then(list => { if (this.p()?.id === id) this.alsoBought.set(list); });
+    });
+    // URL thân thiện SEO (Chương IV): mở bằng mã cũ /san-pham/p-0053 thì đổi thanh địa chỉ sang
+    // /san-pham/ca-basa-cat-khuc-0053 mà không tải lại trang; link cũ vẫn dùng được.
+    effect(() => {
+      const p = this.p();
+      if (p?.slug && this.id() !== p.slug) this.location.replaceState(`/san-pham/${p.slug}${window.location.hash}`); // giữ #h-rv nếu có
     });
     effect(() => { if (this.name()) this.title.setTitle(this.name() + ' · FreshMart'); });
   }

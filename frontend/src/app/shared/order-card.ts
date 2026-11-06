@@ -25,7 +25,7 @@ import { ImgFallbackDirective } from './img-fallback.directive';
     }
     <div class="o-items">
       @for (l of o().lines; track l.p.id) {
-        <a class="ph" [routerLink]="['/san-pham', l.p.id]" [fragment]="o().status === 'delivered' ? 'h-rv' : undefined" [title]="ps.shortName(l.p)"><img [fmImg]="l.p.name" [src]="ps.img(l.p)" [alt]="ps.shortName(l.p)"></a>
+        <a class="ph" [routerLink]="['/san-pham', l.p.slug || l.p.id]" [fragment]="o().status === 'delivered' ? 'h-rv' : undefined" [title]="ps.shortName(l.p)"><img [fmImg]="l.p.name" [src]="ps.img(l.p)" [alt]="ps.shortName(l.p)"></a>
       }
     </div>
     @if (open()) {

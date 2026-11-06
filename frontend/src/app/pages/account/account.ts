@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, computed, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService, apiMessage } from '../../core/auth.service';
 import { OrderService, OrderView } from '../../core/order.service';
@@ -16,9 +16,11 @@ import { OrderCard } from '../../shared/order-card';
 
 type Tab = 'orders' | 'wish' | 'vouchers' | 'profile';
 
+import { matchFieldsValidator } from '../../shared/validators';
+
 @Component({
   selector: 'fm-account',
-  imports: [FormsModule, RouterLink, ProductCard, VoucherList, OrderCard],
+  imports: [FormsModule, ReactiveFormsModule, RouterLink, ProductCard, VoucherList, OrderCard],
   templateUrl: './account.html',
   styleUrl: './account.css',
   encapsulation: ViewEncapsulation.None
@@ -44,7 +46,13 @@ export class Account {
   protected savedVouchers = computed(() => this.vs.saved().map(c => this.vs.find(c)).filter((v): v is Voucher => !!v));
 
   private u = this.auth.user();
-  protected passwordForm = { current: '', next: '', confirm: '' };
+  /** Reactive Form: độ dài kiểm tra ở từng ô, "nhập lại phải trùng" kiểm tra ở cấp nhóm (Cross-Field Validation) */
+  protected passwordForm = inject(FormBuilder).nonNullable.group({
+    current: ['', Validators.required],
+    next: ['', [Validators.required, Validators.minLength(8)]],
+    confirm: ['', Validators.required],
+  }, { validators: matchFieldsValidator('next', 'confirm') });
+  protected pwTried = signal(false);
   protected passwordBusy = signal(false);
   protected passwordError = signal('');
   protected profileBusy = signal(false);
@@ -73,11 +81,17 @@ export class Account {
   protected async changePassword(): Promise<void> {
     if (this.passwordBusy()) return;
     this.passwordError.set('');
-    if (this.passwordForm.next.length < 8) { this.passwordError.set('Mật khẩu mới cần ít nhất 8 ký tự'); return; }
-    if (this.passwordForm.next !== this.passwordForm.confirm) { this.passwordError.set('Hai mật khẩu mới chưa trùng nhau'); return; }
+    this.pwTried.set(true);
+    const f = this.passwordForm;
+    if (f.invalid) {
+      this.passwordError.set(f.controls.current.hasError('required') ? 'Nhập mật khẩu hiện tại'
+        : f.controls.next.invalid ? 'Mật khẩu mới cần ít nhất 8 ký tự'
+        : f.hasError('fieldsMismatch') ? 'Hai mật khẩu mới chưa trùng nhau' : 'Nhập lại mật khẩu mới');
+      return;
+    }
     this.passwordBusy.set(true);
     try {
-      await this.auth.changePassword(this.passwordForm.current, this.passwordForm.next);
+      await this.auth.changePassword(f.controls.current.value, f.controls.next.value);
       this.toast.show('Đã đổi mật khẩu. Vui lòng đăng nhập lại.');
       this.router.navigateByUrl('/dang-nhap');
     } catch (error) { this.passwordError.set(apiMessage(error)); }

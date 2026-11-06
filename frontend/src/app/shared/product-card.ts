@@ -12,12 +12,12 @@ import { ImgFallbackDirective } from './img-fallback.directive';
   host: { class: 'p-card' },
   template: `
     <div class="ph-wrap">
-      <a class="ph" [routerLink]="['/san-pham', p().id]">
+      <a class="ph" [routerLink]="['/san-pham', p().slug || p().id]">
         <img [fmImg]="name()" [src]="ps.img(p())" [alt]="name()" loading="lazy">
       </a>
       <div class="add"><fm-add-control [product]="p()" /></div>
     </div>
-    <h3><a [routerLink]="['/san-pham', p().id]">{{ name() }}</a></h3>
+    <h3><a [routerLink]="['/san-pham', p().slug || p().id]">{{ name() }}</a></h3>
     <p class="sub">{{ p().subcategoryName || p().categoryName }} · {{ ps.unit(p()) }}</p>
     <div class="price-row">
       <span class="price num">{{ ps.price(p()) | vnd }}</span>

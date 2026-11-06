@@ -22,6 +22,8 @@ function buildSlots() {
   return raw.map(([from, to], i) => ({ day, from, to, value: `${day} ${from}–${to}`, disabled: first >= 0 && i < first, preferred: first < 0 ? i === 0 : i === first }));
 }
 
+import { normalizePhone, personNameValidator, phoneMessage, vnPhoneValidator } from '../../shared/validators';
+
 @Component({
   selector: 'fm-checkout',
   imports: [ReactiveFormsModule, RouterLink, VndPipe, ImgFallbackDirective],
@@ -46,8 +48,8 @@ export class Checkout {
 
   private u = this.auth.user();
   protected form = inject(FormBuilder).nonNullable.group({
-    name: [this.u?.fullName ?? '', [Validators.required, Validators.minLength(2)]],
-    phone: [this.u?.phone ?? '', [Validators.required, Validators.pattern(/^0\d{9}$/)]],
+    name: [this.u?.fullName ?? '', [Validators.required, Validators.minLength(2), personNameValidator()]],
+    phone: [this.u?.phone ?? '', [Validators.required, vnPhoneValidator()]],
     email: [this.u?.email ?? '', [Validators.email]],
     address: [this.u?.address ?? '', [Validators.required, Validators.minLength(6)]],
     note: [''],
@@ -72,6 +74,7 @@ export class Checkout {
     this.form.valueChanges.pipe(takeUntilDestroyed()).subscribe(() => this.orders.resetAttempt());
   }
 
+  protected phoneError = () => phoneMessage(this.form.controls.phone.errors);
   protected bad(name: 'name' | 'phone' | 'email' | 'address'): boolean {
     const c = this.form.controls[name];
     return c.invalid && (c.touched || this.tried());
@@ -84,7 +87,8 @@ export class Checkout {
     if (this.cart.issues().length) { this.toast.show('Giỏ có sản phẩm vừa hết hàng hoặc ngừng bán. Sửa giỏ trước khi đặt.'); this.router.navigateByUrl('/gio-hang'); return; }
     this.sending.set(true);
     try {
-      const f = this.form.getRawValue();
+      const raw = this.form.getRawValue();
+      const f = { ...raw, name: raw.name.trim(), phone: normalizePhone(raw.phone) };
       const o = await this.orders.place(f, this.t().voucher ? this.cart.voucherCode() : '');
       // Đơn đã giữ hàng; thanh toán online thì chuyển sang cổng, kết quả quay về /thanh-toan/ket-qua.
       if (o.paymentMethod === 'vnpay') {

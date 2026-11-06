@@ -153,9 +153,9 @@
   <ul class="board" id="board-panel" role="tabpanel" [attr.aria-labelledby]="'tab-' + group()">
     @for (row of board(); track row.p.id) {
       <li>
-        <h3 class="bt"><a [routerLink]="['/san-pham', row.p.id]">{{ row.name }}</a></h3>
+        <h3 class="bt"><a [routerLink]="['/san-pham', row.p.slug || row.p.id]">{{ row.name }}</a></h3>
         <p class="bnote small">{{ row.note }}</p>
-        <a class="pic" [routerLink]="['/san-pham', row.p.id]" tabindex="-1">
+        <a class="pic" [routerLink]="['/san-pham', row.p.slug || row.p.id]" tabindex="-1">
           <img [src]="'/img/cut/bang-gia/' + row.cut + '.webp'" [fmImg]="row.name" alt="" loading="lazy">
           @if (ps.off(row.p)) { <span class="badge num">−{{ ps.off(row.p) }}%</span> }
         </a>
