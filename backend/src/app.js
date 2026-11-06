@@ -13,6 +13,7 @@ const { notFound, errorHandler } = require('./middleware/error-handler');
 function createApp() {
   const app = express();
   app.disable('x-powered-by');
+  if (env.trustProxy) app.set('trust proxy', env.trustProxy);
   app.use(compression()); // gzip JSON/HTML: danh sách sản phẩm ~280 KB còn khoảng 1/6 khi truyền
   app.use('/api', (req, res, next) => {
     // Dữ liệu catalog công khai (giống nhau với mọi khách) được trình duyệt dùng lại 60 giây và làm mới nền;

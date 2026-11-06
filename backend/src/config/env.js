@@ -16,8 +16,14 @@ if (nodeEnv === 'production' && (!mongodbUri || !configuredSecret)) {
   throw new Error('Production requires MONGODB_URI and SESSION_SECRET.');
 }
 
+// Số proxy đứng trước backend khi deploy: Vercel (chuyển tiếp /api) -> bộ cân bằng tải của Render -> Express.
+// Express cần biết để nhận đúng HTTPS (cookie Secure) và IP thật của khách (giới hạn số lần đăng nhập).
+const trustProxy = Number(process.env.TRUST_PROXY || 0);
+if (!Number.isInteger(trustProxy) || trustProxy < 0 || trustProxy > 5) throw new Error('TRUST_PROXY must be an integer between 0 and 5.');
+
 module.exports = {
   port,
+  trustProxy,
   nodeEnv,
   frontendOrigin: process.env.FRONTEND_ORIGIN || 'http://localhost:4200',
   mongodbUri,

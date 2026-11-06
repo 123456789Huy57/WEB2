@@ -75,3 +75,7 @@ Mở http://localhost:4200 là xong.
 - [Danh sách API](backend/docs/part-b-handoff.md)
 - [Thiết kế database](backend/docs/database-schema.md) và [ERD](backend/docs/erd.png)
 - [Chi tiết backend](backend/README.md), [chi tiết frontend](frontend/README.md)
+
+## Deploy
+
+Xem [DEPLOY.md](DEPLOY.md): frontend lên Vercel, backend lên Render, database Atlas, ảnh Cloudinary.
