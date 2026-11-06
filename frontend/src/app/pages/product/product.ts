@@ -11,6 +11,7 @@ import { VndPipe } from '../../shared/vnd.pipe';
 import { ProductCard } from '../../shared/product-card';
 import { ImgFallbackDirective } from '../../shared/img-fallback.directive';
 import { ProductReviews } from '../../shared/product-reviews';
+import { Recommendation, RecommendationService } from '../../core/recommendation.service';
 
 @Component({
   selector: 'fm-product',
@@ -55,14 +56,27 @@ export class ProductPage {
     const rows: [string, number | undefined, string][] = [['Năng lượng', n.energy_kcal, 'kcal'], ['Đạm', n.protein, 'g'], ['Béo', n.fat, 'g'], ['Tinh bột', n.carbohydrates, 'g'], ['Đường', n.sugars, 'g'], ['Chất xơ', n.fiber, 'g']];
     return rows.filter(r => r[1] != null).map(([label, v, unit]) => ({ label, value: String(v).replace('.', ','), unit }));
   });
+  private recs = inject(RecommendationService);
+  /** Gợi ý từ luật kết hợp (backend); chưa có hoặc lỗi thì dùng món bán chạy cùng quầy như trước. */
+  protected alsoBought = signal<Recommendation[]>([]);
   protected related = computed(() => {
     const p = this.p();
-    return p ? this.ps.all().filter(x => x.category === p.category && x.id !== p.id).sort((a, b) => b.sold_count - a.sold_count).slice(0, 4) : [];
+    if (!p) return [];
+    const fromRules = this.alsoBought().map(r => r.product).filter(x => x.id !== p.id);
+    if (fromRules.length) return fromRules.slice(0, 4);
+    return this.ps.all().filter(x => x.category === p.category && x.id !== p.id).sort((a, b) => b.sold_count - a.sold_count).slice(0, 4);
   });
+  /** Có ít nhất một gợi ý học từ đơn hàng/công thức thì đổi tiêu đề thành "Thường được mua cùng" */
+  protected learned = computed(() => this.alsoBought().some(r => r.source !== 'category'));
   protected wished = computed(() => { this.wish.ids(); return !!this.p() && this.wish.has(this.p()!.id); });
 
   constructor() {
     effect(() => { this.id(); this.qty.set(1); this.imgIndex.set(0); });
+    effect(() => {
+      const id = this.id();
+      this.alsoBought.set([]);
+      void this.recs.alsoBought(id).then(list => { if (this.id() === id) this.alsoBought.set(list); });
+    });
     effect(() => { if (this.name()) this.title.setTitle(this.name() + ' · FreshMart'); });
   }
 

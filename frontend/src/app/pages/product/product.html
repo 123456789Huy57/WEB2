@@ -84,7 +84,13 @@
     <fm-product-reviews [productId]="p.id" />
   </section>
   <section class="sec band" aria-labelledby="h-rel">
-    <div class="sec-head"><h2 class="h2" id="h-rel">Cùng quầy</h2><a class="link" routerLink="/san-pham" [queryParams]="{ c: p.category }">Xem cả quầy</a></div>
+    <div class="sec-head">
+      <div>
+        <h2 class="h2" id="h-rel">{{ learned() ? 'Thường được mua cùng' : 'Cùng quầy' }}</h2>
+        @if (learned()) { <p>Gợi ý từ những đơn hàng và món ăn có sản phẩm này.</p> }
+      </div>
+      <a class="link" routerLink="/san-pham" [queryParams]="{ c: p.category }">Xem cả quầy</a>
+    </div>
     <div class="p-grid">
       @for (r of related(); track r.id) { <fm-product-card [product]="r" /> }
     </div>

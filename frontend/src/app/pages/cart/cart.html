@@ -50,6 +50,13 @@
         <a class="link small c-link" routerLink="/san-pham">Tiếp tục đi chợ</a>
       </aside>
     </div>
+    @if (learned().length) {
+      <section class="sec" aria-labelledby="h-tog">
+        <div class="sec-head"><div><h2 class="h2" id="h-tog">Thường được mua cùng</h2>
+          <p>Khách mua những món trong giỏ của bạn hay mua thêm các món này.</p></div></div>
+        <div class="p-grid">@for (p of learned(); track p.id) { <fm-product-card [product]="p" /> }</div>
+      </section>
+    }
     @if (suggest().length) {
       <section class="sec" aria-labelledby="h-sug">
         <div class="sec-head"><div><h2 class="h2" id="h-sug">{{ needForFree() > 0 ? 'Thêm chút nữa là miễn phí giao' : 'Đang giảm giá hôm nay' }}</h2>

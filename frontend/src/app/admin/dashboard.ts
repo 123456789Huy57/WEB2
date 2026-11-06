@@ -1,7 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { OrderService, ORDER_STATUS, STATUS_FLOW } from '../core/order.service';
 import { ProductService } from '../core/product.service';
@@ -16,10 +16,17 @@ interface DashboardData {
   customers: number; activeProducts: number; lowStock: { id: string; name: string; unit: string; stock: number }[];
 }
 
+interface Rule { from: string; to: string; fromName: string; toName: string; count: number; support: number; confidence: number; lift: number; }
+interface RulesData {
+  computedAt: string;
+  orders: { transactions: number; totalRules: number; rules: Rule[] };
+  recipes: { transactions: number; totalRules: number; rules: Rule[] };
+}
+
 /** Số liệu do server tính bằng aggregation trên toàn bộ đơn (GET /api/admin/dashboard). */
 @Component({
   selector: 'fm-admin-dashboard',
-  imports: [DatePipe, RouterLink, VndPipe],
+  imports: [DatePipe, DecimalPipe, RouterLink, VndPipe],
   template: `
     <div class="adm-head"><div><h1 class="h2">Tổng quan</h1><p>Tính trên toàn bộ đơn hàng. Đơn đã hủy không tính doanh thu; đã thu {{ (d()?.collected ?? 0) | vnd }} từ đơn đã thanh toán.</p></div></div>
     <dl class="stats">
@@ -71,6 +78,29 @@ interface DashboardData {
         </table></div>
       </section>
     </div>
+    @if (rules(); as r) {
+      <section class="card" aria-labelledby="h-rules">
+        <h2 class="h3" id="h-rules">Luật mua kèm (gợi ý "Thường được mua cùng")</h2>
+        <p class="muted" style="margin:-8px 0 14px">
+          Luật kết hợp học từ {{ r.orders.transactions }} đơn chưa hủy ({{ r.orders.totalRules }} luật) và {{ r.recipes.transactions }} công thức ({{ r.recipes.totalRules }} luật).
+          Confidence: mua món trước thì bao nhiêu % mua thêm món sau. Lift &gt; 1: mua cùng nhiều hơn ngẫu nhiên. Cập nhật {{ r.computedAt | date: 'HH:mm dd/MM' }}.
+        </p>
+        <div class="toolbar" role="group" aria-label="Nguồn luật">
+          <button class="tab" type="button" [attr.aria-pressed]="ruleSource() === 'orders'" (click)="ruleSource.set('orders')">Từ đơn hàng</button>
+          <button class="tab" type="button" [attr.aria-pressed]="ruleSource() === 'recipes'" (click)="ruleSource.set('recipes')">Từ công thức</button>
+        </div>
+        <div class="tbl-wrap"><table class="tbl">
+          <thead><tr><th>Khi mua</th><th>Thường mua thêm</th><th class="r">Số lần</th><th class="r">Support</th><th class="r">Confidence</th><th class="r">Lift</th></tr></thead>
+          <tbody>
+            @for (x of shownRules(); track x.from + x.to) {
+              <tr><td>{{ x.fromName }}</td><td>{{ x.toName }}</td><td class="r num">{{ x.count }}</td><td class="r num">{{ x.support * 100 | number: '1.0-1' }}%</td><td class="r num">{{ x.confidence * 100 | number: '1.0-0' }}%</td><td class="r num">{{ x.lift | number: '1.1-2' }}</td></tr>
+            } @empty {
+              <tr><td colspan="6" class="empty-row">{{ ruleSource() === 'orders' ? 'Chưa đủ đơn để rút ra luật (cần mỗi cặp xuất hiện ít nhất 2 lần). Gợi ý đang dùng luật từ công thức.' : 'Chưa có luật.' }}</td></tr>
+            }
+          </tbody>
+        </table></div>
+      </section>
+    }
     @if (lowStock().length) {
       <section class="card" aria-labelledby="h-low">
         <h2 class="h3" id="h-low">Sắp hết hàng</h2>
@@ -89,7 +119,16 @@ export class Dashboard {
   private http = inject(HttpClient);
   protected st = ORDER_STATUS;
   protected d = signal<DashboardData | null>(null);
-  constructor() { void firstValueFrom(this.http.get<DashboardData>('/api/admin/dashboard')).then(x => this.d.set(x)).catch(() => this.d.set(null)); }
+  protected rules = signal<RulesData | null>(null);
+  protected ruleSource = signal<'orders' | 'recipes'>('orders');
+  protected shownRules = computed(() => (this.rules()?.[this.ruleSource()].rules ?? []).slice(0, 10));
+  constructor() {
+    void firstValueFrom(this.http.get<DashboardData>('/api/admin/dashboard')).then(x => this.d.set(x)).catch(() => this.d.set(null));
+    void firstValueFrom(this.http.get<RulesData>('/api/admin/recommendations')).then(x => {
+      this.rules.set(x);
+      if (!x.orders.rules.length) this.ruleSource.set('recipes');
+    }).catch(() => this.rules.set(null));
+  }
 
   protected revenueAll = computed(() => this.d()?.revenue ?? 0);
   protected aov = computed(() => this.d()?.averageOrderValue ?? 0);

@@ -480,3 +480,56 @@ test('Regression từ backend-review', async t => {
     assert.equal((await c.get(`/api/users/me/orders/${o.id}`)).data.paymentStatus, 'refunded');
   });
 });
+
+test('Gợi ý "Thường được mua cùng" (luật kết hợp)', async t => {
+  const database = db.getDatabase();
+  const now = new Date().toISOString();
+  const p = (id, extra) => ({ _id: id, id, name: `SP ${id}`, slug: `sp-${id}`, category: 'c-test', price: 50000, sale_price: 0, unit: 'Hộp', stock: 10, sold_count: 0, image_url: '', active: true, createdAt: now, updatedAt: now, ...extra });
+  await database.collection('products').insertMany([p('g-mi'), p('g-trung'), p('g-hanh'), p('g-het', { stock: 0 }), p('g-ban-chay', { sold_count: 99 })]);
+  // Đơn mẫu: mì + trứng đi cùng 3 lần; mì + hàng hết kho 2 lần (không được gợi ý vì không mua được).
+  const basket = (n, ids) => ({ _id: `ord-g${n}`, id: `ord-g${n}`, status: 'delivered', items: ids.map(productId => ({ productId })), createdAt: now });
+  await database.collection('orders').insertMany([
+    basket(1, ['g-mi', 'g-trung']), basket(2, ['g-mi', 'g-trung', 'g-hanh']), basket(3, ['g-mi', 'g-trung']),
+    basket(4, ['g-mi', 'g-het']), basket(5, ['g-mi', 'g-het']), { ...basket(6, ['g-mi', 'g-hanh']), status: 'cancelled' }, basket(7, ['g-hanh']),
+  ], { bypassDocumentValidation: true });
+  require('../src/modules/recommendations/recommendations.service').resetCache();
+
+  await t.test('trang sản phẩm: món hay mua cùng đứng đầu, kèm confidence/lift; bỏ món hết hàng và đơn đã hủy', async () => {
+    const c = await new Client().start();
+    const r = (await c.get('/api/products/g-mi/also-bought?limit=4')).data;
+    assert.equal(r.items[0].productId, 'g-trung');
+    assert.equal(r.items[0].source, 'orders');
+    assert.ok(r.items[0].confidence > 0 && r.items[0].lift >= 1);
+    assert.equal(r.items.some(x => x.productId === 'g-het'), false, 'hết hàng không gợi ý');
+    assert.equal(r.items.some(x => x.productId === 'g-hanh' && x.source === 'orders'), false, 'mì + hành chỉ 1 đơn còn hiệu lực, dưới ngưỡng');
+    assert.equal(r.items.some(x => x.productId === 'g-mi'), false);
+    assert.ok(r.items.length <= 4);
+    assert.ok(r.items.some(x => x.source === 'category'), 'thiếu thì lấp bằng món bán chạy cùng quầy');
+  });
+
+  await t.test('giỏ hàng: gợi ý theo các món trong giỏ, không lặp món đã có', async () => {
+    const c = await new Client().register(80);
+    assert.deepEqual((await c.get('/api/cart/recommendations')).data.items, []);
+    await c.post('/api/cart/items', { productId: 'g-trung', quantity: 1 });
+    const items = (await c.get('/api/cart/recommendations')).data.items;
+    assert.equal(items[0].productId, 'g-mi');
+    assert.equal(items.some(x => x.productId === 'g-trung'), false);
+  });
+
+  await t.test('admin xem bảng luật; khách không xem được', async () => {
+    const admin = await new Client().start();
+    await admin.post('/api/auth/login', { identifier: 'admin@example.com', password: 'adminpass123' });
+    const r = (await admin.get('/api/admin/recommendations?refresh=true')).data;
+    const rule = r.orders.rules.find(x => x.from === 'g-mi' && x.to === 'g-trung');
+    assert.ok(rule && rule.count === 3 && rule.fromName === 'SP g-mi');
+    assert.equal((await (await new Client().register(81)).get('/api/admin/recommendations')).status, 403);
+  });
+
+  await t.test('catalog công khai được nén và cache ngắn; API cá nhân không cache', async () => {
+    const res = await fetch(`${base}/api/products`, { headers: { 'Accept-Encoding': 'gzip' } });
+    assert.equal(res.headers.get('content-encoding'), 'gzip');
+    assert.match(res.headers.get('cache-control'), /max-age=60/);
+    assert.equal((await fetch(`${base}/api/cart`)).headers.get('cache-control'), 'no-store');
+    assert.equal((await fetch(`${base}/api/products/khong-co`)).headers.get('cache-control'), 'no-store', 'lỗi 404 không cache');
+  });
+});
