@@ -46,7 +46,7 @@ async function productData(body, old) {
   }
   if (body.image_url !== undefined && body.image_url !== old?.image_url) delete p.img;
   if (p.image_url && !/^https?:\/\//i.test(p.image_url) && !p.image_url.startsWith('/')) v.bad('Ảnh phải là URL HTTP(S) hoặc đường dẫn bắt đầu bằng /.');
-  if (p.gallery.some(url => url && !/^https?:\/\//i.test(url) && !url.startsWith('/'))) v.bad('Gallery chứa URL không hợp lệ.');
+  if ((p.gallery || []).some(url => url && !/^https?:\/\//i.test(url) && !url.startsWith('/'))) v.bad('Gallery chứa URL không hợp lệ.');
   p.slug = body.slug !== undefined ? v.slug(body.slug) : p.slug || `${v.slugify(p.name).slice(0, 120) || 'san-pham'}-${p.id}`;
   p.updatedAt = new Date().toISOString();
   if (!old) p.createdAt = p.updatedAt;
