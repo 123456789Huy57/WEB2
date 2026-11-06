@@ -143,7 +143,13 @@ async function update(id, body) {
   if (!old) fail('VOUCHER_NOT_FOUND', 'Không tìm thấy voucher.', 404);
   const { _id, usedCount, ...patch } = voucherData(body, old);
   // Không ghi đè usedCount: lượt dùng chỉ đổi qua đặt/hủy đơn.
-  const next = await vouchers().findOneAndUpdate({ id: old.id }, { $set: patch }, { returnDocument: 'after' });
+  // Tổng suất mới phải còn ≥ số lượt đã dùng TẠI THỜI ĐIỂM GHI (khách có thể vừa dùng mã sau lúc đọc).
+  const limitGuard = patch.usageLimit == null ? {} : { usedCount: { $lte: patch.usageLimit } };
+  const next = await vouchers().findOneAndUpdate({ id: old.id, ...limitGuard }, { $set: patch }, { returnDocument: 'after' });
+  if (!next) {
+    const now = await vouchers().findOne({ id: old.id });
+    fail('VOUCHER_LIMIT_TOO_LOW', `Tổng suất không được nhỏ hơn số lượt đã dùng (${now?.usedCount ?? 0}).`, 409);
+  }
   return withRemaining(next);
 }
 

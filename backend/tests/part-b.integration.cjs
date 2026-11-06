@@ -385,3 +385,98 @@ test('Thanh toán online qua cổng giả lập (cùng định dạng VNPay)', a
     assert.equal((await c.post(`/api/users/me/orders/${cod.id}/payments`)).data.error.code, 'PAYMENT_NOT_ONLINE');
   });
 });
+
+// Các lỗi trong backend/docs/backend-review.md (rà soát 05/11): mỗi ca là một lần tái hiện, giữ lại để không tái phát.
+test('Regression từ backend-review', async t => {
+  const admin = await new Client().start();
+  await admin.post('/api/auth/login', { identifier: 'admin@example.com', password: 'adminpass123' });
+  const now = new Date().toISOString();
+  const p = (id, extra) => ({ _id: id, id, name: `SP ${id}`, slug: `sp-${id}`, category: 'c-test', price: 100000, sale_price: 0, unit: 'Hộp', stock: 10, sold_count: 0, image_url: '', active: true, createdAt: now, updatedAt: now, ...extra });
+  await db.getDatabase().collection('products').insertMany([p('r-unit', { unit: 'Kg', stock: 1 }), p('r-one', { stock: 1 }), p('r-x'), p('r-y'), p('r-pay', { stock: 20 })]);
+  const step = (o, status, expectedStatus) => admin.patch(`/api/admin/orders/${o.id}/status`, { status, expectedStatus });
+  const follow = async url => { const r = await fetch(url.replace(/^http:\/\/localhost:\d+/, base), { redirect: 'manual' }); return r.status === 200 ? r.text() : r.headers.get('location'); };
+  const payOnline = async (c, o) => {
+    const { data } = await c.post(`/api/users/me/orders/${o.id}/payments`);
+    const okLink = [...(await follow(data.payUrl)).matchAll(/href="([^"]+)"/g)][0][1].replace(/&amp;|&#38;/g, '&');
+    assert.match(await follow(okLink), /ok=1/);
+  };
+
+  await t.test('#1 đơn VNPay chưa trả tiền không xác nhận/giao được, không tự thành đã thanh toán', async () => {
+    const c = await new Client().register(70);
+    await c.post('/api/cart/items', { productId: 'r-pay', quantity: 1 });
+    const { data: o } = await order(c, { paymentMethod: 'vnpay' });
+    assert.ok(o.paymentDueAt, 'đơn VNPay có hạn thanh toán');
+    assert.equal((await step(o, 'confirmed', 'pending')).data.error.code, 'ORDER_NOT_PAID');
+    await payOnline(c, o);
+    for (const [s, e] of [['confirmed', 'pending'], ['preparing', 'confirmed'], ['shipping', 'preparing'], ['delivered', 'shipping']]) assert.equal((await step(o, s, e)).status, 200);
+    const done = (await admin.get(`/api/admin/orders/${o.id}`)).data;
+    assert.equal(done.paymentStatus, 'paid');
+    assert.equal(await db.getDatabase().collection('payments').countDocuments({ orderId: o.id, status: 'paid' }), 1);
+  });
+
+  await t.test('#2 không đổi đơn vị khi còn đơn mở; hủy đơn hoàn đúng đơn vị cũ', async () => {
+    const c = await new Client().register(71);
+    await c.post('/api/cart/items', { productId: 'r-unit', quantity: 1 });
+    const { data: o } = await order(c);
+    assert.equal(await stockOf('r-unit'), 0);
+    assert.equal((await admin.patch('/api/admin/products/r-unit', { unit: 'Hộp' })).data.error.code, 'UNIT_HAS_OPEN_ORDERS');
+    await c.post(`/api/users/me/orders/${o.id}/cancel`);
+    const product = await db.getDatabase().collection('products').findOne({ id: 'r-unit' });
+    assert.deepEqual([product.stock, product.unit], [1, 'Kg']);
+  });
+
+  await t.test('#4 thêm hai món vào giỏ cùng lúc không mất món', async () => {
+    const c = await new Client().register(72);
+    await Promise.all([c.post('/api/cart/items', { productId: 'r-x', quantity: 1 }), c.post('/api/cart/items', { productId: 'r-y', quantity: 1 }), c.post('/api/cart/items', { productId: 'r-x', quantity: 1 })]);
+    const cart = (await c.get('/api/cart')).data;
+    assert.deepEqual(cart.items.map(i => [i.productId, i.quantity]).sort(), [['r-x', 2], ['r-y', 1]]);
+  });
+
+  await t.test('#6 hai yêu cầu đặt đơn cùng khóa khi kho còn 1 trả cùng một đơn', async () => {
+    const c = await new Client().register(73);
+    await c.post('/api/cart/items', { productId: 'r-one', quantity: 1 });
+    const key = randomUUID();
+    const [a, b] = await Promise.all([order(c, {}, key), order(c, {}, key)]);
+    assert.deepEqual([a.status, b.status].sort(), [200, 201], JSON.stringify([a.data, b.data]));
+    assert.equal(a.data.id, b.data.id);
+    assert.equal(await db.getDatabase().collection('orders').countDocuments({ idempotencyKey: key }), 1);
+  });
+
+  await t.test('#7 dùng lại khóa điều chỉnh kho cho nội dung khác bị từ chối', async () => {
+    const key = randomUUID();
+    const adjust = body => admin.post('/api/admin/inventory/r-x/adjustments', body, { 'Idempotency-Key': key });
+    const before = await stockOf('r-x');
+    assert.equal((await adjust({ quantityDelta: 2, reason: 'Nhập' })).data.stock, before + 2);
+    assert.equal((await adjust({ quantityDelta: 2, reason: 'Nhập' })).data.stock, before + 2, 'gửi lại đúng nội dung vẫn trả kết quả cũ');
+    assert.equal((await adjust({ quantityDelta: 5, reason: 'Nhập' })).data.error.code, 'IDEMPOTENCY_CONFLICT');
+    assert.equal(await stockOf('r-x'), before + 2);
+  });
+
+  await t.test('đơn VNPay quá hạn tự hủy, hoàn kho, không thanh toán được nữa', async () => {
+    const c = await new Client().register(74);
+    const before = await stockOf('r-pay');
+    await c.post('/api/cart/items', { productId: 'r-pay', quantity: 2 });
+    const { data: o } = await order(c, { paymentMethod: 'vnpay' });
+    assert.equal(await stockOf('r-pay'), before - 2);
+    await db.getDatabase().collection('orders').updateOne({ id: o.id }, { $set: { paymentDueAt: new Date(Date.now() - 1000).toISOString() } });
+    assert.equal((await c.post(`/api/users/me/orders/${o.id}/payments`)).data.error.code, 'ORDER_PAYMENT_EXPIRED');
+    assert.equal((await c.get(`/api/users/me/orders/${o.id}`)).data.status, 'cancelled');
+    assert.equal(await stockOf('r-pay'), before);
+    assert.equal(await require('../src/modules/orders/orders.service').expireUnpaid(), 0, 'quét lại không hủy hai lần');
+  });
+
+  await t.test('admin hủy đơn đã thanh toán online → cần hoàn tiền → xác nhận đã hoàn', async () => {
+    const c = await new Client().register(75);
+    await c.post('/api/cart/items', { productId: 'r-pay', quantity: 1 });
+    const { data: o } = await order(c, { paymentMethod: 'vnpay' });
+    await payOnline(c, o);
+    assert.equal((await step(o, 'cancelled', 'pending')).data.paymentStatus, 'paid');
+    const list = (await admin.get('/api/admin/payments/refunds')).data.items;
+    const pay = list.find(x => x.orderId === o.id);
+    assert.ok(pay, 'giao dịch nằm trong danh sách cần hoàn tiền');
+    assert.equal((await c.get('/api/admin/payments/refunds')).status, 403);
+    assert.equal((await admin.post(`/api/admin/payments/${pay.id}/refund`, { note: 'Đã hoàn trên cổng' })).data.status, 'refunded');
+    assert.equal((await admin.post(`/api/admin/payments/${pay.id}/refund`)).data.status, 'refunded', 'bấm lại không lỗi');
+    assert.equal((await c.get(`/api/users/me/orders/${o.id}`)).data.paymentStatus, 'refunded');
+  });
+});

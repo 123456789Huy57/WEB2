@@ -7,6 +7,9 @@ async function start() {
     await connectDatabase(env.mongodbUri, env.mongodbDb);
     await require('./config/indexes').ensureIndexes();
     console.log('MongoDB connected. Sessions use MongoDB.');
+    // Mỗi phút hủy đơn VNPay quá hạn chưa trả tiền để trả hàng về kho.
+    const { expireUnpaid } = require('./modules/orders/orders.service');
+    setInterval(() => expireUnpaid().catch(error => console.error('Expire unpaid orders failed:', error.name)), 60 * 1000).unref();
   } else {
     console.log('No MONGODB_URI: local starter only. Database APIs return 503; sessions use temporary memory.');
   }

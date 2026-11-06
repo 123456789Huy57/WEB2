@@ -1,6 +1,6 @@
 // Mọi thay đổi tồn kho đi qua đây (contract mục 8). Luôn cập nhật có điều kiện để không âm kho,
 // và ghi inventoryMovements với operationId duy nhất để một thao tác không bị ghi hai lần.
-const { randomUUID } = require('node:crypto');
+const { randomUUID, createHash } = require('node:crypto');
 const { getDatabase, getMongoClient } = require('../../config/database');
 const { HttpError } = require('../../lib/http-error');
 const v = require('../../lib/validation');
@@ -11,9 +11,9 @@ const products = () => getDatabase().collection('products');
 const movements = () => getDatabase().collection('inventoryMovements');
 const LOW_STOCK = 10;
 
-async function record({ operationId, productId, type, quantityDelta, stockAfter, orderId = null, reason = '', actorId, session, now }) {
+async function record({ operationId, productId, type, quantityDelta, stockAfter, orderId = null, reason = '', requestHash, actorId, session, now }) {
   const id = `im-${randomUUID()}`;
-  await movements().insertOne({ _id: id, id, operationId, productId, type, quantityDelta, stockAfter, orderId, reason, actorId, createdAt: now }, { session });
+  await movements().insertOne({ _id: id, id, operationId, productId, type, quantityDelta, stockAfter, orderId, reason, ...(requestHash ? { requestHash } : {}), actorId, createdAt: now }, { session });
   return id;
 }
 
@@ -34,8 +34,10 @@ async function takeForOrder({ productId, quantity, unit, orderId, actorId, sessi
 // Hoàn kho khi hủy đơn. operationId cố định nên gọi hai lần cũng chỉ hoàn một lần (lỗi trùng khóa).
 async function restoreForOrder({ items, orderId, actorId, session, now }) {
   for (const item of items) {
-    const after = await products().findOneAndUpdate({ id: item.productId }, { $inc: { stock: item.quantity }, $set: { updatedAt: now } }, { session, returnDocument: 'after', projection: { stock: 1 } });
-    if (!after) continue; // sản phẩm đã bị xóa khỏi DB: bỏ qua, đơn vẫn hủy được
+    // Chỉ hoàn kho khi đơn vị hiện tại khớp đơn vị lúc mua (đổi đơn vị đã bị chặn khi còn đơn mở; đây là lớp bảo vệ thêm).
+    const unit = item.unitSnapshot ? { unit: { $regex: `^${item.unitSnapshot.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, $options: 'i' } } : {};
+    const after = await products().findOneAndUpdate({ id: item.productId, ...unit }, { $inc: { stock: item.quantity }, $set: { updatedAt: now } }, { session, returnDocument: 'after', projection: { stock: 1 } });
+    if (!after) continue; // sản phẩm đã bị xóa hoặc đã đổi đơn vị: không hoàn sai đơn vị, đơn vẫn hủy được
     await record({ operationId: `${orderId}:${item.productId}:cancel`, productId: item.productId, type: 'cancel', quantityDelta: item.quantity, stockAfter: after.stock, orderId, actorId, session, now });
   }
 }
@@ -60,8 +62,15 @@ async function adjust({ productId, body, key, actorId }) {
   const reason = v.text(body.reason ?? '', 'Lý do', 0, 200);
   if (delta === 0) v.bad('quantityDelta phải khác 0.');
   const operationId = `adjust:${key}`;
+  // Cùng khóa chỉ được dùng lại cho đúng nội dung cũ (bấm hai lần/gửi lại sau lỗi mạng). Khác nội dung: báo 409.
+  const requestHash = createHash('sha256').update(JSON.stringify([actorId, productId, delta, reason])).digest('hex');
   const previous = await movements().findOne({ operationId });
-  if (previous) return { productId: previous.productId, stock: previous.stockAfter, movementId: previous.id };
+  if (previous) {
+    const same = previous.requestHash ? previous.requestHash === requestHash
+      : previous.productId === productId && previous.quantityDelta === delta && (previous.reason || '') === reason && previous.actorId === actorId;
+    if (!same) throw new HttpError(409, 'IDEMPOTENCY_CONFLICT', 'Khóa điều chỉnh này đã dùng cho một thao tác khác.');
+    return { productId: previous.productId, stock: previous.stockAfter, movementId: previous.id };
+  }
   const session = getMongoClient().startSession();
   try {
     let result;
@@ -76,7 +85,7 @@ async function adjust({ productId, body, key, actorId }) {
         { session, returnDocument: 'after', projection: { stock: 1 } },
       );
       if (!after) throw new HttpError(409, 'STOCK_NEGATIVE', `Tồn kho hiện có ${product.stock}, không thể giảm ${-delta}.`);
-      const movementId = await record({ operationId, productId, type: 'adjustment', quantityDelta: delta, stockAfter: after.stock, reason, actorId, session, now });
+      const movementId = await record({ operationId, productId, type: 'adjustment', quantityDelta: delta, stockAfter: after.stock, reason, requestHash, actorId, session, now });
       result = { productId, stock: after.stock, movementId };
     });
     return result;

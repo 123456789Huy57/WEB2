@@ -71,7 +71,7 @@ const collections = {
         },
         subtotal: money, shippingFee: money, productDiscount: money, shippingDiscount: money, discount: money, total: money,
         voucherCode: strOrNull,
-        paymentMethod: { enum: ['cod', 'vnpay'] }, paymentStatus: { enum: ['unpaid', 'paid'] }, paidAt: strOrNull,
+        paymentMethod: { enum: ['cod', 'vnpay'] }, paymentStatus: { enum: ['unpaid', 'paid', 'refunded'] }, paidAt: strOrNull, paymentDueAt: str,
         status: { enum: ORDER_STATUSES },
         history: {
           bsonType: 'array',
@@ -130,7 +130,7 @@ const collections = {
       required: ['id', 'operationId', 'productId', 'type', 'quantityDelta', 'stockAfter', 'actorId', 'createdAt'],
       properties: {
         id: str, operationId: str, productId: str, type: { enum: ['order', 'cancel', 'adjustment'] },
-        quantityDelta: num, stockAfter: money, orderId: strOrNull, reason: str, actorId: str, createdAt: str,
+        quantityDelta: num, stockAfter: money, orderId: strOrNull, reason: str, requestHash: str, actorId: str, createdAt: str,
       },
     },
     expr: { $ne: ['$quantityDelta', 0] },
@@ -188,7 +188,8 @@ const collections = {
       required: ['id', 'orderId', 'userId', 'provider', 'txnRef', 'amount', 'status', 'createdAt'],
       properties: {
         id: str, orderId: str, orderCode: str, userId: str, provider: { enum: ['vnpay', 'mock'] }, txnRef: str, amount: positive,
-        status: { enum: ['pending', 'paid', 'failed', 'refund_required'] }, responseCode: str, transactionNo: str, paidAt: str, createdAt: str, updatedAt: str,
+        status: { enum: ['pending', 'paid', 'failed', 'refund_required', 'refunded'] }, responseCode: str, transactionNo: str, paidAt: str,
+        refundedAt: str, refundedBy: str, refundNote: str, createdAt: str, updatedAt: str,
       },
     },
   },

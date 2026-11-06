@@ -4,6 +4,7 @@ const { randomUUID } = require('node:crypto');
 const { getDatabase, getMongoClient } = require('../../config/database');
 const { HttpError } = require('../../lib/http-error');
 const env = require('../../config/env');
+const v = require('../../lib/validation');
 const vnpay = require('./vnpay');
 
 const payments = () => getDatabase().collection('payments');
@@ -23,6 +24,10 @@ async function createPayment({ orderId, userId, ip }) {
   if (order.paymentMethod !== 'vnpay') throw new HttpError(409, 'PAYMENT_NOT_ONLINE', 'Đơn này thanh toán khi nhận hàng.');
   if (order.paymentStatus === 'paid') throw new HttpError(409, 'ORDER_ALREADY_PAID', 'Đơn đã được thanh toán.');
   if (order.status === 'cancelled') throw new HttpError(409, 'ORDER_CANCELLED', 'Đơn đã hủy, không thể thanh toán.');
+  if (order.paymentDueAt && order.paymentDueAt <= new Date().toISOString()) {
+    await require('../orders/orders.service').expireUnpaid(); // hủy ngay để hoàn kho, không chờ lượt quét định kỳ
+    throw new HttpError(409, 'ORDER_PAYMENT_EXPIRED', 'Đơn đã quá hạn thanh toán và đã được hủy. Vui lòng đặt lại.');
+  }
   const p = provider();
   const txnRef = `${order.orderCode.replace(/-/g, '')}${Date.now().toString(36).toUpperCase().slice(-5)}`;
   const id = `pay-${randomUUID()}`, now = new Date().toISOString();
@@ -54,4 +59,36 @@ async function complete(query) {
   return { code: r.success ? 'PAID' : 'FAILED', payment: await payments().findOne({ id: payment.id }) };
 }
 
-module.exports = { createPayment, complete, provider };
+// Admin: các giao dịch cần hoàn tiền (khách trả tiền cho đơn đã hủy, hoặc đơn đã trả bị hủy).
+async function listRefunds(query = {}) {
+  const status = query.status === 'refunded' ? 'refunded' : 'refund_required';
+  const items = await payments().find({ status }, { projection: { _id: 0 } }).sort({ updatedAt: -1 }).limit(200).toArray();
+  return { items, status };
+}
+
+// Admin xác nhận đã hoàn tiền cho khách (thực hiện ngoài hệ thống, ví dụ trên cổng VNPay). Gọi lại không ghi hai lần.
+async function markRefunded({ paymentId, actorId, body = {} }) {
+  v.object(body, ['note']);
+  const note = v.text(body.note ?? '', 'Ghi chú', 0, 300);
+  const session = getMongoClient().startSession();
+  let result;
+  try {
+    await session.withTransaction(async () => {
+      const now = new Date().toISOString();
+      const payment = await payments().findOne({ id: paymentId }, { session });
+      if (!payment) throw new HttpError(404, 'PAYMENT_NOT_FOUND', 'Không tìm thấy giao dịch.');
+      if (payment.status === 'refunded') { result = payment; return; }
+      if (payment.status !== 'refund_required') throw new HttpError(409, 'PAYMENT_NOT_REFUNDABLE', 'Giao dịch này không ở trạng thái cần hoàn tiền.');
+      result = await payments().findOneAndUpdate(
+        { id: paymentId, status: 'refund_required' },
+        { $set: { status: 'refunded', refundedAt: now, refundedBy: actorId, refundNote: note, updatedAt: now } },
+        { session, returnDocument: 'after' },
+      );
+      await orders().updateOne({ id: payment.orderId, status: 'cancelled', paymentStatus: 'paid' }, { $set: { paymentStatus: 'refunded', updatedAt: now } }, { session });
+    });
+  } finally { await session.endSession(); }
+  const { _id, ...publicPayment } = result;
+  return publicPayment;
+}
+
+module.exports = { createPayment, complete, provider, listRefunds, markRefunded };

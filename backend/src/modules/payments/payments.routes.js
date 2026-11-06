@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const env = require('../../config/env');
 const v = require('../../lib/validation');
-const { requireAuth } = require('../../middleware/auth');
+const { requireAuth, requireAdmin } = require('../../middleware/auth');
 const service = require('./payments.service');
 const vnpay = require('./vnpay');
 
@@ -42,6 +42,12 @@ router.get('/payments/mock/pay', (req, res) => {
 <style>body{font-family:system-ui,sans-serif;background:#f4f1e8;margin:0;display:grid;place-items:center;min-height:100vh}main{background:#fff;padding:32px;border-radius:12px;max-width:420px;width:calc(100% - 32px);box-shadow:0 8px 30px #0001}h1{font-size:20px;margin:0 0 4px}.amt{font-size:34px;font-weight:700;margin:18px 0}.note{color:#666;font-size:14px}a{display:block;text-align:center;padding:14px;border-radius:8px;text-decoration:none;margin-top:12px;font-weight:600}.ok{background:#1f6f54;color:#fff}.no{background:#eee;color:#333}</style>
 <main><p class="note">Cổng giả lập cho môi trường thử, không trừ tiền thật</p><h1>${esc(params.vnp_OrderInfo)}</h1><div class="amt">${amount} đ</div>
 <a class="ok" href="${esc(back('00'))}">Thanh toán thành công</a><a class="no" href="${esc(back('24'))}">Hủy giao dịch</a></main></html>`);
+});
+
+// Admin: hoàn tiền cho giao dịch online của đơn đã hủy.
+router.get('/admin/payments/refunds', requireAuth, requireAdmin, async (req, res) => res.json(await service.listRefunds(req.query)));
+router.post('/admin/payments/:id/refund', requireAuth, requireAdmin, async (req, res) => {
+  res.json(await service.markRefunded({ paymentId: v.id(req.params.id), actorId: req.user.id, body: req.body ?? {} }));
 });
 
 module.exports = router;

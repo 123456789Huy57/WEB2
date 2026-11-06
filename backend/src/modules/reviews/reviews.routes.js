@@ -83,7 +83,7 @@ router.get('/admin/reviews', requireAuth, requireAdmin, async (req, res) => {
     reviews().aggregate([
       { $match: filter }, { $sort: { createdAt: -1 } }, { $skip: (page - 1) * pageSize }, { $limit: pageSize },
       { $lookup: { from: 'products', localField: 'productId', foreignField: 'id', as: 'p' } },
-      { $project: { _id: 0, userId: 0, id: 1, productId: 1, userName: 1, orderId: 1, rating: 1, comment: 1, createdAt: 1, hidden: { $ifNull: ['$hidden', false] }, productName: { $first: '$p.name' } } },
+      { $project: { _id: 0, id: 1, productId: 1, userName: 1, orderId: 1, rating: 1, comment: 1, createdAt: 1, hidden: { $ifNull: ['$hidden', false] }, productName: { $first: '$p.name' } } },
     ]).toArray(),
     reviews().countDocuments(filter),
   ]);

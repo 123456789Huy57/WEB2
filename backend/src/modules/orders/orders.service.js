@@ -1,11 +1,10 @@
 // Đặt đơn COD, xem đơn, hủy, chuyển trạng thái (contract mục 6-7).
 // Đơn + trừ kho + tiêu voucher + ghi lịch sử kho chạy trong MỘT transaction: lỗi ở đâu cũng hoàn tác hết.
 const { randomUUID, randomBytes, createHash } = require('node:crypto');
-const { promisify } = require('node:util');
 const { getDatabase, getMongoClient } = require('../../config/database');
 const { HttpError } = require('../../lib/http-error');
 const v = require('../../lib/validation');
-const { TRANSITIONS, CUSTOMER_CANCEL_STATUSES, PAYMENT_METHODS, ORDER_FLOW } = require('../../config/commerce');
+const { TRANSITIONS, CUSTOMER_CANCEL_STATUSES, PAYMENT_METHODS, PAYMENT_TIMEOUT_MINUTES, ORDER_FLOW } = require('../../config/commerce');
 const { checkoutProducts } = require('../catalog/catalog.service');
 const { priceCart, totals } = require('./pricing');
 const cart = require('../cart/cart.service');
@@ -18,6 +17,8 @@ const STATUSES = [...ORDER_FLOW, 'cancelled'];
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 const publicOrder = ({ _id, idempotencyKey, requestHash, stockRestored, ...order }) => order;
+const payments = () => getDatabase().collection('payments');
+const SYSTEM_ACTOR = 'system';
 
 function idempotencyKey(req) {
   const key = req.get('idempotency-key');
@@ -56,16 +57,14 @@ async function replay(userId, key, hash) {
 
 // Sau khi đơn đã lưu: bỏ khỏi giỏ đúng phần vừa mua. Nếu khách vừa thêm món khác trong lúc đặt, món đó được giữ lại.
 async function removePurchased(req, purchased, revision) {
-  await promisify(req.session.reload).call(req.session);
-  if ((req.session.cartRevision || 0) === revision) cart.writeCart(req, []);
-  else {
+  await cart.withCart(req, () => {
+    if ((req.session.cartRevision || 0) === revision) return cart.writeCart(req, []);
     const bought = new Map(purchased.map(i => [i.productId, i.quantity]));
     cart.writeCart(req, cart.readCart(req).flatMap(i => {
       const left = Math.round((i.quantity - (bought.get(i.productId) || 0)) * 1000) / 1000;
       return left > 0 ? [{ productId: i.productId, quantity: left }] : [];
     }));
-  }
-  await promisify(req.session.save).call(req.session);
+  });
 }
 
 async function createOrder(req) {
@@ -80,9 +79,13 @@ async function createOrder(req) {
   if (!items.length) throw new HttpError(400, 'CART_EMPTY', 'Giỏ hàng đang trống.');
   const revision = req.session.cartRevision || 0;
   const session = getMongoClient().startSession();
-  let order;
+  let order, replayed = null;
   try {
     await session.withTransaction(async () => {
+      replayed = null;
+      // Transaction có thể chạy lại sau xung đột ghi: lúc đó yêu cầu song song cùng khóa có thể đã lưu đơn.
+      const saved = await orders().findOne({ userId, idempotencyKey: key }, { session });
+      if (saved) { replayed = saved; return; }
       const now = new Date().toISOString();
       const priced = priceCart(items, await checkoutProducts(items.map(i => i.productId), session));
       if (priced.issues.length) throw new HttpError(409, 'CART_INVALID', 'Giỏ có sản phẩm cần sửa trước khi đặt.', priced.issues);
@@ -98,27 +101,31 @@ async function createOrder(req) {
         items: priced.lines.map(l => ({ productId: l.productId, productNameSnapshot: l.product.name, unitSnapshot: l.product.unit, unitPriceSnapshot: l.unitPrice, quantity: l.quantity, lineTotal: l.lineTotal, image_url: l.product.image_url || '' })),
         ...money, voucherCode: discount.voucher?.code || null,
         paymentMethod: input.paymentMethod, paymentStatus: 'unpaid', paidAt: null, status: 'pending',
+        ...(input.paymentMethod === 'vnpay' ? { paymentDueAt: new Date(Date.parse(now) + PAYMENT_TIMEOUT_MINUTES * 60000).toISOString() } : {}),
         history: [{ from: null, to: 'pending', actorId: userId, at: now }],
         idempotencyKey: key, requestHash: hash, stockRestored: false, createdAt: now, updatedAt: now,
       };
       await orders().insertOne(order, { session });
     });
   } catch (error) {
-    // Hai yêu cầu cùng khóa chạy song song: một cái thắng, cái còn lại trả về đơn đã tạo.
-    if (error.code === 11000 && error.keyPattern?.idempotencyKey) {
-      const existing = await replay(userId, key, hash);
-      if (existing) return { status: 200, order: existing };
-    }
+    // Hai yêu cầu cùng khóa chạy song song: một cái thắng, cái còn lại (dù lỗi trùng khóa, hết hàng hay voucher)
+    // phải trả về đúng đơn đã tạo. Đọc lại theo khóa trước khi báo lỗi.
+    const existing = await replay(userId, key, hash);
+    if (existing) return { status: 200, order: existing };
     throw error;
   } finally {
     await session.endSession();
+  }
+  if (replayed) {
+    if (replayed.requestHash !== hash) throw new HttpError(409, 'IDEMPOTENCY_CONFLICT', 'Khóa đặt đơn này đã dùng cho một yêu cầu khác.');
+    return { status: 200, order: publicOrder(replayed) };
   }
   try { await removePurchased(req, items, revision); } catch { /* đơn đã lưu; gửi lại cùng khóa vẫn trả đơn cũ */ }
   return { status: 201, order: publicOrder(order) };
 }
 
 // Chuyển trạng thái dùng chung cho khách hủy và admin xử lý đơn.
-async function changeStatus({ orderId, to, expectedStatus, actor, ownerId }) {
+async function changeStatus({ orderId, to, expectedStatus, actor, ownerId, expireUnpaid: onlyUnpaid = false }) {
   if (!STATUSES.includes(to)) v.bad('Trạng thái không hợp lệ.');
   const session = getMongoClient().startSession();
   let result;
@@ -128,15 +135,21 @@ async function changeStatus({ orderId, to, expectedStatus, actor, ownerId }) {
       const order = await orders().findOne({ id: orderId, ...(ownerId ? { userId: ownerId } : {}) }, { session });
       if (!order) throw new HttpError(404, 'ORDER_NOT_FOUND', 'Không tìm thấy đơn hàng.');
       if (ownerId && order.status === 'cancelled' && to === 'cancelled') { result = order; return; } // hủy lần hai: trả lại đơn
+      if (onlyUnpaid && order.paymentStatus !== 'unpaid') throw new HttpError(409, 'ORDER_ALREADY_PAID', 'Đơn vừa được thanh toán.');
       if (expectedStatus && order.status !== expectedStatus) throw new HttpError(409, 'ORDER_CHANGED', 'Đơn vừa được cập nhật bởi người khác. Tải lại để xem trạng thái mới.', [{ status: order.status }]);
       if (ownerId && order.paymentStatus === 'paid') throw new HttpError(409, 'ORDER_PAID_CONTACT_SUPPORT', 'Đơn đã thanh toán online. Liên hệ cửa hàng để hủy và hoàn tiền.');
       const allowed = ownerId ? (to === 'cancelled' && CUSTOMER_CANCEL_STATUSES.includes(order.status)) : TRANSITIONS[order.status].includes(to);
       if (!allowed) throw new HttpError(409, 'ORDER_STATUS_INVALID', `Không thể chuyển đơn từ "${order.status}" sang "${to}".`);
+      // Đơn VNPay chỉ được xử lý tiếp khi đã có xác nhận thanh toán; chưa trả thì chỉ có thể hủy.
+      if (order.paymentMethod === 'vnpay' && order.paymentStatus !== 'paid' && to !== 'cancelled') {
+        throw new HttpError(409, 'ORDER_NOT_PAID', 'Đơn VNPay chưa được thanh toán, chưa thể xác nhận hoặc giao.');
+      }
       const set = { status: to, updatedAt: now };
-      if (to === 'delivered') Object.assign(set, { paymentStatus: 'paid', paidAt: now });
+      // Chỉ COD mới thu tiền lúc giao. VNPay đã có paidAt từ lúc cổng thanh toán xác nhận.
+      if (to === 'delivered' && order.paymentMethod === 'cod') Object.assign(set, { paymentStatus: 'paid', paidAt: now });
       if (to === 'cancelled') set.stockRestored = true;
       const updated = await orders().findOneAndUpdate(
-        { id: orderId, status: order.status, ...(to === 'cancelled' ? { stockRestored: { $ne: true } } : {}) },
+        { id: orderId, status: order.status, paymentStatus: order.paymentStatus, ...(to === 'cancelled' ? { stockRestored: { $ne: true } } : {}) },
         { $set: set, $push: { history: { from: order.status, to, actorId: actor, at: now } } },
         { session, returnDocument: 'after' },
       );
@@ -144,6 +157,10 @@ async function changeStatus({ orderId, to, expectedStatus, actor, ownerId }) {
       if (to === 'cancelled') {
         await inventory.restoreForOrder({ items: order.items, orderId, actorId: actor, session, now });
         await vouchers.release({ orderId, session, now });
+        // Hủy đơn đã thanh toán online: đánh dấu giao dịch cần hoàn tiền để admin xử lý.
+        if (order.paymentStatus === 'paid') {
+          await payments().updateMany({ orderId, status: 'paid' }, { $set: { status: 'refund_required', updatedAt: now } }, { session });
+        }
       }
       if (to === 'delivered') {
         for (const item of order.items) await products().updateOne({ id: item.productId }, { $inc: { sold_count: item.quantity } }, { session });
@@ -154,6 +171,24 @@ async function changeStatus({ orderId, to, expectedStatus, actor, ownerId }) {
     await session.endSession();
   }
   return publicOrder(result);
+}
+
+// Hủy các đơn VNPay quá hạn mà khách chưa trả tiền: hoàn kho và lượt voucher. Chạy định kỳ và trước khi tạo thanh toán.
+async function expireUnpaid(now = new Date()) {
+  const due = await orders().find(
+    { paymentMethod: 'vnpay', paymentStatus: 'unpaid', status: 'pending', paymentDueAt: { $lte: now.toISOString() } },
+    { projection: { id: 1 } },
+  ).limit(100).toArray();
+  let expired = 0;
+  for (const { id } of due) {
+    try {
+      await changeStatus({ orderId: id, to: 'cancelled', expectedStatus: 'pending', actor: SYSTEM_ACTOR, expireUnpaid: true });
+      expired += 1;
+    } catch (error) {
+      if (!(error instanceof HttpError)) throw error; // đơn vừa được trả tiền hoặc vừa đổi trạng thái: bỏ qua
+    }
+  }
+  return expired;
 }
 
 function listFilter(query, base) {
@@ -200,4 +235,4 @@ async function reorder(req, id) {
   return { cart: await cart.view(req), skipped };
 }
 
-module.exports = { createOrder, changeStatus, list, find, reorder, orderCode, parseOrderBody, publicOrder, STATUSES };
+module.exports = { createOrder, changeStatus, expireUnpaid, list, find, reorder, orderCode, parseOrderBody, publicOrder, STATUSES };

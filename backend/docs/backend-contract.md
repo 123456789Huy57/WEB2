@@ -155,7 +155,12 @@ Trình tự: xác thực + validate → kiểm tra idempotency → lấy cart �
 | delivered | Không | Không |
 | cancelled | Không | Đã hủy thì trả lại đơn, không hoàn kho lần nữa |
 
-Không chuyển lùi/mở lại đơn hủy. History ghi from/to, actorId, thời gian. COD: mới đặt `paymentStatus=unpaid`; chuyển delivered đồng thời ghi `paid` và paidAt. Hủy trước shipping giữ unpaid. Refund/đổi trả và thanh toán online là phạm vi sau MVP.
+Không chuyển lùi/mở lại đơn hủy. History ghi from/to, actorId, thời gian (`actorId=system` khi hệ thống tự hủy). `paymentStatus` gồm `unpaid`, `paid`, `refunded`.
+
+- **COD:** mới đặt `unpaid`; chuyển delivered đồng thời ghi `paid` và paidAt. Hủy trước shipping giữ unpaid.
+- **VNPay:** mới đặt `unpaid`, có `paymentDueAt` = lúc đặt + 15 phút; hàng đã trừ kho để giữ chỗ. Chỉ khi cổng thanh toán xác nhận (return/IPN có chữ ký hợp lệ) mới ghi `paid`. Đơn VNPay chưa `paid` chỉ được hủy; admin chuyển sang trạng thái khác trả 409 `ORDER_NOT_PAID`. Giao xong không tự ghi `paid` cho VNPay.
+- **Quá hạn:** backend quét mỗi phút, hủy đơn VNPay `pending` + `unpaid` đã qua `paymentDueAt`, hoàn kho và lượt voucher. Tạo thanh toán cho đơn đã quá hạn trả 409 `ORDER_PAYMENT_EXPIRED` và hủy đơn ngay.
+- **Hoàn tiền:** khách không tự hủy đơn đã trả tiền (409 `ORDER_PAID_CONTACT_SUPPORT`). Admin hủy đơn đã trả, hoặc tiền về sau khi đơn đã hủy → payment chuyển `refund_required`. Admin hoàn tiền trên cổng VNPay rồi gọi `POST /admin/payments/:paymentId/refund` `{note?}` → payment `refunded`, đơn đã hủy chuyển `paymentStatus=refunded`. Gọi lại trả kết quả cũ. Danh sách: `GET /admin/payments/refunds?status=refund_required|refunded`.
 
 ## 8. Quyền tồn kho và điểm nối A/B
 
@@ -167,7 +172,11 @@ Không chuyển lùi/mở lại đơn hủy. History ghi from/to, actorId, thờ
 - Tạo inventory movement với operationId/orderId để chống ghi trùng, lưu actor và thời gian. Collection products có trường stock do B cập nhật qua inventory service theo ranh giới này; đây là quyền ghi đã thống nhất.
 - Transaction nhiều document yêu cầu replica set/Atlas phù hợp. Không chạy checkout theo kiểu bỏ transaction trên MongoDB standalone.
 
-API kho do B tạo: GET /admin/inventory (phân trang, q?, lowStock?), POST /admin/inventory/:productId/adjustments với `{quantityDelta,reason}` và Idempotency-Key. Admin only, CSRF; quantityDelta theo nấc bán, khác 0, không để stock âm; trả `{productId,stock,movementId}`. Dùng điều chỉnh tăng/giảm thay cho đặt tuyệt đối stock từ một màn hình có thể đã cũ.
+API kho do B tạo: GET /admin/inventory (phân trang, q?, lowStock?), POST /admin/inventory/:productId/adjustments với `{quantityDelta,reason}` và Idempotency-Key. Admin only, CSRF; quantityDelta theo nấc bán, khác 0, không để stock âm; trả `{productId,stock,movementId}`. Gửi lại cùng Idempotency-Key và cùng nội dung trả kết quả cũ; cùng khóa nhưng khác sản phẩm/số lượng/lý do trả 409 `IDEMPOTENCY_CONFLICT`. Admin tăng hay giảm đều ghi `type=adjustment`; chỉ đặt đơn là `order`, hủy đơn là `cancel`.
+
+Đổi đơn vị bán (A) chỉ được khi stock = 0 **và** không còn đơn chưa kết thúc (pending → shipping) chứa sản phẩm; nếu còn trả 409 `UNIT_HAS_OPEN_ORDERS`. Kiểm tra chạy trong transaction cùng sản phẩm nên không lọt với đơn đặt đồng thời. Hoàn kho khi hủy chỉ cộng nếu đơn vị hiện tại khớp `unitSnapshot`.
+
+Giỏ trong session được cập nhật tuần tự theo session (khóa trong tiến trình Node): nhiều tab hoặc request song song không ghi đè mất món. Chạy nhiều instance backend thì cần chuyển khóa này xuống database. Dùng điều chỉnh tăng/giảm thay cho đặt tuyệt đối stock từ một màn hình có thể đã cũ.
 
 ## 9. Checklist B bắt đầu làm
 
