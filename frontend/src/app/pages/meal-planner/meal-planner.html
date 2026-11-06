@@ -174,8 +174,8 @@
                 <div class="b-row"><span></span><span></span><span class="nm">{{ x.ingredient?.name }}<span class="q" style="display:block">Chưa có sản phẩm phù hợp trong kho</span></span><span></span></div>
               }
             }
-            <button class="btn btn-forest" type="button" [disabled]="!chosen().length" (click)="addMissing()">
-              {{ chosen().length ? 'Thêm ' + chosen().length + ' món vào giỏ · ' + (chosenTotal() | vnd) : 'Chọn ít nhất 1 món' }}
+            <button class="btn btn-forest" type="button" [disabled]="!chosen().length || adding()" (click)="addMissing()">
+              {{ adding() ? 'Đang thêm vào giỏ…' : chosen().length ? 'Thêm ' + chosen().length + ' món vào giỏ · ' + (chosenTotal() | vnd) : 'Chọn ít nhất 1 món' }}
             </button>
           } @else {
             <p class="h">Bạn đã có đủ nguyên liệu.</p>

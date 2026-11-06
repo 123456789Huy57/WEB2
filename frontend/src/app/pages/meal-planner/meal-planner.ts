@@ -124,11 +124,24 @@ export class MealPlanner implements AfterViewInit {
   protected toggleBuy(id: string): void {
     this.unchecked.update(u => (u.includes(id) ? u.filter(x => x !== id) : [...u, id]));
   }
+  protected readonly adding = signal(false);
+
   protected async addMissing(): Promise<void> {
+    if (this.adding()) return;
     const items = this.chosen(), recipe = this.current()!, name = recipe.name;
-    this.dlg().nativeElement.close();
-    const added = await this.cart.addMany(items.map(x => ({ id: x.product!.id, qty: x.cartQty })));
-    if (added) void this.cooked(recipe);
-    this.toast.show(added === items.length ? `Đã thêm ${added} sản phẩm còn thiếu của “${name}” vào giỏ` : `Đã thêm ${added}/${items.length} sản phẩm của “${name}”, số còn lại tạm hết hàng`);
+    this.adding.set(true);
+    try {
+      const { added, failed } = await this.cart.addMany(items.map(x => ({ id: x.product!.id, qty: x.cartQty })));
+      if (added) void this.cooked(recipe);
+      if (!failed.length) {
+        this.dlg().nativeElement.close();
+        this.toast.show(`Đã thêm ${added} sản phẩm còn thiếu của “${name}” vào giỏ`);
+      } else {
+        // Giữ hộp thoại mở để khách thấy món nào chưa thêm được và chọn món khác.
+        this.toast.show(`Đã thêm ${added}/${items.length} sản phẩm. Chưa thêm đủ: ${failed.join(', ')} (hết hàng hoặc không đủ số lượng)`);
+      }
+    } finally {
+      this.adding.set(false);
+    }
   }
 }

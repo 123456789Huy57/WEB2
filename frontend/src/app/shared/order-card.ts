@@ -44,7 +44,7 @@ import { ImgFallbackDirective } from './img-fallback.directive';
       </div>
     }
     <div class="o-bot">
-      <span class="small muted">{{ o().lines.length }} sản phẩm · {{ payLabel[o().paymentMethod] }}{{ o().paymentMethod === 'vnpay' ? (o().paymentStatus === 'paid' ? ' · đã thanh toán' : ' · chưa thanh toán') : '' }}</span>
+      <span class="small muted">{{ o().lines.length }} sản phẩm · {{ payLabel[o().paymentMethod] }}{{ o().paymentMethod === 'vnpay' ? ' · ' + orders.payStatusLabel(o()).toLowerCase() : '' }}@if (o().paymentMethod === 'vnpay' && o().paymentStatus === 'unpaid' && o().status === 'pending' && o().paymentDueAt) { · giữ hàng đến {{ o().paymentDueAt | date: 'HH:mm' }} }</span>
       <div class="o-act">
         <span class="price num">{{ o().total | vnd }}</span>
         <button class="btn btn-paper btn-sm" type="button" (click)="open.set(!open())" [attr.aria-expanded]="open()">{{ open() ? 'Thu gọn' : 'Chi tiết' }}</button>

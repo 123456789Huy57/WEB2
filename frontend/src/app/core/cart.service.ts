@@ -77,11 +77,18 @@ export class CartService {
     return this.run(() => this.http.post<ServerCart>('/api/cart/items', { productId: id, quantity: amount }));
   }
 
-  /** Thêm nhiều món một lượt (Meal Planner, mua lại): gửi tuần tự, món nào lỗi thì bỏ qua và báo lại. */
-  async addMany(items: { id: string; qty: number }[]): Promise<number> {
+  /** Thêm nhiều món một lượt (Meal Planner, mua lại): gửi tuần tự, trả về số món thêm đủ và tên các món chưa thêm đủ
+   *  (hết hàng, kho không đủ, lỗi mạng) để màn hình báo đúng cho khách. */
+  async addMany(items: { id: string; qty: number }[]): Promise<{ added: number; failed: string[] }> {
     let added = 0;
-    for (const i of items) { const before = this.qty(i.id); await this.add(i.id, i.qty); if (this.qty(i.id) > before) added++; }
-    return added;
+    const failed: string[] = [];
+    for (const i of items) {
+      const before = this.qty(i.id);
+      await this.add(i.id, i.qty);
+      if (this.qty(i.id) - before >= i.qty - 1e-9) added++;
+      else { const p = this.products.get(i.id); failed.push(p ? this.products.shortName(p) : i.id); }
+    }
+    return { added, failed };
   }
 
   /** Tăng / giảm một nấc */

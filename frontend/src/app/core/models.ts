@@ -53,7 +53,7 @@ export interface Order {
   id: string; orderCode: string; userId: string; createdAt: string; updatedAt?: string;
   status: OrderStatus; items: OrderItem[];
   subtotal: number; shippingFee: number; productDiscount: number; shippingDiscount: number; discount: number; total: number;
-  voucherCode: string | null; paymentMethod: PaymentMethod; paymentStatus: 'unpaid' | 'paid'; paidAt?: string | null;
+  voucherCode: string | null; paymentMethod: PaymentMethod; paymentStatus: 'unpaid' | 'paid' | 'refunded'; paidAt?: string | null; paymentDueAt?: string;
   customer: { name: string; phone: string; email?: string; address: string; note?: string; slot?: string };
   history: OrderHistory[];
 }

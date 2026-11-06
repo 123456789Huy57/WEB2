@@ -1,4 +1,6 @@
-import { Component, computed, inject, input, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, input, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 import { apiMessage } from '../core/auth.service';
 import { DatePipe } from '@angular/common';
 import { OrderService, OrderView, ORDER_STATUS, PAYMENT_LABEL, STATUS_FLOW } from '../core/order.service';
@@ -9,11 +11,33 @@ import { OrderStatus } from '../core/models';
 import { norm } from '../core/storage';
 import { VndPipe } from '../shared/vnd.pipe';
 
+interface RefundPayment { id: string; orderCode: string; txnRef: string; transactionNo?: string; amount: number; paidAt?: string; }
+
 @Component({
   selector: 'fm-admin-orders',
   imports: [DatePipe, VndPipe],
   template: `
     <div class="adm-head"><div><h1 class="h2">Đơn hàng</h1><p>Chuyển trạng thái theo từng bước. Đơn hủy tự trả hàng về kho; khách thấy trạng thái mới ngay trong Tài khoản.</p></div></div>
+    @if (refunds().length) {
+      <div class="card" style="margin-bottom:16px;padding:16px">
+        <h2 class="h4" style="margin:0 0 4px">Cần hoàn tiền <span class="num">({{ refunds().length }})</span></h2>
+        <p class="small muted" style="margin:0 0 12px">Khách đã trả tiền online cho đơn đã hủy. Hoàn tiền trên cổng VNPay rồi bấm xác nhận.</p>
+        <div class="tbl-wrap"><table class="tbl">
+          <thead><tr><th>Mã đơn</th><th>Mã giao dịch</th><th class="r">Số tiền</th><th>Thời điểm trả</th><th></th></tr></thead>
+          <tbody>
+            @for (p of refunds(); track p.id) {
+              <tr>
+                <td class="num"><b>{{ p.orderCode }}</b></td>
+                <td class="num">{{ p.transactionNo || p.txnRef }}</td>
+                <td class="r num">{{ p.amount | vnd }}</td>
+                <td class="num">{{ p.paidAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+                <td class="r"><button class="btn btn-forest btn-sm" type="button" [disabled]="refunding() === p.id" (click)="refund(p)">Đã hoàn tiền</button></td>
+              </tr>
+            }
+          </tbody>
+        </table></div>
+      </div>
+    }
     <div class="toolbar">
       <input class="adm-input" type="search" placeholder="Tìm mã đơn, tên khách, số điện thoại" [value]="query()" (input)="query.set($any($event.target).value)" aria-label="Tìm đơn hàng">
     </div>
@@ -31,14 +55,15 @@ import { VndPipe } from '../shared/vnd.pipe';
             <td class="num">{{ o.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
             <td>{{ o.customer.name }}<br><span class="small muted num">{{ o.customer.phone }}</span></td>
             <td class="r num">{{ o.total | vnd }}</td>
-            <td>{{ pay[o.paymentMethod] }}<br><span class="small" [class.muted]="o.paymentStatus !== 'paid'">{{ o.paymentStatus === 'paid' ? 'Đã thanh toán' : 'Chưa thanh toán' }}</span></td>
+            <td>{{ pay[o.paymentMethod] }}<br><span class="small" [class.muted]="o.paymentStatus !== 'paid'">{{ orders.payStatusLabel(o) }}</span></td>
             <td>
               <select [value]="o.status" (change)="set(o, $any($event.target).value, $any($event.target))" [attr.aria-label]="'Trạng thái đơn ' + o.orderCode">
                 @for (s of statusKeys; track s) { <option [value]="s" [selected]="s === o.status">{{ st[s] }}</option> }
               </select>
             </td>
             <td class="r">
-              @if (next(o); as n) { <button class="btn btn-forest btn-sm" type="button" (click)="set(o, n)">{{ st[n] }}</button> }
+              @if (waitingPayment(o)) { <span class="small muted">Chờ khách thanh toán</span> }
+              @else if (next(o); as n) { <button class="btn btn-forest btn-sm" type="button" (click)="set(o, n)">{{ st[n] }}</button> }
               <button class="link-btn" type="button" style="margin-left:10px" (click)="toggle(o.orderCode)">{{ open() === o.orderCode ? 'Ẩn' : 'Chi tiết' }}</button>
             </td>
           </tr>
@@ -59,7 +84,7 @@ import { VndPipe } from '../shared/vnd.pipe';
     </table></div></div>
   `
 })
-export class AdminOrders {
+export class AdminOrders implements OnInit {
   /** /admin/don-hang?q=FM-... (link từ Tổng quan) */
   readonly q = input<string>();
   protected orders = inject(OrderService);
@@ -77,6 +102,26 @@ export class AdminOrders {
     const k = norm(this.query() || this.q() || '');
     return this.orders.all().filter(o => (this.filter() === 'all' || o.status === this.filter()) && (!k || norm(`${o.orderCode} ${o.customer.name} ${o.customer.phone}`).includes(k)));
   });
+  private http = inject(HttpClient);
+  protected refunds = signal<RefundPayment[]>([]);
+  protected refunding = signal('');
+  ngOnInit(): void { void this.loadRefunds(); }
+  private async loadRefunds(): Promise<void> {
+    try { this.refunds.set((await firstValueFrom(this.http.get<{ items: RefundPayment[] }>('/api/admin/payments/refunds'))).items); }
+    catch { /* bảng hoàn tiền không bắt buộc để xem đơn */ }
+  }
+  protected async refund(p: RefundPayment): Promise<void> {
+    if (!(await this.cf.ask('Xác nhận đã hoàn tiền?', `Chỉ xác nhận sau khi đã hoàn ${p.amount.toLocaleString('vi-VN')} đ cho đơn ${p.orderCode} trên cổng thanh toán.`, 'Đã hoàn tiền'))) return;
+    this.refunding.set(p.id);
+    try {
+      await firstValueFrom(this.http.post(`/api/admin/payments/${p.id}/refund`, {}));
+      this.toast.show(`Đơn ${p.orderCode}: đã ghi nhận hoàn tiền`);
+      await Promise.all([this.loadRefunds(), this.orders.reload()]);
+    } catch (error) { this.toast.show(apiMessage(error)); }
+    finally { this.refunding.set(''); }
+  }
+  /** Đơn VNPay chưa trả tiền: không xác nhận/giao được, chỉ chờ khách trả hoặc hủy */
+  protected waitingPayment(o: OrderView): boolean { return o.paymentMethod === 'vnpay' && o.paymentStatus === 'unpaid' && o.status === 'pending'; }
   protected next(o: OrderView): OrderStatus | null { const i = STATUS_FLOW.indexOf(o.status); return i > -1 && i < STATUS_FLOW.length - 1 ? STATUS_FLOW[i + 1] : null; }
   protected toggle(code: string): void { this.open.set(this.open() === code ? '' : code); }
   protected async set(o: OrderView, s: OrderStatus, el?: HTMLSelectElement): Promise<void> {

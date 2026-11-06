@@ -82,9 +82,17 @@ export class OrderService {
     this.replace(updated);
   }
   /** Khách chỉ hủy được khi cửa hàng chưa bắt đầu soạn hàng, và đơn chưa thanh toán online */
-  canCancel(o: Order): boolean { return (o.status === 'pending' || o.status === 'confirmed') && o.paymentStatus !== 'paid'; }
-  /** Đơn VNPay chưa thanh toán: còn thanh toán tiếp được */
-  canPay(o: Order): boolean { return o.paymentMethod === 'vnpay' && o.paymentStatus !== 'paid' && o.status !== 'cancelled'; }
+  canCancel(o: Order): boolean { return (o.status === 'pending' || o.status === 'confirmed') && o.paymentStatus === 'unpaid'; }
+  /** Đơn VNPay chưa thanh toán và còn trong thời gian giữ hàng: còn thanh toán tiếp được */
+  canPay(o: Order): boolean {
+    return o.paymentMethod === 'vnpay' && o.paymentStatus === 'unpaid' && o.status === 'pending' && (!o.paymentDueAt || Date.parse(o.paymentDueAt) > Date.now());
+  }
+  /** Nhãn trạng thái thanh toán dùng chung cho khách và admin */
+  payStatusLabel(o: Pick<Order, 'paymentMethod' | 'paymentStatus' | 'status'>): string {
+    if (o.paymentStatus === 'refunded') return 'Đã hoàn tiền';
+    if (o.paymentStatus === 'paid') return o.status === 'cancelled' ? 'Đã thanh toán, chờ hoàn tiền' : 'Đã thanh toán';
+    return o.paymentMethod === 'vnpay' && o.status === 'pending' ? 'Chờ thanh toán' : 'Chưa thanh toán';
+  }
   /** Tạo giao dịch rồi chuyển trình duyệt sang cổng thanh toán */
   async pay(o: Pick<Order, 'id'>): Promise<void> {
     const r = await firstValueFrom(this.http.post<{ payUrl: string }>(`/api/users/me/orders/${o.id}/payments`, {}));
