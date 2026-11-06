@@ -487,7 +487,8 @@ test('Gợi ý "Thường được mua cùng" (luật kết hợp)', async t => 
   const p = (id, extra) => ({ _id: id, id, name: `SP ${id}`, slug: `sp-${id}`, category: 'c-test', price: 50000, sale_price: 0, unit: 'Hộp', stock: 10, sold_count: 0, image_url: '', active: true, createdAt: now, updatedAt: now, ...extra });
   await database.collection('products').insertMany([p('g-mi'), p('g-trung'), p('g-hanh'), p('g-het', { stock: 0 }), p('g-ban-chay', { sold_count: 99 })]);
   // Đơn mẫu: mì + trứng đi cùng 3 lần; mì + hàng hết kho 2 lần (không được gợi ý vì không mua được).
-  const basket = (n, ids) => ({ _id: `ord-g${n}`, id: `ord-g${n}`, status: 'delivered', items: ids.map(productId => ({ productId })), createdAt: now });
+  // Đơn mẫu chèn thẳng: chỉ cần các trường thuật toán đọc, nhưng phải có đủ khóa duy nhất (mã đơn, người đặt + khóa đặt đơn).
+  const basket = (n, ids) => ({ _id: `ord-g${n}`, id: `ord-g${n}`, orderCode: `FM-20260101-GGGGGGG${n}`, userId: `u-g${n}`, idempotencyKey: randomUUID(), status: 'delivered', items: ids.map(productId => ({ productId })), createdAt: now });
   await database.collection('orders').insertMany([
     basket(1, ['g-mi', 'g-trung']), basket(2, ['g-mi', 'g-trung', 'g-hanh']), basket(3, ['g-mi', 'g-trung']),
     basket(4, ['g-mi', 'g-het']), basket(5, ['g-mi', 'g-het']), { ...basket(6, ['g-mi', 'g-hanh']), status: 'cancelled' }, basket(7, ['g-hanh']),
