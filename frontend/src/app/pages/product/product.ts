@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation, computed, effect, inject, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { ProductService } from '../../core/product.service';
+import { ProductService, cdnImage } from '../../core/product.service';
 import { CartService } from '../../core/cart.service';
 import { WishlistService } from '../../core/wishlist.service';
 import { ToastService } from '../../core/toast.service';
@@ -44,7 +44,7 @@ export class ProductPage {
   protected images = computed(() => {
     const p = this.p();
     if (!p) return [];
-    return [this.ps.img(p), ...(p.img ? [] : (p.gallery ?? []).slice(0, 3))];
+    return [this.ps.img(p, 900), ...(p.img ? [] : (p.gallery ?? []).slice(0, 3).map(u => cdnImage(u, 900)))];
   });
   protected unitNote = computed(() => {
     const p = this.p()!; const u = this.ps.unit(p);

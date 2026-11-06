@@ -8,7 +8,7 @@
     </nav>
     <div class="pd">
       <div class="pd-media" [class.single]="images().length < 2">
-        <div class="ph pd-main"><img [fmImg]="name()" [src]="images()[imgIndex()]" [alt]="name()"></div>
+        <div class="ph pd-main"><img [fmImg]="name()" [src]="images()[imgIndex()]" [alt]="name()" loading="eager" fetchpriority="high"></div>
         @if (images().length > 1) {
           <div class="pd-thumbs" role="tablist" aria-label="Ảnh sản phẩm">
             @for (u of images(); track u; let i = $index) {

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, forkJoin, of } from 'rxjs';
 import { Category, Ingredient, IngredientProductMap, Product, Recipe, Store, User, Voucher } from './models';
 import { store } from './storage';
+import { cdnImage } from './cdn-image';
 
 type Page<T> = { items: T[]; page: number; pageSize: number; total: number };
 @Injectable({ providedIn: 'root' })
@@ -18,26 +19,38 @@ export class DataService {
   readonly users = signal<User[]>([]);
   readonly error = signal('');
 
+  /** Dữ liệu Meal Planner và cửa hàng: nạp nền sau khi trang đã hiện, chỉ một lần (signal tự cập nhật giao diện khi có). */
+  private extras: Promise<void> | null = null;
+  loadExtras(force = false): Promise<void> {
+    if (this.extras && !force) return this.extras;
+    this.extras = firstValueFrom(forkJoin({
+      recipes: this.http.get<Recipe[]>('/api/recipes'),
+      ingredients: this.http.get<Ingredient[]>('/api/ingredients'),
+      map: this.http.get<IngredientProductMap>('/api/ingredient-products'),
+      stores: this.http.get<Store[]>('/api/stores'),
+    })).then(d => {
+      this.recipes.set(d.recipes.filter(r => r.isActive !== false).map(r => ({ ...r, imageUrl: cdnImage(r.imageUrl, 600) })));
+      this.ingredients.set(d.ingredients.filter(i => i.isActive !== false).map(i => ({ ...i, imageUrl: cdnImage(i.imageUrl, 300) })));
+      this.ingredientMap.set(d.map); this.stores.set(d.stores);
+    }).catch(() => { this.extras = null; });
+    return this.extras;
+  }
+
+  /** Dữ liệu cần để vẽ trang: sản phẩm, danh mục, voucher (admin thêm khách hàng). Chờ xong mới vào route. */
   async load(admin = false): Promise<void> {
     this.error.set('');
     this.users.set([]);
+    void this.loadExtras();
     try {
       const d = await firstValueFrom(forkJoin({
         products: this.http.get<Product[]>(admin ? '/api/admin/products' : '/api/products'),
         categories: this.http.get<Category[]>(admin ? '/api/admin/categories' : '/api/categories'),
         vouchers: this.http.get<Voucher[]>(admin ? '/api/admin/vouchers' : '/api/vouchers'),
-        recipes: this.http.get<Recipe[]>('/api/recipes'),
-        ingredients: this.http.get<Ingredient[]>('/api/ingredients'),
-        map: this.http.get<IngredientProductMap>('/api/ingredient-products'),
-        stores: this.http.get<Store[]>('/api/stores'),
         users: admin ? this.http.get<Page<User>>('/api/admin/users?pageSize=100') : of(null)
       }));
       this.products.set(d.products);
       this.categories.set(d.categories);
       this.vouchers.set(d.vouchers);
-      this.recipes.set(d.recipes.filter(r => r.isActive !== false));
-      this.ingredients.set(d.ingredients.filter(i => i.isActive !== false));
-      this.ingredientMap.set(d.map); this.stores.set(d.stores);
       if (d.users) {
         const users = [...d.users.items];
         for (let page = 2; users.length < d.users.total; page++) {

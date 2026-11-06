@@ -14,7 +14,10 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch(), withInterceptors([apiInterceptor])),
     provideAppInitializer(() => {
       const auth = inject(AuthService), data = inject(DataService);
-      return auth.restore().catch(() => {}).then(() => data.load(auth.isAdmin()));
+      // Khôi phục đăng nhập và tải catalog song song (trước đây chạy nối tiếp). Admin cần bản catalog
+      // đầy đủ (cả sản phẩm ẩn) nên tải lại bản admin sau khi biết vai trò.
+      const restored = auth.restore().catch(() => {});
+      return Promise.all([restored, data.load(false)]).then(() => auth.isAdmin() ? data.load(true) : undefined);
     })
   ]
 };

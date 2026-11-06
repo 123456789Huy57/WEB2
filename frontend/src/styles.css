@@ -3,10 +3,10 @@
    rau củ cắt nền đặt to trên những mảng màu phẳng: vàng chanh, xanh lá, kem, đen.
    Mảng màu mạnh dành cho khu giới thiệu; khu mua hàng (danh sách, giỏ, thanh toán) giữ nền kem sáng cho dễ đọc giá.
    Mọi màu, cỡ chữ, khoảng cách đều lấy từ biến bên dưới. Component không tự đặt màu mới. Xem DESIGN.md. */
-@font-face { font-family: "Oswald"; src: url("/fonts/Oswald-Variable.ttf") format("truetype"); font-weight: 200 700; font-display: swap; }
-@font-face { font-family: "Be Vietnam Pro"; src: url("/fonts/BeVietnamPro-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
-@font-face { font-family: "Be Vietnam Pro"; src: url("/fonts/BeVietnamPro-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
-@font-face { font-family: "Be Vietnam Pro"; src: url("/fonts/BeVietnamPro-SemiBold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Oswald"; src: url("/fonts/Oswald-Variable.woff2") format("woff2"); font-weight: 200 700; font-display: swap; }
+@font-face { font-family: "Be Vietnam Pro"; src: url("/fonts/BeVietnamPro-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Be Vietnam Pro"; src: url("/fonts/BeVietnamPro-Medium.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Be Vietnam Pro"; src: url("/fonts/BeVietnamPro-SemiBold.woff2") format("woff2"); font-weight: 600; font-display: swap; }
 
 :root {
   /* Màu nền và chữ */
