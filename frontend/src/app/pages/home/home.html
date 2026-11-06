@@ -10,7 +10,7 @@
 
 <!-- Trang 1: video chợ nổi phủ kín, chữ trắng ở giữa -->
 <section class="hs-slide hs-video" aria-roledescription="slide" aria-label="1 trên 2" aria-labelledby="hs-title" [inert]="slide() !== 0">
-  <video #vid muted [muted]="true" playsinline preload="auto" poster="/video/cho-noi.jpg" aria-hidden="true" (ended)="go(1)">
+  <video #vid muted [muted]="true" playsinline preload="none" poster="/video/cho-noi.jpg" aria-hidden="true" (ended)="go(1)">
     <source src="/video/cho-noi.mp4" type="video/mp4">
   </video>
   <div class="hs-copy">
@@ -150,13 +150,13 @@
     </div>
   </div>
   <!-- Mỗi mặt hàng một thẻ kem viền xanh: tên in hoa, ảnh đã tách nền, huy hiệu % giảm; dưới cùng là nhãn giá, giá gốc và nút thêm vào giỏ -->
-  <ul class="board" id="board-panel" role="tabpanel" [attr.aria-labelledby]="'tab-' + group()">
+  <div id="board-panel" role="tabpanel" [attr.aria-labelledby]="'tab-' + group()"><ul class="board">
     @for (row of board(); track row.p.id) {
       <li>
         <h3 class="bt"><a [routerLink]="['/san-pham', row.p.slug || row.p.id]">{{ row.name }}</a></h3>
         <p class="bnote small">{{ row.note }}</p>
-        <a class="pic" [routerLink]="['/san-pham', row.p.slug || row.p.id]" tabindex="-1">
-          <img [src]="'/img/cut/bang-gia/' + row.cut + '.webp'" [fmImg]="row.name" alt="" loading="lazy">
+        <a class="pic" [routerLink]="['/san-pham', row.p.slug || row.p.id]" tabindex="-1" [attr.aria-label]="row.name">
+          <img [src]="'/img/cut/bang-gia/' + row.cut + '.webp'" [fmImg]="row.name" alt="" loading="lazy" width="560" height="340">
           @if (ps.off(row.p)) { <span class="badge num">−{{ ps.off(row.p) }}%</span> }
         </a>
         <div class="buy">
@@ -166,7 +166,7 @@
         </div>
       </li>
     }
-  </ul>
+  </ul></div>
   <p class="board-note small">Hàng cân ký tính theo cân thực tế lúc soạn đơn. Giá đã gồm VAT.</p>
   <!-- Dải chữ chạy cuối khu Bảng giá; bản thứ hai ẩn với trình đọc màn hình -->
   <div class="marquee board-marquee">
@@ -179,11 +179,22 @@
 </section>
 
 
+<!-- Các khu bên dưới bảng giá dùng @defer: code và việc vẽ chỉ chạy khi người dùng cuộn gần tới
+     (on viewport), và code được tải sẵn lúc trình duyệt rảnh (prefetch on idle) nên cuộn tới là có ngay.
+     Màn hình đầu nhờ vậy vẽ nhanh hơn. Khung chờ giữ sẵn chiều cao để trang không bị nhảy. -->
 <!-- Đi chợ theo quầy: component riêng (aisle-carousel.ts) -->
-<fm-aisle-carousel />
+@defer (on viewport; prefetch on idle) {
+  <fm-aisle-carousel />
+} @placeholder {
+  <div class="defer-ph" style="min-height: 640px" aria-hidden="true"></div>
+}
 
 <!-- Có gì trong bếp, nấu món đó: Meal Planner thu nhỏ, component riêng (kitchen-match.ts) -->
-<fm-kitchen-match />
+@defer (on viewport; prefetch on idle) {
+  <fm-kitchen-match />
+} @placeholder {
+  <div class="defer-ph" style="min-height: 720px" aria-hidden="true"></div>
+}
 
 <!-- Giao hàng: "con đường giao hàng" trên nền vàng. Ba con số là ba biển báo bên đường,
      xe FreshMart (ảnh đã tách nền) chạy trên dải đường nhựa và lái vào từ trái khi cuộn tới. -->
@@ -193,26 +204,26 @@
     <a class="btn btn-ink" routerLink="/cua-hang" fmReveal="1">Xem 12 cửa hàng</a>
   </div>
   <div class="ship-scene">
-    <dl class="signs band">
-      <div class="sign">
+    <div class="signs band" role="list">
+      <div class="sign" role="listitem">
         <div class="sign-face">
           <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="21" r="13"/><path d="M20 13v8l5 4M16 4h8"/></svg>
-          <dt class="num">1–2 giờ</dt><dd>Nội thành TP.HCM cho đơn đặt trước 16:00. Tỉnh lân cận 1–2 ngày.</dd>
+          <dl><dt class="num">1–2 giờ</dt><dd>Nội thành TP.HCM cho đơn đặt trước 16:00. Tỉnh lân cận 1–2 ngày.</dd></dl>
         </div>
       </div>
-      <div class="sign">
+      <div class="sign" role="listitem">
         <div class="sign-face">
           <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M3 11h20v16H3zM23 16h8l6 6v5H23z"/><circle cx="10" cy="29" r="3"/><circle cx="30" cy="29" r="3"/></svg>
-          <dt class="num">0 đ</dt><dd>Phí giao hàng cho đơn từ 300.000 đ trong nội thành, dưới mức này phí sẽ được tính theo khoảng cách.</dd>
+          <dl><dt class="num">0 đ</dt><dd>Phí giao hàng cho đơn từ 300.000 đ trong nội thành, dưới mức này phí sẽ được tính theo khoảng cách.</dd></dl>
         </div>
       </div>
-      <div class="sign">
+      <div class="sign" role="listitem">
         <div class="sign-face">
           <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M8 15h18a8 8 0 0 1 0 16H14"/><path d="M14 9 8 15l6 6"/></svg>
-          <dt class="num">7 ngày</dt><dd>Đổi trả hàng còn nguyên tem nhãn, hoàn tiền 100% trong 3–5 ngày làm việc.</dd>
+          <dl><dt class="num">7 ngày</dt><dd>Đổi trả hàng còn nguyên tem nhãn, hoàn tiền 100% trong 3–5 ngày làm việc.</dd></dl>
         </div>
       </div>
-    </dl>
+    </div>
     <img class="truck" src="/img/cut/xe-freshmart.webp" alt="Xe tải giao hàng màu xanh in logo FreshMart, thùng xe vẽ rau củ" width="1200" height="648" loading="lazy">
     <div class="road" aria-hidden="true"></div>
   </div>

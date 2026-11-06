@@ -54,7 +54,7 @@
 .km-formula .need .km-ic { opacity: .45; }
 .km-formula .need .km-name { color: var(--yellow); }
 .km-verdict { margin-top: 18px; font-family: var(--display); font-size: 22px; font-weight: 500; letter-spacing: .02em; text-transform: uppercase; color: var(--on-forest-muted); }
-.km-verdict.ready { color: var(--yellow); }
+.km-verdict.ready { color: var(--yellow); font-weight: 700; } /* chữ lớn đậm: vàng trên xanh rừng đạt chuẩn 3:1 */
 .km-alt { margin-top: 10px; color: var(--on-forest-muted); font-size: 15px; }
 .km-alt .link { color: var(--cream); }
 .km-empty { padding: 48px 0; color: var(--on-forest-muted); text-align: center; }

@@ -12,7 +12,7 @@ import { ImgFallbackDirective } from './img-fallback.directive';
   host: { class: 'p-card' },
   template: `
     <div class="ph-wrap">
-      <a class="ph" [routerLink]="['/san-pham', p().slug || p().id]">
+      <a class="ph" [routerLink]="['/san-pham', p().slug || p().id]" tabindex="-1" aria-hidden="true">
         <img [fmImg]="name()" [src]="ps.img(p())" [alt]="name()" loading="lazy">
       </a>
       <div class="add"><fm-add-control [product]="p()" /></div>

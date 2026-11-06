@@ -19,7 +19,7 @@ import { ImgFallbackDirective } from '../shared/img-fallback.directive';
       <form class="search" role="search" (ngSubmit)="search()" (focusout)="blur($event)" (keydown.escape)="open.set(false)">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg>
         <label class="sr" for="q">Tìm sản phẩm</label>
-        <input id="q" name="q" type="search" placeholder="Tìm rau, thịt, cá, trái cây…" autocomplete="off" aria-controls="q-list" aria-autocomplete="list" [attr.aria-expanded]="open() && term().length > 1"
+        <input id="q" name="q" type="search" role="combobox" placeholder="Tìm rau, thịt, cá, trái cây…" autocomplete="off" aria-controls="q-list" aria-autocomplete="list" [attr.aria-expanded]="open() && term().length > 1"
           [ngModel]="term()" (ngModelChange)="term.set($event); open.set(true)" (focus)="open.set(true)">
         @if (open() && term().trim().length > 1) {
           <div class="sugg" id="q-list" role="listbox" aria-label="Gợi ý sản phẩm">
@@ -39,7 +39,7 @@ import { ImgFallbackDirective } from '../shared/img-fallback.directive';
         }
       </form>
       <nav class="h-actions" aria-label="Tài khoản">
-        <a class="h-act" [routerLink]="auth.isAdmin() ? '/admin' : auth.user() ? '/tai-khoan' : '/dang-nhap'">
+        <a class="h-act" [routerLink]="auth.isAdmin() ? '/admin' : auth.user() ? '/tai-khoan' : '/dang-nhap'" [attr.aria-label]="auth.user() ? 'Tài khoản của ' + (firstName() || 'bạn') : 'Đăng nhập'">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/></svg>
           <span class="t">{{ firstName() || 'Tài khoản' }}</span>
         </a>

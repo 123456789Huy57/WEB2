@@ -36,8 +36,16 @@ export class DataService {
     return this.extras;
   }
 
-  /** Dữ liệu cần để vẽ trang: sản phẩm, danh mục, voucher (admin thêm khách hàng). Chờ xong mới vào route. */
-  async load(admin = false): Promise<void> {
+  /** Lần tải catalog gần nhất; route cần dữ liệu chờ promise này (dataGuard), trang chủ thì không. */
+  private current: Promise<void> = Promise.resolve();
+  ready(): Promise<void> { return this.current; }
+
+  /** Dữ liệu cần để vẽ trang: sản phẩm, danh mục, voucher (admin thêm khách hàng). */
+  load(admin = false): Promise<void> {
+    this.current = this.fetchCatalog(admin);
+    return this.current;
+  }
+  private async fetchCatalog(admin: boolean): Promise<void> {
     this.error.set('');
     this.users.set([]);
     void this.loadExtras();

@@ -227,7 +227,7 @@ fm-root:has(.ship) .footer { margin-top: 0; }
 .f-news .btn { height: 44px; padding-block: 0; background: var(--yellow); color: var(--ink); }
 .f-news .btn:hover { background: var(--cream); }
 .f-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; max-width: 960px; margin: 36px auto 0; padding-top: 36px; border-top: 1px solid rgb(254 252 245 / .2); }
-.footer h4 { font-family: var(--display); color: var(--cream); font-size: 18px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 16px; }
+.footer .f-h { font-family: var(--display); color: var(--cream); font-size: 18px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 16px; }
 .footer ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; gap: 10px; font-size: 15px; }
 .footer a { transition: color .2s; }
 .footer a:hover { color: var(--yellow); }

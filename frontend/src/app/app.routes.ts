@@ -1,11 +1,13 @@
 import { Routes } from '@angular/router';
-import { adminGuard, authGuard, guestGuard } from './core/auth.guard';
+import { adminGuard, authGuard, dataGuard, guestGuard } from './core/auth.guard';
+import { Home } from './pages/home/home';
 
 /** Mỗi trang tải riêng (lazy) để trang chủ mở nhanh. Đường dẫn tiếng Việt không dấu. */
-export const routes: Routes = [
+const pages: Routes = [
   { path: 'quen-mat-khau', title: 'Quên mật khẩu · FreshMart', loadComponent: () => import('./pages/login/password-recovery').then(m => m.PasswordRecovery) },
   { path: 'dat-lai-mat-khau', title: 'Đặt lại mật khẩu · FreshMart', data: { resetMode: true }, loadComponent: () => import('./pages/login/password-recovery').then(m => m.PasswordRecovery) },
-  { path: '', title: 'FreshMart · Đi chợ liền tay, giao ngay trước tối', loadComponent: () => import('./pages/home/home').then(m => m.Home) },
+  // Trang chủ là trang vào nhiều nhất: nạp sẵn trong bundle chính để bớt một lượt tải. Các trang khác vẫn lazy.
+  { path: '', title: 'FreshMart · Đi chợ liền tay, giao ngay trước tối', component: Home },
   { path: 'san-pham', title: 'Sản phẩm · FreshMart', loadComponent: () => import('./pages/catalog/catalog').then(m => m.Catalog) },
   { path: 'san-pham/:id', title: 'Sản phẩm · FreshMart', loadComponent: () => import('./pages/product/product').then(m => m.ProductPage) },
   { path: 'gio-hang', title: 'Giỏ hàng · FreshMart', loadComponent: () => import('./pages/cart/cart').then(m => m.CartPage) },
@@ -24,3 +26,6 @@ export const routes: Routes = [
   { path: 'admin', title: 'Quản trị · FreshMart', canActivate: [adminGuard], loadChildren: () => import('./admin/admin.routes').then(m => m.ADMIN_ROUTES) },
   { path: '**', title: 'Không tìm thấy trang · FreshMart', loadComponent: () => import('./pages/not-found/not-found').then(m => m.NotFound) }
 ];
+
+/** Mọi trang trừ trang chủ đều chờ catalog trước (dataGuard chạy trước các guard đăng nhập/quản trị). */
+export const routes: Routes = pages.map(r => r.path === '' ? r : { ...r, canActivate: [dataGuard, ...(r.canActivate ?? [])] });
