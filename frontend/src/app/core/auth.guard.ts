@@ -1,11 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from './auth.service';
-import { DataService } from './data.service';
-
-/** Trang cần catalog (sản phẩm, danh mục, voucher): chờ lần tải dữ liệu đang chạy xong rồi mới mở.
- *  Trang chủ không dùng guard này nên hiện ngay, không đợi dữ liệu. */
-export const dataGuard: CanActivateFn = () => inject(DataService).ready().then(() => true);
 
 /** Trang cần đăng nhập (Tài khoản) */
 export const authGuard: CanActivateFn = (_route, state) => {

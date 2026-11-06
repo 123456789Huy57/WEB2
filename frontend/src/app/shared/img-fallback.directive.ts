@@ -9,14 +9,6 @@ export class ImgFallbackDirective {
   readonly fmImg = input<string>('');
   private el = inject<ElementRef<HTMLImageElement>>(ElementRef);
 
-  constructor() {
-    // Ảnh sản phẩm/món ăn mặc định tải khi sắp cuộn tới và giải mã không chặn luồng chính.
-    // Ảnh nằm ngay màn hình đầu (ảnh chính trang sản phẩm) ghi loading="eager" trong template.
-    const img = this.el.nativeElement;
-    if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
-    if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
-  }
-
   @HostListener('error') onError(): void {
     const img = this.el.nativeElement;
     img.classList.add('img-missing');

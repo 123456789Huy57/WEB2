@@ -68,7 +68,6 @@
         @if (active().length > 1) { <button class="chip" type="button" (click)="clear('all')">Xóa tất cả</button> }
       </div>
     }
-    <h2 class="sr">Danh sách sản phẩm</h2>
     <div class="p-grid cat-grid">
       @for (p of shown(); track p.id) {
         <fm-product-card [product]="p" />

@@ -1,5 +1,4 @@
 import { Component, ViewEncapsulation, effect, inject, input, signal } from '@angular/core';
-import { apiMessage } from '../../core/auth.service';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { OrderService, OrderView } from '../../core/order.service';
@@ -22,11 +21,11 @@ import { OrderCard } from '../../shared/order-card';
   template: `
     <section class="page-head band">
       <h1 class="h2">Tra cứu đơn hàng</h1>
-      <p>Nhập mã đơn (dạng FM-20261105-AB12CD34) để xem nhanh một đơn trong tài khoản. Xem tất cả đơn ở <a class="link" routerLink="/tai-khoan">Tài khoản</a>.</p>
+      <p>Nhập mã đơn (dạng FM-20261030-123) và số điện thoại lúc đặt hàng. Có tài khoản thì xem tất cả đơn ở <a class="link" routerLink="/tai-khoan">Tài khoản</a>.</p>
     </section>
     <section class="band lk">
       <form (ngSubmit)="find()">
-        <div class="field"><label for="lk-code">Mã đơn hàng</label><input id="lk-code" name="code" autocomplete="off" [(ngModel)]="code" placeholder="FM-20261105-AB12CD34"></div>
+        <div class="field"><label for="lk-code">Mã đơn hàng</label><input id="lk-code" name="code" autocomplete="off" [(ngModel)]="code" placeholder="FM-20261030-123"></div>
         <div class="field"><label for="lk-phone">Số điện thoại</label><input id="lk-phone" name="phone" type="tel" inputmode="tel" [(ngModel)]="phone"></div>
         <p class="err small" aria-live="polite">{{ err() }}</p>
         <button class="btn btn-forest" type="submit">Tra cứu</button>
@@ -56,17 +55,17 @@ export class OrderLookup {
     effect(() => { if (this.ma() && this.sdt()) { this.code = this.ma()!; this.phone = this.sdt()!; this.find(); } });
   }
   protected find(): void {
-    const o = this.orders.lookup(this.code);
-    this.err.set(o ? '' : 'Không tìm thấy đơn này trong tài khoản của bạn. Kiểm tra lại mã đơn giúp mình nhé.');
+    const o = this.orders.lookup(this.code, this.phone);
+    this.err.set(o ? '' : 'Không tìm thấy đơn khớp cả mã đơn và số điện thoại. Kiểm tra lại giúp mình nhé.');
     this.foundCode.set(o?.orderCode ?? '');
   }
-  protected async again(o: OrderView): Promise<void> {
-    try { const skipped = await this.orders.reorder(o); this.toast.show(skipped.length ? `Đã thêm ${o.lines.length - skipped.length}/${o.lines.length} sản phẩm` : `Đã thêm sản phẩm của đơn ${o.orderCode} vào giỏ`); }
-    catch (error) { this.toast.show(apiMessage(error)); }
+  protected again(o: OrderView): void {
+    o.lines.filter(l => l.p.stock > 0).forEach(l => this.cart.add(l.p.id, Math.min(l.qty, l.p.stock)));
+    this.toast.show(`Đã thêm sản phẩm của đơn ${o.orderCode} vào giỏ`);
   }
   protected async cancel(o: OrderView): Promise<void> {
-    if (!(await this.cf.ask('Hủy đơn hàng?', `Đơn ${o.orderCode} sẽ bị hủy và hàng được trả lại kho.`, 'Hủy đơn'))) return;
-    try { await this.orders.cancel(o); this.toast.show(`Đã hủy đơn ${o.orderCode}`); }
-    catch (error) { this.toast.show(apiMessage(error)); }
+    if (!(await this.cf.ask(`Hủy đơn ${o.orderCode}?`, 'Đơn chưa được soạn nên bạn hủy được ngay. Nếu đã chuyển khoản, FreshMart hoàn tiền trong 3–5 ngày làm việc.', 'Hủy đơn'))) return;
+    this.orders.setStatus(o.orderCode, 'cancelled');
+    this.toast.show(`Đã hủy đơn ${o.orderCode}`);
   }
 }

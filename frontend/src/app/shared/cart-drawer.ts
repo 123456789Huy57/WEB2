@@ -26,9 +26,9 @@ import { ImgFallbackDirective } from './img-fallback.directive';
         <ul class="dr-lines">
           @for (l of cart.lines(); track l.p.id) {
             <li>
-              <a class="ph" [routerLink]="['/san-pham', l.p.slug || l.p.id]"><img [fmImg]="l.p.name" [src]="ps.img(l.p)" alt=""></a>
+              <a class="ph" [routerLink]="['/san-pham', l.p.id]"><img [fmImg]="l.p.name" [src]="ps.img(l.p)" alt=""></a>
               <div>
-                <a class="nm" [routerLink]="['/san-pham', l.p.slug || l.p.id]">{{ ps.shortName(l.p) }}</a>
+                <a class="nm" [routerLink]="['/san-pham', l.p.id]">{{ ps.shortName(l.p) }}</a>
                 <div class="qty">
                   <button type="button" (click)="cart.nudge(l.p.id, -1)" [attr.aria-label]="'Bớt ' + ps.shortName(l.p)">−</button>
                   <span class="num">{{ ps.qtyLabel(l.p, l.qty) }}</span>

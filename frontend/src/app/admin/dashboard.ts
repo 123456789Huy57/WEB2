@@ -1,38 +1,21 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
-import { DatePipe, DecimalPipe } from '@angular/common';
+import { Component, computed, inject } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { OrderService, ORDER_STATUS, STATUS_FLOW } from '../core/order.service';
 import { ProductService } from '../core/product.service';
-import { OrderStatus, Product } from '../core/models';
+import { DataService } from '../core/data.service';
+import { OrderStatus } from '../core/models';
 import { VndPipe } from '../shared/vnd.pipe';
 
-interface DashboardData {
-  revenue: number; collected: number; orders: number; averageOrderValue: number;
-  statusCounts: Partial<Record<OrderStatus, number>>;
-  last7Days: { date: string; revenue: number; orders: number }[];
-  topProducts: { productId: string; name: string; unit: string; qty: number; revenue: number }[];
-  customers: number; activeProducts: number; lowStock: { id: string; name: string; unit: string; stock: number }[];
-}
-
-interface Rule { from: string; to: string; fromName: string; toName: string; count: number; support: number; confidence: number; lift: number; }
-interface RulesData {
-  computedAt: string;
-  orders: { transactions: number; totalRules: number; rules: Rule[] };
-  recipes: { transactions: number; totalRules: number; rules: Rule[] };
-}
-
-/** Số liệu do server tính bằng aggregation trên toàn bộ đơn (GET /api/admin/dashboard). */
 @Component({
   selector: 'fm-admin-dashboard',
-  imports: [DatePipe, DecimalPipe, RouterLink, VndPipe],
+  imports: [DatePipe, RouterLink, VndPipe],
   template: `
-    <div class="adm-head"><div><h1 class="h2">Tổng quan</h1><p>Tính trên toàn bộ đơn hàng. Đơn đã hủy không tính doanh thu; đã thu {{ (d()?.collected ?? 0) | vnd }} từ đơn đã thanh toán.</p></div></div>
+    <div class="adm-head"><div><h1 class="h2">Tổng quan</h1><p>Số liệu tính từ đơn hàng hiện có. Đơn đã hủy không tính doanh thu.</p></div></div>
     <dl class="stats">
       <div class="card stat"><dt>Doanh thu 7 ngày</dt><dd class="num">{{ revenue7() | vnd }}</dd><p class="sub">Tổng từ trước tới nay {{ revenueAll() | vnd }}</p></div>
-      <div class="card stat"><dt>Đơn hàng</dt><dd class="num">{{ totalOrders() }}</dd><p class="sub">{{ count('pending') }} đơn chờ xác nhận</p></div>
-      <div class="card stat"><dt>Giá trị đơn trung bình</dt><dd class="num">{{ aov() | vnd }}</dd><p class="sub">{{ d()?.activeProducts ?? ps.all().length }} sản phẩm đang bán</p></div>
+      <div class="card stat"><dt>Đơn hàng</dt><dd class="num">{{ orders.all().length }}</dd><p class="sub">{{ count('pending') }} đơn chờ xác nhận</p></div>
+      <div class="card stat"><dt>Giá trị đơn trung bình</dt><dd class="num">{{ aov() | vnd }}</dd><p class="sub">{{ ps.all().length }} sản phẩm đang bán</p></div>
       <div class="card stat"><dt>Khách hàng</dt><dd class="num">{{ customers() }}</dd><p class="sub">{{ lowStock().length }} sản phẩm sắp hết hàng</p></div>
     </dl>
     <div class="grid-2">
@@ -61,7 +44,7 @@ interface RulesData {
           <thead><tr><th>Mã đơn</th><th>Khách</th><th>Thời gian</th><th class="r">Tổng</th><th>Trạng thái</th></tr></thead>
           <tbody>
             @for (o of orders.all().slice(0, 6); track o.orderCode) {
-              <tr><td class="num"><a class="link-btn" routerLink="/admin/don-hang" [queryParams]="{ q: o.orderCode }">{{ o.orderCode }}</a></td><td>{{ o.customer.name }}</td><td class="num">{{ o.createdAt | date: 'dd/MM HH:mm' }}</td><td class="r num">{{ o.total | vnd }}</td><td><span class="pill" [class.on]="o.status === 'delivered'" [class.warn]="o.status === 'pending'">{{ st[o.status] }}</span></td></tr>
+              <tr><td class="num"><a class="link-btn" routerLink="/admin/don-hang" [queryParams]="{ q: o.orderCode }">{{ o.orderCode }}</a></td><td>{{ o.customer?.name }}</td><td class="num">{{ o.createdAt | date: 'dd/MM HH:mm' }}</td><td class="r num">{{ o.total | vnd }}</td><td><span class="pill" [class.on]="o.status === 'delivered'" [class.warn]="o.status === 'pending'">{{ st[o.status] }}</span></td></tr>
             }
           </tbody>
         </table></div>
@@ -78,29 +61,6 @@ interface RulesData {
         </table></div>
       </section>
     </div>
-    @if (rules(); as r) {
-      <section class="card" aria-labelledby="h-rules">
-        <h2 class="h3" id="h-rules">Luật mua kèm (gợi ý "Thường được mua cùng")</h2>
-        <p class="muted" style="margin:-8px 0 14px">
-          Luật kết hợp học từ {{ r.orders.transactions }} đơn chưa hủy ({{ r.orders.totalRules }} luật) và {{ r.recipes.transactions }} công thức ({{ r.recipes.totalRules }} luật).
-          Confidence: mua món trước thì bao nhiêu % mua thêm món sau. Lift &gt; 1: mua cùng nhiều hơn ngẫu nhiên. Cập nhật {{ r.computedAt | date: 'HH:mm dd/MM' }}.
-        </p>
-        <div class="toolbar" role="group" aria-label="Nguồn luật">
-          <button class="tab" type="button" [attr.aria-pressed]="ruleSource() === 'orders'" (click)="ruleSource.set('orders')">Từ đơn hàng</button>
-          <button class="tab" type="button" [attr.aria-pressed]="ruleSource() === 'recipes'" (click)="ruleSource.set('recipes')">Từ công thức</button>
-        </div>
-        <div class="tbl-wrap"><table class="tbl">
-          <thead><tr><th>Khi mua</th><th>Thường mua thêm</th><th class="r">Số lần</th><th class="r">Support</th><th class="r">Confidence</th><th class="r">Lift</th></tr></thead>
-          <tbody>
-            @for (x of shownRules(); track x.from + x.to) {
-              <tr><td>{{ x.fromName }}</td><td>{{ x.toName }}</td><td class="r num">{{ x.count }}</td><td class="r num">{{ x.support * 100 | number: '1.0-1' }}%</td><td class="r num">{{ x.confidence * 100 | number: '1.0-0' }}%</td><td class="r num">{{ x.lift | number: '1.1-2' }}</td></tr>
-            } @empty {
-              <tr><td colspan="6" class="empty-row">{{ ruleSource() === 'orders' ? 'Chưa đủ đơn để rút ra luật (cần mỗi cặp xuất hiện ít nhất 2 lần). Gợi ý đang dùng luật từ công thức.' : 'Chưa có luật.' }}</td></tr>
-            }
-          </tbody>
-        </table></div>
-      </section>
-    }
     @if (lowStock().length) {
       <section class="card" aria-labelledby="h-low">
         <h2 class="h3" id="h-low">Sắp hết hàng</h2>
@@ -116,44 +76,38 @@ interface RulesData {
 export class Dashboard {
   protected orders = inject(OrderService);
   protected ps = inject(ProductService);
-  private http = inject(HttpClient);
+  private data = inject(DataService);
   protected st = ORDER_STATUS;
-  protected d = signal<DashboardData | null>(null);
-  protected rules = signal<RulesData | null>(null);
-  protected ruleSource = signal<'orders' | 'recipes'>('orders');
-  protected shownRules = computed(() => (this.rules()?.[this.ruleSource()].rules ?? []).slice(0, 10));
-  constructor() {
-    void firstValueFrom(this.http.get<DashboardData>('/api/admin/dashboard')).then(x => this.d.set(x)).catch(() => this.d.set(null));
-    void firstValueFrom(this.http.get<RulesData>('/api/admin/recommendations')).then(x => {
-      this.rules.set(x);
-      if (!x.orders.rules.length) this.ruleSource.set('recipes');
-    }).catch(() => this.rules.set(null));
-  }
-
-  protected revenueAll = computed(() => this.d()?.revenue ?? 0);
-  protected aov = computed(() => this.d()?.averageOrderValue ?? 0);
-  protected customers = computed(() => this.d()?.customers ?? 0);
-  protected totalOrders = computed(() => Object.values(this.d()?.statusCounts ?? {}).reduce((a, b) => a + (b ?? 0), 0));
-  /** Ưu tiên sản phẩm đã tải (có ảnh, tên ngắn); không có thì dùng dữ liệu server trả */
-  protected lowStock = computed(() => (this.d()?.lowStock ?? []).map(x => this.ps.get(x.id) ?? ({ ...x, slug: '', category: '', categoryName: '', description: '', price: 0, sale_price: 0, sold_count: 0, image_url: '', gallery: [] } as Product)));
-  protected count(s: OrderStatus): number { return this.d()?.statusCounts[s] ?? 0; }
+  private valid = computed(() => this.orders.all().filter(o => o.status !== 'cancelled'));
+  protected revenueAll = computed(() => this.valid().reduce((s, o) => s + o.total, 0));
+  protected aov = computed(() => (this.valid().length ? this.revenueAll() / this.valid().length : 0));
+  protected customers = computed(() => this.data.users().filter(u => u.role === 'customer').length);
+  protected lowStock = computed(() => this.ps.all().filter(p => p.stock <= 10).sort((a, b) => a.stock - b.stock));
+  protected count(s: OrderStatus): number { return this.orders.all().filter(o => o.status === s).length; }
 
   protected days = computed(() => {
-    const list = this.d()?.last7Days ?? [];
-    const max = Math.max(1, ...list.map(x => x.revenue));
-    return list.map((x, i) => {
-      const [, m, day] = x.date.split('-').map(Number);
-      return { key: x.date, label: i === list.length - 1 ? 'Hôm nay' : `${day}/${m}`, value: x.revenue, short: x.revenue ? `${Math.round(x.revenue / 1000)}K` : '0', pct: (x.revenue / max) * 100 };
-    });
+    const out: { key: string; label: string; value: number; short: string; pct: number }[] = [];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - i);
+      const key = d.toDateString();
+      const value = this.valid().filter(o => new Date(o.createdAt).toDateString() === key).reduce((s, o) => s + o.total, 0);
+      out.push({ key, label: i === 0 ? 'Hôm nay' : `${d.getDate()}/${d.getMonth() + 1}`, value, short: value ? `${Math.round(value / 1000)}K` : '0', pct: 0 });
+    }
+    const max = Math.max(1, ...out.map(x => x.value));
+    return out.map(x => ({ ...x, pct: (x.value / max) * 100 }));
   });
   protected revenue7 = computed(() => this.days().reduce((s, d) => s + d.value, 0));
   protected chartLabel = computed(() => this.days().map(d => `${d.label} ${d.short}`).join(', '));
   protected statuses = computed(() => {
-    const all = this.totalOrders() || 1;
+    const all = this.orders.all().length || 1;
     return [...STATUS_FLOW, 'cancelled' as OrderStatus].map(k => { const n = this.count(k); return { key: k, label: ORDER_STATUS[k], n, pct: (n / all) * 100 }; });
   });
-  protected top = computed(() => (this.d()?.topProducts ?? []).slice(0, 6).map(t => {
-    const p = this.ps.get(t.productId);
-    return { name: p ? this.ps.shortName(p) : t.name, qty: p ? this.ps.qtyLabel(p, t.qty) : String(t.qty), rev: t.revenue };
-  }));
+  protected top = computed(() => {
+    const m = new Map<string, { name: string; qty: number; rev: number }>();
+    this.valid().forEach(o => o.lines.forEach(l => {
+      const cur = m.get(l.p.id) ?? { name: this.ps.shortName(l.p), qty: 0, rev: 0 };
+      cur.qty += l.qty; cur.rev += l.qty * l.price; m.set(l.p.id, cur);
+    }));
+    return [...m.values()].sort((a, b) => b.rev - a.rev).slice(0, 6);
+  });
 }

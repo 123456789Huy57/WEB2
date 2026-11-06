@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /admin
-Disallow: /tai-khoan
-Disallow: /gio-hang
-Disallow: /thanh-toan
-Disallow: /api/

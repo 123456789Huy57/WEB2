@@ -40,8 +40,8 @@ import { ImgFallbackDirective } from '../../shared/img-fallback.directive';
             <thead><tr><td></td>
               @for (p of items(); track p.id) {
                 <td>
-                  <a class="ph" [routerLink]="['/san-pham', p.slug || p.id]"><img [fmImg]="p.name" [src]="ps.img(p)" [alt]="ps.shortName(p)"></a>
-                  <a class="nm" [routerLink]="['/san-pham', p.slug || p.id]">{{ ps.shortName(p) }}</a>
+                  <a class="ph" [routerLink]="['/san-pham', p.id]"><img [fmImg]="p.name" [src]="ps.img(p)" [alt]="ps.shortName(p)"></a>
+                  <a class="nm" [routerLink]="['/san-pham', p.id]">{{ ps.shortName(p) }}</a>
                   <div class="add-wrap"><fm-add-control [product]="p" /></div>
                   <button class="rm" type="button" (click)="cmp.toggle(p.id)">Bỏ khỏi so sánh</button>
                 </td>

@@ -14,9 +14,9 @@
         <ul class="lines">
           @for (l of cart.lines(); track l.p.id) {
             <li>
-              <a class="ph" [routerLink]="['/san-pham', l.p.slug || l.p.id]"><img [fmImg]="l.p.name" [src]="ps.img(l.p)" alt=""></a>
+              <a class="ph" [routerLink]="['/san-pham', l.p.id]"><img [fmImg]="l.p.name" [src]="ps.img(l.p)" alt=""></a>
               <div>
-                <a class="nm" [routerLink]="['/san-pham', l.p.slug || l.p.id]">{{ ps.shortName(l.p) }}</a>
+                <a class="nm" [routerLink]="['/san-pham', l.p.id]">{{ ps.shortName(l.p) }}</a>
                 <p class="meta num">{{ ps.price(l.p) | vnd }} / {{ ps.unit(l.p) }}@if (ps.off(l.p)) { · giảm {{ ps.off(l.p) }}% }</p>
               </div>
               <div class="lp"><span class="price num">{{ ps.price(l.p) * l.qty | vnd }}</span></div>
@@ -50,13 +50,6 @@
         <a class="link small c-link" routerLink="/san-pham">Tiếp tục đi chợ</a>
       </aside>
     </div>
-    @if (learned().length) {
-      <section class="sec" aria-labelledby="h-tog">
-        <div class="sec-head"><div><h2 class="h2" id="h-tog">Thường được mua cùng</h2>
-          <p>Khách mua những món trong giỏ của bạn hay mua thêm các món này.</p></div></div>
-        <div class="p-grid">@for (p of learned(); track p.id) { <fm-product-card [product]="p" /> }</div>
-      </section>
-    }
     @if (suggest().length) {
       <section class="sec" aria-labelledby="h-sug">
         <div class="sec-head"><div><h2 class="h2" id="h-sug">{{ needForFree() > 0 ? 'Thêm chút nữa là miễn phí giao' : 'Đang giảm giá hôm nay' }}</h2>

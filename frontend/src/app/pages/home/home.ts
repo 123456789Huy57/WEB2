@@ -61,16 +61,8 @@ export class Home implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (this.reduce || this.slowNetwork()) { this.paused.set(true); return; } // ảnh nền tĩnh vẫn hiện như khung đầu video
-    // Như các trang lớn: video nền chỉ bắt đầu tải khi trang đã hiện xong và trình duyệt rảnh,
-    // để 3 MB video không tranh băng thông với chữ, ảnh và dữ liệu sản phẩm.
-    const start = () => { const idle = (window as any).requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 200)); idle(() => this.play(), { timeout: 2000 }); };
-    if (document.readyState === 'complete') start(); else window.addEventListener('load', start, { once: true });
-  }
-  /** Bật tiết kiệm dữ liệu hoặc mạng 2G/3G: không tự tải video */
-  private slowNetwork(): boolean {
-    const c = (navigator as any).connection;
-    return !!c && (c.saveData || /(^|-)2g|3g/.test(c.effectiveType ?? ''));
+    if (this.reduce) this.paused.set(true);
+    else this.play();
   }
 
   /** Chuyển tới trang i. Về trang video thì phát lại từ đầu; sang trang 2 thì dừng video và hẹn 9 giây sau quay lại */

@@ -64,7 +64,7 @@
 .bag { align-self: end; width: clamp(240px, 26vw, 380px); height: auto; transform: translateY(3%); }
 /* Dải chữ chạy dưới khu Vì sao chọn: cùng công thức với dải ở khu Bảng giá (chữ kem, chấm vàng) nhưng nền xanh lá vừa,
    sáng hơn một bậc để tách khỏi khu Vòng cam kết nền xanh đậm ngay bên dưới */
-.why + .marquee { position: relative; z-index: 1; background: var(--green); color: var(--ink); } /* chữ đen trên xanh 5.6:1 (chữ kem chỉ 3.3:1) */
+.why + .marquee { position: relative; z-index: 1; background: var(--green); color: var(--cream); }
 .why + .marquee li::after { background: var(--yellow); }
 
 /* Vòng cam kết: nền xanh đậm, tiêu đề kem ở giữa, vòng chữ vàng, vòng ngoài 20 icon rau củ quả chia đều (mỗi icon nằm trên một "nan" xoay --i × 18°) */
@@ -187,7 +187,6 @@ fm-home > .sec { padding-block: var(--sec-y); }
 /* Mặt biển: nền đen, viền kem bên trong như biển chỉ đường */
 .sign-face { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 320px; padding: 18px 22px 20px; border-radius: 10px; background: var(--ink); color: var(--cream); text-align: center; box-shadow: inset 0 0 0 5px var(--ink), inset 0 0 0 7px var(--cream); }
 .sign-face svg { width: 44px; height: 44px; fill: none; stroke: var(--yellow); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-.sign-face dl { display: contents; } /* dl chỉ để đúng ngữ nghĩa, không đổi bố cục */
 .sign-face dt { margin-top: 4px; font-family: var(--display); font-size: clamp(32px, 2.8vw, 42px); font-weight: 600; line-height: var(--lh-head); color: var(--yellow); }
 .sign-face dd { margin: 6px 0 0; max-width: 30ch; font-size: 15px; line-height: 1.5; }
 .truck { position: absolute; z-index: 1; left: calc(50% - var(--tw) / 2); bottom: calc(var(--road) * .3); width: var(--tw); height: auto; }

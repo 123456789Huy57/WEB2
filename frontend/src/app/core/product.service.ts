@@ -3,9 +3,6 @@ import { DataService } from './data.service';
 import { Category, Product } from './models';
 import { norm } from './storage';
 
-export { cdnImage } from './cdn-image';
-import { cdnImage } from './cdn-image';
-
 @Injectable({ providedIn: 'root' })
 export class ProductService {
   private data = inject(DataService);
@@ -23,8 +20,7 @@ export class ProductService {
   price(p: Product): number { return p.sale_price > 0 && p.sale_price < p.price ? p.sale_price : p.price; }
   /** Phần trăm giảm, 0 nếu không giảm */
   off(p: Product): number { return p.sale_price > 0 && p.sale_price < p.price ? Math.round((1 - p.sale_price / p.price) * 100) : 0; }
-  /** Ảnh sản phẩm. Ảnh Cloudinary được xin bản đã tối ưu: định dạng hợp trình duyệt (WebP/AVIF), nén tự động, giới hạn bề ngang. */
-  img(p: Product, width = 480): string { return cdnImage(p.img ? p.img : p.image_url, width); }
+  img(p: Product): string { return p.img ? p.img : p.image_url; }
   unit(p: Product): string { return String(p.unit || '').toLowerCase(); }
   /** Hàng cân ký bán theo nấc 0,5 kg; hàng đóng gói bán theo từng đơn vị */
   step(p: Product): number { return this.unit(p) === 'kg' ? 0.5 : 1; }

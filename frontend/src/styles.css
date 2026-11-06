@@ -3,10 +3,10 @@
    rau củ cắt nền đặt to trên những mảng màu phẳng: vàng chanh, xanh lá, kem, đen.
    Mảng màu mạnh dành cho khu giới thiệu; khu mua hàng (danh sách, giỏ, thanh toán) giữ nền kem sáng cho dễ đọc giá.
    Mọi màu, cỡ chữ, khoảng cách đều lấy từ biến bên dưới. Component không tự đặt màu mới. Xem DESIGN.md. */
-@font-face { font-family: "Oswald"; src: url("/fonts/Oswald-Variable.woff2") format("woff2"); font-weight: 200 700; font-display: swap; }
-@font-face { font-family: "Be Vietnam Pro"; src: url("/fonts/BeVietnamPro-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
-@font-face { font-family: "Be Vietnam Pro"; src: url("/fonts/BeVietnamPro-Medium.woff2") format("woff2"); font-weight: 500; font-display: swap; }
-@font-face { font-family: "Be Vietnam Pro"; src: url("/fonts/BeVietnamPro-SemiBold.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Oswald"; src: url("/fonts/Oswald-Variable.ttf") format("truetype"); font-weight: 200 700; font-display: swap; }
+@font-face { font-family: "Be Vietnam Pro"; src: url("/fonts/BeVietnamPro-Regular.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Be Vietnam Pro"; src: url("/fonts/BeVietnamPro-Medium.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Be Vietnam Pro"; src: url("/fonts/BeVietnamPro-SemiBold.ttf") format("truetype"); font-weight: 600; font-display: swap; }
 
 :root {
   /* Màu nền và chữ */
@@ -227,7 +227,7 @@ fm-root:has(.ship) .footer { margin-top: 0; }
 .f-news .btn { height: 44px; padding-block: 0; background: var(--yellow); color: var(--ink); }
 .f-news .btn:hover { background: var(--cream); }
 .f-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; max-width: 960px; margin: 36px auto 0; padding-top: 36px; border-top: 1px solid rgb(254 252 245 / .2); }
-.footer .f-h { font-family: var(--display); color: var(--cream); font-size: 18px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 16px; }
+.footer h4 { font-family: var(--display); color: var(--cream); font-size: 18px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 16px; }
 .footer ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; gap: 10px; font-size: 15px; }
 .footer a { transition: color .2s; }
 .footer a:hover { color: var(--yellow); }
@@ -364,8 +364,8 @@ a.ph, button.ph { display: block; }
 .h-cart { border: 0; cursor: pointer; }
 @media (max-width: 1200px) { .h-nav { gap: 4px 20px; font-size: 16px; } }
 /* Màn hình nhỏ: chỉ giữ các mục chính, quầy hàng xem trong "Tất cả quầy" */
-@media (max-width: 900px) { .h-nav .nav-cat { display: none; } .h-nav { overflow: visible; gap: 4px 22px; } }
-@media (max-width: 560px) { .h-nav { justify-content: space-between; gap: 4px 12px; font-size: 16px; } }
+@media (max-width: 900px) { .h-nav .nav-cat { display: none; } .h-nav { overflow-x: auto; overflow-y: hidden; gap: 4px 22px; } }
+@media (max-width: 560px) { .h-nav { justify-content: flex-start; flex-wrap: wrap; gap: 4px 16px; font-size: 16px; overflow: visible; } }
 
 /* Thẻ đơn hàng (Tài khoản, Tra cứu đơn) */
 .order { display: block; background: var(--stone); border-radius: var(--r); padding: 24px 28px; }
