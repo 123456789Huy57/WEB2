@@ -12,7 +12,8 @@ export const ADMIN_ROUTES: Routes = [
       { path: 'ton-kho', title: 'Tồn kho · Quản trị FreshMart', loadComponent: () => import('./inventory').then(m => m.AdminInventory) },
       { path: 'voucher', title: 'Voucher · Quản trị FreshMart', loadComponent: () => import('./vouchers').then(m => m.AdminVouchers) },
       { path: 'khach-hang', title: 'Khách hàng · Quản trị FreshMart', loadComponent: () => import('./customers').then(m => m.AdminCustomers) },
-      { path: 'danh-gia', title: 'Đánh giá · Quản trị FreshMart', loadComponent: () => import('./reviews').then(m => m.AdminReviews) }
+      { path: 'danh-gia', title: 'Đánh giá · Quản trị FreshMart', loadComponent: () => import('./reviews').then(m => m.AdminReviews) },
+      { path: 'ra-anh', title: 'Rà ảnh · Quản trị FreshMart', loadComponent: () => import('./image-audit').then(m => m.AdminImageAudit) }
     ]
   }
 ];
