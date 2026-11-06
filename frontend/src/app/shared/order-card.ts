@@ -25,7 +25,7 @@ import { ImgFallbackDirective } from './img-fallback.directive';
     }
     <div class="o-items">
       @for (l of o().lines; track l.p.id) {
-        <a class="ph" [routerLink]="['/san-pham', l.p.id]" [fragment]="o().status === 'delivered' ? 'h-rv' : undefined" [title]="ps.shortName(l.p)"><img [fmImg]="l.p.name" [src]="ps.img(l.p)" [alt]="ps.shortName(l.p)"></a>
+        <a class="ph" [routerLink]="['/san-pham', l.p.id]" [title]="ps.shortName(l.p)"><img [fmImg]="l.p.name" [src]="ps.img(l.p)" [alt]="ps.shortName(l.p)"></a>
       }
     </div>
     @if (open()) {
@@ -37,20 +37,16 @@ import { ImgFallbackDirective } from './img-fallback.directive';
           <li class="muted"><span>Phí giao hàng</span><span class="num">{{ o().shippingFee ? (o().shippingFee | vnd) : 'Miễn phí' }}</span></li>
           @if (o().discount) { <li class="muted"><span>Mã {{ o().voucherCode }}</span><span class="num">−{{ o().discount | vnd }}</span></li> }
         </ul>
-        @if (o().status === 'delivered') { <p class="small" style="margin:0 0 8px">Đơn đã giao: bấm vào ảnh sản phẩm để viết đánh giá.</p> }
         @if (o().customer; as c) {
           <p class="small muted">Giao cho {{ c.name }} · {{ c.phone }} · {{ c.address }}@if (c.slot) { · {{ c.slot }} }@if (c.note) { · Ghi chú: {{ c.note }} }</p>
         }
       </div>
     }
     <div class="o-bot">
-      <span class="small muted">{{ o().lines.length }} sản phẩm · {{ payLabel[o().paymentMethod] }}{{ o().paymentMethod === 'vnpay' ? ' · ' + orders.payStatusLabel(o()).toLowerCase() : '' }}@if (o().paymentMethod === 'vnpay' && o().paymentStatus === 'unpaid' && o().status === 'pending' && o().paymentDueAt) { · giữ hàng đến {{ o().paymentDueAt | date: 'HH:mm' }} }</span>
+      <span class="small muted">{{ o().lines.length }} sản phẩm · {{ pay[o().paymentMethod] }}</span>
       <div class="o-act">
         <span class="price num">{{ o().total | vnd }}</span>
         <button class="btn btn-paper btn-sm" type="button" (click)="open.set(!open())" [attr.aria-expanded]="open()">{{ open() ? 'Thu gọn' : 'Chi tiết' }}</button>
-        @if (orders.canPay(o())) {
-          <button class="btn btn-forest btn-sm" type="button" (click)="pay()">Thanh toán</button>
-        }
         @if (orders.canCancel(o())) {
           <button class="btn btn-paper btn-sm" type="button" (click)="cancel.emit(o())">Hủy đơn</button>
         }
@@ -66,9 +62,8 @@ export class OrderCard {
   protected ps = inject(ProductService);
   protected orders = inject(OrderService);
   protected status = ORDER_STATUS;
-  protected payLabel = PAYMENT_LABEL;
+  protected pay = PAYMENT_LABEL;
   protected flow = STATUS_FLOW;
   protected open = signal(false);
   protected stepIndex = computed(() => STATUS_FLOW.indexOf(this.o().status));
-  protected async pay(): Promise<void> { try { await this.orders.pay(this.o()); } catch { /* lỗi đã hiện ở trang */ } }
 }

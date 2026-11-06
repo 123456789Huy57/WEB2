@@ -138,10 +138,8 @@
  "ing-gao-thom": {
   "ingredientId": "ing-gao-thom",
   "mealProductId": "p-018",
-  "preferredProductId": "p-0130",
+  "preferredProductId": "p-0132",
   "productIds": [
-   "p-0130",
-   "p-0127",
    "p-0132"
   ]
  },

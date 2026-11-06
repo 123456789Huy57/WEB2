@@ -17,7 +17,7 @@ export const INFO: Record<string, InfoPage> = {
     title: 'Đội ngũ phát triển', group: 'about',
     lead: 'FreshMart là đồ án môn Phát triển web kinh doanh. Web1 làm giao diện HTML/CSS/JS, Web2 chuyển sang Angular và thêm backend Node.js, Express, MongoDB.',
     blocks: [
-      { h: 'Nhóm thực hiện', rows: [['Trưởng nhóm', 'Điều phối, ghép frontend và backend'], ['Frontend', '2 thành viên: các trang Angular, service, giao diện'], ['Backend', '2 thành viên: API Express, MongoDB, đăng nhập bằng session và cookie']] },
+      { h: 'Nhóm thực hiện', rows: [['Trưởng nhóm', 'Điều phối, ghép frontend và backend'], ['Frontend', '2 thành viên: các trang Angular, service, giao diện'], ['Backend', '2 thành viên: API Express, MongoDB, đăng nhập JWT']] },
       { h: 'Công nghệ', list: ['Angular 20: standalone component, signals, router lazy load, reactive forms', 'Node.js + Express: REST API', 'MongoDB (Compass để xem dữ liệu): sản phẩm, đơn hàng, người dùng, công thức', 'Dữ liệu thật của Web1: 200 sản phẩm, 66 công thức, 75 nguyên liệu'] }
     ]
   },

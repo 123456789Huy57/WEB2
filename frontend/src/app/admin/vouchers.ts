@@ -1,8 +1,8 @@
 import { Component, ElementRef, computed, inject, signal, viewChild } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DataService } from '../core/data.service';
-import { apiMessage } from '../core/auth.service';
 import { VoucherService } from '../core/voucher.service';
+import { OrderService } from '../core/order.service';
 import { ToastService } from '../core/toast.service';
 import { Voucher } from '../core/models';
 import { VndPipe } from '../shared/vnd.pipe';
@@ -21,11 +21,11 @@ import { VndPipe } from '../shared/vnd.pipe';
         @for (v of list(); track v.code) {
           <tr [class.dim]="!v.isActive">
             <td><b>{{ v.code }}</b></td>
-            <td>{{ v.title }}<br><span class="small muted">{{ v.category === 'shipping' ? 'Giảm phí giao' : 'Giảm tiền hàng' }}{{ vs.isFirstOrderOnly(v) ? ' · chỉ khách mới' : '' }}{{ v.perUserLimit && v.perUserLimit > 1 ? ' · ' + v.perUserLimit + ' lần/khách' : '' }}</span></td>
+            <td>{{ v.title }}<br><span class="small muted">{{ v.category === 'shipping' ? 'Giảm phí giao' : 'Giảm tiền hàng' }}{{ vs.isFirstOrderOnly(v) ? ' · chỉ đơn đầu tiên' : '' }}</span></td>
             <td class="r num">{{ v.discountType === 'percent' ? v.discountValue + '%' : (v.discountValue | vnd) }}@if (v.maxDiscountValue) { <br><span class="small muted">tối đa {{ v.maxDiscountValue | vnd }}</span> }</td>
             <td class="r num">{{ v.minOrderValue | vnd }}</td>
             <td class="num small">{{ fmt(v.startDate) }} – {{ fmt(v.endDate) }}</td>
-            <td class="r num">{{ v.usedCount ?? 0 }}{{ v.usageLimit ? ' / ' + v.usageLimit : '' }}</td>
+            <td class="r num">{{ used(v.code) }}</td>
             <td><span class="pill" [class.on]="v.isActive">{{ v.isActive ? 'Đang chạy' : 'Đã tắt' }}</span></td>
             <td class="r" style="white-space:nowrap"><button class="link-btn" type="button" (click)="edit(v)">Sửa</button><button class="link-btn" type="button" style="margin-left:12px" (click)="toggle(v)">{{ v.isActive ? 'Tắt' : 'Bật' }}</button></td>
           </tr>
@@ -46,9 +46,6 @@ import { VndPipe } from '../shared/vnd.pipe';
           <div class="field"><label for="vf-max">Giảm tối đa (đ, 0 = không giới hạn)</label><input id="vf-max" type="number" min="0" step="1000" formControlName="maxDiscountValue"></div>
           <div class="field"><label for="vf-start">Từ ngày</label><input id="vf-start" type="date" formControlName="startDate"></div>
           <div class="field"><label for="vf-end">Đến ngày</label><input id="vf-end" type="date" formControlName="endDate"></div>
-          <div class="field"><label for="vf-aud">Đối tượng</label><select id="vf-aud" formControlName="audience"><option value="all">Mọi khách đã đăng nhập</option><option value="new_customer">Chỉ khách mới (chưa có đơn)</option></select></div>
-          <div class="field"><label for="vf-per">Số lần mỗi khách</label><input id="vf-per" type="number" min="1" formControlName="perUserLimit"></div>
-          <div class="field"><label for="vf-lim">Tổng suất (0 = không giới hạn)</label><input id="vf-lim" type="number" min="0" formControlName="usageLimit"></div>
           <label class="check full"><input type="checkbox" formControlName="isActive"> Đang chạy</label>
         </div>
         @if (tried() && formErr()) { <p class="err small">{{ formErr() }}</p> }
@@ -60,6 +57,7 @@ import { VndPipe } from '../shared/vnd.pipe';
 export class AdminVouchers {
   private data = inject(DataService);
   protected vs = inject(VoucherService);
+  private orders = inject(OrderService);
   private toast = inject(ToastService);
   protected list = this.data.vouchers;
   protected dlg = viewChild.required<ElementRef<HTMLDialogElement>>('dlg');
@@ -69,10 +67,10 @@ export class AdminVouchers {
     code: ['', [Validators.required, Validators.pattern(/^[A-Za-z0-9]{3,20}$/)]], title: ['', Validators.required],
     category: ['product' as Voucher['category']], discountType: ['percent' as Voucher['discountType']],
     discountValue: [10, [Validators.required, Validators.min(1)]], minOrderValue: [0, Validators.min(0)], maxDiscountValue: [0, Validators.min(0)],
-    startDate: [''], endDate: [''], isActive: [true],
-    audience: ['all' as NonNullable<Voucher['audience']>], perUserLimit: [1, [Validators.required, Validators.min(1)]], usageLimit: [0, Validators.min(0)]
+    startDate: [''], endDate: [''], isActive: [true]
   });
-  protected busy = signal(false);
+  private usedMap = computed(() => { const m = new Map<string, number>(); this.orders.all().forEach(o => { if (o.voucherCode && o.status !== 'cancelled') m.set(o.voucherCode, (m.get(o.voucherCode) ?? 0) + 1); }); return m; });
+  protected used(code: string): number { return this.usedMap().get(code) ?? 0; }
   protected fmt(d: string): string { return d ? d.split('-').reverse().join('/') : '—'; }
   protected codeErr(): string {
     const c = this.form.controls.code;
@@ -91,32 +89,24 @@ export class AdminVouchers {
   protected edit(v: Voucher | null): void {
     this.editing.set(v); this.tried.set(false);
     const today = new Date().toISOString().slice(0, 10);
-    this.form.reset(v ? { code: v.code, title: v.title, category: v.category, discountType: v.discountType, discountValue: v.discountValue, minOrderValue: v.minOrderValue, maxDiscountValue: v.maxDiscountValue ?? 0, startDate: v.startDate, endDate: v.endDate, isActive: v.isActive, audience: v.audience ?? 'all', perUserLimit: v.perUserLimit ?? 1, usageLimit: v.usageLimit ?? 0 }
-      : { code: '', title: '', category: 'product', discountType: 'percent', discountValue: 10, minOrderValue: 0, maxDiscountValue: 0, startDate: today, endDate: '2026-12-31', isActive: true, audience: 'all', perUserLimit: 1, usageLimit: 0 });
+    this.form.reset(v ? { code: v.code, title: v.title, category: v.category, discountType: v.discountType, discountValue: v.discountValue, minOrderValue: v.minOrderValue, maxDiscountValue: v.maxDiscountValue ?? 0, startDate: v.startDate, endDate: v.endDate, isActive: v.isActive }
+      : { code: '', title: '', category: 'product', discountType: 'percent', discountValue: 10, minOrderValue: 0, maxDiscountValue: 0, startDate: today, endDate: '2026-12-31', isActive: true });
     if (v) this.form.controls.code.disable(); else this.form.controls.code.enable();
     this.dlg().nativeElement.showModal();
   }
-  protected async save(): Promise<void> {
+  protected save(): void {
     this.tried.set(true); this.form.markAllAsTouched();
-    if (this.form.invalid || this.codeErr() || this.formErr() || this.busy()) return;
+    if (this.form.invalid || this.codeErr() || this.formErr()) return;
     const f = this.form.getRawValue();
     const old = this.editing();
-    const body: Partial<Voucher> = {
-      code: f.code.trim().toUpperCase(), title: f.title.trim(), description: old?.description ?? f.title.trim(),
+    const v: Voucher = {
+      id: old?.id ?? 'v-' + Date.now().toString(36), code: f.code.trim().toUpperCase(), title: f.title.trim(), description: old?.description ?? f.title.trim(),
       category: f.category, discountType: f.discountType, discountValue: f.discountValue, minOrderValue: f.minOrderValue,
-      maxDiscountValue: f.maxDiscountValue || null, startDate: f.startDate, endDate: f.endDate, isActive: f.isActive,
-      audience: f.audience, perUserLimit: f.perUserLimit, usageLimit: f.usageLimit || null
+      maxDiscountValue: f.maxDiscountValue || null, startDate: f.startDate, endDate: f.endDate, isActive: f.isActive
     };
-    this.busy.set(true);
-    try {
-      const saved = await this.data.saveVoucher(body, old?.id);
-      this.dlg().nativeElement.close();
-      this.toast.show(old ? `Đã lưu mã ${saved.code}` : `Đã tạo mã ${saved.code}`);
-    } catch (error) { this.toast.show(apiMessage(error)); }
-    finally { this.busy.set(false); }
+    this.data.saveVoucher(v);
+    this.dlg().nativeElement.close();
+    this.toast.show(old ? `Đã lưu mã ${v.code}` : `Đã tạo mã ${v.code}`);
   }
-  protected async toggle(v: Voucher): Promise<void> {
-    try { await this.data.saveVoucher({ isActive: !v.isActive }, v.id); this.toast.show(v.isActive ? `Đã tắt mã ${v.code}` : `Đã bật mã ${v.code}`); }
-    catch (error) { this.toast.show(apiMessage(error)); }
-  }
+  protected toggle(v: Voucher): void { this.data.saveVoucher({ ...v, isActive: !v.isActive }); this.toast.show(v.isActive ? `Đã tắt mã ${v.code}` : `Đã bật mã ${v.code}`); }
 }

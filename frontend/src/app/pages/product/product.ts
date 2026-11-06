@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, computed, effect, inject, input, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { ProductService } from '../../core/product.service';
 import { CartService } from '../../core/cart.service';
@@ -10,11 +10,10 @@ import { MEAL_LABEL, MealPlannerService } from '../../core/meal-planner.service'
 import { VndPipe } from '../../shared/vnd.pipe';
 import { ProductCard } from '../../shared/product-card';
 import { ImgFallbackDirective } from '../../shared/img-fallback.directive';
-import { ProductReviews } from '../../shared/product-reviews';
 
 @Component({
   selector: 'fm-product',
-  imports: [RouterLink, VndPipe, ProductCard, ImgFallbackDirective, ProductReviews],
+  imports: [RouterLink, VndPipe, ProductCard, ImgFallbackDirective],
   templateUrl: './product.html',
   styleUrl: './product.css',
   encapsulation: ViewEncapsulation.None
@@ -24,6 +23,7 @@ export class ProductPage {
   readonly id = input.required<string>();
   protected ps = inject(ProductService);
   private cart = inject(CartService);
+  private router = inject(Router);
   private wish = inject(WishlistService);
   private toast = inject(ToastService);
   private title = inject(Title);
@@ -62,19 +62,22 @@ export class ProductPage {
   protected wished = computed(() => { this.wish.ids(); return !!this.p() && this.wish.has(this.p()!.id); });
 
   constructor() {
-    effect(() => { this.id(); this.qty.set(1); this.imgIndex.set(0); });
+    effect(() => { this.id(); this.qty.set(this.step()); this.imgIndex.set(0); });
     effect(() => { if (this.name()) this.title.setTitle(this.name() + ' · FreshMart'); });
   }
 
-  protected async add(): Promise<void> {
+  protected add(): boolean {
     const p = this.p()!;
     const before = this.cart.qty(p.id);
-    await this.cart.add(p.id, this.qty());
+    this.cart.add(p.id, this.qty());
     const added = this.cart.qty(p.id) - before;
-    if (added <= 0 && before < p.stock) return; // lỗi đã được báo bằng toast từ giỏ
     this.toast.show(added <= 0 ? `Giỏ đã có tối đa số lượng còn trong kho (${this.ps.qty(p.stock)} ${this.ps.unit(p)})`
       : added < this.qty() ? `Chỉ thêm được ${this.ps.qty(added)} ${this.ps.unit(p)} vì kho còn ${this.ps.qty(p.stock)} ${this.ps.unit(p)}`
       : `Đã thêm ${this.ps.qty(added)} ${this.ps.unit(p)} ${this.name()} vào giỏ`);
+    return added > 0;
+  }
+  protected buyNow(): void {
+    if (this.add()) void this.router.navigateByUrl('/thanh-toan');
   }
   protected toggleCompare(): void {
     if (!this.cmp.toggle(this.p()!.id)) this.toast.show('Chỉ so sánh tối đa 3 sản phẩm. Bỏ bớt ở trang So sánh nhé.');

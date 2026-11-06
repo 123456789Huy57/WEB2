@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation, computed, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService, apiMessage } from '../../core/auth.service';
+import { AuthService } from '../../core/auth.service';
 import { OrderService, OrderView } from '../../core/order.service';
 import { ProductService } from '../../core/product.service';
 import { CartService } from '../../core/cart.service';
@@ -44,46 +44,23 @@ export class Account {
   protected savedVouchers = computed(() => this.vs.saved().map(c => this.vs.find(c)).filter((v): v is Voucher => !!v));
 
   private u = this.auth.user();
-  protected passwordForm = { current: '', next: '', confirm: '' };
-  protected passwordBusy = signal(false);
-  protected passwordError = signal('');
-  protected profileBusy = signal(false);
   protected profile = { fullName: this.u?.fullName ?? '', phone: this.u?.phone ?? '', address: this.u?.address ?? '' };
 
-  protected async buyAgain(o: OrderView): Promise<void> {
-    try {
-      const skipped = await this.orderSvc.reorder(o);
-      const added = o.lines.length - skipped.length;
-      this.toast.show(skipped.length ? `Đã thêm ${added}/${o.lines.length} sản phẩm, số còn lại tạm hết hàng` : `Đã thêm ${added} sản phẩm của đơn ${o.orderCode} vào giỏ`);
-    } catch (error) { this.toast.show(apiMessage(error)); }
+  protected buyAgain(o: OrderView): void {
+    const ok = o.lines.filter(l => l.p.active !== false && l.p.stock > 0);
+    ok.forEach(l => this.cart.add(l.p.id, Math.min(l.qty, l.p.stock)));
+    this.toast.show(ok.length < o.lines.length ? `Đã thêm ${ok.length}/${o.lines.length} sản phẩm, số còn lại tạm hết hàng` : `Đã thêm ${ok.length} sản phẩm của đơn ${o.orderCode} vào giỏ`);
   }
   protected async cancelOrder(o: OrderView): Promise<void> {
-    if (!(await this.cf.ask('Hủy đơn hàng?', `Đơn ${o.orderCode} sẽ bị hủy và hàng được trả lại kho.`, 'Hủy đơn'))) return;
-    try { await this.orderSvc.cancel(o); this.toast.show(`Đã hủy đơn ${o.orderCode}`); }
-    catch (error) { this.toast.show(apiMessage(error)); }
+    if (!(await this.cf.ask(`Hủy đơn ${o.orderCode}?`, 'Đơn chưa được soạn nên bạn hủy được ngay. Nếu đã chuyển khoản, FreshMart hoàn tiền trong 3–5 ngày làm việc.', 'Hủy đơn'))) return;
+    this.orderSvc.setStatus(o.orderCode, 'cancelled');
+    this.toast.show(`Đã hủy đơn ${o.orderCode}`);
   }
   protected useVoucher(code: string): void { this.cart.setVoucher(code); this.router.navigateByUrl('/gio-hang'); }
-  protected async saveProfile(): Promise<void> {
-    if (this.profileBusy()) return;
-    this.profileBusy.set(true);
-    try { await this.auth.update({ ...this.profile, fullName: this.profile.fullName.trim() }); this.toast.show('Đã lưu thông tin'); }
-    catch (error) { this.toast.show(apiMessage(error)); }
-    finally { this.profileBusy.set(false); }
+  protected saveProfile(form: NgForm): void {
+    if (form.invalid) { form.form.markAllAsTouched(); this.toast.show('Kiểm tra lại họ tên và số điện thoại'); return; }
+    this.auth.update({ ...this.profile, fullName: this.profile.fullName.trim(), phone: this.profile.phone.trim() });
+    this.toast.show('Đã lưu thông tin');
   }
-  protected async changePassword(): Promise<void> {
-    if (this.passwordBusy()) return;
-    this.passwordError.set('');
-    if (this.passwordForm.next.length < 8) { this.passwordError.set('Mật khẩu mới cần ít nhất 8 ký tự'); return; }
-    if (this.passwordForm.next !== this.passwordForm.confirm) { this.passwordError.set('Hai mật khẩu mới chưa trùng nhau'); return; }
-    this.passwordBusy.set(true);
-    try {
-      await this.auth.changePassword(this.passwordForm.current, this.passwordForm.next);
-      this.toast.show('Đã đổi mật khẩu. Vui lòng đăng nhập lại.');
-      this.router.navigateByUrl('/dang-nhap');
-    } catch (error) { this.passwordError.set(apiMessage(error)); }
-    finally { this.passwordBusy.set(false); }
-  }
-  protected async logout(): Promise<void> {
-    try { await this.auth.logout(); this.router.navigateByUrl('/'); } catch (error) { this.toast.show(apiMessage(error)); }
-  }
+  protected logout(): void { this.auth.logout(); this.router.navigateByUrl('/'); }
 }
