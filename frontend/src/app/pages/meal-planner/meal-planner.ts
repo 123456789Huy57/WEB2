@@ -123,8 +123,8 @@ export class MealPlanner implements AfterViewInit {
       this.featTab.set('steps');
       this.qtyOverride.set({});
       this.loading.set(false);
-      // Màn hình hẹp: cột kết quả nằm dưới bộ lọc nên cuộn xuống; màn hình rộng hai cột đã thấy ngay.
-      if (window.matchMedia('(max-width: 960px)').matches) setTimeout(() => this.resultsEl()?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+      // Kết quả nằm dưới hai ô chọn nên cuộn xuống cho khách thấy ngay.
+      setTimeout(() => this.resultsEl()?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' }));
     }, 450);
   }
 
