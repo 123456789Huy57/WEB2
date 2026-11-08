@@ -185,7 +185,7 @@
           <div class="mp-plate-img"><img [fmImg]="r.name" [src]="r.imageUrl" [alt]="r.name"></div>
           @for (c of callouts(); track c.line.ingredientId; let i = $index) {
             <span class="mp-callout pos-{{ i }}" [class.need]="!isSel(c.line.ingredientId)">
-              @if (c.product) { <img [src]="ps.img(c.product, 120)" alt=""> }
+              <img [fmImg]="c.ingredient?.name ?? ''" [src]="c.product ? ps.img(c.product, 120) : (c.ingredient?.imageUrl ?? '')" alt="">
               <span><b>{{ c.ingredient?.name }}</b><small>{{ isSel(c.line.ingredientId) ? 'Bạn có sẵn' : 'Cần mua' }}</small></span>
             </span>
           }

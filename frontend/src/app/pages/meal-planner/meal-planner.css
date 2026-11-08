@@ -181,7 +181,7 @@
 .mp-actions { display: grid; grid-template-columns: 1fr auto; gap: 8px; padding-top: 14px; border-top: 1.5px solid var(--stone); }
 
 .mp-placeholder { padding: clamp(28px, 4vw, 48px); }
-.mp-how { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 20px; counter-reset: how; list-style: none; }
+.mp-how { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 20px; counter-reset: how; padding: 0; list-style: none; }
 .mp-how li { display: grid; gap: 4px; padding: 16px; background: var(--stone); border-radius: var(--r); counter-increment: how; }
 .mp-how li::before { content: "0" counter(how); font-family: var(--display); font-size: 28px; font-weight: 600; color: var(--forest); }
 .mp-how span { font-size: var(--t-small); color: var(--muted); }
@@ -190,14 +190,14 @@
 .mp-feature { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, .9fr); gap: 24px; align-items: center; padding: clamp(20px, 3vw, 36px); scroll-margin-top: calc(var(--header-h) + 16px); }
 .mp-badge { display: inline-block; padding: 5px 10px; background: var(--yellow); font-family: var(--display); font-size: 14px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; border-radius: var(--r); }
 .mp-feature-name { margin-top: 14px; font-family: var(--display); font-size: clamp(36px, 4vw, 56px); font-weight: 600; line-height: 1.1; text-transform: uppercase; }
-.mp-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; list-style: none; }
+.mp-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; padding: 0; list-style: none; }
 .mp-meta li { padding: 6px 10px; border: 1.5px solid var(--stone-2); border-radius: var(--r); font-size: 14px; font-weight: 500; }
 .mp-match { margin-top: 16px; padding: 10px 14px; border-left: 3px solid var(--forest); background: color-mix(in srgb, var(--forest) 7%, var(--paper)); font-size: 15px; }
 .mp-feature-cta { margin-top: 20px; }
 .mp-plate { position: relative; padding: 36px 16px; }
 .mp-plate-img { aspect-ratio: 1; max-width: 300px; margin: 0 auto; overflow: hidden; border-radius: 50%; border: 8px solid var(--cream); box-shadow: 0 18px 40px rgba(18, 18, 18, .16); }
 .mp-plate-img img { width: 100%; height: 100%; object-fit: cover; }
-.mp-callout { position: absolute; display: flex; align-items: center; gap: 8px; max-width: 170px; padding: 6px 10px 6px 6px; background: var(--paper); border: 1.5px solid var(--forest); border-radius: var(--r); box-shadow: 0 6px 18px rgba(18, 18, 18, .1); }
+.mp-callout { position: absolute; display: flex; width: max-content; align-items: center; gap: 8px; max-width: 170px; padding: 6px 10px 6px 6px; background: var(--paper); border: 1.5px solid var(--forest); border-radius: var(--r); box-shadow: 0 6px 18px rgba(18, 18, 18, .1); }
 .mp-callout.need { border-color: var(--stone-2); }
 .mp-callout img { width: 32px; height: 32px; flex: none; object-fit: cover; border-radius: var(--r); }
 .mp-callout span { display: flex; flex-direction: column; min-width: 0; }
@@ -212,7 +212,7 @@
 /* Danh sách cần mua */
 .mp-shop { padding: 18px 20px; }
 .mp-shop-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
-.mp-shop-list { display: grid; gap: 8px; margin-top: 16px; list-style: none; }
+.mp-shop-list { display: grid; gap: 8px; margin-top: 16px; padding: 0; list-style: none; }
 .mp-shop-row { display: grid; grid-template-columns: 48px minmax(0, 1fr) auto auto; align-items: center; gap: 12px; padding: 8px 10px 8px 8px; border: 1.5px solid var(--stone); border-radius: var(--r); }
 .mp-shop-row .ph { width: 48px; height: 48px; }
 .mp-shop-row b { font-size: 15px; }
@@ -226,7 +226,7 @@
 /* Cách làm / dinh dưỡng / mẹo */
 .mp-tabs-card { padding: 16px 20px 20px; }
 .mp-seg-tabs { max-width: 420px; margin-bottom: 18px; }
-.mp-steps { display: grid; gap: 12px; list-style: none; counter-reset: st; }
+.mp-steps { display: grid; gap: 12px; padding: 0; list-style: none; counter-reset: st; }
 .mp-steps li { display: grid; grid-template-columns: 32px minmax(0, 1fr); column-gap: 12px; counter-increment: st; }
 .mp-steps li::before { content: counter(st); grid-row: span 2; width: 32px; height: 32px; display: grid; place-items: center; background: var(--ink); color: var(--cream); font-family: var(--display); font-weight: 600; border-radius: var(--r); }
 .mp-steps b { font-weight: 600; }
