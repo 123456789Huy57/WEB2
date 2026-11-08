@@ -25,6 +25,8 @@ export class DataService {
   readonly users = signal<UserRecord[]>([]);
   readonly error = signal<string>('');
 
+  /** Công thức, nguyên liệu, cửa hàng đã tải sẵn trong load(); giữ hàm này để các trang gọi như bản main. */
+  loadExtras(): Promise<void> { return Promise.resolve(); }
   async load(): Promise<void> {
     try {
       const d = await firstValueFrom(forkJoin({
