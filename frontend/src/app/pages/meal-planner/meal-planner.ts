@@ -81,6 +81,16 @@ export class MealPlanner implements AfterViewInit {
     const k = norm(this.q().trim());
     return this.mp.ingredients().filter(i => (this.group() === 'all' || i.categoryId === this.group()) && (!k || norm(i.name).includes(k)));
   });
+  // Chia trang danh sách nguyên liệu: mỗi trang vài món để khung chọn luôn gọn, không phải cuộn dài
+  protected readonly ingPageSize = 8;
+  protected ingPage = signal(0);
+  protected ingPages = computed(() => Math.max(1, Math.ceil(this.visible().length / this.ingPageSize)));
+  protected pagedIngs = computed(() => {
+    const page = Math.min(this.ingPage(), this.ingPages() - 1);
+    return this.visible().slice(page * this.ingPageSize, (page + 1) * this.ingPageSize);
+  });
+  protected setQuery(v: string): void { this.q.set(v); this.ingPage.set(0); }
+  protected setGroup(g: string): void { this.group.set(g); this.ingPage.set(0); }
   protected isSel(id: string): boolean { return this.selected().includes(id); }
   protected clearSelected(): void { this.selected.set([]); store.set('mpSel', []); }
   protected toggle(id: string): void {
@@ -109,6 +119,7 @@ export class MealPlanner implements AfterViewInit {
     setTimeout(() => {
       this.results.set(this.mp.generate(this.selected(), this.f()));
       this.featuredId.set(null);
+      this.otherPage.set(0);
       this.featTab.set('steps');
       this.qtyOverride.set({});
       this.loading.set(false);
@@ -121,7 +132,7 @@ export class MealPlanner implements AfterViewInit {
   protected reset(): void {
     this.clearSelected();
     this.f.set({ ...MealPlanner.DEFAULT_FILTERS });
-    this.q.set(''); this.group.set('all');
+    this.q.set(''); this.group.set('all'); this.ingPage.set(0); this.otherPage.set(0);
     this.results.set(null); this.featuredId.set(null); this.qtyOverride.set({});
   }
 
@@ -134,6 +145,13 @@ export class MealPlanner implements AfterViewInit {
     return res.find(x => x.recipe.id === this.featuredId()) ?? res[0];
   });
   protected others = computed(() => (this.results() ?? []).filter(x => x !== this.featured()));
+  protected readonly otherPageSize = 6;
+  protected otherPage = signal(0);
+  protected otherPages = computed(() => Math.max(1, Math.ceil(this.others().length / this.otherPageSize)));
+  protected pagedOthers = computed(() => {
+    const page = Math.min(this.otherPage(), this.otherPages() - 1);
+    return this.others().slice(page * this.otherPageSize, (page + 1) * this.otherPageSize);
+  });
   protected featLines = computed(() => {
     const x = this.featured();
     return x ? x.recipe.ingredients.map(l => this.mp.purchase(l, this.f().servings, x.recipe)) : [];

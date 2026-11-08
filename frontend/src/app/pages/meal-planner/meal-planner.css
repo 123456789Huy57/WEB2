@@ -145,7 +145,7 @@
 .mp-groups { display: flex; flex-wrap: wrap; gap: 6px; }
 .chip-sm { height: 34px; padding: 0 11px; font-size: 14px; }
 
-.mp-ings { display: grid; gap: 6px; max-height: 300px; overflow: auto; padding-right: 2px; scrollbar-width: thin; }
+.mp-ings { display: grid; gap: 6px; }
 .mp-ing { display: grid; grid-template-columns: 40px minmax(0, 1fr) 12px; align-items: center; gap: 12px; padding: 6px 12px 6px 6px; border: 1.5px solid var(--stone); border-radius: var(--r); background: var(--paper); text-align: left; cursor: pointer; transition: border-color .15s, background .15s; }
 .mp-ing:hover { border-color: var(--stone-2); background: var(--cream); }
 .mp-ing .ph, .mp-shop-row .ph { width: 40px; height: 40px; overflow: hidden; border-radius: var(--r); background: var(--stone); }
@@ -272,3 +272,8 @@
   .mp-nut { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .mp-callout { max-width: 140px; }
 }
+.mp-pager { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 13px; color: var(--muted); }
+.mp-pager button { width: 34px; height: 34px; border: 1.5px solid var(--stone-2); border-radius: var(--r); background: var(--paper); font-size: 20px; line-height: 1; cursor: pointer; }
+.mp-pager button:hover:not(:disabled) { border-color: var(--ink); }
+.mp-pager button:disabled { opacity: .35; cursor: default; }
+.mp-pager-wide { justify-content: center; gap: 16px; }

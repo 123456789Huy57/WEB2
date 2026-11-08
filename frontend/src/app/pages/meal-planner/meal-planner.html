@@ -72,15 +72,15 @@
         <div class="mp-search">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg>
           <label class="sr" for="ing-q">Tìm nguyên liệu</label>
-          <input id="ing-q" type="search" placeholder="Tìm: trứng, cà chua, thịt heo…" autocomplete="off" [value]="q()" (input)="q.set($any($event.target).value)">
+          <input id="ing-q" type="search" placeholder="Tìm: trứng, cà chua, thịt heo…" autocomplete="off" [value]="q()" (input)="setQuery($any($event.target).value)">
         </div>
         <div class="mp-groups" role="group" aria-label="Nhóm nguyên liệu">
           @for (g of groups; track g[0]) {
-            <button class="chip chip-sm" type="button" [attr.aria-pressed]="group() === g[0]" (click)="group.set(g[0])">{{ g[1] }}</button>
+            <button class="chip chip-sm" type="button" [attr.aria-pressed]="group() === g[0]" (click)="setGroup(g[0])">{{ g[1] }}</button>
           }
         </div>
         <div class="mp-ings" role="listbox" aria-multiselectable="true" aria-label="Chọn nguyên liệu">
-          @for (i of visible(); track i.id) {
+          @for (i of pagedIngs(); track i.id) {
             <button class="mp-ing" type="button" role="option" [attr.aria-selected]="isSel(i.id)" (click)="toggle(i.id)">
               <span class="ph"><img [fmImg]="i.name" [src]="mp.ingredientImage(i)" alt="" loading="lazy"></span>
               <span class="nm"><b>{{ i.name }}</b><small>{{ groupName().get(i.categoryId) }}</small></span>
@@ -90,6 +90,13 @@
             <p class="mp-empty-line">Chưa có “{{ q() }}”. Thử tên gọi khác nhé.</p>
           }
         </div>
+        @if (ingPages() > 1) {
+          <nav class="mp-pager" aria-label="Trang nguyên liệu">
+            <button type="button" aria-label="Trang trước" [disabled]="ingPage() === 0" (click)="ingPage.set(ingPage() - 1)">‹</button>
+            <span class="num">{{ ingPage() + 1 }} / {{ ingPages() }} · {{ visible().length }} nguyên liệu</span>
+            <button type="button" aria-label="Trang sau" [disabled]="ingPage() >= ingPages() - 1" (click)="ingPage.set(ingPage() + 1)">›</button>
+          </nav>
+        }
         @if (selected().length) {
           <div class="mp-picked">
             <div class="mp-picked-head"><b>Đã chọn {{ selected().length }}</b><button class="mp-text-btn" type="button" (click)="clearSelected()">Xóa tất cả</button></div>
@@ -250,7 +257,7 @@
       @if (others().length) {
         <h3 class="mp-grid-title">Món khác hợp với bếp của bạn</h3>
         <div class="mp-grid">
-          @for (o of others(); track o.recipe.id) {
+          @for (o of pagedOthers(); track o.recipe.id) {
             <article class="mp-rec">
               <button class="mp-rec-img" type="button" (click)="feature(o.recipe.id)" [attr.aria-label]="'Xem ' + o.recipe.name + ' ở phần trên'">
                 <img [fmImg]="o.recipe.name" [src]="o.recipe.imageUrl" alt="" loading="lazy">
@@ -271,6 +278,13 @@
             </article>
           }
         </div>
+        @if (otherPages() > 1) {
+          <nav class="mp-pager mp-pager-wide" aria-label="Trang món khác">
+            <button type="button" aria-label="Trang trước" [disabled]="otherPage() === 0" (click)="otherPage.set(otherPage() - 1)">‹</button>
+            <span class="num">{{ otherPage() + 1 }} / {{ otherPages() }}</span>
+            <button type="button" aria-label="Trang sau" [disabled]="otherPage() >= otherPages() - 1" (click)="otherPage.set(otherPage() + 1)">›</button>
+          </nav>
+        }
       }
     } @else {
       <div class="mp-card mp-placeholder"><p class="h3">Chưa có món khớp nguyên liệu và tiêu chí</p><p class="muted">Thử bỏ bớt yêu cầu, đổi bữa ăn hoặc chọn thêm nguyên liệu nhé.</p></div>
