@@ -51,7 +51,7 @@ export class AdminShell {
     { path: '/admin', label: 'Tổng quan' }, { path: '/admin/don-hang', label: 'Đơn hàng' }, { path: '/admin/san-pham', label: 'Sản phẩm' },
     { path: '/admin/ton-kho', label: 'Tồn kho' }, { path: '/admin/voucher', label: 'Voucher' }, { path: '/admin/khach-hang', label: 'Khách hàng' }
   ];
-  protected logout(): void { this.auth.logout(); this.router.navigateByUrl('/'); }
+  protected async logout(): Promise<void> { await this.auth.logout(); this.router.navigateByUrl('/'); }
   protected async reset(): Promise<void> {
     if (await this.cf.ask('Khôi phục dữ liệu mẫu?', 'Mọi chỉnh sửa về giá, tồn kho, voucher, đơn hàng và tài khoản mới sẽ bị xóa.', 'Khôi phục')) this.data.resetEdits();
   }

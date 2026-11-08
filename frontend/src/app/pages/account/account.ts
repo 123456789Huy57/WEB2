@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation, computed, inject, signal } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../core/auth.service';
+import { AuthService, apiMessage } from '../../core/auth.service';
 import { OrderService, OrderView } from '../../core/order.service';
 import { ProductService } from '../../core/product.service';
 import { CartService } from '../../core/cart.service';
@@ -57,10 +57,12 @@ export class Account {
     this.toast.show(`Đã hủy đơn ${o.orderCode}`);
   }
   protected useVoucher(code: string): void { this.cart.setVoucher(code); this.router.navigateByUrl('/gio-hang'); }
-  protected saveProfile(form: NgForm): void {
+  protected async saveProfile(form: NgForm): Promise<void> {
     if (form.invalid) { form.form.markAllAsTouched(); this.toast.show('Kiểm tra lại họ tên và số điện thoại'); return; }
-    this.auth.update({ ...this.profile, fullName: this.profile.fullName.trim(), phone: this.profile.phone.trim() });
-    this.toast.show('Đã lưu thông tin');
+    try {
+      await this.auth.update({ fullName: this.profile.fullName.trim(), phone: this.profile.phone.trim(), address: this.profile.address });
+      this.toast.show('Đã lưu thông tin');
+    } catch (e) { this.toast.show(apiMessage(e)); }
   }
-  protected logout(): void { this.auth.logout(); this.router.navigateByUrl('/'); }
+  protected async logout(): Promise<void> { await this.auth.logout(); this.router.navigateByUrl('/'); }
 }
