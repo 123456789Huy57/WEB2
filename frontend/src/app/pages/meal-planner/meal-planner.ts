@@ -5,7 +5,7 @@ import { DataService } from '../../core/data.service';
 import { ProductService } from '../../core/product.service';
 import { CartService } from '../../core/cart.service';
 import { ToastService } from '../../core/toast.service';
-import { DIFF_LABEL, INGREDIENT_GROUPS, MEAL_LABEL, MealPlannerService, PlannerFilters, PlannerResult } from '../../core/meal-planner.service';
+import { DIFF_LABEL, INGREDIENT_GROUPS, MEAL_LABEL, MealPlannerService, PlannerFilters, PlannerResult, PurchaseLine } from '../../core/meal-planner.service';
 import { Recipe } from '../../core/models';
 import { norm, store } from '../../core/storage';
 import { VndPipe } from '../../shared/vnd.pipe';
@@ -62,6 +62,12 @@ export class MealPlanner implements AfterViewInit {
     this.toast.show(`Chúc bạn nấu ${r.name} ngon miệng!`);
   }
 
+  /** Nút nấu ngay ở món nổi bật (không mở hộp thoại) */
+  protected async cookNow2(r: Recipe): Promise<void> {
+    await this.cooked(r);
+    this.toast.show(`Chúc bạn nấu ${r.name} ngon miệng!`);
+  }
+
   protected groups = INGREDIENT_GROUPS;
   protected meal = MEAL_LABEL;
   protected diff = DIFF_LABEL;
@@ -83,17 +89,14 @@ export class MealPlanner implements AfterViewInit {
   }
 
   // Bước 2: tiêu chí
-  protected f = signal<PlannerFilters>({ mealType: 'all', time: 'all', difficulty: 'all', servings: 2, lowFat: false, highProtein: false, vegetarian: false });
+  private static readonly DEFAULT_FILTERS: PlannerFilters = { mealType: 'all', time: 'all', difficulty: 'all', servings: 2, lowFat: false, highProtein: false, vegetarian: false };
+  protected f = signal<PlannerFilters>({ ...MealPlanner.DEFAULT_FILTERS });
+  protected groupName = computed(() => new Map(this.groups));
   protected patch<K extends keyof PlannerFilters>(k: K, v: PlannerFilters[K]): void { this.f.update(x => ({ ...x, [k]: v })); }
 
-  // Các tiêu chí mở rộng được thu thập ở frontend để nhóm backend tích hợp API recommendation.
-  protected taste = signal('all');
-  protected cuisine = signal('all');
-  protected extraRequest = signal('');
-  protected readonly tastes = ['Đậm đà', 'Thanh nhẹ', 'Cay', 'Chua ngọt', 'Béo thơm'];
-  protected readonly cuisines = ['Việt Nam', 'Châu Á', 'Châu Âu', 'Hàn Quốc', 'Nhật Bản'];
   protected readonly mealOptions = [{ v: 'all', l: 'Bất kỳ' }, { v: 'breakfast', l: 'Bữa sáng' }, { v: 'lunch', l: 'Bữa trưa' }, { v: 'dinner', l: 'Bữa tối' }, { v: 'snack', l: 'Ăn vặt' }];
   protected readonly timeOptions = [{ v: 'all', l: 'Không giới hạn' }, { v: 'quick', l: 'Dưới 15 phút' }, { v: 'normal', l: '15 – 30 phút' }, { v: 'long', l: '30 – 60 phút' }];
+  protected readonly servingOptions = [1, 2, 3, 4, 5, 6];
   protected readonly difficultyOptions = [{ v: 'all', l: 'Bất kỳ' }, { v: 'easy', l: 'Dễ' }, { v: 'medium', l: 'Vừa' }, { v: 'hard', l: 'Thử thách' }];
 
   // Bước 3: kết quả
@@ -105,10 +108,94 @@ export class MealPlanner implements AfterViewInit {
     this.loading.set(true);
     setTimeout(() => {
       this.results.set(this.mp.generate(this.selected(), this.f()));
+      this.featuredId.set(null);
+      this.featTab.set('steps');
+      this.qtyOverride.set({});
       this.loading.set(false);
-      setTimeout(() => this.resultsEl()?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+      // Màn hình hẹp: cột kết quả nằm dưới bộ lọc nên cuộn xuống; màn hình rộng hai cột đã thấy ngay.
+      if (window.matchMedia('(max-width: 960px)').matches) setTimeout(() => this.resultsEl()?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' }));
     }, 450);
   }
+
+  /** Đưa bộ chọn về như lúc mới mở trang */
+  protected reset(): void {
+    this.clearSelected();
+    this.f.set({ ...MealPlanner.DEFAULT_FILTERS });
+    this.q.set(''); this.group.set('all');
+    this.results.set(null); this.featuredId.set(null); this.qtyOverride.set({});
+  }
+
+  // Món nổi bật (mặc định món hợp nhất) và phần mua hàng ngay trên trang, không cần mở hộp thoại
+  protected featuredId = signal<string | null>(null);
+  protected featTab = signal<'steps' | 'nutrition' | 'tips'>('steps');
+  protected featured = computed(() => {
+    const res = this.results();
+    if (!res?.length) return null;
+    return res.find(x => x.recipe.id === this.featuredId()) ?? res[0];
+  });
+  protected others = computed(() => (this.results() ?? []).filter(x => x !== this.featured()));
+  protected featLines = computed(() => {
+    const x = this.featured();
+    return x ? x.recipe.ingredients.map(l => this.mp.purchase(l, this.f().servings, x.recipe)) : [];
+  });
+  protected featMissing = computed(() => this.featLines().filter(x => !this.isSel(x.line.ingredientId)));
+  /** Tối đa 4 nguyên liệu chú thích quanh ảnh món: ưu tiên món bạn đã có */
+  protected callouts = computed(() => [...this.featLines()].sort((a, b) => Number(this.isSel(b.line.ingredientId)) - Number(this.isSel(a.line.ingredientId))).slice(0, 4));
+  protected featTips = computed(() => {
+    const r = this.featured()?.recipe;
+    return r ? r.steps.map(s => this.stepTip(s)).filter((t): t is string => !!t) : [];
+  });
+  private featureEl = viewChild<ElementRef<HTMLElement>>('featureEl');
+  protected feature(id: string): void {
+    this.featuredId.set(id); this.featTab.set('steps'); this.qtyOverride.set({});
+    setTimeout(() => this.featureEl()?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+  }
+  protected matchPct(x: PlannerResult): number {
+    const total = x.recipe.ingredients.length;
+    return total ? Math.round((x.matched / total) * 100) : 0;
+  }
+
+  // Số lượng mua từng dòng, chỉnh bằng nút − / + theo nấc bán (0,5 kg hoặc 1 đơn vị)
+  protected qtyOverride = signal<Record<string, number>>({});
+  protected lineQty(x: PurchaseLine): number { return this.qtyOverride()[x.line.ingredientId] ?? x.cartQty; }
+  protected bump(x: PurchaseLine, dir: 1 | -1): void {
+    if (!x.product) return;
+    const step = this.ps.step(x.product);
+    const q = Math.max(step, Math.min(x.product.stock, +(this.lineQty(x) + dir * step).toFixed(2)));
+    this.qtyOverride.update(o => ({ ...o, [x.line.ingredientId]: q }));
+  }
+  protected busy = signal<string | null>(null);
+  protected async addLine(x: PurchaseLine): Promise<void> {
+    const p = x.product;
+    if (!p || this.busy()) return;
+    this.busy.set(x.line.ingredientId);
+    try {
+      const before = this.cart.qty(p.id);
+      await this.cart.add(p.id, this.lineQty(x));
+      const added = this.cart.qty(p.id) - before;
+      if (added > 0) this.toast.show(`Đã thêm ${this.ps.qty(added)} ${this.ps.unit(p)} ${this.ps.shortName(p)} vào giỏ`);
+    } finally { this.busy.set(null); }
+  }
+  /** Thêm cả phần còn thiếu của một món (bỏ qua gia vị và hàng bán nguyên thùng, như hộp thoại công thức) */
+  protected async addRecipe(r: Recipe, useOverrides = false): Promise<void> {
+    if (this.busy()) return;
+    const lines = r.ingredients.map(l => this.mp.purchase(l, this.f().servings, r))
+      .filter(x => x.product && !this.isSel(x.line.ingredientId) && !x.bulk && x.ingredient?.categoryId !== 'condiments');
+    if (!lines.length) { this.toast.show(`Bạn đã có đủ nguyên liệu chính cho ${r.name}`); return; }
+    this.busy.set(r.id);
+    try {
+      const { added, failed } = await this.cart.addMany(lines.map(x => ({ id: x.product!.id, qty: useOverrides ? this.lineQty(x) : x.cartQty })));
+      if (added) void this.cooked(r);
+      this.toast.show(failed.length
+        ? `Đã thêm ${added}/${lines.length} sản phẩm. Chưa thêm đủ: ${failed.join(', ')}`
+        : `Đã thêm ${added} sản phẩm còn thiếu của “${r.name}” vào giỏ`);
+    } finally { this.busy.set(null); }
+  }
+  protected readonly tagLabel: Record<string, string> = {
+    family: 'Gia đình', healthy: 'Lành mạnh', 'high-protein': 'Nhiều đạm', vegetarian: 'Món chay', quick: 'Nhanh gọn', seafood: 'Hải sản',
+    comfort: 'Ấm bụng', premium: 'Đãi khách', fresh: 'Thanh mát', budget: 'Tiết kiệm', 'low-cal': 'Ít calo', vegan: 'Thuần chay', dessert: 'Tráng miệng'
+  };
+  protected tags(r: Recipe): string[] { return r.tags.filter(t => this.tagLabel[t]).slice(0, 2).map(t => this.tagLabel[t]); }
 
   // Bước 4: xem món, thêm phần còn thiếu vào giỏ
   private dlg = viewChild.required<ElementRef<HTMLDialogElement>>('dlg');
