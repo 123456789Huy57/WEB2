@@ -16,8 +16,14 @@ if (nodeEnv === 'production' && (!mongodbUri || !configuredSecret)) {
   throw new Error('Production requires MONGODB_URI and SESSION_SECRET.');
 }
 
+// Số proxy đứng trước backend khi deploy: Vercel (chuyển tiếp /api) -> bộ cân bằng tải của Render -> Express.
+// Express cần biết để nhận đúng HTTPS (cookie Secure) và IP thật của khách (giới hạn số lần đăng nhập).
+const trustProxy = Number(process.env.TRUST_PROXY || 0);
+if (!Number.isInteger(trustProxy) || trustProxy < 0 || trustProxy > 5) throw new Error('TRUST_PROXY must be an integer between 0 and 5.');
+
 module.exports = {
   port,
+  trustProxy,
   nodeEnv,
   frontendOrigin: process.env.FRONTEND_ORIGIN || 'http://localhost:4200',
   mongodbUri,
@@ -26,4 +32,12 @@ module.exports = {
   temporarySessionSecret: !configuredSecret,
   sessionCookieName: 'freshmart.sid',
   sessionMaxAge: 60 * 60 * 1000,
+  // Địa chỉ backend mà trình duyệt/cổng thanh toán gọi tới (để tạo return URL)
+  backendUrl: (process.env.BACKEND_URL || `http://localhost:${port}`).replace(/\/$/, ''),
+  payment: {
+    provider: process.env.PAYMENT_PROVIDER || (process.env.VNPAY_TMN_CODE ? 'vnpay' : 'mock'),
+    vnpTmnCode: process.env.VNPAY_TMN_CODE?.trim() || '',
+    vnpHashSecret: process.env.VNPAY_HASH_SECRET?.trim() || '',
+    vnpUrl: process.env.VNPAY_URL || 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html',
+  },
 };

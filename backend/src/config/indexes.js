@@ -17,6 +17,9 @@ async function ensureIndexes() {
     db.collection('orders').createIndex({ userId: 1, createdAt: -1 }),
     db.collection('orders').createIndex({ status: 1, createdAt: -1 }),
     db.collection('orders').createIndex({ createdAt: -1 }),
+    db.collection('orders').createIndex({ paymentMethod: 1, paymentStatus: 1, status: 1, paymentDueAt: 1 }), // quét đơn VNPay quá hạn
+    db.collection('orders').createIndex({ 'items.productId': 1, status: 1 }), // chặn đổi đơn vị khi còn đơn mở
+    db.collection('payments').createIndex({ status: 1, updatedAt: -1 }),
     db.collection('vouchers').createIndex({ id: 1 }, { unique: true }),
     db.collection('vouchers').createIndex({ code: 1 }, { unique: true }),
     db.collection('voucherUsages').createIndex({ orderId: 1 }, { unique: true }),
@@ -25,6 +28,16 @@ async function ensureIndexes() {
     db.collection('inventoryMovements').createIndex({ productId: 1, createdAt: -1 }),
     db.collection('inventoryMovements').createIndex({ orderId: 1 }),
     db.collection('savedVouchers').createIndex({ userId: 1, code: 1 }, { unique: true }),
+    db.collection('recipes').createIndex({ id: 1 }, { unique: true }),
+    db.collection('recipes').createIndex({ slug: 1 }, { unique: true }),
+    db.collection('ingredients').createIndex({ id: 1 }, { unique: true }),
+    db.collection('ingredientProducts').createIndex({ ingredientId: 1 }, { unique: true }),
+    db.collection('stores').createIndex({ id: 1 }, { unique: true }),
+    db.collection('recipeCooks').createIndex({ day: 1, recipeId: 1 }),
+    db.collection('reviews').createIndex({ productId: 1, userId: 1 }, { unique: true }),
+    db.collection('reviews').createIndex({ productId: 1, createdAt: -1 }),
+    db.collection('payments').createIndex({ txnRef: 1 }, { unique: true }),
+    db.collection('payments').createIndex({ orderId: 1, createdAt: -1 }),
   ]);
 }
 module.exports = { ensureIndexes };

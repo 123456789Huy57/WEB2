@@ -63,7 +63,9 @@ export class OrderLookup {
     o.lines.filter(l => l.p.stock > 0).forEach(l => this.cart.add(l.p.id, Math.min(l.qty, l.p.stock)));
     this.toast.show(`Đã thêm sản phẩm của đơn ${o.orderCode} vào giỏ`);
   }
-  protected async cancel(_o: OrderView): Promise<void> {
-    this.toast.show('Quản lý đơn hàng đang được hoàn thiện.');
+  protected async cancel(o: OrderView): Promise<void> {
+    if (!(await this.cf.ask(`Hủy đơn ${o.orderCode}?`, 'Đơn chưa được soạn nên bạn hủy được ngay. Nếu đã chuyển khoản, FreshMart hoàn tiền trong 3–5 ngày làm việc.', 'Hủy đơn'))) return;
+    this.orders.setStatus(o.orderCode, 'cancelled');
+    this.toast.show(`Đã hủy đơn ${o.orderCode}`);
   }
 }

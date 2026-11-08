@@ -7,7 +7,7 @@ import { VoucherService } from '../../core/voucher.service';
 import { AuthService } from '../../core/auth.service';
 import { OrderService, PAYMENT_LABEL } from '../../core/order.service';
 import { ToastService } from '../../core/toast.service';
-import { PaymentMethod } from '../../core/models';
+import { PaymentMethod, Product } from '../../core/models';
 import { VndPipe } from '../../shared/vnd.pipe';
 import { ImgFallbackDirective } from '../../shared/img-fallback.directive';
 
@@ -39,7 +39,11 @@ export class Checkout {
   protected t = this.cart.totals;
   protected slots = buildSlots();
   protected sending = signal(false);
-  protected done = signal<{ code: string; total: number; slot: string; payment: string; firstName: string; phone: string; guest: boolean } | null>(null);
+  protected done = signal<{
+    code: string; subtotal: number; shipping: number; discount: number; total: number;
+    slot: string; payment: string; name: string; phone: string; address: string; note: string;
+    items: { product: Product; qty: number; price: number }[]; guest: boolean;
+  } | null>(null);
   private tried = signal(false);
 
   private u = this.auth.user();
@@ -71,6 +75,36 @@ export class Checkout {
   }
 
   protected submit(): void {
-    this.toast.show('Đặt hàng đang được hoàn thiện. Vui lòng quay lại sau.');
+    this.tried.set(true);
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      const first = (['name', 'phone', 'email', 'address'] as const).find(k => this.form.controls[k].invalid);
+      document.getElementById({ name: 'f-name', phone: 'f-phone', email: 'f-email', address: 'f-addr' }[first!])?.focus();
+      this.toast.show('Kiểm tra lại thông tin người nhận');
+      return;
+    }
+    // Tồn kho có thể đã thay đổi từ lúc bỏ vào giỏ
+    const over = this.cart.lines().filter(l => l.qty > l.p.stock);
+    if (over.length) {
+      over.forEach(l => this.cart.set(l.p.id, l.p.stock));
+      this.toast.show(`${this.ps.shortName(over[0].p)} chỉ còn ${this.ps.qty(over[0].p.stock)} ${this.ps.unit(over[0].p)}, giỏ hàng đã được cập nhật`);
+      return;
+    }
+    this.sending.set(true);
+    const v = this.form.getRawValue();
+    // Khi có backend: this.http.post('/api/orders', ...) thay cho dòng dưới
+    setTimeout(() => {
+      const t = this.t();
+      const lines = this.cart.lines().map(l => ({ product: l.p, qty: l.qty, price: this.ps.price(l.p) }));
+      const o = this.orders.place(v, lines.map(l => ({ id: l.product.id, qty: l.qty })), { ship: t.ship, disc: t.disc, voucherCode: t.voucher?.code }, this.auth.user());
+      this.cart.clear();
+      this.done.set({
+        code: o.orderCode, subtotal: t.sub, shipping: t.ship, discount: t.disc, total: t.total,
+        slot: v.slot, payment: PAYMENT_LABEL[v.payment], name: v.name, phone: v.phone, address: v.address, note: v.note,
+        items: lines, guest: !this.auth.user()
+      });
+      this.sending.set(false);
+      window.scrollTo(0, 0);
+    }, 600);
   }
 }

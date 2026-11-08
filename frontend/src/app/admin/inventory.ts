@@ -58,6 +58,11 @@ export class AdminInventory {
     const k = norm(this.q());
     return this.ps.all().filter(p => (!k || norm(p.name).includes(k)) && (!this.onlyLow() || p.stock <= 10)).sort((a, b) => a.stock - b.stock).slice(0, 60);
   });
-  protected add(_p: Product, _n: number): void { this.toast.show('Quản lý tồn kho đang được hoàn thiện.'); }
-  protected setTo(_p: Product, _v: string): void { this.toast.show('Quản lý tồn kho đang được hoàn thiện.'); }
+  protected add(p: Product, n: number): void { this.data.adjustStock(p.id, n); this.toast.show(`Đã nhập thêm ${n} ${this.ps.unit(p)} ${this.ps.shortName(p)}`); }
+  protected setTo(p: Product, v: string): void {
+    const n = Number(v);
+    if (!Number.isFinite(n) || n < 0) { this.toast.show('Số tồn phải là số không âm'); return; }
+    this.data.saveProduct({ ...p, stock: n });
+    this.toast.show(`${this.ps.shortName(p)}: còn ${this.ps.qty(n)} ${this.ps.unit(p)}`);
+  }
 }

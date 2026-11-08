@@ -1,6 +1,6 @@
 # Backend FreshMart
 
-Phần A đã hoàn thành theo [bảng bàn giao](docs/part-a-handoff.md): auth/session, phân quyền, hồ sơ, khách hàng, catalog, upload ảnh và khôi phục mật khẩu. Phần B triển khai giỏ/đơn/voucher/kho theo [hợp đồng backend v1](docs/backend-contract.md). Dùng Node.js 22+, Express, CommonJS, MongoClient, Morgan, Nodemon và express-session.
+Phần A đã hoàn thành theo [bảng bàn giao](docs/part-a-handoff.md): auth/session, phân quyền, hồ sơ, khách hàng, catalog, upload ảnh và khôi phục mật khẩu. Phần B (giỏ, đặt đơn COD/VNPay, kho, voucher, dashboard) và phần mở rộng (Meal Planner API, Cộng đồng, đánh giá, Cloudinary) đã triển khai: xem [bàn giao phần B](docs/part-b-handoff.md) và [hợp đồng backend v1](docs/backend-contract.md). Dùng Node.js 22+, Express, CommonJS, MongoClient, Morgan, Nodemon và express-session.
 
 ## Chạy local
 
@@ -39,6 +39,8 @@ Mật khẩu ít nhất 8 ký tự và tối đa 72 byte UTF-8, lưu bằng bcry
 | `npm start` | Chạy server bằng Node |
 | `npm test` | Kiểm tra HTTP, session và quy tắc dùng chung |
 | `npm run test:integration` | Kiểm tra phần A với MongoDB local trong DB thử riêng, xóa sau khi chạy |
+| `npm run db:setup` | Dựng database: collection, luật kiểm tra, index, dữ liệu mẫu (leader chạy) |
+| `npm run check:db` | Kiểm tra kết nối MongoDB, in lý do nếu lỗi |
 | `npm run seed:catalog` | Nhập products/categories còn thiếu |
 | `npm run seed:admin` | Tạo admin từ cấu hình riêng |
 | `npm run seed:vouchers` | Nhập voucher còn thiếu, gán loại khách mới/mọi khách |
@@ -62,7 +64,7 @@ Integration test dùng `MONGODB_TEST_URI` nếu có, mặc định MongoDB local
 
 Frontend đã có dev proxy `/api/**` → localhost:3000, interceptor cookie/CSRF và gọi API phần A. Chạy backend trước, sau đó `cd frontend` và `npm ci`, `npm start`. Auth không dùng localStorage/users.json; catalog lấy dữ liệu MongoDB. Public API trả mảng mặc định; admin user API trả phân trang.
 
-Các phần giỏ, voucher, công thức và đơn thuộc B/content vẫn có dữ liệu demo. Các thao tác checkout, đổi trạng thái đơn và thay stock demo đã chặn để tránh giả lập ghi vào dữ liệu thật; B nối API rồi bật lại. Upload ảnh và email reset đã có. OTP SMS, social login, loyalty và thanh toán online nằm ngoài phần A theo bảng phân công.
+Giỏ, đơn, voucher, kho, công thức và đánh giá đều đọc/ghi qua API; trình duyệt chỉ còn lưu tiện ích cá nhân (yêu thích, so sánh, nguyên liệu đã chọn).
 
 Session dùng cookie HttpOnly/SameSite=Lax, 1 giờ hoặc 7 ngày nếu rememberMe. Có DB thì lưu collection sessions; MemoryStore chỉ cho local chưa cấu hình DB. Production yêu cầu URI/secret, HTTPS; nếu có reverse proxy phải cấu hình trust proxy theo hạ tầng. Admin/user role và trạng thái được kiểm tra từ DB trên mỗi request cần quyền.
 

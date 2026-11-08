@@ -9,7 +9,7 @@ Phân công cho hai người theo phương án ban đầu: A phụ trách tài k
 - Có backend Express/MongoDB, auth/session/phân quyền, profile/customer và CRUD catalog.
 - Angular đã nối phần A, bao gồm danh mục, upload ảnh, đổi/quên mật khẩu và chi tiết khách hàng.
 - Khôi phục mật khẩu dùng hộp thư local để thử; cấu hình SMTP khi có dịch vụ email thật.
-- Giỏ, checkout, đơn, voucher và kho là phần B triển khai tiếp theo hợp đồng.
+- Giỏ, checkout, đơn, voucher và kho đã triển khai trên nhánh `huy-phan-b` ([bàn giao phần B](part-b-handoff.md)).
 
 ## Người A phụ trách tài khoản bảo mật và catalog
 

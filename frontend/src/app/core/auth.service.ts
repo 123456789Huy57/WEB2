@@ -2,7 +2,6 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { User } from './models';
-import { DataService } from './data.service';
 import { store } from './storage';
 
 type AuthResponse = { user: User | null; csrfToken: string };
@@ -12,7 +11,6 @@ export function apiMessage(error: unknown): string {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private http = inject(HttpClient);
-  private data = inject(DataService);
   readonly user = signal<User | null>(null);
   readonly csrfToken = signal('');
   readonly isAdmin = computed(() => this.user()?.role === 'admin');
@@ -36,7 +34,6 @@ export class AuthService {
       if (!this.csrfToken()) await this.restore();
       const response = await firstValueFrom(this.http.post<AuthResponse>(url, body));
       this.accept(response);
-      await this.data.load(this.isAdmin());
       return { ok: true, msg: '', user: response.user ?? undefined };
     } catch (error) { return { ok: false, msg: apiMessage(error) }; }
   }
@@ -47,7 +44,6 @@ export class AuthService {
   async changePassword(currentPassword: string, newPassword: string): Promise<void> {
     await firstValueFrom(this.http.patch('/api/users/me/password', { currentPassword, newPassword }));
     this.user.set(null); this.csrfToken.set('');
-    await this.data.load(false);
   }
   async requestRecovery(email: string): Promise<{ message: string; delivery: string }> {
     if (!this.csrfToken()) await this.restore();
@@ -57,11 +53,9 @@ export class AuthService {
     if (!this.csrfToken()) await this.restore();
     await firstValueFrom(this.http.post('/api/auth/reset-password', { token, newPassword }));
     this.user.set(null); this.csrfToken.set('');
-    await this.data.load(false);
   }
   async logout(): Promise<void> {
     await firstValueFrom(this.http.post('/api/auth/logout', {}));
     this.user.set(null); this.csrfToken.set('');
-    await this.data.load(false);
   }
 }

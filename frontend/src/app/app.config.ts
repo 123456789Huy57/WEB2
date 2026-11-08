@@ -14,7 +14,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch(), withInterceptors([apiInterceptor])),
     provideAppInitializer(() => {
       const auth = inject(AuthService), data = inject(DataService);
-      return auth.restore().catch(() => {}).then(() => data.load(auth.isAdmin()));
+      // Khôi phục phiên đăng nhập từ cookie backend song song với tải catalog.
+      return Promise.all([data.load(), auth.restore().catch(() => {})]).then(() => {});
     })
   ]
 };

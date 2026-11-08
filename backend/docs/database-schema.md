@@ -16,19 +16,44 @@ Database `freshmart`. Bám theo `backend-contract.md` v1: ID là chuỗi, tiền
 | `voucherUsages` | B | Mới | Mỗi lần dùng voucher cho một đơn |
 | `inventoryMovements` | B | Mới | Lịch sử tăng/giảm tồn kho |
 | `savedVouchers` | B | Mới (đã chốt làm) | Voucher khách đã lưu |
+| `recipes` | Meal Planner | Mới | Công thức món ăn (66 món) |
+| `ingredients` | Meal Planner | Mới | Nguyên liệu (75 loại) |
+| `ingredientProducts` | Meal Planner | Mới | Nguyên liệu nào mua bằng sản phẩm nào |
+| `stores` | Chung | Mới | Danh sách cửa hàng |
+| `recipeCooks` | Meal Planner | Mới | Lượt "nấu" món, dùng cho tab Cộng đồng |
+| `reviews` | Đánh giá | Mới | Đánh giá sản phẩm của khách đã nhận hàng |
+| `payments` | Thanh toán | Mới | Giao dịch VNPay / cổng giả lập |
 
 Giỏ hàng **không** có collection riêng: nằm trong `sessions` ở trường `cart` (contract mục 2).
 
-## Quan hệ
+## Quan hệ (ERD)
 
+```mermaid
+erDiagram
+  users ||--o{ orders : "đặt"
+  users ||--o{ savedVouchers : "lưu"
+  users ||--o{ voucherUsages : "dùng"
+  orders ||--|{ ORDER_ITEM : "items (nhúng)"
+  orders ||--o{ inventoryMovements : "trừ/hoàn kho"
+  orders ||--o| voucherUsages : "áp dụng"
+  vouchers ||--o{ voucherUsages : "được dùng"
+  vouchers ||--o{ savedVouchers : "được lưu"
+  categories ||--o{ products : "chứa"
+  products ||--o{ inventoryMovements : "biến động"
+  products ||--o{ ORDER_ITEM : "bản chụp"
+  recipes ||--|{ RECIPE_LINE : "ingredients (nhúng)"
+  ingredients ||--o{ RECIPE_LINE : "dùng trong"
+  ingredients ||--|| ingredientProducts : "mua bằng"
+  ingredientProducts }o--o{ products : "productIds"
+  recipes ||--o{ recipeCooks : "được nấu"
+  users ||--o{ recipeCooks : "nấu"
+  products ||--o{ reviews : "được đánh giá"
+  users ||--o{ reviews : "viết"
+  orders ||--o{ reviews : "chứng minh đã mua"
+  orders ||--o{ payments : "thanh toán"
 ```
-users 1───n orders 1───n (items nhúng)
-orders 1───n inventoryMovements      (orderId)
-orders 1───0..1 voucherUsages        (orderId)
-vouchers 1───n voucherUsages         (voucherId)
-products 1───n inventoryMovements    (productId)
-categories 1───n products            (products.category)
-```
+
+Bản đầy đủ có các trường chính: [erd.png](erd.png) (nguồn: [erd.mmd](erd.mmd), sửa rồi vẽ lại bằng `npx @mermaid-js/mermaid-cli -i erd.mmd -o erd.png`). GitHub tự vẽ sơ đồ quan hệ bên trên. Muốn đưa vào báo cáo: mở file trên GitHub và chụp màn hình, hoặc dán khối mermaid vào https://mermaid.live để xuất ảnh.
 
 Quy tắc nhúng/tách: `items` và `history` nhúng trong đơn vì luôn đi cùng đơn và có giới hạn; `inventoryMovements` và `voucherUsages` tách riêng vì tăng mãi và cần tra cứu độc lập.
 
@@ -113,11 +138,56 @@ Index: `{operationId:1}` unique; `{productId:1, createdAt:-1}`; `{orderId:1}`.
 
 Index: `{userId:1, code:1}` unique.
 
+## recipeCooks (tab Cộng đồng)
+
+```json
+{ "id": "2026-11-05:rec-003:u-UUID", "recipeId": "rec-003", "actorKey": "u-UUID | s-<hash session>", "day": "2026-11-05", "servings": 2, "at": "ISO" }
+```
+
+`_id` gồm ngày + món + người nên mỗi người chỉ tính một lượt cho một món mỗi ngày. Index: `{day:1, recipeId:1}`.
+
+## reviews
+
+```json
+{ "id": "rv-UUID", "productId": "p-0053", "userId": "u-UUID", "userName": "Lan", "orderId": "ord-UUID",
+  "rating": 5, "comment": "", "hidden": false, "createdAt": "ISO", "updatedAt": "ISO" }
+```
+
+Chỉ tạo được khi khách có đơn `delivered` chứa sản phẩm. `products.rating` và `products.review_count` được tính lại từ bảng này sau mỗi thay đổi (`rating = -1` khi chưa có đánh giá). Index: `{productId:1, userId:1}` unique; `{productId:1, createdAt:-1}`.
+
+## payments
+
+```json
+{ "id": "pay-UUID", "orderId": "ord-UUID", "orderCode": "FM-...", "userId": "u-UUID", "provider": "vnpay | mock",
+  "txnRef": "FM20261105...", "amount": 125000, "status": "pending | paid | failed | refund_required",
+  "responseCode": "00", "transactionNo": "", "paidAt": "ISO", "createdAt": "ISO" }
+```
+
+Mỗi lần bấm thanh toán là một giao dịch mới (`txnRef` unique). Kết quả chỉ được ghi một lần (cập nhật có điều kiện `status: pending`). Đơn bị hủy trong lúc khách đang trả tiền thì giao dịch chuyển `refund_required` để admin hoàn tiền. Index: `{txnRef:1}` unique; `{orderId:1, createdAt:-1}`.
+
 ## products — phần liên quan tới B
 
 - `stock` là số (có thể 0.5 với hàng Kg); chỉ `inventory service` được đổi, luôn qua cập nhật có điều kiện `stock >= quantity`.
 - `sold_count` tăng khi đơn `delivered` (quy ước đề xuất, cần Đồng xác nhận).
 - Thêm index `{stock:1}` để tìm hàng tồn thấp.
+
+## Luật kiểm tra trong MongoDB
+
+Định nghĩa ở `src/config/schema.js`, được gắn vào từng collection khi chạy `npm run db:setup`. Dù code có lỗi, MongoDB vẫn từ chối ghi dữ liệu sai. Ví dụ:
+
+| Collection | Luật |
+|---|---|
+| `products` | Có đủ id, tên, slug, danh mục, giá, đơn vị, tồn kho; **tồn kho không âm**; giá dương; giá giảm thấp hơn giá gốc |
+| `orders` | Ít nhất 1 sản phẩm; số điện thoại 10 số; trạng thái và phương thức thanh toán đúng danh sách; **total = subtotal + phí ship − giảm giá**; giảm không vượt phần được giảm; đã giao thì đã thanh toán |
+| `vouchers` | Mã chữ hoa; **usedCount không vượt usageLimit**; giảm % không quá 100; ngày kết thúc sau ngày bắt đầu |
+| `inventoryMovements` | Loại biến động đúng danh sách; số lượng thay đổi khác 0 |
+| `users` | Có id, vai trò (customer/admin), mật khẩu băm, trạng thái |
+
+Mức kiểm tra `moderate`: áp dụng cho dữ liệu thêm mới và sửa đổi, không chặn dữ liệu cũ. `npm test` kiểm tra toàn bộ dữ liệu mẫu đều qua luật.
+
+## Dựng database: `npm run db:setup`
+
+Một lệnh làm 3 việc: tạo collection và gắn luật kiểm tra, tạo index, nhập dữ liệu mẫu còn thiếu (sản phẩm, danh mục, voucher, công thức, nguyên liệu, ánh xạ, cửa hàng). Chạy lại bao nhiêu lần cũng được, không xóa và không ghi đè dữ liệu đã có. Cần tài khoản có quyền quản trị database, nên chỉ leader chạy. Admin vẫn tạo riêng bằng `npm run seed:admin`.
 
 ## Dữ liệu khởi tạo (seed)
 
@@ -127,7 +197,7 @@ Index: `{userId:1, code:1}` unique.
 | Admin | `npm run seed:admin` | Đã có |
 | Voucher | Còn trong `frontend/public/data/vouchers.json` | Viết `seed-vouchers.js`, nhập vào `vouchers` |
 | Tồn kho ban đầu | Sản phẩm mới `stock=0` | Nhập qua API điều chỉnh kho khi có; tạm thời seed số liệu thử |
-| Công thức, nguyên liệu, ánh xạ | JSON tĩnh trong frontend | Chuyển lên MongoDB nếu làm Meal Planner API (giai đoạn sau) |
+| Công thức, nguyên liệu, ánh xạ, cửa hàng | `npm run db:setup` | Đã nhập vào MongoDB; frontend còn đọc JSON, sẽ chuyển sang API |
 
 ## Đã chốt
 

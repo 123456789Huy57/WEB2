@@ -6,6 +6,7 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const { requireAuth, requireAdmin } = require('../../middleware/auth');
 const { HttpError } = require('../../lib/http-error');
+const cloudinary = require('../../lib/cloudinary');
 const uploadDirectory = () => path.resolve(process.env.UPLOAD_DIR || path.join(__dirname, '../../../public/images/uploads'));
 router.post('/admin/uploads', requireAuth, requireAdmin, fileUpload({
   limits: { fileSize: 2 * 1024 * 1024, files: 2, fields: 0 },
@@ -26,6 +27,11 @@ router.post('/admin/uploads', requireAuth, requireAdmin, fileUpload({
     buffer = await image.rotate().resize({ width: 1600, height: 1600, fit: 'inside', withoutEnlargement: true }).webp({ quality: 85 }).toBuffer();
   } catch { throw new HttpError(400, 'IMAGE_INVALID', 'Nội dung ảnh không hợp lệ hoặc kích thước quá lớn.'); }
   const name = `${randomUUID()}.webp`;
+  // Có Cloudinary: ảnh nằm trên Cloudinary, deploy lại không mất. Không có: lưu thư mục local như cũ.
+  if (cloudinary.configured()) {
+    try { return res.status(201).json({ imageUrl: await cloudinary.upload(buffer, { publicId: name.replace('.webp', ''), folder: `${process.env.CLOUDINARY_FOLDER || 'freshmart'}/uploads` }) }); }
+    catch (error) { console.error('Cloudinary upload failed:', error.message); throw new HttpError(502, 'IMAGE_STORAGE_FAILED', 'Không lưu được ảnh lên Cloudinary. Thử lại sau.'); }
+  }
   await fs.mkdir(uploadDirectory(), { recursive: true });
   await fs.writeFile(path.join(uploadDirectory(), name), buffer, { flag: 'wx' });
   res.status(201).json({ imageUrl: `/images/uploads/${name}` });

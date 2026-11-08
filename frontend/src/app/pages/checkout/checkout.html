@@ -35,9 +35,10 @@
           <legend class="h3">Thanh toán</legend>
           <div class="choices">
             <label class="choice"><input type="radio" formControlName="payment" value="cod"><span><b>Tiền mặt khi nhận hàng</b><span class="small muted">Trả cho shipper khi nhận, kiểm hàng trước khi trả</span></span></label>
-            <label class="choice"><input type="radio" formControlName="payment" value="bank"><span><b>Chuyển khoản ngân hàng</b><span class="small muted">Thông tin tài khoản hiện sau khi đặt hàng</span></span></label>
-            <label class="choice"><input type="radio" formControlName="payment" value="momo"><span><b>Ví MoMo</b><span class="small muted">Quét mã QR sau khi đặt hàng</span></span></label>
+            <label class="choice"><input type="radio" formControlName="payment" value="bank"><span><b>Chuyển khoản ngân hàng</b><span class="small muted">Lựa chọn thanh toán được lưu trong đơn demo</span></span></label>
+            <label class="choice"><input type="radio" formControlName="payment" value="momo"><span><b>Ví MoMo</b><span class="small muted">Lựa chọn thanh toán được lưu trong đơn demo</span></span></label>
           </div>
+          <p class="small muted">Website demo chưa kết nối cổng thanh toán trực tuyến.</p>
         </fieldset>
       </div>
       <aside class="panel sticky" aria-labelledby="h-co-sum">
@@ -63,7 +64,7 @@
           @if (t().voucher) { <div><span>Mã {{ t().voucher!.code }}</span><span class="num">−{{ t().disc | vnd }}</span></div> }
           <div class="total"><span>Tổng cộng</span><b class="num">{{ t().total | vnd }}</b></div>
         </div>
-        <button class="btn btn-forest w100" type="submit" [disabled]="true">Đặt hàng đang được hoàn thiện</button>
+        <button class="btn btn-forest w100" type="submit" [disabled]="sending()">{{ sending() ? 'Đang gửi đơn…' : 'Đặt hàng' }}</button>
         <p class="small muted" style="margin-top:14px">Bấm đặt hàng là bạn đồng ý với chính sách giao hàng và đổi trả của FreshMart.</p>
       </aside>
     </form>
@@ -72,15 +73,32 @@
   <section class="band done">
     <div class="done-in">
       <h1 class="h2">Đã nhận đơn của bạn</h1>
-      <p class="lead">Cảm ơn {{ done()!.firstName }}. FreshMart sẽ gọi số {{ done()!.phone }} để xác nhận trong 10 phút.</p>
+      <p class="lead">Đơn demo đã được lưu trên trình duyệt và đang chờ xác nhận.</p>
       <dl class="done-facts">
         <div><dt>Mã đơn</dt><dd class="num">{{ done()!.code }}</dd></div>
-        <div><dt>Tổng thanh toán</dt><dd class="num">{{ done()!.total | vnd }}</dd></div>
-        <div><dt>Giờ nhận</dt><dd class="num">{{ done()!.slot }}</dd></div>
+        <div><dt>Người nhận</dt><dd>{{ done()!.name }} · {{ done()!.phone }}</dd></div>
+        <div><dt>Địa chỉ</dt><dd>{{ done()!.address }}</dd></div>
+        <div><dt>Giờ nhận</dt><dd>{{ done()!.slot }}</dd></div>
         <div><dt>Thanh toán</dt><dd>{{ done()!.payment }}</dd></div>
       </dl>
+      @if (done()!.note) { <p class="small muted done-note">Ghi chú: {{ done()!.note }}</p> }
+      <ul class="done-items">
+        @for (l of done()!.items; track l.product.id) {
+          <li>
+            <span class="ph"><img [fmImg]="l.product.name" [src]="ps.img(l.product)" [alt]="ps.shortName(l.product)"></span>
+            <span>{{ ps.shortName(l.product) }} <span class="muted">× {{ ps.qtyLabel(l.product, l.qty) }}</span></span>
+            <b class="num">{{ l.price * l.qty | vnd }}</b>
+          </li>
+        }
+      </ul>
+      <div class="sum done-sum">
+        <div><span>Tiền hàng</span><span class="num">{{ done()!.subtotal | vnd }}</span></div>
+        <div><span>Phí giao hàng</span><span class="num">{{ done()!.shipping ? (done()!.shipping | vnd) : 'Miễn phí' }}</span></div>
+        @if (done()!.discount) { <div><span>Giảm giá</span><span class="num">−{{ done()!.discount | vnd }}</span></div> }
+        <div class="total"><span>Tổng cộng</span><b class="num">{{ done()!.total | vnd }}</b></div>
+      </div>
       @if (done()!.guest) {
-        <p class="small muted done-note">Bạn đặt hàng không cần tài khoản. Lưu lại mã đơn để tra cứu bằng mã và số điện thoại.</p>
+        <p class="small muted done-note">Bạn đặt hàng không cần tài khoản. Dùng mã đơn và số điện thoại để tra cứu.</p>
       }
       <div class="done-cta">
         @if (done()!.guest) {

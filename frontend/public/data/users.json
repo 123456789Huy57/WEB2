@@ -1,0 +1,42 @@
+[
+ {
+  "id": "u-001",
+  "fullName": "Nguyễn Văn A",
+  "email": "a@example.com",
+  "phone": "0900000001",
+  "role": "customer",
+  "password": "123456",
+  "address": "63 Đường Số 1, P. Tân Hưng, Quận 7, TP.HCM",
+  "createdAt": "2026-01-01T08:00:00.000Z"
+ },
+ {
+  "id": "u-002",
+  "fullName": "Lê Thị B",
+  "email": "b@example.com",
+  "phone": "0900000002",
+  "role": "customer",
+  "password": "123456",
+  "address": "",
+  "createdAt": "2026-01-05T08:00:00.000Z"
+ },
+ {
+  "id": "u-003",
+  "fullName": "Phạm Văn C",
+  "email": "c@example.com",
+  "phone": "0900000003",
+  "role": "customer",
+  "password": "123456",
+  "address": "",
+  "createdAt": "2026-02-01T08:00:00.000Z"
+ },
+ {
+  "id": "u-004",
+  "fullName": "Quản trị FreshMart",
+  "email": "admin@example.com",
+  "phone": "0900000004",
+  "role": "admin",
+  "password": "admin123",
+  "address": "",
+  "createdAt": "2026-01-01T08:00:00.000Z"
+ }
+]

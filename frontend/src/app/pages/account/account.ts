@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, computed, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService, apiMessage } from '../../core/auth.service';
 import { OrderService, OrderView } from '../../core/order.service';
@@ -44,10 +44,6 @@ export class Account {
   protected savedVouchers = computed(() => this.vs.saved().map(c => this.vs.find(c)).filter((v): v is Voucher => !!v));
 
   private u = this.auth.user();
-  protected passwordForm = { current: '', next: '', confirm: '' };
-  protected passwordBusy = signal(false);
-  protected passwordError = signal('');
-  protected profileBusy = signal(false);
   protected profile = { fullName: this.u?.fullName ?? '', phone: this.u?.phone ?? '', address: this.u?.address ?? '' };
 
   protected buyAgain(o: OrderView): void {
@@ -55,31 +51,18 @@ export class Account {
     ok.forEach(l => this.cart.add(l.p.id, Math.min(l.qty, l.p.stock)));
     this.toast.show(ok.length < o.lines.length ? `Đã thêm ${ok.length}/${o.lines.length} sản phẩm, số còn lại tạm hết hàng` : `Đã thêm ${ok.length} sản phẩm của đơn ${o.orderCode} vào giỏ`);
   }
-  protected async cancelOrder(_o: OrderView): Promise<void> {
-    this.toast.show('Quản lý đơn hàng đang được hoàn thiện.');
+  protected async cancelOrder(o: OrderView): Promise<void> {
+    if (!(await this.cf.ask(`Hủy đơn ${o.orderCode}?`, 'Đơn chưa được soạn nên bạn hủy được ngay. Nếu đã chuyển khoản, FreshMart hoàn tiền trong 3–5 ngày làm việc.', 'Hủy đơn'))) return;
+    this.orderSvc.setStatus(o.orderCode, 'cancelled');
+    this.toast.show(`Đã hủy đơn ${o.orderCode}`);
   }
   protected useVoucher(code: string): void { this.cart.setVoucher(code); this.router.navigateByUrl('/gio-hang'); }
-  protected async saveProfile(): Promise<void> {
-    if (this.profileBusy()) return;
-    this.profileBusy.set(true);
-    try { await this.auth.update({ ...this.profile, fullName: this.profile.fullName.trim() }); this.toast.show('Đã lưu thông tin'); }
-    catch (error) { this.toast.show(apiMessage(error)); }
-    finally { this.profileBusy.set(false); }
-  }
-  protected async changePassword(): Promise<void> {
-    if (this.passwordBusy()) return;
-    this.passwordError.set('');
-    if (this.passwordForm.next.length < 8) { this.passwordError.set('Mật khẩu mới cần ít nhất 8 ký tự'); return; }
-    if (this.passwordForm.next !== this.passwordForm.confirm) { this.passwordError.set('Hai mật khẩu mới chưa trùng nhau'); return; }
-    this.passwordBusy.set(true);
+  protected async saveProfile(form: NgForm): Promise<void> {
+    if (form.invalid) { form.form.markAllAsTouched(); this.toast.show('Kiểm tra lại họ tên và số điện thoại'); return; }
     try {
-      await this.auth.changePassword(this.passwordForm.current, this.passwordForm.next);
-      this.toast.show('Đã đổi mật khẩu. Vui lòng đăng nhập lại.');
-      this.router.navigateByUrl('/dang-nhap');
-    } catch (error) { this.passwordError.set(apiMessage(error)); }
-    finally { this.passwordBusy.set(false); }
+      await this.auth.update({ fullName: this.profile.fullName.trim(), phone: this.profile.phone.trim(), address: this.profile.address });
+      this.toast.show('Đã lưu thông tin');
+    } catch (e) { this.toast.show(apiMessage(e)); }
   }
-  protected async logout(): Promise<void> {
-    try { await this.auth.logout(); this.router.navigateByUrl('/'); } catch (error) { this.toast.show(apiMessage(error)); }
-  }
+  protected async logout(): Promise<void> { await this.auth.logout(); this.router.navigateByUrl('/'); }
 }

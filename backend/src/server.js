@@ -7,6 +7,9 @@ async function start() {
     await connectDatabase(env.mongodbUri, env.mongodbDb);
     await require('./config/indexes').ensureIndexes();
     console.log('MongoDB connected. Sessions use MongoDB.');
+    // Mỗi phút hủy đơn VNPay quá hạn chưa trả tiền để trả hàng về kho.
+    const { expireUnpaid } = require('./modules/orders/orders.service');
+    setInterval(() => expireUnpaid().catch(error => console.error('Expire unpaid orders failed:', error.name)), 60 * 1000).unref();
   } else {
     console.log('No MONGODB_URI: local starter only. Database APIs return 503; sessions use temporary memory.');
   }
@@ -18,9 +21,10 @@ async function start() {
     console.log(`FreshMart API: http://localhost:${env.port}/api/health`);
   });
   server.on('error', async error => {
-    console.error('Server could not start:', error.code || error.name);
-    await disconnectDatabase();
-    process.exitCode = 1;
+    if (error.code === 'EADDRINUSE') console.error(`Cổng ${env.port} đang được dùng: có backend khác đang chạy. Tắt Terminal cũ (Ctrl + C) rồi chạy lại.`);
+    else console.error('Server could not start:', error.code || error.name);
+    await disconnectDatabase().catch(() => {});
+    process.exit(1);
   });
   let closing = false;
   function shutdown() {

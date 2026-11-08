@@ -12,7 +12,7 @@ export interface Product {
   netWeightGram?: number; unitWeightGram?: number; sellUnit?: string; tags?: string[];
 }
 export interface Category {
-  id: string; slug: string; name: string; description: string; active?: boolean; productCount: number; sortOrder: number;
+  id: string; slug: string; name: string; description: string; productCount: number; sortOrder: number;
   subcategories: { id: string; name: string }[];
 }
 export interface Voucher {
@@ -21,10 +21,11 @@ export interface Voucher {
   minOrderValue: number; maxDiscountValue?: number | null; startDate: string; endDate: string; isActive: boolean;
 }
 export interface RecipeLine { productId: string; ingredientId: string; quantity: number; unit: string; }
+export interface RecipeStep { title: string; description: string; durationMinutes?: number; tip?: string; }
 export interface Recipe {
   id: string; slug: string; name: string; mealType: 'breakfast' | 'lunch' | 'dinner' | 'snack';
   servings: number; prepTimeMinutes: number; cookTimeMinutes: number; difficulty: 'easy' | 'medium' | 'hard';
-  imageUrl: string; ingredients: RecipeLine[]; steps: string[];
+  imageUrl: string; ingredients: RecipeLine[]; steps: Array<string | RecipeStep>;
   nutrition: { calories: number; protein: number; carbs: number; fat: number };
   tags: string[]; goalTags?: string[]; isActive?: boolean;
 }
@@ -37,7 +38,8 @@ export interface Store { id: string; name: string; address: string; phone: strin
 
 export interface CartLine { id: string; qty: number; }
 export type Role = 'customer' | 'admin';
-export interface User { id: string; fullName: string; email: string; phone: string; address: string; role: Role; isActive?: boolean; createdAt?: string; }
+export interface User { id: string; fullName: string; email: string; phone: string; address: string; role: Role; createdAt?: string; }
+export interface UserRecord extends User { password: string; }
 export type PaymentMethod = 'cod' | 'bank' | 'momo';
 export type OrderStatus = 'pending' | 'confirmed' | 'preparing' | 'shipping' | 'delivered' | 'cancelled';
 export interface OrderItem { id: string; qty: number; price: number; }

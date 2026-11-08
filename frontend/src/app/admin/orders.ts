@@ -78,8 +78,9 @@ export class AdminOrders {
   });
   protected next(o: OrderView): OrderStatus | null { const i = STATUS_FLOW.indexOf(o.status); return i > -1 && i < STATUS_FLOW.length - 1 ? STATUS_FLOW[i + 1] : null; }
   protected toggle(code: string): void { this.open.set(this.open() === code ? '' : code); }
-  protected async set(o: OrderView, _s: OrderStatus, el?: HTMLSelectElement): Promise<void> {
-    if (el) el.value = o.status;
-    this.toast.show('Quản lý đơn hàng đang được hoàn thiện.');
+  protected async set(o: OrderView, s: OrderStatus, el?: HTMLSelectElement): Promise<void> {
+    if (s === 'cancelled' && !(await this.cf.ask(`Hủy đơn ${o.orderCode}?`, 'Hàng trong đơn sẽ được cộng lại vào tồn kho.', 'Hủy đơn'))) { if (el) el.value = o.status; return; }
+    this.orders.setStatus(o.orderCode, s);
+    this.toast.show(`Đơn ${o.orderCode}: ${ORDER_STATUS[s]}`);
   }
 }

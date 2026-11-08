@@ -2,6 +2,8 @@ const { randomUUID } = require('node:crypto');
 const model = require('./catalog.model');
 const v = require('../../lib/validation');
 const { HttpError } = require('../../lib/http-error');
+const { getDatabase, getMongoClient } = require('../../config/database');
+const OPEN_ORDER_STATUSES = ['pending', 'confirmed', 'preparing', 'shipping'];
 const productFields = ['name', 'slug', 'brand', 'category', 'subcategory', 'description', 'price', 'sale_price', 'unit', 'image_url', 'gallery', 'origin', 'badges', 'nutrition', 'netWeightGram', 'unitWeightGram', 'sellUnit', 'tags', 'active'];
 const units = ['kg', 'gói', 'hộp', 'chai', 'khay', 'trái', 'bó', 'lon', 'túi', 'bao', 'cái', 'lốc', 'thùng', 'vỉ', 'bịch', 'túyp', 'tuýp', 'hũ', 'quả'];
 async function productData(body, old) {
@@ -44,7 +46,7 @@ async function productData(body, old) {
   }
   if (body.image_url !== undefined && body.image_url !== old?.image_url) delete p.img;
   if (p.image_url && !/^https?:\/\//i.test(p.image_url) && !p.image_url.startsWith('/')) v.bad('Ảnh phải là URL HTTP(S) hoặc đường dẫn bắt đầu bằng /.');
-  if (p.gallery.some(url => url && !/^https?:\/\//i.test(url) && !url.startsWith('/'))) v.bad('Gallery chứa URL không hợp lệ.');
+  if ((p.gallery || []).some(url => url && !/^https?:\/\//i.test(url) && !url.startsWith('/'))) v.bad('Gallery chứa URL không hợp lệ.');
   p.slug = body.slug !== undefined ? v.slug(body.slug) : p.slug || `${v.slugify(p.name).slice(0, 120) || 'san-pham'}-${p.id}`;
   p.updatedAt = new Date().toISOString();
   if (!old) p.createdAt = p.updatedAt;
@@ -65,9 +67,27 @@ async function updateProduct(id, body) {
   if (body.image_url !== undefined && body.image_url !== old.image_url) update.$unset = { img: '' };
   for (const key of ['netWeightGram', 'unitWeightGram']) if (body[key] === null) update.$unset = { ...update.$unset, [key]: '' };
   const filter = { id };
-  if (body.unit !== undefined && body.unit.toLowerCase() !== old.unit.toLowerCase()) filter.stock = 0;
-  const updated = await model.products().findOneAndUpdate(filter, update, { returnDocument: 'after', projection: { _id: 0 } });
-  if (!updated) throw new HttpError(409, 'PRODUCT_CHANGED', 'Sản phẩm đã thay đổi. Tải lại rồi thử lại.');
+  const unitChanged = body.unit !== undefined && body.unit.toLowerCase() !== old.unit.toLowerCase();
+  if (!unitChanged) {
+    const updated = await model.products().findOneAndUpdate(filter, update, { returnDocument: 'after', projection: { _id: 0 } });
+    if (!updated) throw new HttpError(409, 'PRODUCT_CHANGED', 'Sản phẩm đã thay đổi. Tải lại rồi thử lại.');
+    return updated;
+  }
+  // Đổi đơn vị: kho phải bằng 0 VÀ không còn đơn chưa kết thúc chứa sản phẩm (hủy đơn đó sẽ hoàn kho theo đơn vị cũ).
+  // Chạy trong transaction: đặt đơn cũng ghi vào sản phẩm nên hai bên không lọt qua nhau.
+  filter.stock = 0;
+  const session = getMongoClient().startSession();
+  let updated;
+  try {
+    await session.withTransaction(async () => {
+      const open = await getDatabase().collection('orders').findOne({ 'items.productId': id, status: { $in: OPEN_ORDER_STATUSES } }, { session, projection: { orderCode: 1 } });
+      if (open) throw new HttpError(409, 'UNIT_HAS_OPEN_ORDERS', `Còn đơn chưa hoàn tất (${open.orderCode}) chứa sản phẩm này. Xử lý xong đơn rồi mới đổi đơn vị.`);
+      updated = await model.products().findOneAndUpdate(filter, update, { session, returnDocument: 'after', projection: { _id: 0 } });
+      if (!updated) throw new HttpError(409, 'UNIT_HAS_STOCK', 'Chỉ đổi đơn vị khi tồn kho bằng 0.');
+    });
+  } finally {
+    await session.endSession();
+  }
   return updated;
 }
 async function categoryData(body, old) {

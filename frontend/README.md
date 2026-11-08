@@ -1,7 +1,7 @@
 # FreshMart · Web2 (Angular)
 
 Frontend Angular 20 của đồ án FreshMart, chuyển từ bản Web1 (HTML/CSS/JS thuần).
-Tài khoản, hồ sơ và catalog gọi Express/MongoDB. Công thức, voucher và các phần B còn dùng dữ liệu demo trong lúc nối backend.
+Đọc dữ liệu thật của Web1 (200 sản phẩm, 13 quầy, 66 công thức, 75 nguyên liệu, 10 voucher) từ `public/data/*.json`.
 
 ## Chạy thử
 
@@ -15,13 +15,15 @@ npm start          # mở http://localhost:4200
 
 `npm run images` nên chạy trước hôm demo: ảnh gốc của Web1 nằm ở CDN Bách Hóa Xanh và Pinterest, nếu các trang đó chặn hoặc mạng yếu thì web vẫn đủ ảnh. Ảnh nào không tải được thì giữ link cũ; trên web, ảnh lỗi hiện chữ cái đầu của tên trên nền đá thay vì biểu tượng ảnh vỡ.
 
-## Tài khoản và backend
+Tài khoản thử:
 
-Chạy/cấu hình backend theo [hướng dẫn backend](../backend/README.md), import catalog rồi mới chạy frontend. Khách tự đăng ký; admin được tạo qua `npm run seed:admin` với thông tin riêng. Không còn tài khoản demo hoặc mật khẩu trong public/data/users.json.
+| Vai trò | Email | Mật khẩu |
+|---|---|---|
+| Khách (đã có đơn) | `a@example.com` | `123456` |
+| Khách | `b@example.com`, `c@example.com` | `123456` |
+| Quản trị | `admin@example.com` | `admin123` |
 
-Frontend đã có dev proxy, cookie và CSRF interceptor. Login/profile/catalog admin dùng API; JSON/localStorage không còn là nguồn chuẩn của tài khoản và sản phẩm. Reset dữ liệu mẫu trên giao diện chỉ xóa dữ liệu demo ở trình duyệt, không xóa MongoDB.
-
-Checkout, sửa stock và đổi trạng thái đơn đang chặn để chờ API phần B; đơn/voucher/giỏ hiện có vẫn là dữ liệu demo. Hợp đồng MVP chốt member-only checkout và COD. B nối API rồi bật chức năng tương ứng.
+Dữ liệu sửa trong trang quản trị (giá, tồn kho, voucher, đơn hàng) lưu ở trình duyệt. Muốn quay về dữ liệu mẫu: vào Admin, bấm **Khôi phục dữ liệu mẫu**.
 
 ## Các màn hình
 
@@ -31,13 +33,13 @@ Checkout, sửa stock và đổi trạng thái đơn đang chặn để chờ AP
 | `/san-pham?c=vegetables&q=...` | Danh sách, lọc theo quầy, loại, giá, giảm giá; sắp xếp | `pages/catalog` |
 | `/san-pham/:id` | Chi tiết sản phẩm, dinh dưỡng, yêu thích | `pages/product` |
 | `/gio-hang` | Giỏ hàng, mã giảm giá, miễn phí giao từ 300.000 đ | `pages/cart` |
-| `/thanh-toan` | Thanh toán (Reactive Forms), chờ API COD phần B | `pages/checkout` |
+| `/thanh-toan` | Thanh toán (Reactive Forms), giờ nhận, COD / chuyển khoản / MoMo | `pages/checkout` |
 | `/meal-planner` | Chọn nguyên liệu → tiêu chí → gợi ý món → thêm phần còn thiếu vào giỏ | `pages/meal-planner` |
 | `/uu-dai` | Mã giảm giá, sản phẩm đang giảm | `pages/offers` |
 | `/cua-hang` | 12 cửa hàng, tìm theo quận | `pages/stores` |
 | `/dang-nhap` | Đăng nhập, tạo tài khoản | `pages/login` |
 | `/tai-khoan` | Đơn của mình kèm tiến trình giao, hủy đơn, mua lại; yêu thích; mã đã lưu; thông tin | `pages/account` |
-| `/tra-cuu-don?ma=&sdt=` | Tra cứu demo cũ; không thuộc API công khai của MVP | `pages/order-lookup` |
+| `/tra-cuu-don?ma=&sdt=` | Khách không có tài khoản tra cứu, hủy đơn bằng mã đơn + số điện thoại | `pages/order-lookup` |
 | `/so-sanh` | So sánh tối đa 3 sản phẩm theo giá và dinh dưỡng | `pages/compare` |
 | `/thong-tin/:slug` | Giới thiệu, đội ngũ, đối tác, hướng dẫn mua hàng, giao hàng, đổi trả, bảo mật | `pages/info` |
 | `/blog`, `/blog/:slug` | Blog ẩm thực | `pages/blog` |
@@ -88,11 +90,15 @@ public/
   img/                     Ảnh cửa hàng và ảnh sản phẩm đã tách nền
 ```
 
-## Ghép với Backend Express và MongoDB
+## Ghép với Backend (Express + MongoDB)
 
-Phần A đã nối: AuthService, API interceptor, DataService, login/remember-me, đổi/quên mật khẩu, profile, admin products/categories/customers và upload ảnh. Session được khôi phục trước khi Angular vào route; customer không tải danh sách user hoặc sản phẩm ẩn.
+Giao diện chỉ gọi service, nên nhóm Backend làm xong API thì Frontend sửa rất ít:
 
-Phần B nối theo [backend-contract.md](../backend/docs/backend-contract.md): CartService → /api/cart, OrderService → /api/orders và /api/users/me/orders, admin order/inventory theo các endpoint trong hợp đồng. Không dùng catalog PATCH để trừ/hoàn kho. Giữ thuật toán Meal Planner hiện tại và đổi thao tác mua nguyên liệu sang Cart API khi B hoàn thành.
+1. `core/data.service.ts`: đổi `BASE = '/data'` thành `'http://localhost:3000/api'`. API trả mảng JSON đúng như các file trong `public/data`.
+2. `core/data.service.ts`: các hàm `saveProduct`, `adjustStock`, `saveVoucher`, `addUser` đổi thành `PUT/POST` lên API.
+3. `core/auth.service.ts`: thay `login()` / `register()` bằng `POST /api/auth/login`, `/api/auth/register`, lưu JWT. Mật khẩu băm bằng bcrypt ở server (file `users.json` mẫu đang để mật khẩu thô chỉ để chạy thử).
+4. `core/order.service.ts`: `place()` → `POST /api/orders` (trừ kho trong cùng transaction), `forUser()` → `GET /api/orders/me`, `setStatus()` → `PATCH /api/orders/:code`, `lookup()` → `GET /api/orders/lookup?code&phone`.
+5. Giỏ hàng, yêu thích, mã đã lưu hiện ở localStorage. Muốn đồng bộ nhiều máy thì thêm API tương ứng.
 
 ## Quy ước giao diện
 
@@ -100,9 +106,3 @@ Phần B nối theo [backend-contract.md](../backend/docs/backend-contract.md): 
 - Tên món, giá, tiêu đề dùng chữ có chân (`.h2`, `.h3`, `.price`). Nội dung dùng Be Vietnam Pro.
 - Không đổ bóng, không gradient. Tách khối bằng khoảng trắng hoặc nền đá `--stone`.
 - Chữ trên giao diện viết như người bán hàng nói: “Thêm vào giỏ”, “Cần mua thêm 2 nguyên liệu”.
-
-## Chức năng phần A đã hoàn thiện
-
-Quản lý danh mục/danh mục con ở `/admin/danh-muc`. Trong form sản phẩm có upload PNG/JPEG/WebP, gallery, dinh dưỡng và khối lượng; stock chỉ đọc. Admin khách hàng có Chi tiết và Khóa/Mở. Trang tài khoản có đổi mật khẩu; trang đăng nhập có ghi nhớ 7 ngày và Quên mật khẩu.
-
-Khôi phục local dùng hộp thư thử của backend (`npm run mail:inbox`), không gửi email thật. Cấu hình SMTP khi nhóm có dịch vụ gửi thư. Xem [bàn giao A](../backend/docs/part-a-handoff.md) để kiểm tra toàn bộ các mục.
