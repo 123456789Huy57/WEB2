@@ -28,5 +28,6 @@ const pages: Routes = [
   { path: '**', title: 'Không tìm thấy trang · FreshMart', loadComponent: () => import('./pages/not-found/not-found').then(m => m.NotFound) }
 ];
 
-/** Mọi trang trừ trang chủ đều chờ catalog trước (dataGuard chạy trước các guard đăng nhập/quản trị). */
-export const routes: Routes = pages.map(r => r.path === '' ? r : { ...r, canActivate: [dataGuard, ...(r.canActivate ?? [])] });
+/** Mọi trang trừ trang chủ đều chờ catalog trước (dataGuard chạy trước các guard đăng nhập/quản trị).
+ *  Route chỉ để chuyển hướng (redirectTo) không được gắn guard, Angular sẽ báo lỗi và không mở được app. */
+export const routes: Routes = pages.map(r => r.path === '' || r.redirectTo ? r : { ...r, canActivate: [dataGuard, ...(r.canActivate ?? [])] });
