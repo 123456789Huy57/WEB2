@@ -25,10 +25,11 @@ export interface Voucher {
   remaining?: number | null; saved?: boolean; usedByMe?: number;
 }
 export interface RecipeLine { productId: string; ingredientId: string; quantity: number; unit: string; }
+export interface RecipeStep { title: string; description: string; durationMinutes?: number; tip?: string; }
 export interface Recipe {
   id: string; slug: string; name: string; mealType: 'breakfast' | 'lunch' | 'dinner' | 'snack';
   servings: number; prepTimeMinutes: number; cookTimeMinutes: number; difficulty: 'easy' | 'medium' | 'hard';
-  imageUrl: string; ingredients: RecipeLine[]; steps: string[];
+  imageUrl: string; ingredients: RecipeLine[]; steps: Array<string | RecipeStep>;
   nutrition: { calories: number; protein: number; carbs: number; fat: number };
   tags: string[]; goalTags?: string[]; isActive?: boolean;
 }

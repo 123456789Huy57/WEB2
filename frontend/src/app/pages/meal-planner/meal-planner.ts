@@ -76,6 +76,7 @@ export class MealPlanner implements AfterViewInit {
     return this.mp.ingredients().filter(i => (this.group() === 'all' || i.categoryId === this.group()) && (!k || norm(i.name).includes(k)));
   });
   protected isSel(id: string): boolean { return this.selected().includes(id); }
+  protected clearSelected(): void { this.selected.set([]); store.set('mpSel', []); }
   protected toggle(id: string): void {
     const s = this.isSel(id) ? this.selected().filter(x => x !== id) : [...this.selected(), id];
     this.selected.set(s); store.set('mpSel', s);
@@ -84,6 +85,16 @@ export class MealPlanner implements AfterViewInit {
   // Bước 2: tiêu chí
   protected f = signal<PlannerFilters>({ mealType: 'all', time: 'all', difficulty: 'all', servings: 2, lowFat: false, highProtein: false, vegetarian: false });
   protected patch<K extends keyof PlannerFilters>(k: K, v: PlannerFilters[K]): void { this.f.update(x => ({ ...x, [k]: v })); }
+
+  // Các tiêu chí mở rộng được thu thập ở frontend để nhóm backend tích hợp API recommendation.
+  protected taste = signal('all');
+  protected cuisine = signal('all');
+  protected extraRequest = signal('');
+  protected readonly tastes = ['Đậm đà', 'Thanh nhẹ', 'Cay', 'Chua ngọt', 'Béo thơm'];
+  protected readonly cuisines = ['Việt Nam', 'Châu Á', 'Châu Âu', 'Hàn Quốc', 'Nhật Bản'];
+  protected readonly mealOptions = [{ v: 'all', l: 'Bất kỳ' }, { v: 'breakfast', l: 'Bữa sáng' }, { v: 'lunch', l: 'Bữa trưa' }, { v: 'dinner', l: 'Bữa tối' }, { v: 'snack', l: 'Ăn vặt' }];
+  protected readonly timeOptions = [{ v: 'all', l: 'Không giới hạn' }, { v: 'quick', l: 'Dưới 15 phút' }, { v: 'normal', l: '15 – 30 phút' }, { v: 'long', l: '30 – 60 phút' }];
+  protected readonly difficultyOptions = [{ v: 'all', l: 'Bất kỳ' }, { v: 'easy', l: 'Dễ' }, { v: 'medium', l: 'Vừa' }, { v: 'hard', l: 'Thử thách' }];
 
   // Bước 3: kết quả
   protected results = signal<PlannerResult[] | null>(null);
@@ -107,6 +118,38 @@ export class MealPlanner implements AfterViewInit {
   protected missing = computed(() => this.purchase().filter(x => !this.isSel(x.line.ingredientId)));
   protected chosen = computed(() => this.missing().filter(x => x.product && !this.unchecked().includes(x.line.ingredientId)));
   protected chosenTotal = computed(() => this.chosen().reduce((s, x) => s + x.total, 0));
+  protected relatedRecipes = computed(() => {
+    const current = this.current();
+    if (!current) return [];
+    const ids = new Set(current.ingredients.map(x => x.ingredientId));
+    return this.data.recipes()
+      .filter(recipe => recipe.id !== current.id && recipe.isActive !== false)
+      .map(recipe => ({ recipe, overlap: recipe.ingredients.filter(line => ids.has(line.ingredientId)).length }))
+      .filter(item => item.overlap > 0)
+      .sort((a, b) => b.overlap - a.overlap)
+      .slice(0, 3)
+      .map(item => item.recipe);
+  });
+
+  protected stepTitle(step: Recipe['steps'][number], index: number): string {
+    return typeof step === 'string' ? `Bước ${index + 1}` : step.title;
+  }
+  protected stepDescription(step: Recipe['steps'][number]): string {
+    return typeof step === 'string' ? step : step.description;
+  }
+  protected stepDuration(step: Recipe['steps'][number]): number | null {
+    return typeof step === 'string' ? null : step.durationMinutes ?? null;
+  }
+  protected stepTip(step: Recipe['steps'][number]): string | null {
+    return typeof step === 'string' ? null : step.tip ?? null;
+  }
+  protected openRelated(id: string): void {
+    const recipe = this.mp.recipe(id);
+    if (!recipe) return;
+    this.current.set(recipe);
+    this.unchecked.set([]);
+    this.dlg().nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
   protected open(id: string): void {
     this.current.set(this.mp.recipe(id) ?? null);

@@ -9,7 +9,7 @@ import { VoucherService } from '../../core/voucher.service';
 import { AuthService, apiMessage } from '../../core/auth.service';
 import { OrderService, PAYMENT_LABEL } from '../../core/order.service';
 import { ToastService } from '../../core/toast.service';
-import { PaymentMethod } from '../../core/models';
+import { PaymentMethod, Product } from '../../core/models';
 import { VndPipe } from '../../shared/vnd.pipe';
 import { ImgFallbackDirective } from '../../shared/img-fallback.directive';
 
@@ -43,7 +43,11 @@ export class Checkout {
   protected t = this.cart.totals;
   protected slots = buildSlots();
   protected sending = signal(false);
-  protected done = signal<{ code: string; total: number; slot: string; payment: string; firstName: string; phone: string; guest: boolean } | null>(null);
+  protected done = signal<{
+    code: string; subtotal: number; shipping: number; discount: number; total: number;
+    slot: string; payment: string; name: string; phone: string; address: string; note: string;
+    items: { product: Product; qty: number; price: number }[]; guest: boolean;
+  } | null>(null);
   private tried = signal(false);
 
   private u = this.auth.user();
@@ -89,13 +93,19 @@ export class Checkout {
     try {
       const raw = this.form.getRawValue();
       const f = { ...raw, name: raw.name.trim(), phone: normalizePhone(raw.phone) };
+      // Giữ lại dòng hàng trước khi đặt (đặt xong giỏ sẽ trống) để trang xác nhận hiện đủ món.
+      const items = this.cart.lines().map(l => ({ product: l.p, qty: l.qty, price: this.ps.price(l.p) }));
       const o = await this.orders.place(f, this.t().voucher ? this.cart.voucherCode() : '');
       // Đơn đã giữ hàng; thanh toán online thì chuyển sang cổng, kết quả quay về /thanh-toan/ket-qua.
       if (o.paymentMethod === 'vnpay') {
         try { await this.orders.pay(o); return; }
         catch (error) { this.toast.show(`Đã tạo đơn ${o.orderCode} nhưng chưa mở được cổng thanh toán. Thanh toán lại trong Tài khoản.`); }
       }
-      this.done.set({ code: o.orderCode, total: o.total, slot: f.slot, payment: PAYMENT_LABEL[o.paymentMethod], firstName: f.name.trim().split(/\s+/).pop() ?? '', phone: f.phone, guest: false });
+      this.done.set({
+        code: o.orderCode, subtotal: o.subtotal, shipping: o.shippingFee - o.shippingDiscount, discount: o.productDiscount, total: o.total,
+        slot: f.slot, payment: PAYMENT_LABEL[o.paymentMethod], name: f.name, phone: f.phone, address: f.address, note: f.note,
+        items, guest: false
+      });
       window.scrollTo({ top: 0 });
     } catch (error) {
       this.toast.show(apiMessage(error));
