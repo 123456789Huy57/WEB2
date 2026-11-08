@@ -34,6 +34,10 @@ type Errors = Partial<Record<'identifier' | 'password' | 'fullName' | 'phone' | 
                 <button class="pw-toggle" type="button" (click)="showPw.set(!showPw())" [attr.aria-label]="showPw() ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'" [attr.aria-pressed]="showPw()">{{ showPw() ? 'Ẩn' : 'Hiện' }}</button>
               </div>
               <span id="in-pw-err" class="err small">{{ fe().password }}</span>
+              <span class="hint demo-hint">Tài khoản demo:
+                <button type="button" (click)="fillDemo('customer')">Khách {{ demo.customer.id }} / {{ demo.customer.pw }}</button> ·
+                <button type="button" (click)="fillDemo('admin')">Quản trị {{ demo.admin.id }} / {{ demo.admin.pw }}</button>
+              </span>
             </div>
             <div class="auth-row">
               <label class="check"><input type="checkbox" name="rememberMe" [(ngModel)]="rememberMe"> Ghi nhớ đăng nhập 7 ngày</label>
@@ -101,6 +105,17 @@ export class Login {
   protected confirm = '';
   protected fullName = '';
   protected phone = '';
+
+  /** Tài khoản dùng khi demo, bấm vào để điền sẵn. Phải tạo hai tài khoản này trong database trước. */
+  protected readonly demo = {
+    customer: { id: 'khach@freshmart.vn', pw: 'Khach@123' },
+    admin: { id: 'admin@freshmart.vn', pw: 'Admin@123' }
+  };
+  protected fillDemo(kind: 'customer' | 'admin'): void {
+    this.identifier = this.demo[kind].id;
+    this.password = this.demo[kind].pw;
+    this.fe.set({}); this.err.set('');
+  }
 
   protected switchTab(signup: boolean): void {
     this.signup.set(signup);

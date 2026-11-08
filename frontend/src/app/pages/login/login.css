@@ -14,3 +14,6 @@
 .pw-toggle { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); padding: 6px 10px; background: none; border: 0; font: inherit; font-size: 14px; font-weight: 600; color: var(--forest, currentColor); cursor: pointer; border-radius: 6px; }
 .pw-toggle:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
 .auth-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.demo-hint { line-height: 1.6; }
+.demo-hint button { padding: 0; border: 0; background: none; font: inherit; color: inherit; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+.demo-hint button:hover { color: var(--forest); }
