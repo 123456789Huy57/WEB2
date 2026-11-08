@@ -209,12 +209,6 @@ export class MealPlanner implements AfterViewInit {
         : `Đã thêm ${added} sản phẩm còn thiếu của “${r.name}” vào giỏ`);
     } finally { this.busy.set(null); }
   }
-  protected readonly tagLabel: Record<string, string> = {
-    family: 'Gia đình', healthy: 'Lành mạnh', 'high-protein': 'Nhiều đạm', vegetarian: 'Món chay', quick: 'Nhanh gọn', seafood: 'Hải sản',
-    comfort: 'Ấm bụng', premium: 'Đãi khách', fresh: 'Thanh mát', budget: 'Tiết kiệm', 'low-cal': 'Ít calo', vegan: 'Thuần chay', dessert: 'Tráng miệng'
-  };
-  protected tags(r: Recipe): string[] { return r.tags.filter(t => this.tagLabel[t]).slice(0, 2).map(t => this.tagLabel[t]); }
-
   // Bước 4: xem món, thêm phần còn thiếu vào giỏ
   private dlg = viewChild.required<ElementRef<HTMLDialogElement>>('dlg');
   protected current = signal<Recipe | null>(null);
