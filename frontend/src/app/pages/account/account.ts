@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, computed, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
 import { OrderService, OrderView } from '../../core/order.service';
@@ -57,6 +57,10 @@ export class Account {
     this.toast.show(`Đã hủy đơn ${o.orderCode}`);
   }
   protected useVoucher(code: string): void { this.cart.setVoucher(code); this.router.navigateByUrl('/gio-hang'); }
-  protected saveProfile(): void { this.auth.update({ ...this.profile, fullName: this.profile.fullName.trim() }); this.toast.show('Đã lưu thông tin'); }
+  protected saveProfile(form: NgForm): void {
+    if (form.invalid) { form.form.markAllAsTouched(); this.toast.show('Kiểm tra lại họ tên và số điện thoại'); return; }
+    this.auth.update({ ...this.profile, fullName: this.profile.fullName.trim(), phone: this.profile.phone.trim() });
+    this.toast.show('Đã lưu thông tin');
+  }
   protected logout(): void { this.auth.logout(); this.router.navigateByUrl('/'); }
 }

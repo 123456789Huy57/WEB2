@@ -42,11 +42,16 @@ export class CartService {
 
   set(id: string, qty: number): void {
     const p = this.products.get(id);
+    if (!p && qty > 0) return;
     const step = p ? this.products.step(p) : 1;
-    const q = Math.max(0, Math.min(Math.round(qty / step) * step, p?.stock || 99));
+    const stock = p ? Math.max(0, Math.floor((p.stock + Number.EPSILON) / step) * step) : 0;
+    const q = Math.max(0, Math.min(Math.round(qty / step) * step, stock));
     const items = this.state().items.filter(i => i.id !== id);
     const old = this.state().items.findIndex(i => i.id === id);
-    if (q) { if (old > -1) items.splice(old, 0, { id, qty: q }); else items.push({ id, qty: q }); }
+    if (q) {
+      const normalized = +q.toFixed(2);
+      if (old > -1) items.splice(old, 0, { id, qty: normalized }); else items.push({ id, qty: normalized });
+    }
     this.save({ ...this.state(), items });
   }
   add(id: string, qty?: number): void { const p = this.products.get(id); this.set(id, this.qty(id) + (qty ?? (p ? this.products.step(p) : 1))); }

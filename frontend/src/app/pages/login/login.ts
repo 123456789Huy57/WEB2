@@ -57,7 +57,10 @@ export class Login {
   protected phone = '';
 
   protected login(): void {
-    const r = this.auth.login(this.email, this.password);
+    const email = this.email.trim();
+    if (!/^\S+@\S+\.\S+$/.test(email)) { this.err.set('Nhập email đúng định dạng'); return; }
+    if (!this.password) { this.err.set('Nhập mật khẩu'); return; }
+    const r = this.auth.login(email, this.password);
     if (!r.ok) { this.err.set(r.msg); return; }
     this.router.navigateByUrl(this.next() || (r.user?.role === 'admin' ? '/admin' : '/tai-khoan'));
   }
