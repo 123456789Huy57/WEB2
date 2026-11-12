@@ -1,0 +1,249 @@
+[
+  {
+    "ingredient": {
+      "id": "ing-toi",
+      "slug": "toi",
+      "name": "Tỏi",
+      "categoryId": "vegetables",
+      "category": "vegetables",
+      "defaultUnit": "củ",
+      "unitWeightGram": 40,
+      "imageUrl": "/img/ingredients/toi.svg",
+      "aliases": [
+        "tỏi",
+        "tỏi tím",
+        "tỏi băm"
+      ],
+      "nutritionPer100g": {
+        "energy_kcal": 149,
+        "protein": 6.4,
+        "carbohydrates": 33,
+        "fat": 0.5,
+        "fiber": 2.1
+      },
+      "isActive": true
+    },
+    "map": {
+      "ingredientId": "ing-toi",
+      "preferredProductId": "p-0225",
+      "productIds": [
+        "p-0225"
+      ]
+    }
+  },
+  {
+    "ingredient": {
+      "id": "ing-thit-heo-xay",
+      "slug": "thit-heo-xay",
+      "name": "Thịt heo xay",
+      "categoryId": "meat",
+      "category": "meat",
+      "defaultUnit": "g",
+      "unitWeightGram": 1,
+      "imageUrl": "/img/ingredients/thit-heo-xay.svg",
+      "aliases": [
+        "thịt xay",
+        "thịt băm",
+        "thịt heo băm"
+      ],
+      "nutritionPer100g": {
+        "energy_kcal": 263,
+        "protein": 16.9,
+        "carbohydrates": 0,
+        "fat": 21.2,
+        "fiber": 0
+      },
+      "isActive": true
+    },
+    "map": {
+      "ingredientId": "ing-thit-heo-xay",
+      "preferredProductId": "p-0226",
+      "productIds": [
+        "p-0226"
+      ]
+    }
+  },
+  {
+    "ingredient": {
+      "id": "ing-gia-do",
+      "slug": "gia-do",
+      "name": "Giá đỗ",
+      "categoryId": "vegetables",
+      "category": "vegetables",
+      "defaultUnit": "g",
+      "unitWeightGram": 1,
+      "imageUrl": "/img/ingredients/gia-do.svg",
+      "aliases": [
+        "giá",
+        "giá sống",
+        "giá đỗ xanh"
+      ],
+      "nutritionPer100g": {
+        "energy_kcal": 30,
+        "protein": 3,
+        "carbohydrates": 5.9,
+        "fat": 0.2,
+        "fiber": 1.8
+      },
+      "isActive": true
+    },
+    "map": {
+      "ingredientId": "ing-gia-do",
+      "preferredProductId": "p-0227",
+      "productIds": [
+        "p-0227"
+      ]
+    }
+  },
+  {
+    "ingredient": {
+      "id": "ing-mi-quang",
+      "slug": "mi-quang",
+      "name": "Sợi mì Quảng",
+      "categoryId": "pantry",
+      "category": "pantry",
+      "defaultUnit": "gói",
+      "unitWeightGram": 300,
+      "imageUrl": "/img/ingredients/mi-quang.svg",
+      "aliases": [
+        "mì quảng",
+        "sợi mì quảng"
+      ],
+      "isActive": true
+    },
+    "map": {
+      "ingredientId": "ing-mi-quang",
+      "preferredProductId": "p-0228",
+      "productIds": [
+        "p-0228"
+      ]
+    }
+  },
+  {
+    "ingredient": {
+      "id": "ing-hanh-tim",
+      "slug": "hanh-tim",
+      "name": "Hành tím",
+      "categoryId": "vegetables",
+      "category": "vegetables",
+      "defaultUnit": "củ",
+      "unitWeightGram": 15,
+      "imageUrl": "/img/ingredients/hanh-tim.svg",
+      "aliases": [
+        "hành tím",
+        "hành khô",
+        "hành đỏ"
+      ],
+      "nutritionPer100g": {
+        "energy_kcal": 72,
+        "protein": 2.5,
+        "carbohydrates": 16.8,
+        "fat": 0.1,
+        "fiber": 3.2
+      },
+      "isActive": true
+    },
+    "map": {
+      "ingredientId": "ing-hanh-tim",
+      "preferredProductId": "p-0229",
+      "productIds": [
+        "p-0229"
+      ]
+    }
+  },
+  {
+    "ingredient": {
+      "id": "ing-chanh",
+      "slug": "chanh",
+      "name": "Chanh",
+      "categoryId": "vegetables",
+      "category": "vegetables",
+      "defaultUnit": "trái",
+      "unitWeightGram": 60,
+      "imageUrl": "/img/ingredients/chanh.svg",
+      "aliases": [
+        "chanh",
+        "chanh không hạt",
+        "chanh tươi"
+      ],
+      "nutritionPer100g": {
+        "energy_kcal": 30,
+        "protein": 0.7,
+        "carbohydrates": 10.5,
+        "fat": 0.2,
+        "fiber": 2.8
+      },
+      "isActive": true
+    },
+    "map": {
+      "ingredientId": "ing-chanh",
+      "preferredProductId": "p-0230",
+      "productIds": [
+        "p-0230"
+      ]
+    }
+  },
+  {
+    "ingredient": {
+      "id": "ing-ot",
+      "slug": "ot",
+      "name": "Ớt",
+      "categoryId": "vegetables",
+      "category": "vegetables",
+      "defaultUnit": "trái",
+      "unitWeightGram": 3,
+      "imageUrl": "/img/ingredients/ot.svg",
+      "aliases": [
+        "ớt",
+        "ớt hiểm",
+        "ớt tươi"
+      ],
+      "nutritionPer100g": {
+        "energy_kcal": 40,
+        "protein": 1.9,
+        "carbohydrates": 8.8,
+        "fat": 0.4,
+        "fiber": 1.5
+      },
+      "isActive": true
+    },
+    "map": {
+      "ingredientId": "ing-ot",
+      "preferredProductId": "p-0231",
+      "productIds": [
+        "p-0231"
+      ]
+    }
+  },
+  {
+    "ingredient": {
+      "id": "ing-bot-mi",
+      "slug": "bot-mi",
+      "name": "Bột mì",
+      "categoryId": "pantry",
+      "category": "pantry",
+      "defaultUnit": "g",
+      "unitWeightGram": 1,
+      "imageUrl": "/img/ingredients/bot-mi.svg",
+      "aliases": [
+        "bột mì",
+        "bột mì đa dụng"
+      ],
+      "nutritionPer100g": {
+        "energy_kcal": 364,
+        "protein": 10.3,
+        "carbohydrates": 76.3,
+        "fat": 1,
+        "fiber": 2.7
+      },
+      "isActive": true
+    },
+    "map": {
+      "ingredientId": "ing-bot-mi",
+      "preferredProductId": "p-0232",
+      "productIds": [
+        "p-0232"
+      ]
+    }
+  }
+]

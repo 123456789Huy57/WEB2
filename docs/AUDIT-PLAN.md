@@ -48,11 +48,26 @@ Cập nhật: 12/11/2026 · Nhánh `huy-phan-b`
 - Trang sản phẩm: tải chi tiết riêng, hiện thêm gợi ý dùng và bảo quản. Chỉ hiện xuất xứ khi có dữ liệu (bỏ mặc định "Việt Nam"). Dinh dưỡng ghi rõ "giá trị tham khảo".
 - Trang so sánh: tải chi tiết để có dinh dưỡng; xuất xứ trống hiện "Chưa ghi".
 
-## 3. Còn lại (đợt sau)
+## 3. Đợt 2 (đã làm)
 
-1. **Ảnh nguyên liệu (B)**: vẽ 65 icon SVG còn lại theo bộ mẫu đã duyệt (`docs/design/ingredient-icons-samples.html`).
-2. **Ảnh món ăn (C3)**: giữ ảnh tốt, thay ảnh xấu bằng ảnh Unsplash có giấy phép, ảnh lỗi dùng SVG dự phòng.
-3. **Giao diện Meal Planner (D)**: gửi 2–3 phương án để chọn.
-4. **Nguyên liệu còn thiếu trong công thức**: một số món thiếu nguyên liệu chính (Mì Quảng không có sợi mì và thịt; Bún chả không có thịt xay; Bánh xèo không có giá). Cách làm hiện đã viết theo nguyên liệu đang có. Muốn đầy đủ cần thêm nguyên liệu và gắn sản phẩm; cần nhóm duyệt danh sách.
-5. **9 nguyên liệu không có hàng** (mật ong, ghẹ, đào, kem tươi, ớt chuông, riềng, đậu nành hạt, trân châu, mực khô): Meal Planner báo "chưa có sản phẩm phù hợp". Có thể thay món hoặc đổi nguyên liệu.
-6. **Tab Cộng đồng**: dữ liệu là lượt nấu thật. Database mới thì trống cho tới khi có người dùng; không tạo lượt nấu giả.
+1. **Icon nguyên liệu**: 83 icon SVG vẽ phẳng theo bộ mẫu đã duyệt (`frontend/public/img/ingredients/`), mỗi icon dưới 1,2 KB, thay ảnh bao bì sản phẩm trong Meal Planner.
+2. **Ảnh món ăn**: 65/66 món chuyển sang ảnh Unsplash (giấy phép tự do), chọn bằng mắt cho đúng món, tải lên Cloudinary qua `fix:catalog`. Khổ qua xào trứng chưa có ảnh phù hợp nên giữ ảnh cũ.
+3. **Nguyên liệu còn thiếu**: thêm 8 nguyên liệu có hàng thật (tỏi, thịt heo xay, giá đỗ, sợi mì Quảng, hành tím, chanh, ớt, bột mì) và bổ sung cho 21 món (`content/recipe-additions.json`).
+   - Bún chả có thịt xay làm chả viên.
+   - Mì Quảng dùng sợi mì Quảng, ba chỉ, đậu phộng.
+   - Bánh xèo có giá và thịt thay cho mực khô.
+   - Nem nướng dùng thịt xay và cuốn bánh tráng.
+   - Cách làm của 22 món được viết lại theo danh sách mới.
+4. **Giao diện Meal Planner**:
+   - Đầu trang gọn hơn.
+   - Hai cột: "Tủ bếp của bạn" dính bên trái, bộ lọc dạng chip và danh sách món bên phải.
+   - Kết quả cập nhật ngay khi chọn, không cần bấm nút.
+   - Chưa chọn gì thì hiện món gợi ý theo bộ lọc.
+   - Thẻ món hiện icon nguyên liệu (đã có thì đậm), nhãn "Có 3/5" và tên các nguyên liệu cần thêm.
+   - Trên điện thoại có thanh nổi "Xem n món" để nhảy xuống danh sách.
+   - Thuật toán xếp món giữ nguyên như Web1.
+
+## 4. Còn lại
+
+1. **9 nguyên liệu không có hàng** (mật ong, ghẹ, đào, kem tươi, ớt chuông, riềng, đậu nành hạt, trân châu, mực khô): Meal Planner báo "chưa có sản phẩm phù hợp".
+2. **Tab Cộng đồng**: dữ liệu là lượt nấu thật. Database mới thì trống cho tới khi có người dùng; không tạo lượt nấu giả.

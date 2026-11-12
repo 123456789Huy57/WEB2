@@ -1,0 +1,424 @@
+[
+  {
+    "id": "rec-007",
+    "why": "Phở thiếu rau thơm và hành",
+    "add": [
+      {
+        "ingredientId": "ing-hanh-la",
+        "quantity": 30,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing-rau-ngo",
+        "quantity": 20,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing-chanh",
+        "quantity": 1,
+        "unit": "trái"
+      }
+    ]
+  },
+  {
+    "id": "rec-010",
+    "why": "Tỏi là nguyên liệu chính của món",
+    "add": [
+      {
+        "ingredientId": "ing-toi",
+        "quantity": 1,
+        "unit": "củ"
+      }
+    ]
+  },
+  {
+    "id": "rec-015",
+    "why": "Cá kho cần hành tím",
+    "add": [
+      {
+        "ingredientId": "ing-hanh-tim",
+        "quantity": 2,
+        "unit": "củ"
+      },
+      {
+        "ingredientId": "ing-ot",
+        "quantity": 2,
+        "unit": "trái"
+      }
+    ]
+  },
+  {
+    "id": "rec-017",
+    "why": "Phở thiếu rau thơm, giá, chanh",
+    "add": [
+      {
+        "ingredientId": "ing-hanh-la",
+        "quantity": 30,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing-rau-ngo",
+        "quantity": 20,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing-gia-do",
+        "quantity": 100,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing-chanh",
+        "quantity": 1,
+        "unit": "trái"
+      }
+    ]
+  },
+  {
+    "id": "rec-021",
+    "why": "Bún bò Nam Bộ cần giá, rau thơm",
+    "add": [
+      {
+        "ingredientId": "ing-gia-do",
+        "quantity": 100,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing-rau-song",
+        "quantity": 100,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing-toi",
+        "quantity": 1,
+        "unit": "củ"
+      }
+    ]
+  },
+  {
+    "id": "rec-022",
+    "why": "Canh chua thiếu giá, hành, ngò, ớt",
+    "add": [
+      {
+        "ingredientId": "ing-gia-do",
+        "quantity": 100,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing-hanh-la",
+        "quantity": 30,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing-rau-ngo",
+        "quantity": 20,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing-ot",
+        "quantity": 2,
+        "unit": "trái"
+      }
+    ]
+  },
+  {
+    "id": "rec-025",
+    "why": "Bò lúc lắc cần hành tây, tỏi, rau lót",
+    "add": [
+      {
+        "ingredientId": "ing-hanh-tay",
+        "quantity": 150,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing-toi",
+        "quantity": 1,
+        "unit": "củ"
+      },
+      {
+        "ingredientId": "ing-xa-lach",
+        "quantity": 1,
+        "unit": "cây"
+      }
+    ]
+  },
+  {
+    "id": "rec-027",
+    "why": "Cháo lươn cần gừng, hành lá",
+    "add": [
+      {
+        "ingredientId": "ing-gung",
+        "quantity": 20,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing-hanh-la",
+        "quantity": 30,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing-hanh-tim",
+        "quantity": 2,
+        "unit": "củ"
+      }
+    ]
+  },
+  {
+    "id": "rec-028",
+    "why": "Gỏi cuốn cần rau sống",
+    "add": [
+      {
+        "ingredientId": "ing-rau-song",
+        "quantity": 100,
+        "unit": "g"
+      }
+    ]
+  },
+  {
+    "id": "rec-030",
+    "why": "Cơm chiên cần hành lá, nước tương",
+    "add": [
+      {
+        "ingredientId": "ing-hanh-la",
+        "quantity": 30,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing-nuoc-tuong",
+        "quantity": 2,
+        "unit": "muỗng"
+      }
+    ]
+  },
+  {
+    "id": "rec-035",
+    "why": "Món nướng ăn kèm rau, cần tỏi ướp",
+    "add": [
+      {
+        "ingredientId": "ing-toi",
+        "quantity": 1,
+        "unit": "củ"
+      },
+      {
+        "ingredientId": "ing-xa-lach",
+        "quantity": 1,
+        "unit": "cây"
+      }
+    ]
+  },
+  {
+    "id": "rec-042",
+    "why": "Bún chả cần thịt xay làm chả viên và nước chấm",
+    "add": [
+      {
+        "ingredientId": "ing-thit-heo-xay",
+        "quantity": 200,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing-hanh-tim",
+        "quantity": 3,
+        "unit": "củ"
+      },
+      {
+        "ingredientId": "ing-toi",
+        "quantity": 1,
+        "unit": "củ"
+      },
+      {
+        "ingredientId": "ing-chanh",
+        "quantity": 1,
+        "unit": "trái"
+      },
+      {
+        "ingredientId": "ing-ot",
+        "quantity": 2,
+        "unit": "trái"
+      }
+    ]
+  },
+  {
+    "id": "rec-043",
+    "why": "Bánh xèo nhân tôm thịt, không dùng mực khô; Bánh xèo cần giá, hành lá, rau cuốn",
+    "add": [
+      {
+        "ingredientId": "ing-gia-do",
+        "quantity": 150,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing-hanh-la",
+        "quantity": 30,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing-rau-song",
+        "quantity": 100,
+        "unit": "g"
+      }
+    ],
+    "replace": {
+      "from": "ing-muc-dong",
+      "to": {
+        "ingredientId": "ing-ba-chi-heo",
+        "quantity": 200,
+        "unit": "g"
+      }
+    }
+  },
+  {
+    "id": "rec-046",
+    "why": "Nước trộn gỏi cần chanh, tỏi, ớt",
+    "add": [
+      {
+        "ingredientId": "ing-chanh",
+        "quantity": 1,
+        "unit": "trái"
+      },
+      {
+        "ingredientId": "ing-toi",
+        "quantity": 1,
+        "unit": "củ"
+      },
+      {
+        "ingredientId": "ing-ot",
+        "quantity": 2,
+        "unit": "trái"
+      }
+    ]
+  },
+  {
+    "id": "rec-047",
+    "why": "Mì Quảng dùng sợi mì Quảng làm từ bột gạo, không phải bột sắn; Mì Quảng cần sợi mì, thịt, đậu phộng, rau",
+    "add": [
+      {
+        "ingredientId": "ing-ba-chi-heo",
+        "quantity": 200,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing-dau-phong",
+        "quantity": 50,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing-rau-song",
+        "quantity": 100,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing-hanh-tim",
+        "quantity": 2,
+        "unit": "củ"
+      }
+    ],
+    "replace": {
+      "from": "ing-bot-san",
+      "to": {
+        "ingredientId": "ing-mi-quang",
+        "quantity": 1,
+        "unit": "gói"
+      }
+    }
+  },
+  {
+    "id": "rec-051",
+    "why": "Nem nướng làm từ thịt nạc xay, không phải ba chỉ; Nem nướng cuốn bánh tráng, rau sống",
+    "add": [
+      {
+        "ingredientId": "ing-banh-trang",
+        "quantity": 1,
+        "unit": "gói"
+      },
+      {
+        "ingredientId": "ing-rau-song",
+        "quantity": 100,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing-toi",
+        "quantity": 1,
+        "unit": "củ"
+      }
+    ],
+    "replace": {
+      "from": "ing-ba-chi-heo",
+      "to": {
+        "ingredientId": "ing-thit-heo-xay",
+        "quantity": 300,
+        "unit": "g"
+      }
+    }
+  },
+  {
+    "id": "rec-053",
+    "why": "Ghẹ lăn bột mì trước khi chiên",
+    "add": [
+      {
+        "ingredientId": "ing-bot-mi",
+        "quantity": 50,
+        "unit": "g"
+      }
+    ]
+  },
+  {
+    "id": "rec-057",
+    "why": "Món xào cần tỏi",
+    "add": [
+      {
+        "ingredientId": "ing-toi",
+        "quantity": 1,
+        "unit": "củ"
+      }
+    ]
+  },
+  {
+    "id": "rec-061",
+    "why": "Bún tôm ăn kèm rau và chanh",
+    "add": [
+      {
+        "ingredientId": "ing-rau-song",
+        "quantity": 100,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing-chanh",
+        "quantity": 1,
+        "unit": "trái"
+      }
+    ]
+  },
+  {
+    "id": "rec-064",
+    "why": "Sandwich cần rau",
+    "add": [
+      {
+        "ingredientId": "ing-xa-lach",
+        "quantity": 1,
+        "unit": "cây"
+      }
+    ]
+  },
+  {
+    "id": "rec-065",
+    "why": "Món xào cần tỏi",
+    "add": [
+      {
+        "ingredientId": "ing-toi",
+        "quantity": 1,
+        "unit": "củ"
+      }
+    ]
+  },
+  {
+    "id": "rec-040",
+    "why": "Mực khô không có hàng, món dùng mực ống tươi",
+    "replace": {
+      "from": "ing-muc-dong",
+      "to": {
+        "ingredientId": "ing-muc-ong",
+        "quantity": 300,
+        "unit": "g"
+      }
+    }
+  }
+]

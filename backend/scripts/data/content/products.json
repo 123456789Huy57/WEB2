@@ -2609,5 +2609,133 @@
     "origin": "Việt Nam",
     "netWeightGram": 120,
     "nutrition": null
+  },
+  {
+    "id": "p-0225",
+    "description": "Tỏi tím củ chắc, tép to, vỏ ngoài màu tím nhạt, mùi thơm hăng đặc trưng. Túi 200 g dùng được nhiều bữa cho gia đình.",
+    "usage": "Gợi ý dùng: Phi thơm để xào rau muống, băm pha nước chấm, ướp thịt nướng.",
+    "storage": "Để nơi khô thoáng, tránh ẩm; không cho vào tủ lạnh vì dễ mọc mầm.",
+    "origin": "Trung Quốc",
+    "netWeightGram": 200,
+    "nutrition": {
+      "energy_kcal": 149,
+      "protein": 6.4,
+      "fat": 0.5,
+      "carbohydrates": 33,
+      "sugars": 1,
+      "fiber": 2.1,
+      "salt": 0.04
+    }
+  },
+  {
+    "id": "p-0226",
+    "description": "Thịt heo xay sẵn có tỷ lệ nạc mỡ vừa phải, đóng khay kín, tiện cho bữa nấu nhanh. Thịt mềm, kết dính tốt khi viên hoặc nặn chả.",
+    "usage": "Gợi ý dùng: Viên chả nướng bún chả, nấu canh bí, làm nhân trứng chiên hoặc đậu hũ nhồi thịt.",
+    "storage": "Giữ ngăn mát và dùng trong ngày, hoặc cấp đông; rã đông trong ngăn mát trước khi nấu.",
+    "origin": "Việt Nam",
+    "netWeightGram": 200,
+    "nutrition": {
+      "energy_kcal": 263,
+      "protein": 16.9,
+      "fat": 21.2,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.15
+    }
+  },
+  {
+    "id": "p-0227",
+    "description": "Giá đỗ xanh mầm trắng, thân giòn, rễ ngắn. Ăn sống hoặc trụng sơ đều giữ được độ giòn ngọt.",
+    "usage": "Gợi ý dùng: Nhân bánh xèo, ăn kèm phở, bún bò, xào với thịt bò.",
+    "storage": "Giữ ngăn mát trong túi kín, dùng trong 1–2 ngày; nhặt bỏ cọng úng trước khi nấu.",
+    "origin": "Việt Nam",
+    "netWeightGram": 300,
+    "nutrition": {
+      "energy_kcal": 30,
+      "protein": 3,
+      "fat": 0.2,
+      "carbohydrates": 5.9,
+      "sugars": 4.1,
+      "fiber": 1.8,
+      "salt": 0.02
+    }
+  },
+  {
+    "id": "p-0228",
+    "description": "Sợi mì Quảng khô làm từ bột gạo theo kiểu Đại Lộc, Quảng Nam, sợi dẹt bản to màu vàng nhạt. Trụng nước sôi vài phút là sợi mềm dai, không nát.",
+    "usage": "Gợi ý dùng: Mì Quảng tôm thịt, mì Quảng gà, trộn với nước nhưn và đậu phộng rang.",
+    "storage": "Bảo quản nơi khô ráo; đã mở gói thì buộc kín, tránh ẩm.",
+    "origin": "Việt Nam",
+    "netWeightGram": 300,
+    "nutrition": null
+  },
+  {
+    "id": "p-0229",
+    "description": "Hành tím củ nhỏ, vỏ đỏ tím, vị cay nhẹ và thơm khi phi vàng. Là gia vị nền cho hầu hết món kho, xào, canh của Việt Nam.",
+    "usage": "Gợi ý dùng: Phi hành rắc lên cháo, cơm tấm; băm ướp cá kho, thịt nướng.",
+    "storage": "Để nơi khô thoáng, tránh ánh nắng; không bỏ chung với khoai tây.",
+    "origin": "Việt Nam",
+    "netWeightGram": 200,
+    "nutrition": {
+      "energy_kcal": 72,
+      "protein": 2.5,
+      "fat": 0.1,
+      "carbohydrates": 16.8,
+      "sugars": 7.9,
+      "fiber": 3.2,
+      "salt": 0.03
+    }
+  },
+  {
+    "id": "p-0230",
+    "description": "Chanh không hạt trái to, vỏ mỏng xanh bóng, nhiều nước và không đắng. Túi 300 g khoảng 2–6 trái.",
+    "usage": "Gợi ý dùng: Pha nước chấm, vắt vào phở, bún; làm nước chanh đá.",
+    "storage": "Giữ ngăn mát trong túi kín để vỏ không khô, dùng trong 1–2 tuần.",
+    "origin": "Việt Nam",
+    "netWeightGram": 300,
+    "nutrition": {
+      "energy_kcal": 30,
+      "protein": 0.7,
+      "fat": 0.2,
+      "carbohydrates": 10.5,
+      "sugars": 1.7,
+      "fiber": 2.8,
+      "salt": 0
+    }
+  },
+  {
+    "id": "p-0231",
+    "description": "Ớt hiểm trái nhỏ, màu đỏ tươi, vị rất cay và thơm. Chỉ cần một ít là đủ cay cho cả nồi nước chấm.",
+    "usage": "Gợi ý dùng: Băm pha nước mắm chua ngọt, thả vào canh chua, xào sả ớt.",
+    "storage": "Giữ ngăn mát, để nguyên cuống và dùng trong 1 tuần; có thể cấp đông.",
+    "origin": "Việt Nam",
+    "netWeightGram": 50,
+    "nutrition": {
+      "energy_kcal": 40,
+      "protein": 1.9,
+      "fat": 0.4,
+      "carbohydrates": 8.8,
+      "sugars": 5.3,
+      "fiber": 1.5,
+      "salt": 0.02
+    }
+  },
+  {
+    "id": "p-0232",
+    "description": "Bột mì đa dụng mịn, trắng, dùng được cho cả món chiên lẫn làm bánh. Lăn bột trước khi chiên giúp lớp vỏ ráo và vàng đều.",
+    "usage": "Gợi ý dùng: Áo bột chiên tôm, ghẹ; làm bánh bông lan, bánh xèo kiểu giòn.",
+    "storage": "Buộc kín miệng gói, để nơi khô ráo, tránh côn trùng.",
+    "origin": "Việt Nam",
+    "netWeightGram": 500,
+    "nutrition": {
+      "energy_kcal": 364,
+      "protein": 10.3,
+      "fat": 1,
+      "carbohydrates": 76.3,
+      "sugars": 0.3,
+      "fiber": 2.7,
+      "salt": 0
+    }
   }
 ]

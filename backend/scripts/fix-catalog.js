@@ -100,7 +100,7 @@ async function main() {
     changed++;
   }
 
-  console.log(`\n== Thay ${(data.recipes || []).length} ảnh món ăn bị lỗi (ảnh Unsplash, giấy phép tự do)`);
+  console.log(`\n== Thay ${(data.recipes || []).length} ảnh món ăn bằng ảnh Unsplash (giấy phép tự do, đúng món)`);
   for (const r of data.recipes || []) {
     const rec = await db.collection('recipes').findOne({ id: r.id }, { projection: { name: 1, sourceImage: 1 } });
     if (!rec) continue;

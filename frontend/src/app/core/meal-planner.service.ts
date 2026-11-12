@@ -58,7 +58,9 @@ export class MealPlannerService {
       .sort((a, b) => a.recipe.ingredients.length - b.recipe.ingredients.length)
       .slice(0, limit);
   }
+  /** Icon SVG vẽ phẳng của nguyên liệu; nguyên liệu admin mới thêm chưa có icon thì dùng ảnh sản phẩm */
   ingredientImage(i: Ingredient): string {
+    if (i.imageUrl?.startsWith('/img/ingredients/')) return i.imageUrl;
     const p = this.productFor(i.id);
     return p ? this.products.img(p) : i.imageUrl;
   }
@@ -84,6 +86,17 @@ export class MealPlannerService {
       .filter((x): x is PlannerResult => !!x)
       .sort((a, b) => b.score - a.score)
       .slice(0, 12);
+  }
+
+  /** Chưa chọn nguyên liệu: duyệt món theo bộ lọc, món nhanh và ít nguyên liệu lên trước */
+  browse(f: PlannerFilters, limit = 12): PlannerResult[] {
+    const timeOk = (t: number) => ({ all: true, quick: t < 15, normal: t >= 15 && t <= 30, long: t > 30 && t <= 60 })[f.time];
+    return this.data.recipes()
+      .filter(r => (f.mealType === 'all' || r.mealType === f.mealType) && (f.difficulty === 'all' || r.difficulty === f.difficulty) && timeOk(this.totalTime(r))
+        && (!f.vegetarian || r.tags.includes('vegetarian')) && (!f.lowFat || (r.nutrition?.fat ?? 0) <= 15) && (!f.highProtein || (r.nutrition?.protein ?? 0) >= 20))
+      .sort((a, b) => a.ingredients.length - b.ingredients.length || this.totalTime(a) - this.totalTime(b))
+      .slice(0, limit)
+      .map(r => ({ recipe: r, score: 0, matched: 0, missing: r.ingredients.length }));
   }
 
   /** Quy đổi lượng trong công thức (theo số người ăn) ra số lượng sản phẩm cần cho vào giỏ.

@@ -600,5 +600,61 @@
   "productIds": [
    "mp-075"
   ]
+ },
+ "ing-toi": {
+  "ingredientId": "ing-toi",
+  "preferredProductId": "p-0225",
+  "productIds": [
+   "p-0225"
+  ]
+ },
+ "ing-thit-heo-xay": {
+  "ingredientId": "ing-thit-heo-xay",
+  "preferredProductId": "p-0226",
+  "productIds": [
+   "p-0226"
+  ]
+ },
+ "ing-gia-do": {
+  "ingredientId": "ing-gia-do",
+  "preferredProductId": "p-0227",
+  "productIds": [
+   "p-0227"
+  ]
+ },
+ "ing-mi-quang": {
+  "ingredientId": "ing-mi-quang",
+  "preferredProductId": "p-0228",
+  "productIds": [
+   "p-0228"
+  ]
+ },
+ "ing-hanh-tim": {
+  "ingredientId": "ing-hanh-tim",
+  "preferredProductId": "p-0229",
+  "productIds": [
+   "p-0229"
+  ]
+ },
+ "ing-chanh": {
+  "ingredientId": "ing-chanh",
+  "preferredProductId": "p-0230",
+  "productIds": [
+   "p-0230"
+  ]
+ },
+ "ing-ot": {
+  "ingredientId": "ing-ot",
+  "preferredProductId": "p-0231",
+  "productIds": [
+   "p-0231"
+  ]
+ },
+ "ing-bot-mi": {
+  "ingredientId": "ing-bot-mi",
+  "preferredProductId": "p-0232",
+  "productIds": [
+   "p-0232"
+  ]
  }
 }
