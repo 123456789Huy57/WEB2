@@ -1,0 +1,698 @@
+{
+  "note": "Dữ liệu sửa catalog lấy từ trang sản phẩm công khai bachhoaxanh.com (06/11/2026). Chạy: npm run fix:catalog (xem trước), npm run fix:catalog -- --apply (ghi).",
+  "replace": [
+    {
+      "id": "mp-045",
+      "name": "Nước tinh khiết Dasani chai 510ml",
+      "unit": "chai",
+      "netWeightGram": 510,
+      "price": 5200,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/10/image/Products/Images/2563/79249/bhx/nuoc-tinh-khiet-dasani-500ml_202610071358239515.jpg",
+      "source": "https://www.bachhoaxanh.com/nuoc-suoi-khoang/nuoc-tinh-khiet-dasani-500ml"
+    },
+    {
+      "id": "mp-028",
+      "name": "Thùng 24 chai nước khoáng La Vie 500ml",
+      "unit": "thùng",
+      "netWeightGram": 12000,
+      "price": 115000,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/2563/324823/bhx/slide_202410161058409588.jpg",
+      "source": "https://www.bachhoaxanh.com/nuoc-suoi-khoang/thung-24-chai-nuoc-khoang-la-vie-500ml-vi-diu-nhe"
+    },
+    {
+      "id": "mp-022",
+      "name": "Nước mắm Nam Ngư nhãn vàng chai 650ml",
+      "unit": "chai",
+      "netWeightGram": 650,
+      "price": 56000,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/8/image/production/2026/8/image/Products/2289/158062/nuoc-mam-nam-ngu-nhan-vang-chai-650ml_202608261450244523.jpg",
+      "source": "https://www.bachhoaxanh.com/nuoc-mam/nuoc-mam-nam-ngu-nhan-vang-chai-650ml"
+    },
+    {
+      "id": "mp-009",
+      "name": "Cà chua",
+      "unit": "kg",
+      "netWeightGram": 1000,
+      "price": 8400,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/2/image/production/2026/2/image/Products/8785/230449/ca-chua-1kg_202602231534288280.jpg",
+      "source": "https://www.bachhoaxanh.com/cu/ca-chua-1kg"
+    },
+    {
+      "id": "mp-006",
+      "name": "Cá hồi phi lê SG Food khay 200g",
+      "unit": "khay",
+      "netWeightGram": 200,
+      "price": 139000,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/11/image/production/2026/11/image/Products/8400/244643/ca-hoi-phi-le-sg-food-khay-200g_202611031101552992.jpg",
+      "source": "https://www.bachhoaxanh.com/ca-hai-san-dong-lanh/ca-hoi-phi-le-sg-food-khay-200g"
+    },
+    {
+      "id": "mp-002",
+      "name": "Ức gà phi lê có da",
+      "unit": "kg",
+      "netWeightGram": 1000,
+      "price": 30900,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/5/image/production/2026/5/image/Products/8790/222942/uc-ga-phi-le-co-da-tui-1kg_202605251501030372.jpg",
+      "source": "https://www.bachhoaxanh.com/thit-ga/uc-ga-phi-le-co-da-tui-1kg"
+    },
+    {
+      "id": "mp-014",
+      "name": "Xoài cát Hòa Lộc",
+      "unit": "kg",
+      "netWeightGram": 1000,
+      "price": 32500,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8788/234062/bhx/xoai-cat-hoa-loc-1kg_202511031310460537.jpg",
+      "source": "https://www.bachhoaxanh.com/trai-cay-tuoi-ngon/xoai-cat-hoa-loc-1kg"
+    },
+    {
+      "id": "mp-034",
+      "name": "Phô mai Con Bò Cười hộp 112g (8 miếng)",
+      "unit": "hộp",
+      "netWeightGram": 112,
+      "price": 37500,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/10/image/production/2026/10/image/Products/7558/201194/pho-mai-con-bo-cuoi-hop-120g-8-mieng_202610291001596883.jpg",
+      "source": "https://www.bachhoaxanh.com/sua-chua-an/pho-mai-con-bo-cuoi-hop-120g-8-mieng"
+    },
+    {
+      "id": "mp-021",
+      "name": "Yến mạch ăn liền Yumfood hũ 800g",
+      "unit": "hũ",
+      "netWeightGram": 800,
+      "price": 139000,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/10/image/production/2026/10/image/Products/2903/229445/yen-mach-nguyen-chat-yumfood-hu-800g_202610010959298365.jpg",
+      "source": "https://www.bachhoaxanh.com/bot-ngu-coc/yen-mach-nguyen-chat-yumfood-hu-800g"
+    },
+    {
+      "id": "mp-067",
+      "name": "Đậu hũ ta Vị Nguyên hộp 280g",
+      "unit": "hộp",
+      "netWeightGram": 280,
+      "price": 13500,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/11/image/production/2026/11/image/Products/7459/206544/dau-hu-ta-vi-nguyen-hop-280g_202611031520368863.jpg",
+      "source": "https://www.bachhoaxanh.com/do-chua-dua-muoi/dau-hu-ta-vi-nguyen-hop-280g"
+    },
+    {
+      "id": "mp-016",
+      "name": "Táo Gala nhập khẩu New Zealand",
+      "unit": "kg",
+      "netWeightGram": 1000,
+      "price": 56000,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/9/image/production/2026/9/image/Products/8788/234049/tao-gala-nhap-khau-new-zealand-1kg_202609141034187750.jpg",
+      "source": "https://www.bachhoaxanh.com/trai-cay-tuoi-ngon/tao-gala-nhap-khau-new-zealand-1kg"
+    },
+    {
+      "id": "mp-012",
+      "name": "Cà rốt",
+      "unit": "kg",
+      "netWeightGram": 1000,
+      "price": 8700,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8785/234529/bhx/ca-rot-1kg_202504140920251335.jpg",
+      "source": "https://www.bachhoaxanh.com/cu/ca-rot-1kg"
+    },
+    {
+      "id": "mp-070",
+      "name": "Trà Cozy túi lọc hương đào hộp 25 gói x 2g",
+      "unit": "hộp",
+      "netWeightGram": 50,
+      "price": 34500,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/10/image/production/2026/10/image/Products/2385/83473/tra-cozy-tui-loc-huong-dao-hop-2g-25_202610010955361293.jpg",
+      "source": "https://www.bachhoaxanh.com/tra-kho-tui-loc/tra-cozy-tui-loc-huong-dao-hop-2g-25"
+    },
+    {
+      "id": "mp-005",
+      "name": "Tôm thẻ khay 300g",
+      "unit": "khay",
+      "netWeightGram": 300,
+      "price": 40000,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8782/234258/bhx/tom-the-300g_202506211209281963.jpg",
+      "source": "https://www.bachhoaxanh.com/ca-tom-muc-ech/tom-the-300g"
+    },
+    {
+      "id": "mp-068",
+      "name": "Cá ngừ ngâm dầu Tuna Việt Nam lon 140g",
+      "unit": "lon",
+      "netWeightGram": 140,
+      "price": 29000,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/11/image/production/2026/11/image/Products/3237/230040/ca-ngu-ngam-dau-tuna-viet-nam-lon-140g_202611031558495262.jpg",
+      "source": "https://www.bachhoaxanh.com/ca-hop/ca-ngu-ngam-dau-tuna-viet-nam-lon-140g"
+    },
+    {
+      "id": "mp-063",
+      "name": "Đường kính trắng An Khê gói 1kg",
+      "unit": "gói",
+      "netWeightGram": 1000,
+      "price": 27000,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/11/image/production/2026/11/image/Products/2804/321749/duong-kinh-trang-an-khe-goi-1kg_202611051101484773.jpg",
+      "source": "https://www.bachhoaxanh.com/duong/duong-kinh-trang-an-khe-goi-1kg"
+    },
+    {
+      "id": "mp-054",
+      "name": "Trà Lipton nhãn vàng hộp 25 gói x 2g",
+      "unit": "hộp",
+      "netWeightGram": 50,
+      "price": 40500,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/10/image/production/2026/10/image/Products/2385/321229/tra-lipton-nhan-vang-hop-100g-25-goi-x-2g_202610010957557475.jpg",
+      "source": "https://www.bachhoaxanh.com/tra-kho-tui-loc/tra-lipton-nhan-vang-hop-100g-25-goi-x-2g"
+    },
+    {
+      "id": "mp-023",
+      "name": "Nước tương đậm đặc Nam Dương chai 500ml",
+      "unit": "chai",
+      "netWeightGram": 500,
+      "price": 20000,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/8/image/production/2026/8/image/Products/2683/174521/nuoc-tuong-dam-dac-nam-duong-chai-500ml_202608281434503226.jpg",
+      "source": "https://www.bachhoaxanh.com/nuoc-tuong/nuoc-tuong-dam-dac-nam-duong-chai-500ml"
+    },
+    {
+      "id": "mp-007",
+      "name": "Mực ống nguyên con đông lạnh Ào Ào gói 300g",
+      "unit": "gói",
+      "netWeightGram": 300,
+      "price": 109000,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/11/image/production/2026/11/image/Products/8400/335959/muc-ong-nguyen-con-dong-lanh-ao-ao-goi-300g_202611031102242751.jpg",
+      "source": "https://www.bachhoaxanh.com/ca-hai-san-dong-lanh/muc-ong-nguyen-con-dong-lanh-ao-ao-goi-300g"
+    },
+    {
+      "id": "mp-011",
+      "name": "Dưa leo vỉ 500g",
+      "unit": "vỉ",
+      "netWeightGram": 500,
+      "price": 7360,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8785/230451/bhx/dua-leo-vi-500g_202504140837297310.jpg",
+      "source": "https://www.bachhoaxanh.com/cu/dua-leo-vi-500g"
+    },
+    {
+      "id": "mp-047",
+      "name": "Đường phèn hạt Hoàng Hải gói 500g",
+      "unit": "gói",
+      "netWeightGram": 500,
+      "price": 28000,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/10/image/production/2026/10/image/Products/2804/204364/duong-phen-hat-hoang-hai-goi-500g_202610140954574589.jpg",
+      "source": "https://www.bachhoaxanh.com/duong/duong-phen-hat-hoang-hai-goi-500g"
+    },
+    {
+      "id": "mp-069",
+      "name": "Bông cải xanh nhập khẩu",
+      "unit": "kg",
+      "netWeightGram": 1000,
+      "price": 32600,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/10/image/production/2026/10/image/Products/8785/5368347/bong-cai-xanh-nhap-khau_202610021538053255.jpg",
+      "source": "https://www.bachhoaxanh.com/cu/bong-cai-xanh-nhap-khau"
+    },
+    {
+      "id": "mp-065",
+      "name": "Miến dong Susan gói 200g",
+      "unit": "gói",
+      "netWeightGram": 200,
+      "price": 25000,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/9/image/production/2026/9/image/Products/8160/262390/mien-dong-susan-goi-200g_202609111502220821.jpg",
+      "source": "https://www.bachhoaxanh.com/mien-kho/mien-dong-susan-goi-200g"
+    },
+    {
+      "id": "mp-036",
+      "name": "Mì trứng Safoco thượng hạng gói 400g",
+      "unit": "gói",
+      "netWeightGram": 400,
+      "price": 31500,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/9/image/production/2026/9/image/Products/8158/5367176/mi-trung-safoco-thuong-hang-goi-400g_202609141609066210.jpg",
+      "source": "https://www.bachhoaxanh.com/mi-kho/mi-trung-safoco-thuong-hang-goi-400g"
+    },
+    {
+      "id": "mp-073",
+      "name": "Hạt sen khô gói 100g",
+      "unit": "gói",
+      "netWeightGram": 100,
+      "price": 40000,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/11/image/production/2026/11/image/Products/3235/248325/hat-sen-kho-duc-dung-goi-100g_202611031604503970.jpg",
+      "source": "https://www.bachhoaxanh.com/dau-cac-loai/hat-sen-kho-duc-dung-goi-100g"
+    },
+    {
+      "id": "mp-031",
+      "name": "Lạc (đậu phộng) cúc đỏ Lý Tưởng gói 400g",
+      "unit": "gói",
+      "netWeightGram": 400,
+      "price": null,
+      "image": "https://cdn.tgdd.vn/Products/Images/3235/286315/bhx/lac-cuc-do-ly-tuong-goi-400g-202208170859197229.jpg",
+      "source": "https://www.bachhoaxanh.com/dau-cac-loai/lac-cuc-do-ly-tuong-goi-400g"
+    },
+    {
+      "id": "mp-040",
+      "name": "Nấm hương tươi hộp 150g",
+      "unit": "hộp",
+      "netWeightGram": 150,
+      "price": 27000,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8779/344634/bhx/nam-huong-150gr_202509060945419279.jpg",
+      "source": "https://www.bachhoaxanh.com/nam-tuoi/nam-huong-150gr"
+    },
+    {
+      "id": "mp-041",
+      "name": "Nấm đông cô khô gói 50g",
+      "unit": "gói",
+      "netWeightGram": 50,
+      "price": 36000,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/11/image/production/2026/11/image/Products/3235/245243/nam-huong-kho-nguyen-bao-goi-50g_202611031604364312.jpg",
+      "source": "https://www.bachhoaxanh.com/dau-cac-loai/nam-huong-kho-nguyen-bao-goi-50g"
+    },
+    {
+      "id": "mp-027",
+      "name": "Lốc 4 hộp sữa chua uống TH true YOGURT vị cam 110ml",
+      "unit": "lốc",
+      "netWeightGram": 440,
+      "price": 21000,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/8/image/production/2026/8/image/Products/2944/87240/loc-4-hop-sua-chua-uong-th-true-yogurt-top-kid-cam-110ml_202608211428037531.jpg",
+      "source": "https://www.bachhoaxanh.com/sua-chua/loc-4-hop-sua-chua-uong-th-true-yogurt-top-kid-cam-110ml"
+    },
+    {
+      "id": "mp-013",
+      "name": "Xà lách lô lô xanh gói 300g",
+      "unit": "gói",
+      "netWeightGram": 300,
+      "price": 21600,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8820/336812/bhx/336812optimized_202506131013402678.jpg",
+      "source": "https://www.bachhoaxanh.com/rau-sach/xa-lach-lo-lo-xanh-300g"
+    },
+    {
+      "id": "mp-032",
+      "name": "Gừng túi 200g",
+      "unit": "túi",
+      "netWeightGram": 200,
+      "price": 6600,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8785/230452/bhx/gung-vn-tui-200g_202504141001265620.jpg",
+      "source": "https://www.bachhoaxanh.com/cu/gung-vn-tui-200g"
+    },
+    {
+      "id": "mp-056",
+      "name": "Bánh mì sandwich khoai tây Richy gói 275g",
+      "unit": "gói",
+      "netWeightGram": 275,
+      "price": 20000,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/9/image/production/2026/9/image/Products/9027/284549/banh-mi-sandwich-khoai-tay-fresta-richy-goi-275g_202609051017349172.jpg",
+      "source": "https://www.bachhoaxanh.com/banh-ngot/banh-mi-sandwich-khoai-tay-fresta-richy-goi-275g"
+    },
+    {
+      "id": "mp-064",
+      "name": "Hành lá gói 100g",
+      "unit": "gói",
+      "netWeightGram": 100,
+      "price": 7200,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8820/271492/bhx/hanh-la-goi-100g_202505090905122306.jpg",
+      "source": "https://www.bachhoaxanh.com/rau-sach/hanh-la-goi-100g"
+    },
+    {
+      "id": "mp-038",
+      "name": "Hành tây",
+      "unit": "kg",
+      "netWeightGram": 1000,
+      "price": 18400,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/2/image/production/2026/2/image/Products/8785/273076/hanh-tay-tui-1kg_202602231417178861.jpg",
+      "source": "https://www.bachhoaxanh.com/cu/hanh-tay-tui-1kg"
+    },
+    {
+      "id": "mp-043",
+      "name": "Sa tế tôm Cholimex chai 90g",
+      "unit": "chai",
+      "netWeightGram": 90,
+      "price": 10200,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/11/image/production/2026/11/image/Products/2809/156048/sa-te-tom-cholimex-chai-90g_202611051103245118.jpg",
+      "source": "https://www.bachhoaxanh.com/tieu/sa-te-tom-cholimex-chai-90g"
+    },
+    {
+      "id": "mp-075",
+      "name": "Tiêu đen hạt gói 50g",
+      "unit": "gói",
+      "netWeightGram": 50,
+      "price": 22000,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/11/image/production/2026/11/image/Products/2809/227699/tieu-den-hat-50gr_202611041339258403.jpg",
+      "source": "https://www.bachhoaxanh.com/tieu/tieu-den-hat-50gr"
+    },
+    {
+      "id": "mp-019",
+      "name": "Bún gạo khô Lotus gói 400g",
+      "unit": "gói",
+      "netWeightGram": 400,
+      "price": 31500,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/9/image/production/2026/9/image/Products/8163/109652/bun-gao-dac-biet-lotus-goi-400g_202609111515384144.jpg",
+      "source": "https://www.bachhoaxanh.com/bun-kho/bun-gao-dac-biet-lotus-goi-400g"
+    },
+    {
+      "id": "mp-052",
+      "name": "Bột cà ri Vianco gói 10g",
+      "unit": "gói",
+      "netWeightGram": 10,
+      "price": 5500,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8271/158077/bhx/bot-ca-ri-vianco-goi-10g_202507071357431114.jpg",
+      "source": "https://www.bachhoaxanh.com/gia-vi-nem-san/bot-ca-ri-vianco-goi-10g"
+    },
+    {
+      "id": "mp-017",
+      "name": "Thanh long ruột đỏ",
+      "unit": "kg",
+      "netWeightGram": 1000,
+      "price": 16600,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8788/234065/bhx/thanh-long-ruot-do-1kg_202510211435522470.jpg",
+      "source": "https://www.bachhoaxanh.com/trai-cay-tuoi-ngon/thanh-long-ruot-do-1kg"
+    },
+    {
+      "id": "mp-025",
+      "name": "Muối tinh sấy i-ốt Sosal gói 1kg",
+      "unit": "gói",
+      "netWeightGram": 1000,
+      "price": 8000,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/10/image/production/2026/10/image/Products/2803/210392/muoi-tinh-say-bo-sung-i-ot-sosalco-goi-1kg_202610291441441591.jpg",
+      "source": "https://www.bachhoaxanh.com/muoi-an/muoi-tinh-say-bo-sung-i-ot-sosalco-goi-1kg"
+    },
+    {
+      "id": "mp-039",
+      "name": "Bánh tráng mỏng Mikiri 20cm gói 105g",
+      "unit": "gói",
+      "netWeightGram": 105,
+      "price": 14700,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/11/image/production/2026/11/image/Products/3233/229772/banh-trang-mikiri-khong-nhung-nuoc-goi-105g_202611031605489708.jpg",
+      "source": "https://www.bachhoaxanh.com/banh-trang/banh-trang-mikiri-khong-nhung-nuoc-goi-105g"
+    },
+    {
+      "id": "mp-060",
+      "name": "Khổ qua khay 500g (3–5 trái)",
+      "unit": "khay",
+      "netWeightGram": 500,
+      "price": 20900,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8785/291352/bhx/kho-qua-khay-500g-3-5-trai_202508111124490591.jpg",
+      "source": "https://www.bachhoaxanh.com/cu/kho-qua-khay-500g-3-5-trai"
+    },
+    {
+      "id": "mp-057",
+      "name": "Rau thơm các loại gói 200g",
+      "unit": "gói",
+      "netWeightGram": 200,
+      "price": 14900,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8820/271489/bhx/rau-thom-cac-loai-goi-200gr_202505091450540639.jpg",
+      "source": "https://www.bachhoaxanh.com/rau-sach/rau-thom-cac-loai-goi-200gr"
+    },
+    {
+      "id": "mp-020",
+      "name": "Phở khô Susan gói 200g",
+      "unit": "gói",
+      "netWeightGram": 200,
+      "price": 15000,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/9/image/production/2026/9/image/Products/8160/262387/pho-kho-susan-goi-200g_202609111527007073.jpg",
+      "source": "https://www.bachhoaxanh.com/mien-kho/pho-kho-susan-goi-200g"
+    },
+    {
+      "id": "mp-061",
+      "name": "Bột năng khoai mì Tấn Sang gói 400g",
+      "unit": "gói",
+      "netWeightGram": 400,
+      "price": 13000,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/11/image/production/2026/11/image/Products/2388/234434/bot-nang-tan-sang-goi-400g_202611031602338809.jpg",
+      "source": "https://www.bachhoaxanh.com/bot-che-bien-san/bot-nang-tan-sang-goi-400g"
+    },
+    {
+      "id": "mp-062",
+      "name": "Bột ngọt Ajinomoto hạt lớn gói 454g",
+      "unit": "gói",
+      "netWeightGram": 454,
+      "price": 38500,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/10/image/production/2026/10/image/Products/2806/77081/bot-ngot-ajinomoto-hat-lon-goi-454g_202610291441393529.jpg",
+      "source": "https://www.bachhoaxanh.com/hat-nem/bot-ngot-ajinomoto-hat-lon-goi-454g"
+    },
+    {
+      "id": "mp-033",
+      "name": "Cải chua Ngọc Phú gói 450g",
+      "unit": "gói",
+      "netWeightGram": 450,
+      "price": 27000,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/11/image/production/2026/11/image/Products/7459/259897/cai-chua-ngoc-phu-goi-450g_202611031104012744.jpg",
+      "source": "https://www.bachhoaxanh.com/do-chua-dua-muoi/cai-chua-ngoc-phu-goi-450g"
+    },
+    {
+      "id": "mp-037",
+      "name": "Lươn làm sạch",
+      "unit": "kg",
+      "netWeightGram": 1000,
+      "price": 29800,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8782/233748/bhx/luon-lam-sach-1kg_202504121602154357.jpg",
+      "source": "https://www.bachhoaxanh.com/ca-tom-muc-ech/luon-lam-sach-1kg"
+    },
+    {
+      "id": "mp-074",
+      "name": "Ngò rí gói 50g",
+      "unit": "gói",
+      "netWeightGram": 50,
+      "price": 5300,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8820/309141/bhx/ngo-ri-50g_202505081654599596.jpg",
+      "source": "https://www.bachhoaxanh.com/rau-sach/ngo-ri-50g"
+    },
+    {
+      "id": "mp-051",
+      "name": "Bia Sài Gòn Chill lon 250ml",
+      "unit": "lon",
+      "netWeightGram": 250,
+      "price": 13700,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/8/image/production/2026/8/image/Products/2282/357442/bia-sai-gon-chill-lon-250ml_202608211420544358.jpg",
+      "source": "https://www.bachhoaxanh.com/bia/bia-sai-gon-chill-lon-250ml"
+    }
+  ],
+  "merge": [
+    {
+      "from": "mp-003",
+      "to": "p-0042",
+      "why": "Ba chỉ heo = Ba rọi heo C.P"
+    },
+    {
+      "from": "mp-030",
+      "to": "p-0189",
+      "why": "Cà phê hòa tan = NesCafé 3 in 1"
+    },
+    {
+      "from": "mp-004",
+      "to": "p-0049",
+      "why": "Bách Hóa Xanh không bán thăn bò; dùng thịt bò thái lát"
+    },
+    {
+      "from": "mp-072",
+      "to": "mp-065",
+      "why": "Miến và miến dong là cùng một món"
+    }
+  ],
+  "hide": [
+    {
+      "id": "mp-048",
+      "why": "Bách Hóa Xanh không bán mật ong"
+    },
+    {
+      "id": "mp-044",
+      "why": "Bách Hóa Xanh không bán đậu nành hạt"
+    },
+    {
+      "id": "mp-066",
+      "why": "Bách Hóa Xanh không bán ghẹ tươi"
+    },
+    {
+      "id": "mp-059",
+      "why": "Bách Hóa Xanh không bán kem tươi"
+    },
+    {
+      "id": "mp-029",
+      "why": "Bách Hóa Xanh không bán trà xanh không đường"
+    },
+    {
+      "id": "mp-055",
+      "why": "Bách Hóa Xanh không bán mực khô"
+    },
+    {
+      "id": "mp-046",
+      "why": "Bách Hóa Xanh không bán bột bắp"
+    },
+    {
+      "id": "mp-053",
+      "why": "Bách Hóa Xanh không bán trân châu"
+    },
+    {
+      "id": "mp-058",
+      "why": "Bách Hóa Xanh không bán bột bánh xèo"
+    },
+    {
+      "id": "mp-071",
+      "why": "Bách Hóa Xanh không bán đào"
+    },
+    {
+      "id": "mp-035",
+      "why": "Bách Hóa Xanh không bán ớt chuông"
+    },
+    {
+      "id": "mp-042",
+      "why": "Bách Hóa Xanh không bán riềng"
+    }
+  ],
+  "images": [
+    {
+      "id": "p-0159",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/10/image/production/2026/10/image/Products/2286/96425/dau-thuc-vat-tinh-luyen-orchid-1-lit_202610221114595786.jpg",
+      "source": "https://www.bachhoaxanh.com/dau-an/dau-thuc-vat-tinh-luyen-orchid-1-lit"
+    },
+    {
+      "id": "p-0160",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/10/image/production/2026/10/image/Products/2286/226995/dau-an-thuong-hang-neptune-light-chai-1-lit_202610221302344196.jpg",
+      "source": "https://www.bachhoaxanh.com/dau-an/dau-an-thuong-hang-neptune-light-chai-1-lit"
+    },
+    {
+      "id": "p-0183",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/11/image/production/2026/11/image/Products/7618/306210/doi-sun-thuong-hang-lc-foods-goi-500g_202611031521550353.jpg",
+      "source": "https://www.bachhoaxanh.com/xuc-xich-tuoi/doi-sun-thuong-hang-lc-foods-goi-500g"
+    },
+    {
+      "id": "p-0138",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/10/image/production/2026/10/image/Products/3507/341077/xuc-xich-heo-dinh-duong-bin-bon-ponnie-cay-60g_202610140020060513.jpg",
+      "source": "https://www.bachhoaxanh.com/xuc-xich/xuc-xich-heo-dinh-duong-bin-bon-ponnie-cay-60g"
+    },
+    {
+      "id": "p-0140",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/10/image/production/2026/10/image/Products/3507/334724/xuc-xich-tiet-trung-oh-teen-vi-heo-lc-foods-cay-65g_202610140049269003.jpg",
+      "source": "https://www.bachhoaxanh.com/xuc-xich/xuc-xich-tiet-trung-oh-teen-vi-heo-lc-foods-cay-65g"
+    },
+    {
+      "id": "p-0181",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/11/image/production/2026/11/image/Products/7618/296859/xuc-xich-vuon-bia-lc-foods-goi-500g_202611031030296343.jpg",
+      "source": "https://www.bachhoaxanh.com/xuc-xich-tuoi/xuc-xich-vuon-bia-lc-foods-goi-500g"
+    },
+    {
+      "id": "p-0153",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/9/image/production/2026/9/image/Products/2965/277865/thung-24-goi-mien-lau-thai-vifon-60g_202609111525512799.jpg",
+      "source": "https://www.bachhoaxanh.com/hu-tieu/thung-24-goi-mien-lau-thai-vifon-60g"
+    },
+    {
+      "id": "p-0156",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/9/image/production/2026/9/image/Products/2965/277861/mien-suon-heo-vifon-goi-58g_202609111346185321.jpg",
+      "source": "https://www.bachhoaxanh.com/hu-tieu/mien-suon-heo-vifon-goi-58g"
+    },
+    {
+      "id": "p-0189",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/8/image/production/2026/8/image/Products/2524/77352/nescafe-dam-vi-bich-17g-46_202608260959588490.jpg",
+      "source": "https://www.bachhoaxanh.com/ca-phe-hoa-tan/nescafe-dam-vi-bich-17g-46"
+    },
+    {
+      "id": "p-0190",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/8/image/production/2026/8/image/Products/2524/77353/nescafe-dam-vi-hai-hoa-bich-17g-46_202608260953029736.jpg",
+      "source": "https://www.bachhoaxanh.com/ca-phe-hoa-tan/nescafe-dam-vi-hai-hoa-bich-17g-46"
+    },
+    {
+      "id": "p-0131",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/6/image/Products/Images/2513/5367438/bhx/5-tui-gao-thom-neptune-st25-extra-5kg_202606252348433331.jpg",
+      "source": "https://www.bachhoaxanh.com/gao-gao-nep/5-tui-gao-thom-neptune-st25-extra-5kg"
+    },
+    {
+      "id": "p-0132",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/8/image/production/2026/8/image/Products/2513/5367437/5-tui-gao-deo-thom-bach-hoa-xanh-5kg_202608281546144580.jpg",
+      "source": "https://www.bachhoaxanh.com/gao-gao-nep/5-tui-gao-deo-thom-bach-hoa-xanh-5kg"
+    },
+    {
+      "id": "p-0133",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/7/image/Products/Images/2513/5367421/bhx/5-tui-gao-no-xop-5kg_202607150919370767.jpg",
+      "source": "https://www.bachhoaxanh.com/gao-gao-nep/5-tui-gao-no-xop-5kg"
+    },
+    {
+      "id": "p-0020",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8785/233887/bhx/bi-do-ho-lo-tui-1kg_202509111317287438.jpg",
+      "source": "https://www.bachhoaxanh.com/cu/bi-do-ho-lo-tui-1kg"
+    },
+    {
+      "id": "p-0038",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/7/image/production/2026/7/image/Products/8781/226865/thit-dui-heo-1kg_202607300932513655.jpg",
+      "source": "https://www.bachhoaxanh.com/thit-heo/thit-dui-heo-1kg"
+    },
+    {
+      "id": "p-0037",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/1/image/Products/Images/8781/226865/bhx/thit-dui-heo-1kg_202601080926167241.jpg",
+      "source": "https://www.bachhoaxanh.com/thit-heo/thit-dui-heo-1kg"
+    },
+    {
+      "id": "p-0048",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8139/233807/bhx/dui-bo-viet-nam-tui-1kg_202511041108393794.jpg",
+      "source": "https://www.bachhoaxanh.com/thit-bo/dui-bo-viet-nam-tui-1kg"
+    },
+    {
+      "id": "p-0047",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8139/233807/bhx/dui-bo-viet-nam-tui-1kg_202505201405255310.jpg",
+      "source": "https://www.bachhoaxanh.com/thit-bo/dui-bo-viet-nam-tui-1kg"
+    },
+    {
+      "id": "p-0033",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/7/image/production/2026/7/image/Products/8781/233783/chan-gio-heo-1kg_202607301031597500.jpg",
+      "source": "https://www.bachhoaxanh.com/thit-heo/chan-gio-heo-1kg"
+    },
+    {
+      "id": "p-0034",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/7/image/Products/Images/8781/233783/bhx/chan-gio-heo-1kg_202607130940188843.jpg",
+      "source": "https://www.bachhoaxanh.com/thit-heo/chan-gio-heo-1kg"
+    },
+    {
+      "id": "p-0040",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/1/image/production/2026/1/image/Products/8781/233758/chan-gio-heo-nhap-khau-1kg_202601080956005813.jpg",
+      "source": "https://www.bachhoaxanh.com/thit-heo/chan-gio-heo-nhap-khau-1kg"
+    },
+    {
+      "id": "p-0041",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/1/image/Products/Images/8781/233758/bhx/chan-gio-heo-nhap-khau-1kg_202601080955424009.jpg",
+      "source": "https://www.bachhoaxanh.com/thit-heo/chan-gio-heo-nhap-khau-1kg"
+    },
+    {
+      "id": "p-0046",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8139/238859/bhx/nam-bo-tuoi-ngon-tui-1kg_202512041003538471.jpg",
+      "source": "https://www.bachhoaxanh.com/thit-bo/nam-bo-tuoi-ngon-tui-1kg"
+    },
+    {
+      "id": "p-0045",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8139/238859/bhx/nam-bo-tuoi-ngon-tui-1kg_202505201349219530.jpg",
+      "source": "https://www.bachhoaxanh.com/thit-bo/nam-bo-tuoi-ngon-tui-1kg"
+    },
+    {
+      "id": "p-0042",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/7/image/production/2026/7/image/Products/8781/226834/ba-roi-heo-1kg_202607300933343971.jpg",
+      "source": "https://www.bachhoaxanh.com/thit-heo/ba-roi-heo-1kg"
+    },
+    {
+      "id": "p-0043",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/1/image/Products/Images/8781/226834/bhx/ba-roi-heo-1kg_202601271522368652.jpg",
+      "source": "https://www.bachhoaxanh.com/thit-heo/ba-roi-heo-1kg"
+    },
+    {
+      "id": "p-0035",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/7/image/production/2026/7/image/Products/8781/233789/xuong-heo-co-thit-1kg_202607300931064156.jpg",
+      "source": "https://www.bachhoaxanh.com/thit-heo/xuong-heo-co-thit-1kg"
+    },
+    {
+      "id": "p-0036",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/1/image/Products/Images/8781/233789/bhx/xuong-heo-co-thit-1kg_202601081005377508.jpg",
+      "source": "https://www.bachhoaxanh.com/thit-heo/xuong-heo-co-thit-1kg"
+    },
+    {
+      "id": "p-0026",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8788/228923/bhx/chuoi-gia-giong-nam-my_202512031458490151.jpg",
+      "source": "https://www.bachhoaxanh.com/trai-cay-tuoi-ngon/chuoi-gia-giong-nam-my"
+    },
+    {
+      "id": "p-0027",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8788/228923/bhx/chuoi-gia-giong-nam-my_202505201050254345.jpg",
+      "source": "https://www.bachhoaxanh.com/trai-cay-tuoi-ngon/chuoi-gia-giong-nam-my"
+    },
+    {
+      "id": "p-0095",
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/8/image/production/2026/8/image/Products/2282/158349/bia-sai-gon-lager-lon-330ml-thung-24-lon_202608211118498231.jpg",
+      "source": "https://www.bachhoaxanh.com/bia/bia-sai-gon-lager-lon-330ml-thung-24-lon"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "rec-054",
+      "image": "https://images.unsplash.com/photo-1775889086390-d43dadc946f9?w=1200&q=80&fm=jpg",
+      "source": "https://unsplash.com/photos/spiral-fried-potato-skewers-on-a-stand-FlgqblYOA30",
+      "license": "Unsplash License"
+    },
+    {
+      "id": "rec-055",
+      "image": "https://images.unsplash.com/photo-1605291535065-e1d52d2b264a?w=1200&q=80&fm=jpg",
+      "source": "https://unsplash.com/photos/vegetable-salad-on-white-ceramic-plate-1kOsQoehjZA",
+      "license": "Unsplash License"
+    }
+  ]
+}
