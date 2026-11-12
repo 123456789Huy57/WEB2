@@ -74,6 +74,19 @@
 .d-buy .h { font-weight: 500; margin-bottom: 4px; }
 .d-steps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 10px; }
 .d-steps li::marker { font-family: var(--display); }
+.d-steps li { line-height: 1.6; }
+.d-steps b { font-weight: 600; }
+.d-intro { margin: 8px 0 20px; line-height: 1.6; }
+.d-season { list-style: none; margin: 0 0 8px; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 24px; }
+.d-season li { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-bottom: 1px solid var(--stone-2); }
+.d-tips { margin-top: 28px; padding: 18px 20px; border-radius: var(--r); background: var(--butter); }
+.d-tips .f-h { margin: 0 0 8px; }
+.d-tips ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; line-height: 1.55; }
+.d-more { margin: 20px 0 0; display: flex; flex-direction: column; gap: 10px; }
+.d-more div { display: grid; grid-template-columns: 88px 1fr; gap: 12px; }
+.d-more dt { font-weight: 600; }
+.d-more dd { margin: 0; line-height: 1.55; }
+@media (max-width: 600px) { .d-season { grid-template-columns: 1fr; } }
 @media (max-width: 1000px) {
   .mp-tool { grid-template-columns: minmax(0, 1fr); }
   .mp-side { position: static; }

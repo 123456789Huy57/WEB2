@@ -1,0 +1,2613 @@
+[
+  {
+    "id": "p-0053",
+    "description": "Cá basa là loại cá da trơn nuôi phổ biến ở đồng bằng sông Cửu Long, thịt trắng, mềm và ít xương dăm. Sản phẩm được cắt khúc sẵn nên tiện sơ chế và nấu nhanh. Vị ngọt nhẹ, hợp với nhiều cách chế biến từ kho, nấu canh đến chiên.",
+    "usage": "Gợi ý dùng: Cá basa kho tộ, canh chua cá basa, cá basa chiên giòn chấm nước mắm.",
+    "storage": "Bảo quản ngăn mát 0-4°C và dùng trong 1-2 ngày, hoặc cấp đông nếu chưa dùng ngay.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 90,
+      "protein": 15,
+      "fat": 3,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.18
+    }
+  },
+  {
+    "id": "p-0160",
+    "description": "Dầu ăn Neptune Light có màu vàng nhạt trong, vị thanh nhẹ, ít bắt mùi thức ăn. Chai 1 lít vừa dùng cho bữa cơm gia đình hoặc sinh viên nấu ăn hằng ngày. Phù hợp cho cả chiên, xào và chế biến món ăn thường ngày.",
+    "usage": "Gợi ý dùng: Chiên trứng, xào rau, chiên cá hoặc làm nước sốt trộn salad.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ánh nắng trực tiếp; đậy kín nắp sau khi mở và dùng sớm.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 884,
+      "protein": 0,
+      "fat": 100,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0
+    }
+  },
+  {
+    "id": "p-0026",
+    "description": "Chuối già giống Nam Mỹ có quả dài, vỏ vàng khi chín, thịt chắc, ngọt dịu và thơm nhẹ. Mỗi trái nặng khoảng 120-220g, là món ăn nhẹ tiện lợi, no lâu. Có thể ăn trực tiếp hoặc dùng làm nguyên liệu cho đồ uống và món tráng miệng.",
+    "usage": "Gợi ý dùng: Ăn trực tiếp, xay sinh tố chuối sữa, làm bánh chuối nướng.",
+    "storage": "Để nơi thoáng mát, tránh ánh nắng; không bảo quản tủ lạnh khi còn xanh, chín rồi có thể để ngăn mát vài ngày.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 89,
+      "protein": 1.1,
+      "fat": 0.3,
+      "carbohydrates": 22.8,
+      "sugars": 12.2,
+      "fiber": 2.6,
+      "salt": 0
+    }
+  },
+  {
+    "id": "p-0079",
+    "description": "Thùng gồm 48 hộp sữa tươi tiệt trùng ít đường TH true MILK, mỗi hộp 180ml. Sữa có vị ngọt thanh, dễ uống, phù hợp để dùng hằng ngày hoặc mang theo đi học, đi làm. Dạng thùng lớn tiện tích trữ cho cả nhà hoặc ký túc xá.",
+    "usage": "Gợi ý dùng: Uống trực tiếp, uống lạnh sau bữa sáng, pha cùng ngũ cốc hoặc yến mạch.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát; sau khi mở nên uống ngay hoặc giữ ngăn mát và dùng trong ngày.",
+    "origin": "Việt Nam",
+    "netWeightGram": 8640,
+    "nutrition": null
+  },
+  {
+    "id": "p-0132",
+    "description": "Gạo dẻo thơm Bách hoá XANH cho cơm chín mềm, dẻo vừa và có mùi thơm nhẹ. Sản phẩm đóng túi 5kg, thuận tiện lấy dùng và bảo quản. Hợp với bữa cơm gia đình thường ngày.",
+    "usage": "Gợi ý dùng: Nấu cơm trắng, cơm chiên, cơm cuộn hoặc nấu cháo.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát, đậy kín túi sau khi mở để tránh ẩm và côn trùng.",
+    "origin": "Việt Nam",
+    "netWeightGram": 25000,
+    "nutrition": {
+      "energy_kcal": 360,
+      "protein": 7,
+      "fat": 0.6,
+      "carbohydrates": 79,
+      "sugars": 0.1,
+      "fiber": 1.3,
+      "salt": 0
+    }
+  },
+  {
+    "id": "p-0071",
+    "description": "Trứng gà ta đóng hộp 6 quả, lòng đỏ đậm và vị béo thơm đặc trưng của trứng gà thả vườn. Hộp giấy giúp hạn chế va đập khi vận chuyển. Thương hiệu được giao ngẫu nhiên nhưng cùng chất lượng và quy cách.",
+    "usage": "Gợi ý dùng: Luộc, chiên ốp la, trứng chiên hành hoặc hấp trứng.",
+    "storage": "Bảo quản ngăn mát tủ lạnh, để đầu nhọn hướng xuống và dùng trong thời hạn in trên bao bì.",
+    "origin": "Việt Nam",
+    "netWeightGram": 195,
+    "nutrition": {
+      "energy_kcal": 143,
+      "protein": 12.6,
+      "fat": 9.5,
+      "carbohydrates": 0.7,
+      "sugars": 0.4,
+      "fiber": 0,
+      "salt": 0.36
+    }
+  },
+  {
+    "id": "p-0015",
+    "description": "Khoai tây củ lớn từ 130g trở lên, vỏ mỏng, ruột vàng nhạt và có độ bở vừa phải khi nấu chín. Đây là nguyên liệu quen thuộc trong bếp Việt, dễ kết hợp với thịt và rau. Bán theo ký nên tiện chọn lượng vừa đủ.",
+    "usage": "Gợi ý dùng: Hầm thịt bò, chiên khoai tây, nấu canh hoặc làm khoai nghiền.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ánh sáng để không mọc mầm; không rửa trước khi cất.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 77,
+      "protein": 2,
+      "fat": 0.1,
+      "carbohydrates": 17,
+      "sugars": 0.8,
+      "fiber": 2.2,
+      "salt": 0.01
+    }
+  },
+  {
+    "id": "p-0013",
+    "description": "Bắp mỹ là loại bắp ngọt hạt vàng, trái to từ 300g trở lên, hạt mọng nước và giòn. Có thể ăn đơn giản bằng cách luộc hoặc nướng. Vị ngọt tự nhiên nên cũng hay được tách hạt dùng cho nhiều món.",
+    "usage": "Gợi ý dùng: Luộc ăn liền, nướng mỡ hành, nấu súp bắp hoặc xào bắp.",
+    "storage": "Bảo quản ngăn mát, giữ nguyên lớp bẹ và dùng trong 2-3 ngày để hạt còn ngọt.",
+    "origin": "Việt Nam",
+    "netWeightGram": 300,
+    "nutrition": {
+      "energy_kcal": 86,
+      "protein": 3.3,
+      "fat": 1.4,
+      "carbohydrates": 19,
+      "sugars": 6.3,
+      "fiber": 2,
+      "salt": 0
+    }
+  },
+  {
+    "id": "p-0004",
+    "description": "Rau muống nước có thân rỗng, giòn và lá xanh mướt, là loại rau quen thuộc trong bữa cơm Việt. Gói 400g đã được lặt sơ nên tiện chế biến. Vị ngọt mát, dễ nấu và hợp nhiều cách làm.",
+    "usage": "Gợi ý dùng: Xào tỏi, luộc chấm nước kho quẹt, nấu canh với tôm.",
+    "storage": "Bảo quản ngăn mát, để ráo nước, dùng trong 1-2 ngày để rau còn tươi giòn.",
+    "origin": "Việt Nam",
+    "netWeightGram": 400,
+    "nutrition": {
+      "energy_kcal": 19,
+      "protein": 2.6,
+      "fat": 0.2,
+      "carbohydrates": 3.1,
+      "sugars": 0,
+      "fiber": 2.1,
+      "salt": 0.1
+    }
+  },
+  {
+    "id": "mp-045",
+    "description": "Nước tinh khiết Dasani đóng chai 510ml, đã qua lọc và xử lý, không có vị. Chai nhỏ gọn, dễ mang theo trong cặp hoặc khi di chuyển. Phù hợp để uống hằng ngày.",
+    "usage": "Gợi ý dùng: Uống trực tiếp, mang theo đi học, dùng khi tập thể thao.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ánh nắng trực tiếp; uống hết sớm sau khi mở nắp.",
+    "origin": null,
+    "netWeightGram": 510,
+    "nutrition": null
+  },
+  {
+    "id": "mp-028",
+    "description": "Thùng 24 chai nước khoáng La Vie dung tích 500ml, là thương hiệu nước khoáng quen thuộc tại Việt Nam. Dạng thùng thuận tiện cho gia đình, văn phòng hoặc phòng trọ. Chai vừa tay, dễ mang theo.",
+    "usage": "Gợi ý dùng: Uống hằng ngày, mang theo đi làm, dự trữ cho cả nhà.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ánh nắng; chai đã mở nên uống trong ngày.",
+    "origin": "Việt Nam",
+    "netWeightGram": 12000,
+    "nutrition": null
+  },
+  {
+    "id": "mp-022",
+    "description": "Nước mắm Nam Ngư nhãn vàng là loại nước mắm pha chế phổ biến, vị mặn mà cân bằng và thơm đặc trưng. Chai 650ml dùng được lâu cho bữa cơm gia đình. Dùng để nêm nếm và pha nước chấm.",
+    "usage": "Gợi ý dùng: Pha nước chấm, kho thịt cá, nêm canh và ướp thịt.",
+    "storage": "Đậy kín nắp, để nơi khô ráo, thoáng mát, tránh ánh nắng trực tiếp.",
+    "origin": "Việt Nam",
+    "netWeightGram": 650,
+    "nutrition": null
+  },
+  {
+    "id": "mp-009",
+    "description": "Cà chua có quả đỏ tươi, vị chua nhẹ xen ngọt, nhiều nước. Đây là nguyên liệu không thể thiếu trong nhiều món canh, kho và xào của bếp Việt. Cũng có thể ăn sống trong salad.",
+    "usage": "Gợi ý dùng: Nấu canh cà chua trứng, làm sốt cà, trộn salad.",
+    "storage": "Để nơi thoáng mát vài ngày; cà đã chín mềm nên cất ngăn mát và dùng sớm.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 18,
+      "protein": 0.9,
+      "fat": 0.2,
+      "carbohydrates": 3.9,
+      "sugars": 2.6,
+      "fiber": 1.2,
+      "salt": 0.01
+    }
+  },
+  {
+    "id": "mp-006",
+    "description": "Cá hồi phi lê khay 200g đã được lọc xương và tách da sẵn, thịt màu cam hồng, béo mềm. Khay nhỏ vừa cho một đến hai người ăn. Dễ chế biến nhanh với ít gia vị.",
+    "usage": "Gợi ý dùng: Áp chảo, nướng giấy bạc, nấu canh hoặc cháo cá hồi.",
+    "storage": "Bảo quản ngăn mát và dùng trong 1-2 ngày, hoặc cấp đông nếu chưa dùng ngay.",
+    "origin": null,
+    "netWeightGram": 200,
+    "nutrition": {
+      "energy_kcal": 208,
+      "protein": 20.4,
+      "fat": 13.4,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.15
+    }
+  },
+  {
+    "id": "mp-002",
+    "description": "Ức gà phi lê còn da, phần thịt nạc mềm, ít mỡ, giữ được độ ẩm khi nấu đúng cách. Là lựa chọn quen thuộc cho người muốn bữa ăn nhiều đạm. Da gà giúp miếng thịt thơm và đỡ khô khi chiên áp chảo.",
+    "usage": "Gợi ý dùng: Áp chảo, nướng, xé phay trộn gỏi hoặc luộc làm cơm gà.",
+    "storage": "Bảo quản ngăn mát 0-4°C và dùng trong 1-2 ngày, hoặc chia phần cấp đông.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 172,
+      "protein": 20.9,
+      "fat": 9.3,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.16
+    }
+  },
+  {
+    "id": "mp-051",
+    "description": "Bia Sài Gòn Chill đóng lon 250ml, dung tích nhỏ gọn, dễ uống khi ướp lạnh. Phù hợp để dùng trong các buổi tụ họp nhỏ. Sản phẩm chỉ dành cho người đủ 18 tuổi trở lên.",
+    "usage": "Gợi ý dùng: Uống lạnh cùng bạn bè, kèm đồ nhắm nhẹ hoặc món nướng.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ánh nắng; ướp lạnh trước khi uống, không để đông đá.",
+    "origin": "Việt Nam",
+    "netWeightGram": 250,
+    "nutrition": null
+  },
+  {
+    "id": "mp-005",
+    "description": "Tôm thẻ là loại tôm nuôi phổ biến với thịt chắc, ngọt và dễ chế biến. Khay 300g tiện cho bữa ăn của hai đến ba người. Nên sơ chế bỏ chỉ lưng trước khi nấu.",
+    "usage": "Gợi ý dùng: Rang muối, hấp, nấu canh hoặc chiên cơm tôm.",
+    "storage": "Bảo quản ngăn mát và dùng trong ngày, hoặc cấp đông để giữ độ tươi lâu hơn.",
+    "origin": "Việt Nam",
+    "netWeightGram": 300,
+    "nutrition": {
+      "energy_kcal": 85,
+      "protein": 20.1,
+      "fat": 0.5,
+      "carbohydrates": 0.2,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.3
+    }
+  },
+  {
+    "id": "mp-014",
+    "description": "Xoài cát Hòa Lộc là giống xoài nổi tiếng với thịt vàng, dày, mịn, vị ngọt đậm và thơm. Ít xơ, hạt nhỏ nên ăn rất đã. Chín cây hay chín ép đều ngon khi ăn tươi.",
+    "usage": "Gợi ý dùng: Ăn tươi, xay sinh tố xoài, làm xôi xoài hoặc kem xoài.",
+    "storage": "Để nơi thoáng mát đến khi chín; xoài chín cất ngăn mát và dùng trong 2-3 ngày.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 60,
+      "protein": 0.8,
+      "fat": 0.4,
+      "carbohydrates": 15,
+      "sugars": 13.7,
+      "fiber": 1.6,
+      "salt": 0
+    }
+  },
+  {
+    "id": "mp-034",
+    "description": "Phô mai Con Bò Cười dạng miếng tam giác bọc giấy bạc, kết cấu mềm mịn, vị béo nhẹ. Hộp 112g gồm 8 miếng nhỏ, dễ chia phần. Phù hợp ăn liền hoặc phết lên bánh mì.",
+    "usage": "Gợi ý dùng: Phết bánh mì, ăn kèm bánh quy, cuộn sandwich.",
+    "storage": "Bảo quản ngăn mát tủ lạnh 2-8°C; đậy kín phần còn lại sau khi mở và dùng sớm.",
+    "origin": null,
+    "netWeightGram": 112,
+    "nutrition": null
+  },
+  {
+    "id": "mp-021",
+    "description": "Yến mạch ăn liền Yumfood dạng cán mỏng, chỉ cần pha nước nóng hoặc sữa là dùng được. Hũ 800g đủ dùng nhiều bữa sáng. Hạt mềm, vị nhẹ, dễ kết hợp với trái cây.",
+    "usage": "Gợi ý dùng: Pha sữa nóng làm bữa sáng, overnight oats, trộn với sữa chua và trái cây.",
+    "storage": "Đậy kín nắp hũ, để nơi khô ráo, thoáng mát, tránh ẩm.",
+    "origin": null,
+    "netWeightGram": 800,
+    "nutrition": null
+  },
+  {
+    "id": "mp-067",
+    "description": "Đậu hũ ta Vị Nguyên làm từ đậu nành, hộp 280g, khối mềm, mịn và vị béo bùi. Đây là nguồn đạm thực vật quen thuộc trong bữa ăn gia đình. Dễ nấu, hợp cả món chay lẫn mặn.",
+    "usage": "Gợi ý dùng: Chiên giòn chấm tương, sốt cà chua, nấu canh hoặc kho nấm.",
+    "storage": "Bảo quản ngăn mát và dùng sớm; sau khi mở nên ngâm nước sạch, đậy kín và dùng trong ngày.",
+    "origin": "Việt Nam",
+    "netWeightGram": 280,
+    "nutrition": {
+      "energy_kcal": 76,
+      "protein": 8,
+      "fat": 4.8,
+      "carbohydrates": 1.9,
+      "sugars": 0.6,
+      "fiber": 0.3,
+      "salt": 0.01
+    }
+  },
+  {
+    "id": "mp-016",
+    "description": "Táo Gala nhập khẩu từ New Zealand có vỏ đỏ sọc vàng, thịt giòn, vị ngọt thanh và thơm nhẹ. Quả kích thước vừa, thích hợp ăn liền. Bán theo ký nên dễ chọn lượng vừa đủ.",
+    "usage": "Gợi ý dùng: Ăn tươi, ép nước, cắt làm salad trái cây.",
+    "storage": "Bảo quản ngăn mát tủ lạnh; rửa sạch ngay trước khi ăn.",
+    "origin": "New Zealand",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 52,
+      "protein": 0.3,
+      "fat": 0.2,
+      "carbohydrates": 13.8,
+      "sugars": 10.4,
+      "fiber": 2.4,
+      "salt": 0
+    }
+  },
+  {
+    "id": "mp-012",
+    "description": "Cà rốt có củ màu cam tươi, giòn, vị ngọt tự nhiên. Là nguyên liệu quen thuộc trong nhiều món hầm, canh, xào. Ăn sống hay nấu chín đều ngon.",
+    "usage": "Gợi ý dùng: Hầm xương, xào thập cẩm, ép nước cà rốt.",
+    "storage": "Cất ngăn mát tủ lạnh, để ráo nước và dùng trong 1-2 tuần.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 41,
+      "protein": 0.9,
+      "fat": 0.2,
+      "carbohydrates": 9.6,
+      "sugars": 4.7,
+      "fiber": 2.8,
+      "salt": 0.17
+    }
+  },
+  {
+    "id": "mp-070",
+    "description": "Trà Cozy túi lọc hương đào có mùi thơm trái cây, vị nhẹ dễ uống. Hộp 25 gói, mỗi gói 2g, pha nhanh bằng nước nóng. Có thể uống nóng hoặc để nguội thêm đá.",
+    "usage": "Gợi ý dùng: Pha nước nóng uống buổi chiều, làm trà đào đá, uống kèm bánh ngọt.",
+    "storage": "Để nơi khô ráo, thoáng mát, đậy kín hộp sau khi mở để giữ hương.",
+    "origin": "Việt Nam",
+    "netWeightGram": 50,
+    "nutrition": null
+  },
+  {
+    "id": "mp-068",
+    "description": "Cá ngừ ngâm dầu đóng lon 140g, thịt cá được chế biến sẵn, ăn liền được ngay. Là món tiện lợi cho bữa nhanh, dễ cất giữ lâu. Vị mặn nhẹ, béo của dầu.",
+    "usage": "Gợi ý dùng: Trộn salad, kẹp bánh mì, nấu mì hoặc cơm trộn cá ngừ.",
+    "storage": "Để lon nơi khô ráo, thoáng mát; sau khi mở nên chuyển ra hộp kín, cất ngăn mát và dùng trong ngày.",
+    "origin": "Việt Nam",
+    "netWeightGram": 140,
+    "nutrition": null
+  },
+  {
+    "id": "mp-063",
+    "description": "Đường kính trắng An Khê dạng hạt nhỏ, trắng, tơi và tan nhanh. Gói 1kg tiện dùng trong bếp gia đình. Dùng cho pha chế, nấu chè và các món ăn ngọt.",
+    "usage": "Gợi ý dùng: Pha nước chanh, nấu chè, làm bánh và kho thịt.",
+    "storage": "Để nơi khô ráo, thoáng mát, đậy kín gói sau khi mở để tránh ẩm vón cục.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 387,
+      "protein": 0,
+      "fat": 0,
+      "carbohydrates": 99.8,
+      "sugars": 99.8,
+      "fiber": 0,
+      "salt": 0
+    }
+  },
+  {
+    "id": "mp-031",
+    "description": "Lạc (đậu phộng) cúc đỏ Lý Tưởng có hạt nhỏ, vỏ lụa đỏ, vị bùi béo. Gói 400g dùng được cho nhiều món mặn ngọt. Có thể rang, luộc hoặc nấu chè.",
+    "usage": "Gợi ý dùng: Rang muối, nấu chè đậu phộng, giã nhỏ rắc lên xôi và bún.",
+    "storage": "Đậy kín gói, để nơi khô ráo, thoáng mát, tránh ẩm để lạc không bị mốc.",
+    "origin": null,
+    "netWeightGram": 400,
+    "nutrition": null
+  },
+  {
+    "id": "mp-054",
+    "description": "Trà Lipton nhãn vàng là dòng trà đen túi lọc phổ biến với hương thơm đậm và vị chát dịu. Hộp 25 gói, mỗi gói 2g, tiện pha nhanh. Có thể uống nóng hoặc pha lạnh.",
+    "usage": "Gợi ý dùng: Pha trà nóng, trà đá chanh, pha trà sữa.",
+    "storage": "Để nơi khô ráo, thoáng mát, đậy kín hộp sau khi mở để giữ hương.",
+    "origin": null,
+    "netWeightGram": 50,
+    "nutrition": null
+  },
+  {
+    "id": "mp-023",
+    "description": "Nước tương đậm đặc Nam Dương có vị mặn đậm, màu nâu sẫm đặc trưng. Chai 500ml dùng để nêm nếm và chấm trong bữa ăn hằng ngày. Dùng được cho cả món chay lẫn món mặn.",
+    "usage": "Gợi ý dùng: Ướp thịt, kho cá, xào rau hoặc pha nước chấm.",
+    "storage": "Đậy kín nắp, để nơi khô ráo, thoáng mát, tránh ánh nắng.",
+    "origin": "Việt Nam",
+    "netWeightGram": 500,
+    "nutrition": null
+  },
+  {
+    "id": "mp-007",
+    "description": "Mực ống nguyên con đông lạnh Ào Ào đóng gói 300g, thịt dai giòn và ngọt đặc trưng. Cấp đông nên dễ cất giữ, rã đông là dùng được. Nên rã đông tự nhiên trong ngăn mát để giữ độ giòn.",
+    "usage": "Gợi ý dùng: Hấp gừng, xào cần tỏi, nướng sa tế.",
+    "storage": "Bảo quản ngăn đông; sau khi rã đông nên dùng ngay, không cấp đông lại.",
+    "origin": null,
+    "netWeightGram": 300,
+    "nutrition": {
+      "energy_kcal": 92,
+      "protein": 15.6,
+      "fat": 1.4,
+      "carbohydrates": 3.1,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.11
+    }
+  },
+  {
+    "id": "mp-011",
+    "description": "Dưa leo vỉ 500g có quả thon, vỏ xanh, ruột giòn mát và nhiều nước. Đóng vỉ nên sạch, gọn và dễ cầm. Thích hợp ăn sống hoặc dùng trong các món gỏi.",
+    "usage": "Gợi ý dùng: Trộn salad, ăn kèm bánh mì, muối dưa chua, gỏi dưa leo.",
+    "storage": "Cất ngăn mát tủ lạnh, giữ khô ráo và dùng trong 3-5 ngày.",
+    "origin": "Việt Nam",
+    "netWeightGram": 500,
+    "nutrition": {
+      "energy_kcal": 15,
+      "protein": 0.7,
+      "fat": 0.1,
+      "carbohydrates": 3.6,
+      "sugars": 1.7,
+      "fiber": 0.5,
+      "salt": 0.01
+    }
+  },
+  {
+    "id": "mp-047",
+    "description": "Đường phèn hạt Hoàng Hải dạng tinh thể, ngọt thanh hơn đường thường. Gói 500g dùng để nấu các món cần vị ngọt dịu. Thường được dùng trong chè và các món bồi bổ.",
+    "usage": "Gợi ý dùng: Nấu chè, hầm yến hoặc lê, pha nước ngọt thanh với trà.",
+    "storage": "Để nơi khô ráo, thoáng mát, đậy kín gói để tránh ẩm.",
+    "origin": null,
+    "netWeightGram": 500,
+    "nutrition": {
+      "energy_kcal": 387,
+      "protein": 0,
+      "fat": 0,
+      "carbohydrates": 99.8,
+      "sugars": 99.8,
+      "fiber": 0,
+      "salt": 0
+    }
+  },
+  {
+    "id": "mp-029",
+    "description": "Trà lài túi lọc Phúc Long có hương hoa lài thơm nhẹ, vị trà thanh. Hộp 50g gồm 25 gói, mỗi gói 2g. Pha nhanh với nước nóng, thích hợp uống hằng ngày.",
+    "usage": "Gợi ý dùng: Pha trà nóng, trà lài đá, kết hợp trái cây pha trà.",
+    "storage": "Để nơi khô ráo, thoáng mát, đậy kín hộp sau khi mở để giữ hương.",
+    "origin": "Việt Nam",
+    "netWeightGram": 50,
+    "nutrition": null
+  },
+  {
+    "id": "mp-069",
+    "description": "Bông cải xanh nhập khẩu có cụm hoa xanh đậm, chắc và giòn. Là loại rau giàu chất xơ, ngon khi nấu chín vừa tới. Dễ chế biến và phù hợp bữa ăn lành mạnh.",
+    "usage": "Gợi ý dùng: Luộc chấm muối tiêu, xào tỏi, nấu súp hoặc xào thịt bò.",
+    "storage": "Cất ngăn mát tủ lạnh, không rửa trước khi cất và dùng trong 3-5 ngày.",
+    "origin": null,
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 34,
+      "protein": 2.8,
+      "fat": 0.4,
+      "carbohydrates": 6.6,
+      "sugars": 1.7,
+      "fiber": 2.6,
+      "salt": 0.08
+    }
+  },
+  {
+    "id": "mp-036",
+    "description": "Mì trứng Safoco thượng hạng dạng sợi khô, khi nấu có độ dai và thơm mùi trứng. Gói 400g dùng được nhiều bữa. Sợi mì vừa, dễ chín và ăn kèm đa dạng.",
+    "usage": "Gợi ý dùng: Nấu mì nước, mì xào, trộn mì với thịt bằm.",
+    "storage": "Để nơi khô ráo, thoáng mát; cột kín gói sau khi mở để tránh ẩm.",
+    "origin": "Việt Nam",
+    "netWeightGram": 400,
+    "nutrition": null
+  },
+  {
+    "id": "mp-040",
+    "description": "Nấm hương tươi có mũ nâu, thịt dày, thơm đặc trưng và hơi dai. Hộp 150g tiện cho một bữa ăn gia đình nhỏ. Dùng nấu nhiều món mặn lẫn chay.",
+    "usage": "Gợi ý dùng: Xào nấm, nấu canh, kho chay hoặc nhồi thịt hấp.",
+    "storage": "Cất ngăn mát tủ lạnh, giữ nấm khô ráo và dùng trong 2-3 ngày.",
+    "origin": null,
+    "netWeightGram": 150,
+    "nutrition": {
+      "energy_kcal": 34,
+      "protein": 2.2,
+      "fat": 0.5,
+      "carbohydrates": 6.8,
+      "sugars": 2.4,
+      "fiber": 2.5,
+      "salt": 0.01
+    }
+  },
+  {
+    "id": "mp-027",
+    "description": "Sữa chua uống TH true YOGURT vị cam, lốc 4 hộp, mỗi hộp 110ml. Vị chua ngọt hài hòa kèm hương cam dễ uống. Hộp nhỏ vừa dùng cho bữa phụ hoặc mang theo.",
+    "usage": "Gợi ý dùng: Uống lạnh sau bữa ăn, dùng làm bữa phụ, mang đi học.",
+    "storage": "Bảo quản ngăn mát tủ lạnh 2-8°C và dùng trong hạn ghi trên bao bì.",
+    "origin": "Việt Nam",
+    "netWeightGram": 440,
+    "nutrition": null
+  },
+  {
+    "id": "mp-013",
+    "description": "Xà lách lô lô xanh có lá xoăn, mềm giòn, vị nhẹ và hơi ngọt. Gói 300g là loại rau ăn sống tiện dụng. Màu xanh tươi giúp bày món ăn thêm đẹp mắt.",
+    "usage": "Gợi ý dùng: Trộn salad, cuốn bánh tráng, ăn kèm bánh mì và burger.",
+    "storage": "Cất ngăn mát tủ lạnh, giữ khô ráo trong túi kín và dùng trong 2-3 ngày.",
+    "origin": "Việt Nam",
+    "netWeightGram": 300,
+    "nutrition": {
+      "energy_kcal": 15,
+      "protein": 1.4,
+      "fat": 0.2,
+      "carbohydrates": 2.9,
+      "sugars": 0.8,
+      "fiber": 1.3,
+      "salt": 0.07
+    }
+  },
+  {
+    "id": "mp-056",
+    "description": "Bánh mì sandwich khoai tây Richy có ruột mềm, xốp, vị nhẹ. Gói 275g tiện dùng cho bữa sáng hoặc ăn nhanh. Dễ kết hợp với nhiều loại nhân.",
+    "usage": "Gợi ý dùng: Kẹp trứng, kẹp thịt nguội và phô mai, nướng bơ.",
+    "storage": "Để nơi khô ráo, thoáng mát, buộc kín túi sau khi mở và dùng sớm.",
+    "origin": "Việt Nam",
+    "netWeightGram": 275,
+    "nutrition": null
+  },
+  {
+    "id": "mp-032",
+    "description": "Gừng củ có mùi thơm cay ấm đặc trưng. Túi 200g đủ dùng cho nhiều bữa nấu ăn. Là gia vị quen thuộc trong bếp Việt.",
+    "usage": "Gợi ý dùng: Nấu trà gừng, khử mùi tanh cá, kho thịt hoặc làm mứt gừng.",
+    "storage": "Để nơi khô ráo, thoáng mát hoặc cất ngăn mát; giữ khô để tránh mốc.",
+    "origin": "Việt Nam",
+    "netWeightGram": 200,
+    "nutrition": {
+      "energy_kcal": 80,
+      "protein": 1.8,
+      "fat": 0.8,
+      "carbohydrates": 17.8,
+      "sugars": 1.7,
+      "fiber": 2,
+      "salt": 0.03
+    }
+  },
+  {
+    "id": "mp-064",
+    "description": "Hành lá gói 100g có lá xanh, thân trắng, hương thơm nhẹ. Là loại rau gia vị không thể thiếu trong nhiều món Việt. Dùng để nêm, phi thơm và trang trí.",
+    "usage": "Gợi ý dùng: Phi hành thơm, rắc lên canh và cháo, làm mỡ hành.",
+    "storage": "Cất ngăn mát tủ lạnh, để khô ráo và dùng trong 3-4 ngày.",
+    "origin": "Việt Nam",
+    "netWeightGram": 100,
+    "nutrition": {
+      "energy_kcal": 32,
+      "protein": 1.8,
+      "fat": 0.2,
+      "carbohydrates": 7.3,
+      "sugars": 2.3,
+      "fiber": 2.6,
+      "salt": 0.04
+    }
+  },
+  {
+    "id": "mp-038",
+    "description": "Hành tây có củ tròn, vỏ ngoài khô, ruột trắng, vị cay nhẹ và ngọt khi nấu chín. Là nguyên liệu nền cho rất nhiều món xào, hầm và salad. Bán theo ký nên linh hoạt khi mua.",
+    "usage": "Gợi ý dùng: Xào thịt bò, làm hành tây chiên, ăn sống trong salad.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ánh nắng; củ đã cắt thì bọc kín và cất ngăn mát.",
+    "origin": null,
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 40,
+      "protein": 1.1,
+      "fat": 0.1,
+      "carbohydrates": 9.3,
+      "sugars": 4.2,
+      "fiber": 1.7,
+      "salt": 0.01
+    }
+  },
+  {
+    "id": "mp-065",
+    "description": "Miến dong Susan dạng sợi khô, sau khi nấu có độ dai, trong và không bị nát. Gói 200g dùng được cho nhiều món. Hợp cả món nước lẫn món xào.",
+    "usage": "Gợi ý dùng: Nấu miến gà, xào miến, nấu canh miến.",
+    "storage": "Để nơi khô ráo, thoáng mát, buộc kín gói sau khi mở.",
+    "origin": null,
+    "netWeightGram": 200,
+    "nutrition": null
+  },
+  {
+    "id": "mp-043",
+    "description": "Sa tế tôm Cholimex có vị cay thơm của ớt, sả và tỏi, chai nhỏ 90g. Dùng làm gia vị chấm hoặc nêm nhanh cho món ăn. Cay vừa phải và dậy mùi.",
+    "usage": "Gợi ý dùng: Chấm đồ nướng, ướp thịt, nấu bún bò hoặc lẩu.",
+    "storage": "Đậy kín nắp, cất nơi thoáng mát; sau khi mở nên cất ngăn mát và dùng sớm.",
+    "origin": "Việt Nam",
+    "netWeightGram": 90,
+    "nutrition": null
+  },
+  {
+    "id": "mp-075",
+    "description": "Tiêu đen hạt nguyên có mùi thơm nồng và vị cay đặc trưng. Gói 50g dùng được nhiều lần, hạt xay tươi sẽ thơm hơn. Là gia vị cơ bản trong bếp.",
+    "usage": "Gợi ý dùng: Xay nhuyễn ướp thịt, nêm canh, làm bò né hoặc nước sốt tiêu.",
+    "storage": "Đậy kín gói, để nơi khô ráo, thoáng mát, tránh ánh nắng.",
+    "origin": null,
+    "netWeightGram": 50,
+    "nutrition": {
+      "energy_kcal": 251,
+      "protein": 10.4,
+      "fat": 3.3,
+      "carbohydrates": 64,
+      "sugars": 0.6,
+      "fiber": 25.3,
+      "salt": 0.05
+    }
+  },
+  {
+    "id": "mp-019",
+    "description": "Bún gạo khô Lotus làm từ gạo, sợi nhỏ, khi nấu chín mềm và dai nhẹ. Gói 400g tiện dự trữ trong bếp. Phù hợp với nhiều món bún nước và bún trộn.",
+    "usage": "Gợi ý dùng: Nấu bún riêu, bún thịt nướng, bún xào.",
+    "storage": "Để nơi khô ráo, thoáng mát; buộc kín gói sau khi mở để tránh ẩm.",
+    "origin": null,
+    "netWeightGram": 400,
+    "nutrition": null
+  },
+  {
+    "id": "mp-052",
+    "description": "Bột cà ri Vianco gói nhỏ 10g, có hương thơm đặc trưng của hỗn hợp gia vị. Gói tiện dùng một lần cho một món. Cho màu vàng cam bắt mắt.",
+    "usage": "Gợi ý dùng: Nấu cà ri gà, ướp thịt nướng, nấu bò kho kiểu cà ri.",
+    "storage": "Để nơi khô ráo, thoáng mát; bột còn lại nên cho vào hộp kín.",
+    "origin": "Việt Nam",
+    "netWeightGram": 10,
+    "nutrition": null
+  },
+  {
+    "id": "mp-041",
+    "description": "Nấm đông cô khô là loại nấm được sấy khô, khi ngâm nở có mùi thơm đặc trưng và phần mũ dày, dai giòn. Nấm thường dùng để nấu nước dùng, kho hoặc xào, giúp món ăn đậm vị ngọt tự nhiên. Gói 50g tiện cho vài bữa cơm của sinh viên.",
+    "usage": "Gợi ý dùng: Nấu canh nấm, xào chay, kho nấm với đậu hũ.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát, tránh ẩm; sau khi mở gói nên buộc kín hoặc cho vào hộp đậy nắp.",
+    "origin": null,
+    "netWeightGram": 50,
+    "nutrition": {
+      "energy_kcal": 296,
+      "protein": 9.6,
+      "fat": 1,
+      "carbohydrates": 75,
+      "sugars": 2.9,
+      "fiber": 11.5,
+      "salt": 0.03
+    }
+  },
+  {
+    "id": "mp-017",
+    "description": "Thanh long ruột đỏ có vỏ hồng tươi, ruột đỏ tím bắt mắt, vị ngọt dịu và mọng nước, hạt đen nhỏ ăn được. Quả thích hợp ăn tươi sau khi ướp lạnh hoặc dùng làm sinh tố, salad trái cây. Bán theo ký nên bạn có thể chọn số lượng vừa đủ dùng.",
+    "usage": "Gợi ý dùng: Ăn tươi ướp lạnh, xay sinh tố, trộn salad trái cây.",
+    "storage": "Để nơi thoáng mát vài ngày hoặc bảo quản ngăn mát tủ lạnh; đã cắt nên bọc kín và dùng trong ngày.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 50,
+      "protein": 1.1,
+      "fat": 0.4,
+      "carbohydrates": 11,
+      "sugars": 8,
+      "fiber": 3,
+      "salt": 0
+    }
+  },
+  {
+    "id": "mp-025",
+    "description": "Muối tinh sấy bổ sung i-ốt, hạt mịn, trắng và tơi, ít vón cục nhờ được sấy khô. Đây là gia vị cơ bản trong mọi căn bếp, dùng để nêm nếm, ướp thực phẩm hoặc muối dưa cà. Gói 1kg dùng được lâu cho cả gia đình lẫn phòng trọ.",
+    "usage": "Gợi ý dùng: Nêm canh, ướp thịt cá, muối dưa cải.",
+    "storage": "Đựng nơi khô ráo, tránh ẩm; sau khi mở nên chuyển sang hũ kín.",
+    "origin": null,
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 0,
+      "protein": 0,
+      "fat": 0,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 99
+    }
+  },
+  {
+    "id": "mp-039",
+    "description": "Bánh tráng mỏng đường kính khoảng 20cm, dùng để cuốn nhiều món ăn quen thuộc. Khi chấm nước hoặc nhúng nhanh, bánh mềm, dai và dễ cuốn rau thịt. Gói 105g phù hợp cho một bữa cuốn nhỏ.",
+    "usage": "Gợi ý dùng: Cuốn gỏi cuốn, chả giò chiên, bánh tráng cuốn thịt heo.",
+    "storage": "Để nơi khô ráo, thoáng mát; đóng kín gói sau khi mở để bánh không bị ẩm hoặc gãy.",
+    "origin": "Việt Nam",
+    "netWeightGram": 105,
+    "nutrition": null
+  },
+  {
+    "id": "mp-046",
+    "description": "Bột bắp mịn, màu trắng, thường dùng để làm đặc nước sốt, súp và tạo độ giòn cho món chiên. Bột dễ hòa tan trong nước lạnh trước khi cho vào món nóng. Gói 150g đủ cho nhiều lần nấu ăn trong nhà.",
+    "usage": "Gợi ý dùng: Làm sệt sốt, tẩm gà chiên giòn, nấu súp.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát; buộc kín miệng gói hoặc đổ vào hộp sau khi mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 150,
+    "nutrition": {
+      "energy_kcal": 381,
+      "protein": 0.3,
+      "fat": 0.1,
+      "carbohydrates": 91.3,
+      "sugars": 0,
+      "fiber": 0.9,
+      "salt": 0.01
+    }
+  },
+  {
+    "id": "mp-033",
+    "description": "Cải chua là cải xanh muối chua, có vị chua nhẹ, giòn và thơm mùi lên men. Có thể dùng ngay trong các món canh, xào hoặc kho để tạo vị đậm đà. Gói 450g tiện nấu bữa cho vài người.",
+    "usage": "Gợi ý dùng: Nấu canh cải chua, xào thịt bò, kho cá.",
+    "storage": "Bảo quản ngăn mát tủ lạnh; sau khi mở nên đậy kín và dùng sớm.",
+    "origin": "Việt Nam",
+    "netWeightGram": 450,
+    "nutrition": null
+  },
+  {
+    "id": "mp-073",
+    "description": "Hạt sen khô đã tách vỏ, khi nấu chín có độ bùi và thơm nhẹ. Nguyên liệu quen thuộc trong các món chè, súp và cháo bồi bổ. Nên ngâm nước ấm trước khi nấu để hạt mau mềm.",
+    "usage": "Gợi ý dùng: Nấu chè hạt sen, hầm gà hạt sen, nấu cháo.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ẩm; đóng kín gói sau khi mở.",
+    "origin": null,
+    "netWeightGram": 100,
+    "nutrition": {
+      "energy_kcal": 332,
+      "protein": 15.4,
+      "fat": 2,
+      "carbohydrates": 64.5,
+      "sugars": 0,
+      "fiber": 3,
+      "salt": 0
+    }
+  },
+  {
+    "id": "mp-060",
+    "description": "Khổ qua (mướp đắng) có vị đắng đặc trưng, thịt quả giòn, thường được dùng trong các món canh và xào. Khay 500g gồm khoảng 3 đến 5 trái vừa ăn. Có thể bỏ ruột và chần qua nước sôi để giảm bớt vị đắng.",
+    "usage": "Gợi ý dùng: Khổ qua nhồi thịt nấu canh, xào trứng, nấu nước dùng.",
+    "storage": "Bảo quản ngăn mát tủ lạnh, nên dùng trong 3 đến 5 ngày.",
+    "origin": "Việt Nam",
+    "netWeightGram": 500,
+    "nutrition": {
+      "energy_kcal": 17,
+      "protein": 1,
+      "fat": 0.2,
+      "carbohydrates": 3.7,
+      "sugars": 1.9,
+      "fiber": 2.8,
+      "salt": 0.01
+    }
+  },
+  {
+    "id": "mp-057",
+    "description": "Gói rau thơm tổng hợp gồm nhiều loại rau gia vị quen thuộc, giúp bữa ăn thơm và tươi hơn. Rau được đóng gói gọn để dùng kèm các món bún, phở, gỏi và món nướng. Gói 200g phù hợp cho vài bữa ăn.",
+    "usage": "Gợi ý dùng: Ăn kèm bún chả, cuốn gỏi cuốn, ăn kèm phở.",
+    "storage": "Bảo quản ngăn mát tủ lạnh, nên giữ khô ráo và dùng trong 2 đến 3 ngày.",
+    "origin": "Việt Nam",
+    "netWeightGram": 200,
+    "nutrition": null
+  },
+  {
+    "id": "mp-020",
+    "description": "Phở khô dạng sợi dẹt làm từ gạo, sau khi luộc mềm, dai và dễ thấm nước dùng. Sản phẩm bảo quản lâu, tiện để nấu món phở nhanh tại nhà. Gói 200g đủ cho khoảng 2 phần ăn nhỏ.",
+    "usage": "Gợi ý dùng: Nấu phở bò, phở gà, xào phở với rau.",
+    "storage": "Để nơi khô ráo, thoáng mát; đóng kín gói sau khi mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 200,
+    "nutrition": null
+  },
+  {
+    "id": "mp-058",
+    "description": "Bột bánh xèo pha sẵn, chỉ cần hòa với nước hoặc nước cốt dừa là có thể đổ bánh vàng giòn. Hỗn hợp giúp tiết kiệm công thức nhiều loại bột cho người mới nấu. Gói 500g làm được nhiều chiếc bánh.",
+    "usage": "Gợi ý dùng: Đổ bánh xèo tôm thịt, làm bánh khọt, chiên bánh giòn.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát; buộc kín miệng gói sau khi mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 500,
+    "nutrition": null
+  },
+  {
+    "id": "mp-061",
+    "description": "Bột năng làm từ khoai mì, màu trắng, mịn, khi gặp nhiệt sẽ trở nên trong và dẻo dai. Thường dùng làm bánh, chè và tạo độ sệt cho món ăn. Gói 400g thuận tiện cho nhiều công thức.",
+    "usage": "Gợi ý dùng: Nấu chè bánh lọt, làm bánh bột lọc, làm sệt nước sốt.",
+    "storage": "Để nơi khô ráo, thoáng mát; đóng kín gói sau khi mở để tránh ẩm.",
+    "origin": "Việt Nam",
+    "netWeightGram": 400,
+    "nutrition": {
+      "energy_kcal": 358,
+      "protein": 0.2,
+      "fat": 0,
+      "carbohydrates": 88.7,
+      "sugars": 3.4,
+      "fiber": 0.9,
+      "salt": 0.01
+    }
+  },
+  {
+    "id": "mp-037",
+    "description": "Lươn đã được làm sạch nhớt và nội tạng, tiện chế biến ngay. Thịt lươn săn chắc, ngọt và béo nhẹ, hợp với nhiều món nướng, xào và nấu. Bán theo ký nên dễ chọn lượng vừa đủ.",
+    "usage": "Gợi ý dùng: Xào sả ớt, nấu cháo lươn, nấu miến lươn.",
+    "storage": "Bảo quản ngăn mát 0–4°C và dùng trong ngày; để lâu hơn nên cấp đông.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 184,
+      "protein": 18.4,
+      "fat": 11.7,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.13
+    }
+  },
+  {
+    "id": "mp-074",
+    "description": "Ngò rí (rau mùi) có lá nhỏ, mùi thơm đặc trưng, thường rắc lên món ăn trước khi dọn. Gói 50g nhỏ gọn, đủ dùng cho vài bữa. Rau dùng tươi để giữ trọn hương thơm.",
+    "usage": "Gợi ý dùng: Rắc lên canh, ăn kèm phở, làm nước chấm.",
+    "storage": "Bảo quản ngăn mát tủ lạnh, giữ khô ráo và dùng trong 2 đến 3 ngày.",
+    "origin": "Việt Nam",
+    "netWeightGram": 50,
+    "nutrition": {
+      "energy_kcal": 23,
+      "protein": 2.1,
+      "fat": 0.5,
+      "carbohydrates": 3.7,
+      "sugars": 0.9,
+      "fiber": 2.8,
+      "salt": 0.12
+    }
+  },
+  {
+    "id": "mp-062",
+    "description": "Bột ngọt hạt lớn của thương hiệu Ajinomoto, tinh thể trắng, tan nhanh trong món nóng. Dùng với lượng nhỏ để tăng vị umami cho canh, xào và nước dùng. Gói 454g dùng được khá lâu.",
+    "usage": "Gợi ý dùng: Nêm canh, nêm món xào, ướp thịt.",
+    "storage": "Để nơi khô ráo, đóng kín sau khi mở để tránh vón cục.",
+    "origin": null,
+    "netWeightGram": 454,
+    "nutrition": null
+  },
+  {
+    "id": "p-0107",
+    "description": "Bánh croissant cỡ nhỏ phủ lớp socola sữa, vỏ bánh xốp nhẹ với hương bơ thơm. Mỗi gói 49g là phần ăn vặt gọn nhẹ cho buổi sáng hoặc giờ nghỉ. Bánh mềm, vị ngọt vừa phải.",
+    "usage": "Gợi ý dùng: Ăn sáng nhanh, ăn vặt, dùng kèm sữa hoặc cà phê.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát, tránh nắng; nên ăn hết sau khi mở gói.",
+    "origin": "Việt Nam",
+    "netWeightGram": 49,
+    "nutrition": null
+  },
+  {
+    "id": "p-0106",
+    "description": "Bánh croissant mini mang hương matcha, vỏ bánh xốp mềm và vị trà xanh dịu nhẹ. Gói 49g nhỏ gọn, dễ mang theo đi học hay đi làm. Hợp ăn kèm trà hoặc sữa.",
+    "usage": "Gợi ý dùng: Ăn nhẹ buổi sáng, ăn vặt, dùng với trà nóng.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát, tránh nắng; nên ăn hết sau khi mở gói.",
+    "origin": "Việt Nam",
+    "netWeightGram": 49,
+    "nutrition": null
+  },
+  {
+    "id": "p-0052",
+    "description": "Bò lúc lắc là thịt bò cắt miếng vuông nhỏ, sẵn sàng để chế biến nhanh. Thịt mềm khi xào lửa lớn, thấm vị và giữ được độ ngọt. Khay 200g phù hợp cho một đến hai người ăn.",
+    "usage": "Gợi ý dùng: Xào bò lúc lắc với hành tây, ăn kèm khoai tây chiên, trộn salad bò.",
+    "storage": "Bảo quản ngăn mát 0–4°C và dùng trong ngày; để lâu hơn nên cấp đông.",
+    "origin": "Việt Nam",
+    "netWeightGram": 200,
+    "nutrition": {
+      "energy_kcal": 143,
+      "protein": 21,
+      "fat": 6,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.13
+    }
+  },
+  {
+    "id": "p-0159",
+    "description": "Dầu thực vật tinh luyện trong, màu vàng nhạt, ít mùi, thích hợp cho nhiều kiểu nấu ăn hằng ngày. Dầu chịu nhiệt tốt khi chiên rán và dùng được để xào, kho. Chai 1 lít tiện cho gian bếp nhỏ.",
+    "usage": "Gợi ý dùng: Chiên cá, xào rau, rán trứng.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ánh nắng; đậy kín nắp sau khi dùng.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 884,
+      "protein": 0,
+      "fat": 100,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0
+    }
+  },
+  {
+    "id": "p-0105",
+    "description": "Kẹo thạch Zai Zai dạng thanh dài của thương hiệu Đức Hạnh, có độ dẻo dai, vị ngọt trái cây. Kẹo được bán theo từng cái, tiện nhấm nháp hoặc mua thử. Là món ăn vặt quen thuộc của nhiều bạn trẻ.",
+    "usage": "Gợi ý dùng: Ăn vặt, thưởng thức khi giải lao, chia sẻ cùng bạn bè.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh nắng; ăn hết sau khi mở bao bì.",
+    "origin": "Việt Nam",
+    "netWeightGram": null,
+    "nutrition": null
+  },
+  {
+    "id": "p-0051",
+    "description": "Bò viên tươi có thân tròn, dai giòn, vị bò đậm và thơm. Khay 200g tiện chế biến nhanh với nhiều cách nấu. Có thể chần, nấu lẩu hoặc chiên tùy khẩu vị.",
+    "usage": "Gợi ý dùng: Nấu lẩu, nấu mì bò viên, chiên chấm tương ớt.",
+    "storage": "Bảo quản ngăn mát 0–4°C và dùng sớm; để lâu hơn nên cấp đông.",
+    "origin": "Việt Nam",
+    "netWeightGram": 200,
+    "nutrition": null
+  },
+  {
+    "id": "p-0158",
+    "description": "Dầu đậu nành tinh luyện của thương hiệu Janbee, màu vàng trong, dùng được cho đa số món ăn. Can 2 lít phù hợp cho gia đình dùng thường xuyên. Phù hợp để chiên, xào và chế biến hằng ngày.",
+    "usage": "Gợi ý dùng: Chiên gà, xào rau củ, làm nước sốt.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh nắng trực tiếp; đậy kín nắp sau khi dùng.",
+    "origin": "Việt Nam",
+    "netWeightGram": 2000,
+    "nutrition": {
+      "energy_kcal": 884,
+      "protein": 0,
+      "fat": 100,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0
+    }
+  },
+  {
+    "id": "p-0104",
+    "description": "Kẹo thạch Zai Zai dạng thanh vuông của Đức Hạnh, dẻo, dai và có vị ngọt trái cây. Mẫu mã được giao ngẫu nhiên nên mỗi lần mua có thể khác hương vị. Món ăn vặt nhỏ gọn cho giờ giải lao.",
+    "usage": "Gợi ý dùng: Ăn vặt, mang theo đi học, chia sẻ cùng bạn bè.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh nắng; ăn hết sau khi mở bao bì.",
+    "origin": "Việt Nam",
+    "netWeightGram": null,
+    "nutrition": null
+  },
+  {
+    "id": "p-0050",
+    "description": "Nạm bò của Vinabeef là phần thịt có gân xen lẫn, khi hầm lâu sẽ mềm và thơm. Khay 200g phù hợp cho một bữa ăn nhỏ. Nạm thích hợp cho các món hầm, kho và nấu phở.",
+    "usage": "Gợi ý dùng: Hầm nạm bò với cà rốt, nấu phở bò, nấu bò kho.",
+    "storage": "Bảo quản ngăn mát 0–4°C và dùng trong ngày; để lâu hơn nên cấp đông.",
+    "origin": "Việt Nam",
+    "netWeightGram": 200,
+    "nutrition": {
+      "energy_kcal": 150,
+      "protein": 21,
+      "fat": 7,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.13
+    }
+  },
+  {
+    "id": "p-0157",
+    "description": "Dầu đậu nành Meizan trong, màu vàng nhạt, thích hợp cho các món chiên xào hằng ngày. Can 2 lít dùng được lâu cho gia đình hoặc nhóm bạn ở chung. Dầu có mùi nhẹ, không lấn át vị món ăn.",
+    "usage": "Gợi ý dùng: Chiên cá, xào rau, làm nước chấm.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh nắng; đậy kín nắp sau khi dùng.",
+    "origin": "Việt Nam",
+    "netWeightGram": 2000,
+    "nutrition": {
+      "energy_kcal": 884,
+      "protein": 0,
+      "fat": 100,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0
+    }
+  },
+  {
+    "id": "p-0103",
+    "description": "Da heo tẩm mắm hành giòn rụm, vị mặn ngọt đậm đà kèm mùi hành thơm. Hũ 120g thích hợp làm món nhâm nhi khi xem phim hoặc học bài. Sản phẩm ăn liền, không cần chế biến.",
+    "usage": "Gợi ý dùng: Ăn vặt, nhâm nhi cùng trà, ăn kèm khi xem phim.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát; đậy kín nắp hũ sau khi mở để giữ độ giòn.",
+    "origin": "Việt Nam",
+    "netWeightGram": 120,
+    "nutrition": null
+  },
+  {
+    "id": "p-0049",
+    "description": "Thịt bò thái lát mỏng sẵn của Vinabeef, tiện chế biến các món nhanh. Lát thịt mềm, chín nhanh và giữ được vị ngọt. Khay 200g phù hợp cho một đến hai người.",
+    "usage": "Gợi ý dùng: Nhúng lẩu, xào hành tây, cuốn rau.",
+    "storage": "Bảo quản ngăn mát 0–4°C và dùng trong ngày; để lâu hơn nên cấp đông.",
+    "origin": "Việt Nam",
+    "netWeightGram": 200,
+    "nutrition": {
+      "energy_kcal": 140,
+      "protein": 21.5,
+      "fat": 5.5,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.13
+    }
+  },
+  {
+    "id": "p-0156",
+    "description": "Thùng gồm 24 gói miến vị sườn heo của Vifon, mỗi gói 58g. Sợi miến dai, ăn liền chỉ cần chế nước sôi, kèm gói gia vị đậm đà. Thích hợp để dự trữ cho nhiều bữa ăn nhanh.",
+    "usage": "Gợi ý dùng: Chế nước sôi ăn liền, thêm rau và trứng, nấu cùng thịt viên.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh nắng và ẩm.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1392,
+    "nutrition": null
+  },
+  {
+    "id": "p-0102",
+    "description": "Combo 10 gói kẹo thạch Zai Zai Đức Hạnh dạng thanh dài, dẻo dai và có vị ngọt trái cây. Phù hợp để mua dự trữ ăn dần hoặc chia sẻ. Món vặt nhỏ gọn cho giờ giải lao.",
+    "usage": "Gợi ý dùng: Ăn vặt, chia sẻ cùng bạn bè, mang theo đi học.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh nắng; ăn hết sau khi mở bao bì.",
+    "origin": "Việt Nam",
+    "netWeightGram": null,
+    "nutrition": null
+  },
+  {
+    "id": "p-0048",
+    "description": "Đùi bò là phần thịt nạc, ít mỡ, thớ thịt chắc. Bán theo ký nên linh hoạt chọn lượng theo nhu cầu. Thịt phù hợp để xào, nướng, hầm hoặc thái lát mỏng.",
+    "usage": "Gợi ý dùng: Xào hành tây, nướng, làm bò kho.",
+    "storage": "Bảo quản ngăn mát 0–4°C và dùng trong ngày; để lâu hơn nên cấp đông.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 140,
+      "protein": 21.5,
+      "fat": 5.5,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.13
+    }
+  },
+  {
+    "id": "p-0155",
+    "description": "Miến sườn heo của Vifon dạng gói ăn liền, sợi miến dai, kèm gói gia vị vị sườn. Gói 58g gọn nhẹ, chế nước sôi là có bữa ăn nhanh. Phù hợp cho bữa sáng hay bữa phụ.",
+    "usage": "Gợi ý dùng: Chế nước sôi ăn liền, thêm trứng và rau, nấu miến xào.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh nắng và ẩm.",
+    "origin": "Việt Nam",
+    "netWeightGram": 58,
+    "nutrition": null
+  },
+  {
+    "id": "p-0101",
+    "description": "Combo 10 gói kẹo thạch Zai Zai Đức Hạnh dạng thanh vuông, kẹo dẻo, vị ngọt trái cây. Phù hợp để chia nhau hoặc ăn dần trong tuần. Bao bì nhỏ, dễ mang theo.",
+    "usage": "Gợi ý dùng: Ăn vặt, chia sẻ cùng bạn bè, mang theo đi học.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh nắng; ăn hết sau khi mở bao bì.",
+    "origin": "Việt Nam",
+    "netWeightGram": null,
+    "nutrition": null
+  },
+  {
+    "id": "p-0047",
+    "description": "Đùi bò đóng khay 150g, phần thịt nạc ít mỡ, thớ chắc. Khay nhỏ tiện cho người ăn ít hoặc nấu một bữa. Thịt phù hợp xào nhanh và các món hầm.",
+    "usage": "Gợi ý dùng: Xào rau muống, làm bò xào hành tây, hầm với rau củ.",
+    "storage": "Bảo quản ngăn mát 0–4°C và dùng trong ngày; để lâu hơn nên cấp đông.",
+    "origin": "Việt Nam",
+    "netWeightGram": 150,
+    "nutrition": {
+      "energy_kcal": 140,
+      "protein": 21.5,
+      "fat": 5.5,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.13
+    }
+  },
+  {
+    "id": "p-0154",
+    "description": "Miến ăn liền vị lẩu Thái chua cay của Vifon, sợi miến dai và nước dùng đậm vị. Gói 60g nhỏ gọn, dễ chế biến chỉ với nước sôi. Có thể thêm rau và hải sản để bữa ăn đầy đủ hơn.",
+    "usage": "Gợi ý dùng: Chế nước sôi ăn liền, thêm tôm và rau, nấu lẩu mini.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh nắng và ẩm.",
+    "origin": "Việt Nam",
+    "netWeightGram": 60,
+    "nutrition": null
+  },
+  {
+    "id": "p-0100",
+    "description": "Combo 20 gói kẹo thạch Zai Zai Đức Hạnh dạng thanh dài, dẻo dai và có vị trái cây. Số lượng lớn phù hợp cho nhóm bạn hoặc phòng trọ. Món vặt quen thuộc, dễ chia sẻ.",
+    "usage": "Gợi ý dùng: Ăn vặt, chia sẻ cùng nhóm bạn, mang theo đi học.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh nắng; ăn hết sau khi mở bao bì.",
+    "origin": "Việt Nam",
+    "netWeightGram": null,
+    "nutrition": null
+  },
+  {
+    "id": "p-0046",
+    "description": "Nạm bò là phần thịt có gân xen lẫn nạc, hầm lâu sẽ mềm và thơm. Bán theo ký nên tiện chọn lượng cho cả nhóm. Thịt thích hợp với các món hầm, kho và nấu phở.",
+    "usage": "Gợi ý dùng: Nấu bò kho, hầm khoai tây cà rốt, nấu phở.",
+    "storage": "Bảo quản ngăn mát 0–4°C và dùng trong ngày; để lâu hơn nên cấp đông.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 150,
+      "protein": 21,
+      "fat": 7,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.13
+    }
+  },
+  {
+    "id": "p-0153",
+    "description": "Thùng gồm 24 gói miến lẩu Thái Vifon, mỗi gói 60g, vị chua cay đặc trưng. Sợi miến dai, ăn liền với nước sôi. Phù hợp để dự trữ cho nhiều bữa ăn nhanh.",
+    "usage": "Gợi ý dùng: Chế nước sôi ăn liền, thêm rau và trứng, nấu cùng hải sản.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh nắng và ẩm.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1440,
+    "nutrition": null
+  },
+  {
+    "id": "p-0099",
+    "description": "Combo 20 gói kẹo thạch Zai Zai Đức Hạnh dạng thanh vuông, dẻo dai, vị ngọt trái cây. Số lượng nhiều, tiện chia sẻ trong nhóm. Món ăn vặt quen thuộc cho giờ giải lao.",
+    "usage": "Gợi ý dùng: Ăn vặt, chia sẻ cùng nhóm bạn, mang theo đi học.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh nắng; ăn hết sau khi mở bao bì.",
+    "origin": "Việt Nam",
+    "netWeightGram": null,
+    "nutrition": null
+  },
+  {
+    "id": "p-0045",
+    "description": "Nạm bò đóng túi 150g gồm phần thịt có gân, khi hầm sẽ mềm và thơm. Túi nhỏ vừa cho một bữa nấu đơn giản. Thích hợp với món hầm, kho hoặc nấu phở.",
+    "usage": "Gợi ý dùng: Hầm nạm với cà rốt, nấu bò kho, nấu phở bò.",
+    "storage": "Bảo quản ngăn mát 0–4°C và dùng trong ngày; để lâu hơn nên cấp đông.",
+    "origin": "Việt Nam",
+    "netWeightGram": 150,
+    "nutrition": {
+      "energy_kcal": 150,
+      "protein": 21,
+      "fat": 7,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.13
+    }
+  },
+  {
+    "id": "p-0152",
+    "description": "Mì trộn phô mai dạng mini của Ottogi, sợi mì dai kèm sốt phô mai béo nhẹ. Gói 80g nhỏ gọn, dễ nấu và trộn đều với sốt. Là bữa ăn nhanh hoặc ăn vặt cho người thích vị phô mai.",
+    "usage": "Gợi ý dùng: Trộn mì ăn liền, thêm trứng ốp la, ăn kèm xúc xích.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh nắng và ẩm.",
+    "origin": null,
+    "netWeightGram": 80,
+    "nutrition": null
+  },
+  {
+    "id": "p-0098",
+    "description": "Combo 15 gói kẹo thạch Zai Zai Đức Hạnh dạng thanh vuông, dẻo và có vị ngọt trái cây. Số lượng vừa đủ để ăn dần hoặc chia sẻ. Gói nhỏ tiện mang theo.",
+    "usage": "Gợi ý dùng: Ăn vặt, chia sẻ cùng bạn bè, mang theo đi học.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh nắng; ăn hết sau khi mở bao bì.",
+    "origin": "Việt Nam",
+    "netWeightGram": null,
+    "nutrition": null
+  },
+  {
+    "id": "p-0044",
+    "description": "Ba rọi rút sườn là phần thịt heo ba chỉ có lớp nạc mỡ xen kẽ, đã được rút bỏ xương sườn, nhập khẩu từ Nga. Thịt có độ béo vừa, dễ cắt miếng và chế biến. Bán theo ký nên linh hoạt chọn lượng.",
+    "usage": "Gợi ý dùng: Kho tiêu, nướng, làm thịt luộc cuốn rau.",
+    "storage": "Bảo quản ngăn mát 0–4°C và dùng trong ngày; để lâu hơn nên cấp đông.",
+    "origin": "Nga",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 395,
+      "protein": 14,
+      "fat": 38,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.1
+    }
+  },
+  {
+    "id": "p-0151",
+    "description": "Combo gồm 5 thùng, mỗi thùng 24 ly mì Modern vị lẩu Thái tôm, mỗi ly 67g. Sợi mì dai, nước dùng chua cay đặc trưng, chế nước sôi là ăn. Phù hợp để dự trữ lâu dài cho nhiều người.",
+    "usage": "Gợi ý dùng: Chế nước sôi ăn liền, thêm trứng và rau, ăn khuya.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh nắng và ẩm.",
+    "origin": "Việt Nam",
+    "netWeightGram": 8040,
+    "nutrition": null
+  },
+  {
+    "id": "p-0097",
+    "description": "Combo 15 gói kẹo thạch Zai Zai Đức Hạnh dạng thanh dài, dẻo dai và có vị ngọt trái cây. Số lượng vừa phải để ăn dần hoặc chia sẻ. Món vặt quen thuộc cho giờ giải lao.",
+    "usage": "Gợi ý dùng: Ăn vặt, chia sẻ cùng bạn bè, mang theo đi học.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh nắng; ăn hết sau khi mở bao bì.",
+    "origin": "Việt Nam",
+    "netWeightGram": null,
+    "nutrition": null
+  },
+  {
+    "id": "p-0043",
+    "description": "Ba rọi heo C.P là phần thịt ba chỉ có lớp nạc và mỡ xen kẽ đẹp mắt. Vỉ 300g tiện cho bữa cơm gia đình nhỏ. Thịt phù hợp với nhiều món kho, nướng và luộc.",
+    "usage": "Gợi ý dùng: Kho tiêu, nướng, luộc cuốn bánh tráng.",
+    "storage": "Bảo quản ngăn mát 0–4°C và dùng trong ngày; để lâu hơn nên cấp đông.",
+    "origin": "Việt Nam",
+    "netWeightGram": 300,
+    "nutrition": {
+      "energy_kcal": 518,
+      "protein": 9.3,
+      "fat": 53,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.09
+    }
+  },
+  {
+    "id": "p-0150",
+    "description": "Thùng gồm 30 gói mì xào 3 Miền Gold vị hành phi tương tỏi, mỗi gói 75g. Sợi mì dai, vị đậm đà với hành phi và tỏi thơm. Phù hợp để dự trữ cho nhiều bữa ăn nhanh.",
+    "usage": "Gợi ý dùng: Xào mì với trứng, thêm rau củ, thêm xúc xích.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh nắng và ẩm.",
+    "origin": "Việt Nam",
+    "netWeightGram": 2250,
+    "nutrition": null
+  },
+  {
+    "id": "p-0096",
+    "description": "Thùng 24 lon bia Heineken Silver, mỗi lon 330ml, hương vị nhẹ và êm. Bia thích hợp để uống lạnh trong các buổi tụ họp. Sản phẩm chỉ dành cho người từ đủ tuổi theo quy định.",
+    "usage": "Gợi ý dùng: Uống lạnh trong buổi tụ họp, ăn kèm đồ nướng, kèm đồ nhắm nhẹ.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát, tránh nắng; ướp lạnh trước khi uống.",
+    "origin": "Việt Nam",
+    "netWeightGram": 7920,
+    "nutrition": null
+  },
+  {
+    "id": "p-0042",
+    "description": "Ba rọi heo là phần thịt bụng có các lớp nạc và mỡ xen kẽ, khi nấu cho vị béo ngọt và mềm. Sản phẩm thịt heo tươi của C.P, bán theo ký, phù hợp cho nhiều món kho, chiên, nướng quen thuộc trong bữa cơm gia đình.",
+    "usage": "Gợi ý dùng: Thịt kho trứng, ba rọi chiên giòn, ba rọi nướng hoặc cuốn bánh tráng.",
+    "storage": "Bảo quản ngăn mát 0–4°C và dùng trong 1–2 ngày, hoặc cấp đông nếu chưa dùng ngay.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 260,
+      "protein": 16.5,
+      "fat": 21.5,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.2
+    }
+  },
+  {
+    "id": "p-0149",
+    "description": "Mì ăn liền Kokomi vị tôm chua cay chanh ớt dạng gói 75g, sợi mì dai kèm gói gia vị có vị chua cay đặc trưng. Chỉ cần chế nước sôi hoặc nấu vài phút là có ngay một bữa ăn nhanh gọn.",
+    "usage": "Gợi ý dùng: Nấu nước dùng thêm trứng, thêm rau cải và xúc xích, hoặc trộn khô ăn kèm.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát, tránh ánh nắng trực tiếp và nơi ẩm ướt.",
+    "origin": "Việt Nam",
+    "netWeightGram": 75,
+    "nutrition": null
+  },
+  {
+    "id": "p-0095",
+    "description": "Bia Sài Gòn Lager là dòng bia vàng quen thuộc của thương hiệu Sài Gòn, vị nhẹ, dễ uống. Set gồm 2 thùng, mỗi thùng 24 lon 330ml, tiện cho các buổi tụ họp, liên hoan hoặc dự trữ dùng dần.",
+    "usage": "Gợi ý dùng: Uống lạnh cùng đồ nướng, lẩu hoặc các món nhắm trong buổi tụ tập bạn bè.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh nắng; nên ướp lạnh trước khi uống.",
+    "origin": "Việt Nam",
+    "netWeightGram": 15840,
+    "nutrition": null
+  },
+  {
+    "id": "p-0041",
+    "description": "Chân giò heo nhập khẩu từ Đức, đóng túi 300g, phần thịt có da và gân nên khi nấu mềm và béo nhẹ. Chân giò thích hợp cho các món hầm, nấu canh hoặc luộc chấm mắm.",
+    "usage": "Gợi ý dùng: Hầm măng, nấu giò heo hầm đậu, hoặc luộc ăn kèm rau sống.",
+    "storage": "Bảo quản ngăn đông, rã đông trong ngăn mát trước khi chế biến và không cấp đông lại.",
+    "origin": "Đức",
+    "netWeightGram": 300,
+    "nutrition": {
+      "energy_kcal": 230,
+      "protein": 15.7,
+      "fat": 18.6,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.2
+    }
+  },
+  {
+    "id": "p-0148",
+    "description": "Mì 3 Miền Gold vị tôm chua cay đặc biệt, thùng gồm 30 gói 75g. Sợi mì vàng, nước dùng đậm vị chua cay kiểu tôm, thích hợp để dự trữ cho cả nhà hoặc phòng trọ.",
+    "usage": "Gợi ý dùng: Nấu mì nước thêm trứng và rau, hoặc nấu kèm hải sản, xúc xích.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát, tránh ánh nắng và ẩm.",
+    "origin": "Việt Nam",
+    "netWeightGram": 2250,
+    "nutrition": null
+  },
+  {
+    "id": "p-0094",
+    "description": "Bia Heineken 0.0 là dòng bia không cồn của Heineken, vị nhẹ và mang hương bia đặc trưng nhưng không có độ cồn. Set 2 thùng, mỗi thùng 24 lon 250ml, phù hợp cho người cần tránh rượu bia hoặc khi phải lái xe.",
+    "usage": "Gợi ý dùng: Uống lạnh trong bữa tiệc, kèm đồ nhắm hoặc khi đi chơi, picnic.",
+    "storage": "Để nơi khô ráo, thoáng mát; ướp lạnh trước khi uống ngon hơn.",
+    "origin": null,
+    "netWeightGram": 12000,
+    "nutrition": null
+  },
+  {
+    "id": "p-0040",
+    "description": "Chân giò heo nhập khẩu từ Đức, bán theo ký, gồm phần da, gân và thịt nên khi nấu có độ mềm dẻo và béo nhẹ. Thường dùng cho các món hầm, nấu lâu hoặc luộc.",
+    "usage": "Gợi ý dùng: Giò heo hầm, giò heo nấu giả cầy, hoặc luộc chấm mắm gừng.",
+    "storage": "Bảo quản ngăn đông; rã đông ngăn mát trước khi nấu, không cấp đông lại.",
+    "origin": "Đức",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 230,
+      "protein": 15.7,
+      "fat": 18.6,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.2
+    }
+  },
+  {
+    "id": "p-0147",
+    "description": "Mì 3 Miền Gold vị chua cay Thái, thùng 30 gói 75g. Nước dùng có vị chua cay theo kiểu Thái, sợi mì dai, là lựa chọn tiện lợi cho bữa ăn nhanh hằng ngày.",
+    "usage": "Gợi ý dùng: Nấu nước kèm trứng, thêm rau muống hoặc cải, hay thêm hải sản cho đậm vị.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát, tránh ẩm và nắng trực tiếp.",
+    "origin": "Việt Nam",
+    "netWeightGram": 2250,
+    "nutrition": null
+  },
+  {
+    "id": "p-0093",
+    "description": "Bia Tiger là thương hiệu bia lon quen thuộc với vị êm và hậu vị sảng khoái. Set 2 thùng, mỗi thùng 24 lon 250ml, tiện cho các buổi tiệc hoặc dự trữ.",
+    "usage": "Gợi ý dùng: Uống lạnh cùng đồ nướng, lẩu và các món nhắm trong buổi họp mặt.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh nắng; ướp lạnh trước khi uống.",
+    "origin": null,
+    "netWeightGram": 12000,
+    "nutrition": null
+  },
+  {
+    "id": "p-0200",
+    "description": "Cà phê Trung Nguyên Chế phin 1 là cà phê rang xay dạng bột, gói 500g, dùng pha bằng phin truyền thống. Hương cà phê đậm, thích hợp pha uống nóng hoặc cà phê đá hằng ngày.",
+    "usage": "Gợi ý dùng: Pha phin uống đen hoặc cà phê sữa đá, làm cà phê muối.",
+    "storage": "Đóng kín sau khi mở, để nơi khô ráo, thoáng mát, tránh ánh nắng và ẩm.",
+    "origin": "Việt Nam",
+    "netWeightGram": 500,
+    "nutrition": null
+  },
+  {
+    "id": "p-0039",
+    "description": "Sườn que heo nhập khẩu, gói 500g, được cắt thành từng que dài, phần thịt bám xương mềm và thơm khi nướng hoặc rim. Thích hợp cho bữa ăn gia đình hoặc buổi nướng ngoài trời.",
+    "usage": "Gợi ý dùng: Sườn nướng mật ong, sườn rim mặn ngọt, sườn nướng BBQ.",
+    "storage": "Bảo quản ngăn đông; rã đông trong ngăn mát trước khi chế biến và dùng ngay sau khi rã đông.",
+    "origin": null,
+    "netWeightGram": 500,
+    "nutrition": {
+      "energy_kcal": 277,
+      "protein": 15.5,
+      "fat": 23.4,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.2
+    }
+  },
+  {
+    "id": "p-0146",
+    "description": "Mì Kokomi vị tôm chua cay chanh ớt, thùng 30 gói 75g. Sợi mì dai kèm gói gia vị chua cay vừa miệng, tiện dự trữ cho bữa sáng hoặc bữa khuya.",
+    "usage": "Gợi ý dùng: Nấu mì nước thêm trứng, thêm rau cải, hoặc nấu kèm xúc xích.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát, tránh nắng và ẩm.",
+    "origin": "Việt Nam",
+    "netWeightGram": 2250,
+    "nutrition": null
+  },
+  {
+    "id": "p-0092",
+    "description": "Nước khoáng Vikoda đóng chai 500ml, thùng 24 chai, tiện mang theo và dùng hằng ngày. Thích hợp cho gia đình, văn phòng hoặc các buổi họp mặt đông người.",
+    "usage": "Gợi ý dùng: Uống trực tiếp, mang theo khi đi học, đi làm hoặc tập thể thao.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ánh nắng trực tiếp; dùng sớm sau khi mở nắp.",
+    "origin": "Việt Nam",
+    "netWeightGram": 12000,
+    "nutrition": null
+  },
+  {
+    "id": "p-0199",
+    "description": "Cà phê Trung Nguyên Nâu Sức sống đại ngàn là cà phê rang xay gói 500g, hương vị đậm đà theo kiểu cà phê truyền thống. Thích hợp pha phin hoặc pha máy.",
+    "usage": "Gợi ý dùng: Pha phin cà phê đen, cà phê sữa đá hoặc cà phê nóng buổi sáng.",
+    "storage": "Đóng kín sau khi mở, để nơi khô ráo, thoáng mát, tránh ánh nắng.",
+    "origin": "Việt Nam",
+    "netWeightGram": 500,
+    "nutrition": null
+  },
+  {
+    "id": "p-0038",
+    "description": "Thịt đùi heo C.P là phần thịt nạc nhiều, ít mỡ, bán theo ký. Thịt mềm vừa phải, dễ chế biến nên được dùng cho nhiều món xào, luộc, rang hoặc làm nhân.",
+    "usage": "Gợi ý dùng: Thịt luộc chấm mắm tôm, thịt rang cháy cạnh, xào hành tây.",
+    "storage": "Bảo quản ngăn mát 0–4°C và dùng trong 1–2 ngày, hoặc cấp đông nếu chưa dùng ngay.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 180,
+      "protein": 19,
+      "fat": 11,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.2
+    }
+  },
+  {
+    "id": "p-0145",
+    "description": "Mì Kokomi 90 vị tôm chua cay, thùng 30 gói, mỗi gói 90g có phần mì nhiều hơn loại thông thường. Nước dùng chua cay đậm vị, thích hợp cho bữa ăn no nhanh gọn.",
+    "usage": "Gợi ý dùng: Nấu mì nước thêm trứng, rau cải, hoặc trộn thêm chả cá, xúc xích.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát, tránh nắng và ẩm.",
+    "origin": "Việt Nam",
+    "netWeightGram": 2700,
+    "nutrition": null
+  },
+  {
+    "id": "p-0091",
+    "description": "Nước khoáng Vikoda chai 1.5 lít, thùng 12 chai, dung tích lớn tiện cho gia đình dùng hằng ngày. Có thể dùng uống trực tiếp hoặc pha cùng đồ uống khác.",
+    "usage": "Gợi ý dùng: Uống hằng ngày, pha trà hoặc cà phê, mang theo khi đi dã ngoại.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh nắng; đậy kín nắp sau khi mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 18000,
+    "nutrition": null
+  },
+  {
+    "id": "p-0198",
+    "description": "Cà phê Trung Nguyên Sáng tạo 3 là cà phê rang xay gói 340g, hương vị cân bằng giữa đắng và thơm, phù hợp pha phin hoặc pha máy tại nhà.",
+    "usage": "Gợi ý dùng: Pha phin, cà phê sữa đá, hoặc cà phê đen nóng.",
+    "storage": "Đóng kín sau khi mở, để nơi khô ráo, thoáng mát, tránh ánh nắng.",
+    "origin": "Việt Nam",
+    "netWeightGram": 340,
+    "nutrition": null
+  },
+  {
+    "id": "p-0037",
+    "description": "Thịt đùi heo C.P đóng khay 300g, phần thịt nạc nhiều, tiện cho bữa ăn nhỏ của 2–3 người. Thịt dễ chế biến, phù hợp cho nhiều món xào, luộc và rang.",
+    "usage": "Gợi ý dùng: Thịt rang tiêu, thịt luộc cuốn rau, xào rau củ.",
+    "storage": "Bảo quản ngăn mát 0–4°C và dùng trong ngày hoặc ngày hôm sau, cấp đông nếu chưa dùng.",
+    "origin": "Việt Nam",
+    "netWeightGram": 300,
+    "nutrition": {
+      "energy_kcal": 180,
+      "protein": 19,
+      "fat": 11,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.2
+    }
+  },
+  {
+    "id": "p-0144",
+    "description": "Mì khoai tây Cung Đình dạng ly, vị lẩu tôm chua cay, mỗi ly 65g. Sợi mì làm từ khoai tây, chỉ cần chế nước sôi là dùng được, tiện cho bữa ăn nhanh ở phòng trọ hoặc văn phòng. Thùng gồm 24 ly.",
+    "usage": "Gợi ý dùng: Chế nước sôi ăn liền, thêm trứng hoặc xúc xích cho đủ bữa.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát, tránh ẩm và nắng trực tiếp.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1560,
+    "nutrition": null
+  },
+  {
+    "id": "p-0090",
+    "description": "Nước uống i-on kiềm Ocany chai 1.5 lít, thùng 12 chai. Là nước uống đóng chai có tính kiềm, tiện cho gia đình và văn phòng dùng hằng ngày.",
+    "usage": "Gợi ý dùng: Uống hằng ngày, mang theo khi đi làm hoặc tập thể thao.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ánh nắng; đậy kín nắp sau khi mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 18000,
+    "nutrition": null
+  },
+  {
+    "id": "p-0197",
+    "description": "Cà phê Trung Nguyên Sáng tạo 5 là cà phê rang xay gói 340g, hương thơm rõ và vị đậm vừa, thích hợp pha phin hoặc pha máy.",
+    "usage": "Gợi ý dùng: Pha phin uống đen, cà phê sữa đá hoặc cà phê nóng buổi sáng.",
+    "storage": "Đóng kín sau khi mở, để nơi khô ráo, thoáng mát, tránh ánh nắng.",
+    "origin": "Việt Nam",
+    "netWeightGram": 340,
+    "nutrition": null
+  },
+  {
+    "id": "p-0036",
+    "description": "Xương heo có thịt C.P đóng khay 300g, phần xương còn dính thịt, khi hầm cho nước ngọt thanh. Là nguyên liệu quen thuộc để nấu nước dùng và canh.",
+    "usage": "Gợi ý dùng: Nấu canh rau củ, hầm nước dùng hủ tiếu, hầm cháo.",
+    "storage": "Bảo quản ngăn mát và dùng sớm, hoặc cấp đông nếu chưa dùng.",
+    "origin": "Việt Nam",
+    "netWeightGram": 300,
+    "nutrition": null
+  },
+  {
+    "id": "p-0143",
+    "description": "Mì Quen hương vị canh chua tôm gói 63g, sợi mì nhỏ, nước dùng có vị chua nhẹ kiểu canh chua. Chế biến nhanh trong vài phút cho bữa ăn tiện lợi.",
+    "usage": "Gợi ý dùng: Nấu mì nước thêm trứng, rau thơm và cà chua, hoặc kèm tôm.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát, tránh ánh nắng và ẩm.",
+    "origin": null,
+    "netWeightGram": 63,
+    "nutrition": null
+  },
+  {
+    "id": "p-0089",
+    "description": "Nước kiềm có khoáng La Vie + chai 500ml, thùng 24 chai. Là nước uống đóng chai tiện dùng hằng ngày, dễ mang theo khi đi học, đi làm.",
+    "usage": "Gợi ý dùng: Uống trực tiếp, mang theo khi tập thể thao hoặc đi chơi.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ánh nắng trực tiếp.",
+    "origin": "Việt Nam",
+    "netWeightGram": 12000,
+    "nutrition": null
+  },
+  {
+    "id": "p-0196",
+    "description": "Cà phê Mê Trang Robusta gói 500g, loại cà phê rang xay có vị đậm, đắng rõ và hương mạnh đặc trưng của giống Robusta. Thích hợp pha phin theo kiểu truyền thống.",
+    "usage": "Gợi ý dùng: Pha phin cà phê đen, cà phê sữa đá, hoặc cà phê nóng.",
+    "storage": "Đóng kín sau khi mở, để nơi khô ráo, thoáng mát, tránh ánh nắng.",
+    "origin": "Việt Nam",
+    "netWeightGram": 500,
+    "nutrition": null
+  },
+  {
+    "id": "p-0035",
+    "description": "Xương heo có thịt C.P bán theo ký, phần xương còn dính thịt, thường dùng để ninh lấy nước ngọt cho các món nước. Dễ chế biến và phù hợp cho bữa cơm gia đình.",
+    "usage": "Gợi ý dùng: Nấu canh củ quả, hầm nước lẩu, nấu bún hoặc hủ tiếu.",
+    "storage": "Bảo quản ngăn mát và dùng sớm, hoặc cấp đông nếu chưa dùng.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1000,
+    "nutrition": null
+  },
+  {
+    "id": "p-0142",
+    "description": "Mì Quen hương vị canh chua tôm, thùng 30 gói, mỗi gói 63g. Nước dùng chua nhẹ, sợi mì nhỏ, tiện cho bữa ăn nhanh và dự trữ trong nhà.",
+    "usage": "Gợi ý dùng: Nấu mì nước thêm trứng, rau cải hoặc cà chua.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát, tránh ánh nắng và ẩm.",
+    "origin": null,
+    "netWeightGram": 1890,
+    "nutrition": null
+  },
+  {
+    "id": "p-0088",
+    "description": "Nước khoáng La Vie vị dịu nhẹ dạng bình 5 lít, thùng 4 bình. Dung tích lớn, phù hợp cho gia đình hoặc văn phòng dùng với bình đựng hoặc máy lấy nước.",
+    "usage": "Gợi ý dùng: Uống hằng ngày, nấu ăn, pha trà hoặc cà phê.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh nắng; đậy kín nắp sau khi mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 20000,
+    "nutrition": null
+  },
+  {
+    "id": "p-0195",
+    "description": "Cà phê rang xay Phương Vy Moka gói 500g, mang hương thơm nhẹ và vị dịu đặc trưng của dòng Moka. Thích hợp pha phin hoặc pha máy tại nhà.",
+    "usage": "Gợi ý dùng: Pha phin, cà phê sữa đá hoặc cà phê nóng.",
+    "storage": "Đóng kín sau khi mở, để nơi khô ráo, thoáng mát, tránh ánh nắng.",
+    "origin": "Việt Nam",
+    "netWeightGram": 500,
+    "nutrition": null
+  },
+  {
+    "id": "p-0034",
+    "description": "Chân giò heo C.P đóng túi 300g, gồm da, gân và thịt nên khi nấu mềm dẻo và béo nhẹ. Phù hợp cho các món hầm, luộc hoặc kho.",
+    "usage": "Gợi ý dùng: Hầm măng, kho tiêu, luộc chấm mắm gừng.",
+    "storage": "Bảo quản ngăn mát và dùng sớm, hoặc cấp đông nếu chưa dùng.",
+    "origin": "Việt Nam",
+    "netWeightGram": 300,
+    "nutrition": {
+      "energy_kcal": 230,
+      "protein": 15.7,
+      "fat": 18.6,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.2
+    }
+  },
+  {
+    "id": "p-0141",
+    "description": "Mì cay Koreno Jumbo vị chua cay, lốc 10 gói, mỗi gói 101g với phần mì lớn. Nước dùng cay theo nhiều cấp độ, hợp với người thích ăn cay.",
+    "usage": "Gợi ý dùng: Nấu mì cay kiểu Hàn với trứng, xúc xích, phô mai hoặc kim chi.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát, tránh ánh nắng và ẩm.",
+    "origin": null,
+    "netWeightGram": 1010,
+    "nutrition": null
+  },
+  {
+    "id": "p-0087",
+    "description": "Nước khoáng La Vie dạng bình 5 lít, thùng 4 bình. Dung tích lớn, tiện cho gia đình hoặc văn phòng dùng hằng ngày.",
+    "usage": "Gợi ý dùng: Uống hằng ngày, nấu ăn, pha trà hoặc cà phê.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh nắng; đậy kín nắp sau khi mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 20000,
+    "nutrition": null
+  },
+  {
+    "id": "p-0194",
+    "description": "Cà phê sữa hòa tan MacCoffee Café Phố 3in1 loại nhà làm, bịch 840g, gồm cà phê, đường và bột kem sẵn trong từng gói nhỏ. Chỉ cần pha với nước nóng hoặc nước lạnh và đá là dùng được.",
+    "usage": "Gợi ý dùng: Pha nóng buổi sáng, pha cà phê sữa đá, làm đá xay cà phê.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát; gói đã mở nên dùng sớm và đóng kín.",
+    "origin": "Việt Nam",
+    "netWeightGram": 840,
+    "nutrition": null
+  },
+  {
+    "id": "p-0033",
+    "description": "Chân giò heo C.P bán theo ký, phần thịt có da và gân, mềm dẻo khi hầm. Là nguyên liệu quen thuộc trong nhiều món hầm, kho và luộc.",
+    "usage": "Gợi ý dùng: Giò heo hầm măng, giò heo kho tiêu, luộc ăn với rau sống.",
+    "storage": "Bảo quản ngăn mát và dùng trong 1–2 ngày, hoặc cấp đông nếu chưa dùng.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 230,
+      "protein": 15.7,
+      "fat": 18.6,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.2
+    }
+  },
+  {
+    "id": "p-0140",
+    "description": "Xúc xích tiệt trùng Oh Teen vị heo của LC Foods, dạng cây 65g, ăn được ngay không cần nấu. Tiện lợi cho bữa ăn nhẹ hoặc mang theo đi học, đi chơi.",
+    "usage": "Gợi ý dùng: Ăn trực tiếp, chiên sơ, hoặc ăn kèm bánh mì và mì gói.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát; sau khi mở nên dùng ngay hoặc để ngăn mát.",
+    "origin": "Việt Nam",
+    "netWeightGram": 65,
+    "nutrition": null
+  },
+  {
+    "id": "p-0086",
+    "description": "Nước khoáng La Vie chai 1.5 lít, thùng 12 chai. Phù hợp cho gia đình dùng hằng ngày hoặc mang theo khi đi dã ngoại.",
+    "usage": "Gợi ý dùng: Uống hằng ngày, mang theo khi đi chơi, pha đồ uống.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh nắng; đậy kín nắp sau khi mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 18000,
+    "nutrition": null
+  },
+  {
+    "id": "p-0193",
+    "description": "Cà phê muối Ông Bầu hộp 220g, dạng cà phê hòa tan pha sẵn theo phong cách cà phê muối, có vị đắng nhẹ, béo và mặn nhẹ ở hậu vị.",
+    "usage": "Gợi ý dùng: Pha nóng hoặc pha lạnh với đá, uống buổi sáng hoặc chiều.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát; đóng kín sau khi mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 220,
+    "nutrition": null
+  },
+  {
+    "id": "p-0032",
+    "description": "Cherry nhập khẩu từ Canada, hộp 250g, quả size 9–10 mọng nước, vị ngọt xen chút chua nhẹ. Thường dùng để ăn trực tiếp hoặc trang trí món tráng miệng.",
+    "usage": "Gợi ý dùng: Ăn trực tiếp, làm sinh tố, trang trí bánh kem hoặc salad trái cây.",
+    "storage": "Bảo quản ngăn mát, không rửa trước khi cất; nên dùng trong vài ngày.",
+    "origin": "Canada",
+    "netWeightGram": 250,
+    "nutrition": {
+      "energy_kcal": 63,
+      "protein": 1.1,
+      "fat": 0.2,
+      "carbohydrates": 16,
+      "sugars": 12.8,
+      "fiber": 2.1,
+      "salt": 0
+    }
+  },
+  {
+    "id": "p-0139",
+    "description": "Xúc xích heo tiệt trùng LC Foods, gói 200g gồm 5 cây, ăn được ngay hoặc chế biến thêm. Tiện cho bữa sáng, đồ ăn nhẹ hoặc thêm vào món mì.",
+    "usage": "Gợi ý dùng: Chiên sơ, ăn kèm bánh mì, thêm vào mì gói hoặc cơm chiên.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát; sau khi mở nên cất ngăn mát và dùng sớm.",
+    "origin": "Việt Nam",
+    "netWeightGram": 200,
+    "nutrition": null
+  },
+  {
+    "id": "p-0085",
+    "description": "Nước khoáng La Vie vị dịu nhẹ chai 1.5 lít, thùng 12 chai. Phù hợp dùng hằng ngày cho cả gia đình.",
+    "usage": "Gợi ý dùng: Uống hằng ngày, mang theo khi đi chơi, pha trà hoặc cà phê.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh nắng; đậy kín nắp sau khi mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 18000,
+    "nutrition": null
+  },
+  {
+    "id": "p-0192",
+    "description": "Cà phê sữa Wake Up Café Sài Gòn bịch 456g, dạng hòa tan gồm cà phê, đường và bột kem trong từng gói nhỏ. Hương cà phê thơm, vị ngọt béo, pha nhanh chỉ với nước nóng.",
+    "usage": "Gợi ý dùng: Pha nóng buổi sáng, pha lạnh với đá, làm cà phê đá xay.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát; đóng kín gói đã mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 456,
+    "nutrition": null
+  },
+  {
+    "id": "p-0031",
+    "description": "Mận róc hạt, túi 500g, quả có vị ngọt và chua nhẹ, thịt quả mọng nước và hạt dễ tách khỏi thịt. Thường dùng ăn tươi hoặc làm món tráng miệng.",
+    "usage": "Gợi ý dùng: Ăn trực tiếp, làm sinh tố, ngâm đường hoặc làm mứt.",
+    "storage": "Bảo quản ngăn mát, dùng trong vài ngày; rửa trước khi ăn.",
+    "origin": "Trung Quốc",
+    "netWeightGram": 500,
+    "nutrition": {
+      "energy_kcal": 46,
+      "protein": 0.7,
+      "fat": 0.3,
+      "carbohydrates": 11.4,
+      "sugars": 9.9,
+      "fiber": 1.4,
+      "salt": 0
+    }
+  },
+  {
+    "id": "p-0138",
+    "description": "Xúc xích heo dinh dưỡng Bin & Bon Ponnie dạng cây 60g, ăn được ngay, kích thước nhỏ gọn phù hợp cho trẻ và người đi học, đi làm. Tiện làm bữa phụ.",
+    "usage": "Gợi ý dùng: Ăn trực tiếp, chiên sơ, kèm bánh mì hoặc cơm hộp.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát; sau khi mở nên dùng ngay hoặc cất ngăn mát.",
+    "origin": null,
+    "netWeightGram": 60,
+    "nutrition": null
+  },
+  {
+    "id": "p-0084",
+    "description": "Nước khoáng La Vie vị dịu nhẹ chai 500ml, thùng 24 chai. Chai nhỏ gọn, dễ mang theo khi đi học, đi làm.",
+    "usage": "Gợi ý dùng: Uống trực tiếp, mang theo khi tập thể thao hoặc đi chơi.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ánh nắng trực tiếp.",
+    "origin": "Việt Nam",
+    "netWeightGram": 12000,
+    "nutrition": null
+  },
+  {
+    "id": "p-0191",
+    "description": "Cà phê sữa MacCoffee Café Phố Gold 3in1 bịch 870g, gồm cà phê, đường và bột kem trong từng gói nhỏ. Hương cà phê đậm hơn dòng thường, pha nhanh với nước nóng hoặc nước lạnh.",
+    "usage": "Gợi ý dùng: Pha nóng buổi sáng, pha cà phê sữa đá, làm đá xay.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát; đóng kín gói đã mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 870,
+    "nutrition": null
+  },
+  {
+    "id": "p-0030",
+    "description": "Lê đường nội địa Trung Quốc, bán theo túi 1kg, mỗi trái từ 200g. Quả giòn, mọng nước, vị ngọt thanh, thích hợp ăn tươi hoặc nấu món giải khát.",
+    "usage": "Gợi ý dùng: Ăn trực tiếp, chưng đường phèn, nấu nước lê táo đỏ.",
+    "storage": "Bảo quản ngăn mát hoặc nơi thoáng mát; rửa sạch trước khi ăn.",
+    "origin": "Trung Quốc",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 57,
+      "protein": 0.4,
+      "fat": 0.1,
+      "carbohydrates": 15.2,
+      "sugars": 9.8,
+      "fiber": 3.1,
+      "salt": 0
+    }
+  },
+  {
+    "id": "p-0137",
+    "description": "Xúc xích C.P dòng Five Star Red đóng gói 200g, gồm 5 cây nhỏ, mỗi cây khoảng 40g. Sản phẩm đã chế biến sẵn, vị đậm đà, thịt mềm dai, tiện cho bữa sáng nhanh hoặc món ăn vặt.",
+    "usage": "Gợi ý dùng: Chiên hoặc nướng ăn kèm bánh mì, cắt khúc xào cơm chiên, hoặc thả vào mì gói.",
+    "storage": "Bảo quản đông lạnh, sau khi rã đông nên chế biến sớm và không cấp đông lại.",
+    "origin": "Việt Nam",
+    "netWeightGram": 200,
+    "nutrition": null
+  },
+  {
+    "id": "p-0083",
+    "description": "Thùng gồm 24 chai nước khoáng La Vie dung tích 350ml, kích thước nhỏ gọn dễ mang theo. Nước khoáng đóng chai có vị thanh nhẹ, phù hợp uống hằng ngày ở nhà, văn phòng hay khi đi học.",
+    "usage": "Gợi ý dùng: Uống trực tiếp, mang theo khi đi học, tiếp khách hoặc dùng trong sự kiện nhỏ.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ánh nắng trực tiếp; nên uống hết sớm sau khi mở nắp.",
+    "origin": "Việt Nam",
+    "netWeightGram": 8400,
+    "nutrition": null
+  },
+  {
+    "id": "p-0190",
+    "description": "Cà phê hòa tan NesCafé 3 in 1 vị đậm đà hài hòa, gồm cà phê, đường và bột kem được phối sẵn trong từng gói nhỏ. Chỉ cần pha với nước nóng là có ngay ly cà phê sữa thơm, vị cân bằng giữa đắng và ngọt. Bịch lớn 736g phù hợp dùng lâu dài cho gia đình hoặc văn phòng.",
+    "usage": "Gợi ý dùng: Pha cà phê sữa nóng buổi sáng, pha với đá thành cà phê sữa đá, hoặc khuấy vào sữa tươi.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát; sau khi mở bịch nên buộc kín để tránh ẩm.",
+    "origin": null,
+    "netWeightGram": 736,
+    "nutrition": null
+  },
+  {
+    "id": "p-0029",
+    "description": "Lê đường nội địa Trung Quốc có vỏ vàng nhạt, thịt giòn, mọng nước và vị ngọt thanh dễ ăn. Trái từ 200g trở lên, bán theo ký, thích hợp ăn tươi hoặc nấu nước giải nhiệt.",
+    "usage": "Gợi ý dùng: Ăn tươi tráng miệng, nấu nước lê đường phèn, ép nước hoặc làm salad trái cây.",
+    "storage": "Bảo quản ngăn mát tủ lạnh, tránh va đập; nên dùng trong vài ngày để giữ độ giòn.",
+    "origin": "Trung Quốc",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 57,
+      "protein": 0.4,
+      "fat": 0.1,
+      "carbohydrates": 15.2,
+      "sugars": 9.8,
+      "fiber": 3.1,
+      "salt": 0
+    }
+  },
+  {
+    "id": "p-0136",
+    "description": "Combo 5 túi gạo thơm lài, mỗi túi 5kg, tổng cộng 25kg. Gạo thơm lài cho hạt cơm dẻo vừa, mềm và có mùi thơm nhẹ đặc trưng, phù hợp bữa cơm hằng ngày của gia đình. Mua combo giúp tích trữ tiện lợi và tiết kiệm hơn.",
+    "usage": "Gợi ý dùng: Nấu cơm trắng, nấu cơm chiên, nấu cháo.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ẩm và côn trùng; buộc kín túi sau khi mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 25000,
+    "nutrition": {
+      "energy_kcal": 360,
+      "protein": 7,
+      "fat": 0.6,
+      "carbohydrates": 79,
+      "sugars": 0.1,
+      "fiber": 1.3,
+      "salt": 0.01
+    }
+  },
+  {
+    "id": "p-0082",
+    "description": "Thùng 24 chai nước tinh khiết Dasani, mỗi chai 510ml, vừa tay cầm để mang theo. Nước đã qua xử lý lọc, vị trung tính, dễ uống trong sinh hoạt hằng ngày.",
+    "usage": "Gợi ý dùng: Uống hằng ngày, mang theo khi đi học và đi làm, chuẩn bị cho họp mặt hoặc dã ngoại.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ánh nắng trực tiếp; đã mở nắp nên uống trong ngày.",
+    "origin": null,
+    "netWeightGram": 12240,
+    "nutrition": null
+  },
+  {
+    "id": "p-0189",
+    "description": "Cà phê hòa tan NesCafé 3 in 1 vị đậm vị cà phê, phối sẵn cà phê, đường và bột kem trong từng gói nhỏ. Hương cà phê rõ hơn, phù hợp người thích ly cà phê sữa đậm. Bịch 736g đủ dùng cho nhiều lần pha.",
+    "usage": "Gợi ý dùng: Pha cà phê sữa nóng, pha cà phê sữa đá, hoặc làm cà phê đá xay đơn giản.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát; sau khi mở bịch nên buộc kín để tránh ẩm.",
+    "origin": null,
+    "netWeightGram": 736,
+    "nutrition": null
+  },
+  {
+    "id": "p-0028",
+    "description": "Quýt giống Úc trồng tại Trung Quốc, đóng túi 800g tiện mua cho gia đình. Trái có vỏ mỏng dễ bóc, múi mọng nước và vị ngọt xen chút chua nhẹ.",
+    "usage": "Gợi ý dùng: Ăn tươi, vắt lấy nước uống, hoặc làm đĩa trái cây tiếp khách.",
+    "storage": "Bảo quản nơi thoáng mát hoặc ngăn mát tủ lạnh; loại bỏ trái dập để tránh làm hỏng cả túi.",
+    "origin": "Trung Quốc",
+    "netWeightGram": 800,
+    "nutrition": {
+      "energy_kcal": 53,
+      "protein": 0.8,
+      "fat": 0.3,
+      "carbohydrates": 13.3,
+      "sugars": 10.6,
+      "fiber": 1.8,
+      "salt": 0
+    }
+  },
+  {
+    "id": "p-0135",
+    "description": "Gồm 4 túi gạo thơm đặc sản Neptune ST25, mỗi túi 5kg, tổng 20kg. ST25 là giống gạo thơm nổi tiếng của Việt Nam, cho cơm dẻo, mềm và thơm nhẹ. Phù hợp gia đình dùng lâu hoặc mua làm quà.",
+    "usage": "Gợi ý dùng: Nấu cơm trắng, cơm cuộn, hoặc ăn kèm món kho, món canh.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ẩm; đậy kín hoặc buộc chặt túi sau khi mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 20000,
+    "nutrition": {
+      "energy_kcal": 360,
+      "protein": 7,
+      "fat": 0.6,
+      "carbohydrates": 79,
+      "sugars": 0.1,
+      "fiber": 1.3,
+      "salt": 0.01
+    }
+  },
+  {
+    "id": "p-0081",
+    "description": "Combo 3 thùng nước khoáng La Vie vị dịu nhẹ, mỗi thùng 24 chai 500ml, tổng 72 chai. Nước khoáng có vị thanh, dễ uống, thích hợp dự trữ cho gia đình, văn phòng hoặc ký túc xá.",
+    "usage": "Gợi ý dùng: Uống hằng ngày, tiếp khách, mang theo khi di chuyển.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ánh nắng trực tiếp; nên uống hết sớm sau khi mở nắp.",
+    "origin": "Việt Nam",
+    "netWeightGram": 36000,
+    "nutrition": null
+  },
+  {
+    "id": "p-0188",
+    "description": "Combo 4 gói bánh xếp (mandu) Hàn Quốc nhân thịt thương hiệu Bibigo, mỗi gói 175g. Bánh đông lạnh sẵn, vỏ mỏng, nhân thịt đậm vị, chế biến chỉ vài phút.",
+    "usage": "Gợi ý dùng: Hấp, chiên áp chảo, hoặc cho vào canh và lẩu.",
+    "storage": "Bảo quản ngăn đông; sau khi mở gói nên dùng sớm và không cấp đông lại.",
+    "origin": null,
+    "netWeightGram": 700,
+    "nutrition": null
+  },
+  {
+    "id": "p-0027",
+    "description": "Chuối già giống Nam Mỹ đóng túi 1kg, mỗi trái khoảng 120-220g. Chuối có thịt chắc, vị ngọt đậm và thơm, dễ ăn, thích hợp làm bữa phụ hoặc bữa sáng nhanh.",
+    "usage": "Gợi ý dùng: Ăn tươi, xay sinh tố, làm bánh chuối.",
+    "storage": "Để nơi thoáng mát, tránh ánh nắng; không nên cho vào tủ lạnh khi chuối chưa chín.",
+    "origin": null,
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 89,
+      "protein": 1.1,
+      "fat": 0.3,
+      "carbohydrates": 22.8,
+      "sugars": 12.2,
+      "fiber": 2.6,
+      "salt": 0
+    }
+  },
+  {
+    "id": "p-0134",
+    "description": "Bộ 5 túi gạo thơm lài, mỗi túi 5kg, tổng 25kg. Hạt gạo cho cơm dẻo vừa, thơm nhẹ, hợp bữa cơm gia đình hằng ngày.",
+    "usage": "Gợi ý dùng: Nấu cơm trắng, cơm chiên, cháo.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ẩm và côn trùng; buộc kín túi sau khi mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 25000,
+    "nutrition": {
+      "energy_kcal": 360,
+      "protein": 7,
+      "fat": 0.6,
+      "carbohydrates": 79,
+      "sugars": 0.1,
+      "fiber": 1.3,
+      "salt": 0.01
+    }
+  },
+  {
+    "id": "p-0080",
+    "description": "Thùng 48 hộp sữa lúa mạch Milo ít đường, mỗi hộp 180ml. Thức uống kết hợp sữa và lúa mạch, vị béo nhẹ, ít ngọt hơn bản thông thường. Hộp nhỏ tiện mang theo đi học, đi làm.",
+    "usage": "Gợi ý dùng: Uống lạnh làm bữa sáng, uống sau khi vận động, hoặc mang theo làm bữa phụ.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát; sau khi mở hộp nên uống hết ngay.",
+    "origin": null,
+    "netWeightGram": 8640,
+    "nutrition": null
+  },
+  {
+    "id": "p-0187",
+    "description": "Combo 4 gói bánh xếp nhân hải sản thương hiệu Bibigo, mỗi gói 175g. Bánh đông lạnh, vỏ mỏng, nhân hải sản thơm, nấu nhanh chỉ trong vài phút.",
+    "usage": "Gợi ý dùng: Hấp, chiên áp chảo, hoặc nấu canh bánh xếp.",
+    "storage": "Bảo quản ngăn đông; sau khi mở gói nên dùng sớm và không cấp đông lại.",
+    "origin": null,
+    "netWeightGram": 700,
+    "nutrition": null
+  },
+  {
+    "id": "p-0133",
+    "description": "Bộ 5 túi gạo nở xốp, mỗi túi 5kg, tổng 25kg. Gạo khi nấu cho cơm nở nhiều, tơi và xốp, thích hợp nấu số lượng lớn hoặc nấu cơm chiên.",
+    "usage": "Gợi ý dùng: Nấu cơm trắng, cơm chiên, cơm cho quán ăn hoặc bữa tiệc.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ẩm và côn trùng; buộc kín túi sau khi mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 25000,
+    "nutrition": {
+      "energy_kcal": 360,
+      "protein": 7,
+      "fat": 0.6,
+      "carbohydrates": 79,
+      "sugars": 0.1,
+      "fiber": 1.3,
+      "salt": 0.01
+    }
+  },
+  {
+    "id": "p-0186",
+    "description": "Xúc xích xông khói WYN HOTTT thương hiệu G Kitchen, gói 450g. Xúc xích có hương xông khói đặc trưng, thịt mềm, đã chế biến sẵn nên dùng rất tiện.",
+    "usage": "Gợi ý dùng: Chiên hoặc nướng ăn kèm bánh mì, làm hotdog, xào cơm chiên.",
+    "storage": "Bảo quản đông lạnh; sau khi rã đông nên dùng sớm và không cấp đông lại.",
+    "origin": null,
+    "netWeightGram": 450,
+    "nutrition": null
+  },
+  {
+    "id": "p-0025",
+    "description": "Dưa hấu đỏ bán theo ký, ruột đỏ, mọng nước, vị ngọt mát. Đây là loại trái cây giải khát quen thuộc, đặc biệt hợp những ngày nóng.",
+    "usage": "Gợi ý dùng: Ăn tươi, ép nước, xay sinh tố.",
+    "storage": "Để nơi thoáng mát khi còn nguyên trái; đã cắt thì bọc kín và bảo quản ngăn mát, dùng trong 1-2 ngày.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 30,
+      "protein": 0.6,
+      "fat": 0.2,
+      "carbohydrates": 7.6,
+      "sugars": 6.2,
+      "fiber": 0.4,
+      "salt": 0
+    }
+  },
+  {
+    "id": "p-0078",
+    "description": "Thùng 48 bịch sữa dinh dưỡng có đường của Vinamilk, mỗi bịch 220ml. Sữa có vị ngọt béo nhẹ, dễ uống, phù hợp mọi lứa tuổi.",
+    "usage": "Gợi ý dùng: Uống lạnh làm bữa sáng, mang theo làm bữa phụ, hoặc dùng cho trẻ em.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát; sau khi mở bịch nên uống hết ngay.",
+    "origin": "Việt Nam",
+    "netWeightGram": 10560,
+    "nutrition": null
+  },
+  {
+    "id": "p-0185",
+    "description": "Xúc xích phô mai cheesy của Đức Việt, gói 250g. Xúc xích có nhân phô mai béo, thịt mềm, đã chế biến sẵn nên rất tiện.",
+    "usage": "Gợi ý dùng: Chiên hoặc nướng ăn kèm bánh mì, làm hotdog, ăn vặt.",
+    "storage": "Bảo quản đông lạnh hoặc ngăn mát theo hướng dẫn trên bao bì; sau khi mở gói nên dùng sớm.",
+    "origin": "Việt Nam",
+    "netWeightGram": 250,
+    "nutrition": null
+  },
+  {
+    "id": "p-0024",
+    "description": "Táo Gala mini đóng túi 800g, trái nhỏ nhắn, vỏ đỏ vàng. Thịt táo giòn, ngọt dịu, thơm nhẹ, tiện ăn cả trái hoặc cho trẻ em.",
+    "usage": "Gợi ý dùng: Ăn tươi, làm salad trái cây, ép nước.",
+    "storage": "Bảo quản ngăn mát tủ lạnh để giữ độ giòn; rửa sạch trước khi ăn.",
+    "origin": null,
+    "netWeightGram": 800,
+    "nutrition": {
+      "energy_kcal": 52,
+      "protein": 0.3,
+      "fat": 0.2,
+      "carbohydrates": 13.8,
+      "sugars": 10.4,
+      "fiber": 2.4,
+      "salt": 0
+    }
+  },
+  {
+    "id": "p-0131",
+    "description": "Bộ 5 túi gạo thơm Neptune ST25+ Extra, mỗi túi 5kg, tổng 25kg. Gạo cho cơm dẻo, mềm và có mùi thơm nhẹ, phù hợp bữa cơm gia đình hằng ngày.",
+    "usage": "Gợi ý dùng: Nấu cơm trắng, cơm cuộn, cháo.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ẩm; buộc kín túi sau khi mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 25000,
+    "nutrition": {
+      "energy_kcal": 360,
+      "protein": 7,
+      "fat": 0.6,
+      "carbohydrates": 79,
+      "sugars": 0.1,
+      "fiber": 1.3,
+      "salt": 0.01
+    }
+  },
+  {
+    "id": "p-0077",
+    "description": "Thùng 48 hộp sữa lúa mạch Milo, mỗi hộp 180ml. Thức uống kết hợp sữa và lúa mạch, vị béo ngọt, quen thuộc với trẻ em và học sinh, sinh viên.",
+    "usage": "Gợi ý dùng: Uống lạnh vào bữa sáng, uống sau khi vận động, mang theo làm bữa phụ.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát; sau khi mở hộp nên uống hết ngay.",
+    "origin": null,
+    "netWeightGram": 8640,
+    "nutrition": null
+  },
+  {
+    "id": "p-0184",
+    "description": "Xúc xích Yummy của La Cusina, gói 200g. Xúc xích đã chế biến sẵn, vị vừa ăn, thịt mềm, hợp bữa sáng hoặc món ăn vặt.",
+    "usage": "Gợi ý dùng: Chiên ăn kèm bánh mì, nướng, xào cơm chiên.",
+    "storage": "Bảo quản đông lạnh hoặc ngăn mát theo hướng dẫn trên bao bì; sau khi mở gói nên dùng sớm.",
+    "origin": "Việt Nam",
+    "netWeightGram": 200,
+    "nutrition": null
+  },
+  {
+    "id": "p-0023",
+    "description": "Cam sành bán theo ký, trái từ 130g trở lên. Vỏ xanh hơi sần, múi mọng nước, vị ngọt xen chua nhẹ, thơm đặc trưng.",
+    "usage": "Gợi ý dùng: Vắt lấy nước cam, ăn tươi, làm đồ uống giải khát.",
+    "storage": "Để nơi thoáng mát hoặc ngăn mát tủ lạnh; nước cam vắt xong nên uống ngay.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 47,
+      "protein": 0.9,
+      "fat": 0.1,
+      "carbohydrates": 11.8,
+      "sugars": 9.4,
+      "fiber": 2.4,
+      "salt": 0
+    }
+  },
+  {
+    "id": "p-0130",
+    "description": "Gạo thơm lài đóng túi 5kg, hạt gạo cho cơm dẻo vừa, mềm và thơm nhẹ. Phù hợp bữa cơm hằng ngày của gia đình.",
+    "usage": "Gợi ý dùng: Nấu cơm trắng, cơm chiên, cháo.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ẩm và côn trùng; buộc kín túi sau khi mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 5000,
+    "nutrition": {
+      "energy_kcal": 360,
+      "protein": 7,
+      "fat": 0.6,
+      "carbohydrates": 79,
+      "sugars": 0.1,
+      "fiber": 1.3,
+      "salt": 0.01
+    }
+  },
+  {
+    "id": "p-0076",
+    "description": "Thùng 24 bịch sữa dinh dưỡng ít đường của Dutch Lady, mỗi bịch 180ml. Sữa có vị béo nhẹ, ít ngọt, phù hợp uống hằng ngày.",
+    "usage": "Gợi ý dùng: Uống lạnh vào bữa sáng, làm bữa phụ, hoặc dùng cho trẻ em.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát; sau khi mở bịch nên uống hết ngay.",
+    "origin": "Việt Nam",
+    "netWeightGram": 4320,
+    "nutrition": null
+  },
+  {
+    "id": "p-0183",
+    "description": "Dồi sụn thượng hạng của LC FOODS, gói 500g. Dồi có sụn giòn sần sật xen thịt mềm, vị đậm đà, đã chế biến sẵn.",
+    "usage": "Gợi ý dùng: Chiên hoặc nướng ăn kèm rau sống, làm món nhậu, ăn với bún.",
+    "storage": "Bảo quản đông lạnh; sau khi rã đông nên dùng sớm và không cấp đông lại.",
+    "origin": "Việt Nam",
+    "netWeightGram": 500,
+    "nutrition": null
+  },
+  {
+    "id": "p-0022",
+    "description": "Cam sành đóng bộ 5kg, trái từ 130g trở lên. Múi mọng nước, vị ngọt xen chua nhẹ, hợp vắt nước uống cho cả gia đình.",
+    "usage": "Gợi ý dùng: Vắt nước cam, ăn tươi, làm đồ uống giải khát.",
+    "storage": "Để nơi thoáng mát hoặc ngăn mát tủ lạnh; nước cam vắt xong nên uống ngay.",
+    "origin": "Việt Nam",
+    "netWeightGram": 5000,
+    "nutrition": {
+      "energy_kcal": 47,
+      "protein": 0.9,
+      "fat": 0.1,
+      "carbohydrates": 11.8,
+      "sugars": 9.4,
+      "fiber": 2.4,
+      "salt": 0
+    }
+  },
+  {
+    "id": "p-0129",
+    "description": "Gạo thơm A An ST25+ túi 5kg. ST25 là giống gạo thơm nổi tiếng của Việt Nam, cho cơm dẻo, mềm và thơm nhẹ.",
+    "usage": "Gợi ý dùng: Nấu cơm trắng, cơm cuộn, ăn kèm món kho.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ẩm; buộc kín túi sau khi mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 5000,
+    "nutrition": {
+      "energy_kcal": 360,
+      "protein": 7,
+      "fat": 0.6,
+      "carbohydrates": 79,
+      "sugars": 0.1,
+      "fiber": 1.3,
+      "salt": 0.01
+    }
+  },
+  {
+    "id": "p-0075",
+    "description": "Trứng cút đóng hộp 30 quả, tổng khối lượng khoảng 300-360g, thương hiệu giao ngẫu nhiên. Trứng nhỏ, vỏ lốm đốm, lòng đỏ béo, dễ chế biến.",
+    "usage": "Gợi ý dùng: Luộc ăn kèm muối tiêu, kho thịt, chiên.",
+    "storage": "Bảo quản ngăn mát tủ lạnh; nên dùng trong thời hạn in trên hộp.",
+    "origin": "Việt Nam",
+    "netWeightGram": 330,
+    "nutrition": {
+      "energy_kcal": 158,
+      "protein": 13.1,
+      "fat": 11.1,
+      "carbohydrates": 0.4,
+      "sugars": 0.4,
+      "fiber": 0,
+      "salt": 0.35
+    }
+  },
+  {
+    "id": "p-0182",
+    "description": "Xúc xích xông khói TOP ONE WYN của G Kitchen, gói 450g. Xúc xích có hương xông khói, thịt mềm, đã chế biến sẵn.",
+    "usage": "Gợi ý dùng: Chiên hoặc nướng ăn kèm bánh mì, làm hotdog, xào cơm chiên.",
+    "storage": "Bảo quản đông lạnh; sau khi rã đông nên dùng sớm và không cấp đông lại.",
+    "origin": null,
+    "netWeightGram": 450,
+    "nutrition": null
+  },
+  {
+    "id": "p-0021",
+    "description": "Măng cụt trái từ 65g trở lên, bán theo ký. Vỏ tím sẫm, múi trắng mọng, vị ngọt thanh xen chút chua nhẹ, được gọi là nữ hoàng trái cây.",
+    "usage": "Gợi ý dùng: Ăn tươi, làm đĩa trái cây, hoặc ăn lạnh giải nhiệt.",
+    "storage": "Bảo quản ngăn mát tủ lạnh; nên dùng trong vài ngày sau khi mua.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 73,
+      "protein": 0.4,
+      "fat": 0.6,
+      "carbohydrates": 18,
+      "sugars": 16.2,
+      "fiber": 1.8,
+      "salt": 0
+    }
+  },
+  {
+    "id": "p-0128",
+    "description": "Bộ 5 túi gạo thơm A An ST25+, mỗi túi 5kg, tổng 25kg. ST25 là giống gạo thơm nổi tiếng của Việt Nam, cho cơm dẻo và thơm nhẹ.",
+    "usage": "Gợi ý dùng: Nấu cơm trắng, cơm cuộn, ăn kèm món kho.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ẩm; buộc kín túi sau khi mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 25000,
+    "nutrition": {
+      "energy_kcal": 360,
+      "protein": 7,
+      "fat": 0.6,
+      "carbohydrates": 79,
+      "sugars": 0.1,
+      "fiber": 1.3,
+      "salt": 0.01
+    }
+  },
+  {
+    "id": "p-0074",
+    "description": "Trứng vịt đóng hộp 10 quả, tổng khối lượng khoảng 600-700g, thương hiệu giao ngẫu nhiên. Trứng to hơn trứng gà, lòng đỏ béo, vị đậm.",
+    "usage": "Gợi ý dùng: Luộc, chiên, làm bánh hoặc kho.",
+    "storage": "Bảo quản ngăn mát tủ lạnh; nên dùng trong thời hạn in trên hộp.",
+    "origin": "Việt Nam",
+    "netWeightGram": 650,
+    "nutrition": {
+      "energy_kcal": 185,
+      "protein": 12.8,
+      "fat": 13.8,
+      "carbohydrates": 1.5,
+      "sugars": 1.5,
+      "fiber": 0,
+      "salt": 0.37
+    }
+  },
+  {
+    "id": "p-0181",
+    "description": "Xúc xích Vườn Bia của LC FOODS, gói 500g. Xúc xích đã chế biến sẵn, vị đậm đà, hợp làm món nhậu hoặc ăn kèm.",
+    "usage": "Gợi ý dùng: Chiên, nướng, ăn kèm bia và rau sống.",
+    "storage": "Bảo quản đông lạnh; sau khi rã đông nên dùng sớm và không cấp đông lại.",
+    "origin": "Việt Nam",
+    "netWeightGram": 500,
+    "nutrition": null
+  },
+  {
+    "id": "p-0020",
+    "description": "Bí đỏ hồ lô trái nhỏ, bán theo ký. Thịt bí vàng cam, mềm, bở và ngọt dịu khi nấu chín.",
+    "usage": "Gợi ý dùng: Nấu canh bí đỏ, nấu cháo, hầm xương.",
+    "storage": "Để nơi khô ráo, thoáng mát khi còn nguyên trái; đã cắt thì bọc kín và bảo quản ngăn mát.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 26,
+      "protein": 1,
+      "fat": 0.1,
+      "carbohydrates": 6.5,
+      "sugars": 2.8,
+      "fiber": 0.5,
+      "salt": 0
+    }
+  },
+  {
+    "id": "p-0127",
+    "description": "Gạo thơm Neptune ST25+ Extra túi 5kg. Hạt gạo cho cơm dẻo, mềm, thơm nhẹ, phù hợp bữa cơm hằng ngày.",
+    "usage": "Gợi ý dùng: Nấu cơm trắng, cơm cuộn, cháo.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ẩm; buộc kín túi sau khi mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 5000,
+    "nutrition": {
+      "energy_kcal": 360,
+      "protein": 7,
+      "fat": 0.6,
+      "carbohydrates": 79,
+      "sugars": 0.1,
+      "fiber": 1.3,
+      "salt": 0.01
+    }
+  },
+  {
+    "id": "p-0073",
+    "description": "Trứng vịt bắc thảo hộp 4 quả, tổng khối lượng khoảng 240-280g, thương hiệu giao ngẫu nhiên. Trứng ủ đặc trưng, lòng trắng trong sẫm, lòng đỏ đặc, có mùi vị riêng.",
+    "usage": "Gợi ý dùng: Nấu cháo thịt bằm trứng bắc thảo, ăn kèm đậu hũ, cắt múi ăn với gừng.",
+    "storage": "Bảo quản nơi mát hoặc ngăn mát tủ lạnh; sau khi bóc vỏ nên dùng sớm.",
+    "origin": "Việt Nam",
+    "netWeightGram": 260,
+    "nutrition": null
+  },
+  {
+    "id": "p-0180",
+    "description": "Chả lụa bì WYN của G Kitchen, dạng cây 450g. Chả mềm, dai, có sợi bì giòn, đã chế biến sẵn.",
+    "usage": "Gợi ý dùng: Ăn kèm bánh mì, bánh cuốn, cơm tấm.",
+    "storage": "Bảo quản ngăn mát hoặc ngăn đông theo hướng dẫn trên bao bì; sau khi mở nên dùng sớm.",
+    "origin": null,
+    "netWeightGram": 450,
+    "nutrition": null
+  },
+  {
+    "id": "p-0019",
+    "description": "Bí đỏ hồ lô nguyên trái, trọng lượng từ 750g đến 1,4kg. Thịt bí vàng cam, mềm, bở và ngọt dịu khi nấu chín.",
+    "usage": "Gợi ý dùng: Nấu canh bí đỏ, nấu cháo, nấu súp.",
+    "storage": "Để nơi khô ráo, thoáng mát khi còn nguyên trái; đã cắt thì bọc kín và bảo quản ngăn mát.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1075,
+    "nutrition": {
+      "energy_kcal": 26,
+      "protein": 1,
+      "fat": 0.1,
+      "carbohydrates": 6.5,
+      "sugars": 2.8,
+      "fiber": 0.5,
+      "salt": 0
+    }
+  },
+  {
+    "id": "p-0126",
+    "description": "Bộ 6 túi gạo thơm đặc sản Mê Gạo ST25, mỗi túi 5kg, tổng 30kg. ST25 là giống gạo thơm nổi tiếng của Việt Nam, cho cơm dẻo, mềm và thơm nhẹ.",
+    "usage": "Gợi ý dùng: Nấu cơm trắng, cơm cuộn, ăn kèm món kho.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ẩm; buộc kín túi sau khi mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 30000,
+    "nutrition": {
+      "energy_kcal": 360,
+      "protein": 7,
+      "fat": 0.6,
+      "carbohydrates": 79,
+      "sugars": 0.1,
+      "fiber": 1.3,
+      "salt": 0.01
+    }
+  },
+  {
+    "id": "p-0072",
+    "description": "Trứng vịt muối hộp 4 quả, tổng khối lượng khoảng 240-280g, thương hiệu giao ngẫu nhiên. Trứng được ướp muối, lòng đỏ bở và mặn, thơm béo.",
+    "usage": "Gợi ý dùng: Ăn với cháo trắng, hấp thịt bằm, làm nhân bánh trung thu.",
+    "storage": "Bảo quản nơi mát hoặc ngăn mát tủ lạnh; trứng đã luộc nên dùng sớm.",
+    "origin": "Việt Nam",
+    "netWeightGram": 260,
+    "nutrition": null
+  },
+  {
+    "id": "p-0179",
+    "description": "Xúc xích cocktail xông khói C.P gói 250g. Xúc xích cỡ nhỏ, có hương xông khói, vừa miệng, tiện ăn vặt.",
+    "usage": "Gợi ý dùng: Chiên hoặc nướng, làm món tiệc, xào cơm chiên.",
+    "storage": "Bảo quản đông lạnh; sau khi rã đông nên dùng sớm và không cấp đông lại.",
+    "origin": "Việt Nam",
+    "netWeightGram": 250,
+    "nutrition": null
+  },
+  {
+    "id": "p-0018",
+    "description": "Bí đỏ tròn đóng túi 500g. Thịt bí vàng cam, mềm, ngọt dịu, phù hợp nấu cho cả gia đình nhỏ.",
+    "usage": "Gợi ý dùng: Nấu canh bí đỏ, nấu cháo, hấp ăn trực tiếp.",
+    "storage": "Để nơi khô ráo, thoáng mát khi còn nguyên trái; đã cắt thì bọc kín và bảo quản ngăn mát.",
+    "origin": "Việt Nam",
+    "netWeightGram": 500,
+    "nutrition": {
+      "energy_kcal": 26,
+      "protein": 1,
+      "fat": 0.1,
+      "carbohydrates": 6.5,
+      "sugars": 2.8,
+      "fiber": 0.5,
+      "salt": 0
+    }
+  },
+  {
+    "id": "p-0125",
+    "description": "Gạo thơm đặc sản Mê Gạo ST25 túi 5kg. ST25 là giống gạo thơm nổi tiếng của Việt Nam, cho cơm dẻo, mềm và thơm nhẹ.",
+    "usage": "Gợi ý dùng: Nấu cơm trắng, cơm cuộn, ăn kèm món kho.",
+    "storage": "Để nơi khô ráo, thoáng mát, tránh ẩm; buộc kín túi sau khi mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 5000,
+    "nutrition": {
+      "energy_kcal": 360,
+      "protein": 7,
+      "fat": 0.6,
+      "carbohydrates": 79,
+      "sugars": 0.1,
+      "fiber": 1.3,
+      "salt": 0.01
+    }
+  },
+  {
+    "id": "p-0201",
+    "description": "Cá diêu hồng là loại cá nước ngọt thịt trắng, săn chắc và ít xương dăm. Sản phẩm đã được làm sạch vảy, nội tạng, đóng khay tiện chế biến ngay. Thịt cá ngọt, thích hợp để hấp, chiên giòn hoặc nấu canh chua.",
+    "usage": "Gợi ý dùng: Hấp xì dầu gừng hành, chiên giòn chấm nước mắm me hoặc nấu canh chua.",
+    "storage": "Bảo quản ngăn mát và dùng trong ngày, hoặc cấp đông ở ngăn đông để dùng dần.",
+    "origin": "Việt Nam",
+    "netWeightGram": 500,
+    "nutrition": {
+      "energy_kcal": 96,
+      "protein": 20.1,
+      "fat": 1.7,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.13
+    }
+  },
+  {
+    "id": "p-0202",
+    "description": "Cá nục là cá biển thân nhỏ, thịt chắc và có vị ngọt đậm đà đặc trưng. Khay cá đã được làm sạch, chỉ cần rửa lại là có thể nấu. Đây là nguyên liệu quen thuộc trong bữa cơm gia đình Việt.",
+    "usage": "Gợi ý dùng: Kho tiêu, kho cà chua hoặc chiên vàng ăn với cơm nóng.",
+    "storage": "Bảo quản ngăn mát và dùng trong ngày, nếu chưa dùng ngay nên chia phần cấp đông ở ngăn đông.",
+    "origin": "Việt Nam",
+    "netWeightGram": 550,
+    "nutrition": {
+      "energy_kcal": 124,
+      "protein": 20,
+      "fat": 4.5,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.2
+    }
+  },
+  {
+    "id": "p-0203",
+    "description": "Cá basa phi lê là phần thịt cá đã lóc xương, bỏ da, miếng dày và mềm, ít mùi tanh khi sơ chế đúng cách. Dạng phi lê giúp chế biến nhanh và dễ chia phần cho bữa ăn nhỏ. Thịt cá trắng, vị béo nhẹ, hợp nhiều cách nấu.",
+    "usage": "Gợi ý dùng: Chiên sốt chua ngọt, nấu lẩu hoặc áp chảo ăn kèm rau củ.",
+    "storage": "Bảo quản ngăn mát và dùng trong ngày, hoặc cấp đông ở ngăn đông; không cấp đông lại sau khi đã rã đông.",
+    "origin": "Việt Nam",
+    "netWeightGram": 250,
+    "nutrition": {
+      "energy_kcal": 90,
+      "protein": 15.5,
+      "fat": 2.8,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.15
+    }
+  },
+  {
+    "id": "p-0204",
+    "description": "Cá ngân là loại cá biển nhỏ, thân thon, thịt trắng mềm và ngọt nhẹ. Cá đã được làm sạch nên tiết kiệm thời gian sơ chế. Cá thường được dùng cho các món chiên, kho hoặc nấu canh.",
+    "usage": "Gợi ý dùng: Chiên giòn chấm muối ớt, kho tiêu hoặc nấu canh chua.",
+    "storage": "Bảo quản ngăn mát và dùng trong ngày, hoặc để ngăn đông nếu chưa dùng ngay.",
+    "origin": "Việt Nam",
+    "netWeightGram": 300,
+    "nutrition": {
+      "energy_kcal": 90,
+      "protein": 18.3,
+      "fat": 1.3,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.2
+    }
+  },
+  {
+    "id": "p-0205",
+    "description": "Thịt hến là phần ruột hến đã được tách vỏ và làm sạch, nhỏ, dai nhẹ và có vị ngọt thanh của hải sản nước ngọt. Sản phẩm giúp bạn bỏ qua khâu ngâm nhả cát tốn thời gian. Hến là nguyên liệu quen thuộc trong ẩm thực miền Trung và miền Nam.",
+    "usage": "Gợi ý dùng: Nấu canh hến, xào hến với hành tiêu hoặc làm cơm hến.",
+    "storage": "Bảo quản ngăn mát và dùng trong ngày, hoặc cấp đông ở ngăn đông để dùng dần.",
+    "origin": "Việt Nam",
+    "netWeightGram": 200,
+    "nutrition": {
+      "energy_kcal": 74,
+      "protein": 12.8,
+      "fat": 1,
+      "carbohydrates": 2.6,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.14
+    }
+  },
+  {
+    "id": "p-0206",
+    "description": "Thịt sò lông là phần thịt sò đã tách vỏ, đóng khay gọn gàng, có độ dai giòn và vị ngọt đậm của loài nhuyễn thể hai mảnh vỏ. Không cần cạy vỏ nên chế biến nhanh hơn nhiều so với sò nguyên con. Thích hợp cho các món xào, nướng hoặc nấu cháo.",
+    "usage": "Gợi ý dùng: Xào bơ tỏi, nướng mỡ hành hoặc nấu cháo sò.",
+    "storage": "Bảo quản ngăn mát và dùng trong ngày, hoặc cấp đông ở ngăn đông để dùng dần.",
+    "origin": "Việt Nam",
+    "netWeightGram": 250,
+    "nutrition": {
+      "energy_kcal": 79,
+      "protein": 12,
+      "fat": 1.5,
+      "carbohydrates": 3,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.4
+    }
+  },
+  {
+    "id": "p-0207",
+    "description": "Bánh quy bơ và cacao Danisa Abbracci đóng hộp gồm hai vị bơ và cacao, có độ giòn xốp và hương bơ đặc trưng. Hộp 168g tiện mang theo hoặc dùng làm quà tặng nhỏ. Bánh phù hợp ăn nhẹ buổi chiều cùng trà hoặc cà phê.",
+    "usage": "Gợi ý dùng: Ăn vặt cùng trà nóng, nhâm nhi khi học bài hoặc tiếp khách.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát, tránh ánh nắng; đóng kín hộp sau khi mở để bánh giữ độ giòn.",
+    "origin": null,
+    "netWeightGram": 168,
+    "nutrition": null
+  },
+  {
+    "id": "p-0208",
+    "description": "Bánh quy Oreo gồm hai miếng bánh cacao đen giòn kẹp lớp kem socola ngọt ở giữa. Gói 105g có kích thước vừa phải, tiện ăn vặt. Có thể ăn trực tiếp, vặn tách kem hoặc chấm sữa.",
+    "usage": "Gợi ý dùng: Chấm sữa lạnh, nghiền làm đáy bánh cheesecake hoặc rắc lên kem.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát; buộc kín miệng gói sau khi mở để bánh không bị mềm.",
+    "origin": null,
+    "netWeightGram": 105,
+    "nutrition": null
+  },
+  {
+    "id": "p-0209",
+    "description": "Bánh quy sữa Cosy Marie là dòng bánh quy mỏng, vị sữa nhẹ và độ giòn tan dễ ăn. Gói 120g phù hợp dùng cho bữa phụ hằng ngày. Bánh không quá ngọt nên hợp ăn cùng đồ uống nóng.",
+    "usage": "Gợi ý dùng: Ăn kèm cà phê sữa, nhúng sữa nóng hoặc làm lớp đáy bánh tráng miệng.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát, tránh ánh nắng; kẹp kín miệng gói sau khi mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 120,
+    "nutrition": null
+  },
+  {
+    "id": "p-0210",
+    "description": "Bánh quy dừa vuông Libra có hình vuông, bề mặt thơm mùi dừa và vị bùi ngọt vừa phải. Gói 160g tiện chia sẻ hoặc ăn dần trong vài buổi. Bánh giòn nhẹ, hợp ăn vặt cùng trà.",
+    "usage": "Gợi ý dùng: Ăn vặt với trà, dùng làm bữa phụ hoặc mang theo khi đi học.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát; buộc kín miệng gói sau khi mở để bánh giữ độ giòn.",
+    "origin": "Việt Nam",
+    "netWeightGram": 160,
+    "nutrition": null
+  },
+  {
+    "id": "p-0211",
+    "description": "Bánh quy dừa phủ socola Bibica Premium kết hợp bánh quy vị dừa với lớp socola bao ngoài. Hộp 228g chia thành nhiều phần nhỏ, thuận tiện để ăn dần hoặc làm quà. Vị béo của dừa hòa cùng socola ngọt dịu.",
+    "usage": "Gợi ý dùng: Ăn vặt buổi xế, dùng với cà phê hoặc bày đĩa tiếp khách dịp lễ Tết.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát, tránh nhiệt độ cao để socola không bị chảy; đậy kín hộp sau khi mở.",
+    "origin": "Việt Nam",
+    "netWeightGram": 228,
+    "nutrition": null
+  },
+  {
+    "id": "p-0212",
+    "description": "Kẹo dẻo vị sữa chua Play More có kết cấu dẻo dai, vị chua ngọt nhẹ gợi nhớ sữa chua. Gói 64g nhỏ gọn, dễ bỏ túi mang theo. Phù hợp để nhâm nhi khi đi học, đi chơi.",
+    "usage": "Gợi ý dùng: Ăn vặt giữa giờ, chia sẻ cùng bạn bè hoặc mang theo khi đi du lịch.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát, tránh ánh nắng; buộc kín miệng gói sau khi mở.",
+    "origin": null,
+    "netWeightGram": 64,
+    "nutrition": null
+  },
+  {
+    "id": "p-0213",
+    "description": "Kẹo dẻo trái cây Alpenliebe Jelly có nhiều hương vị trái cây, kết cấu mềm dẻo và vị ngọt chua dễ ăn. Gói 90g đủ để chia sẻ nhiều người. Đây là món ăn vặt quen thuộc trong các buổi họp mặt.",
+    "usage": "Gợi ý dùng: Ăn vặt khi xem phim, mang theo đi học hoặc bày đĩa kẹo tiếp khách.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát, tránh nắng và nhiệt độ cao; đóng kín gói sau khi mở.",
+    "origin": null,
+    "netWeightGram": 90,
+    "nutrition": null
+  },
+  {
+    "id": "p-0214",
+    "description": "Kẹo bạc hà nhân socola Dynamite Big Bang có lớp vỏ kẹo hương bạc hà mát lạnh bao bên ngoài phần nhân socola. Gói 112g gồm nhiều viên, thích hợp ăn dần. Vị mát hòa cùng vị ngọt béo của socola tạo cảm giác lạ miệng.",
+    "usage": "Gợi ý dùng: Ngậm khi cần tỉnh táo lúc học bài, ăn vặt giữa giờ hoặc chia cho bạn bè.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát, tránh nắng; buộc kín miệng gói sau khi mở.",
+    "origin": null,
+    "netWeightGram": 112,
+    "nutrition": null
+  },
+  {
+    "id": "p-0215",
+    "description": "Kẹo ngậm hương bạc hà Mentos có dạng viên tròn, vị bạc hà mát và kết cấu dai nhẹ. Hộp 35g nhỏ gọn, dễ bỏ túi. Thường được dùng để làm thơm miệng và tạo cảm giác sảng khoái.",
+    "usage": "Gợi ý dùng: Ngậm sau bữa ăn, mang theo khi đi học hoặc đi làm.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát, tránh ánh nắng; đậy kín nắp hộp sau khi mở.",
+    "origin": null,
+    "netWeightGram": 35,
+    "nutrition": null
+  },
+  {
+    "id": "p-0216",
+    "description": "Snack khoai tây Lay's vị tự nhiên được làm từ khoai tây cắt lát mỏng, chiên giòn và nêm vị mặn nhẹ. Gói 53g vừa đủ cho một lần ăn vặt. Miếng snack giòn rụm, giữ được hương vị khoai tây đặc trưng.",
+    "usage": "Gợi ý dùng: Ăn vặt khi xem phim, ăn kèm đồ uống hoặc mang theo đi picnic.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát, tránh ánh nắng; nên dùng hết sớm sau khi mở gói và kẹp kín miệng gói.",
+    "origin": null,
+    "netWeightGram": 53,
+    "nutrition": null
+  },
+  {
+    "id": "p-0217",
+    "description": "Snack khoai tây Lay's Stax vị tự nhiên có các miếng khoai đồng đều, xếp chồng trong lon hình trụ. Hình dạng này giúp snack ít bị vỡ vụn khi mang đi. Miếng snack giòn, vị mặn nhẹ dễ ăn.",
+    "usage": "Gợi ý dùng: Ăn vặt khi học nhóm, xem phim hoặc mang theo đi dã ngoại.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát; đậy kín nắp lon sau khi mở và dùng sớm để giữ độ giòn.",
+    "origin": null,
+    "netWeightGram": 90,
+    "nutrition": null
+  },
+  {
+    "id": "p-0218",
+    "description": "Snack khoai tây Lay's Stax vị mực cay có các miếng khoai đều nhau xếp trong lon, phủ gia vị mực cay đậm đà. Vị cay nhẹ kết hợp hương mực đặc trưng, giòn tan khi ăn. Lon 90g phù hợp để chia sẻ.",
+    "usage": "Gợi ý dùng: Nhâm nhi cùng nước ngọt, ăn khi xem phim hoặc chia sẻ trong buổi tụ tập bạn bè.",
+    "storage": "Bảo quản nơi khô ráo, thoáng mát; đậy kín nắp lon sau khi mở và dùng sớm để giữ độ giòn.",
+    "origin": null,
+    "netWeightGram": 90,
+    "nutrition": null
+  },
+  {
+    "id": "p-0219",
+    "description": "Bánh bông lan cuộn mềm xốp, nhân kem hương dâu ngọt dịu, mỗi cái gói riêng nên tiện mang theo. Hộp 10 cái hợp cho bữa sáng nhanh hoặc ăn xế cùng trà sữa.",
+    "usage": "Gợi ý dùng: Ăn sáng với sữa tươi, mang theo đi học, đi làm hoặc bày đĩa đãi khách.",
+    "storage": "Để nơi khô ráo, thoáng mát; đã mở gói thì dùng hết trong ngày.",
+    "origin": null,
+    "netWeightGram": 180,
+    "nutrition": null
+  },
+  {
+    "id": "p-0220",
+    "description": "Bánh bông lan mềm, lớp kem bơ sữa béo thơm, đóng gói riêng từng cái. Vị ngọt vừa phải, trẻ em và người lớn đều dễ ăn.",
+    "usage": "Gợi ý dùng: Bữa phụ buổi chiều, hộp bánh cho bé đi học, ăn kèm cà phê sữa.",
+    "storage": "Bảo quản nơi khô mát, tránh nắng; không cần để tủ lạnh.",
+    "origin": null,
+    "netWeightGram": 276,
+    "nutrition": null
+  },
+  {
+    "id": "p-0221",
+    "description": "Bánh bông lan nhân kem cốm thơm mùi lá dứa và cốm non, vỏ bánh mềm ẩm. Hộp 6 cái gói riêng, vừa cho một gia đình nhỏ.",
+    "usage": "Gợi ý dùng: Ăn kèm trà nóng, làm quà nhỏ hoặc bữa phụ cho trẻ.",
+    "storage": "Để nơi khô ráo, thoáng mát; dùng ngay sau khi mở từng gói.",
+    "origin": "Việt Nam",
+    "netWeightGram": 138,
+    "nutrition": null
+  },
+  {
+    "id": "p-0222",
+    "description": "Bánh mì sandwich cắt lát sẵn, ruột trắng mềm, vỏ mỏng. Lát bánh đều, nướng nhanh vàng giòn trên chảo hoặc lò.",
+    "usage": "Gợi ý dùng: Kẹp trứng ốp la và rau, làm sandwich cá ngừ, nướng bơ đường.",
+    "storage": "Buộc kín miệng túi, để nơi thoáng mát và dùng trước hạn in trên bao bì; để ngăn đông nếu muốn giữ lâu hơn.",
+    "origin": "Việt Nam",
+    "netWeightGram": 275,
+    "nutrition": null
+  },
+  {
+    "id": "p-0223",
+    "description": "Gói lớn 16 lát bánh mì sandwich vị lạt, hợp cả món mặn lẫn món ngọt. Đủ dùng nhiều bữa sáng cho gia đình 3–4 người.",
+    "usage": "Gợi ý dùng: Sandwich trộn tôm, bánh mì áp chảo trứng, bánh mì nướng phết mứt.",
+    "storage": "Buộc kín túi sau khi mở, để nơi thoáng mát; cấp đông phần chưa dùng và nướng lại khi ăn.",
+    "origin": "Việt Nam",
+    "netWeightGram": 490,
+    "nutrition": null
+  },
+  {
+    "id": "p-0224",
+    "description": "Bánh mì hoa cúc kiểu Pháp nhiều lớp, ruột mềm xé được từng thớ, thơm mùi bơ sữa. Ăn ngay không cần hâm nóng.",
+    "usage": "Gợi ý dùng: Ăn sáng cùng sữa hoặc cà phê, nướng sơ cho thơm, ăn kèm mứt trái cây.",
+    "storage": "Để nơi khô mát, tránh nắng; đã mở gói nên ăn trong 1–2 ngày.",
+    "origin": "Việt Nam",
+    "netWeightGram": 120,
+    "nutrition": null
+  }
+]

@@ -22,7 +22,8 @@
     "seed:vouchers": "node scripts/seed-vouchers.js",
     "test:integration": "node --test tests/part-a.integration.cjs",
     "test:b": "node --test tests/part-b.integration.cjs",
-    "mail:inbox": "node scripts/mail-inbox.js"
+    "mail:inbox": "node scripts/mail-inbox.js",
+    "db:sync": "node scripts/sync-content.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

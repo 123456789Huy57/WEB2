@@ -450,6 +450,33 @@
       "price": 13700,
       "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/8/image/production/2026/8/image/Products/2282/357442/bia-sai-gon-chill-lon-250ml_202608211420544358.jpg",
       "source": "https://www.bachhoaxanh.com/bia/bia-sai-gon-chill-lon-250ml"
+    },
+    {
+      "id": "mp-058",
+      "name": "Bột bánh xèo Mikko Hương Xưa gói 500g",
+      "unit": "gói",
+      "netWeightGram": 500,
+      "price": 29500,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/11/image/production/2026/11/image/Products/2388/151125/bot-lam-banh-xeo-huong-xua-mikko-500g_202611041339035295.jpg",
+      "source": "https://www.bachhoaxanh.com/bot-che-bien-san/bot-lam-banh-xeo-huong-xua-mikko-500g"
+    },
+    {
+      "id": "mp-046",
+      "name": "Bột bắp Tấn Sang gói 150g",
+      "unit": "gói",
+      "netWeightGram": 150,
+      "price": 7400,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/11/image/production/2026/11/image/Products/2388/234435/bot-bap-tan-sang-goi-150g_202611031602382613.jpg",
+      "source": "https://www.bachhoaxanh.com/bot-che-bien-san/bot-bap-tan-sang-goi-150g"
+    },
+    {
+      "id": "mp-029",
+      "name": "Trà lài túi lọc Phúc Long hộp 50g (25 gói x 2g)",
+      "unit": "hộp",
+      "netWeightGram": 50,
+      "price": 40000,
+      "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/10/image/production/2026/10/image/Products/2385/325064/tra-lai-tui-loc-phuc-long-hop-50g-25-goi-x-2g_202610010957468375.jpg",
+      "source": "https://www.bachhoaxanh.com/tra-kho-tui-loc/tra-lai-tui-loc-phuc-long-hop-50g-25-goi-x-2g"
     }
   ],
   "merge": [
@@ -492,24 +519,12 @@
       "why": "Bách Hóa Xanh không bán kem tươi"
     },
     {
-      "id": "mp-029",
-      "why": "Bách Hóa Xanh không bán trà xanh không đường"
-    },
-    {
       "id": "mp-055",
       "why": "Bách Hóa Xanh không bán mực khô"
     },
     {
-      "id": "mp-046",
-      "why": "Bách Hóa Xanh không bán bột bắp"
-    },
-    {
       "id": "mp-053",
       "why": "Bách Hóa Xanh không bán trân châu"
-    },
-    {
-      "id": "mp-058",
-      "why": "Bách Hóa Xanh không bán bột bánh xèo"
     },
     {
       "id": "mp-071",

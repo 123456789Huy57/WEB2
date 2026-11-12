@@ -10,6 +10,7 @@ export interface Product {
   image_url: string; img?: string; gallery: string[];
   origin?: string; badges?: string[]; nutrition?: Nutrition;
   netWeightGram?: number; unitWeightGram?: number; sellUnit?: string; tags?: string[];
+  usage?: string; storage?: string;
 }
 export interface Category {
   id: string; slug: string; name: string; description: string; active?: boolean; productCount: number; sortOrder: number;
@@ -31,6 +32,8 @@ export interface Recipe {
   imageUrl: string; ingredients: RecipeLine[]; steps: string[];
   nutrition: { calories: number; protein: number; carbs: number; fat: number };
   tags: string[]; goalTags?: string[]; isActive?: boolean;
+  /** Nội dung hướng dẫn (đồng bộ bằng npm run db:sync) */
+  description?: string; tips?: string[]; seasonings?: { name: string; amount?: string }[]; servingNote?: string; storage?: string;
 }
 export interface Ingredient {
   id: string; slug: string; name: string; categoryId: string; defaultUnit: string; unitWeightGram?: number;

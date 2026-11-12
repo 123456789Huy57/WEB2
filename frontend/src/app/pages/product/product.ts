@@ -38,13 +38,16 @@ export class ProductPage {
   protected compared = computed(() => { this.cmp.ids(); return !!this.p() && this.cmp.has(this.p()!.id); });
 
   protected p = computed(() => this.ps.get(this.id()) ?? this.ps.bySlug(this.id()));
+  /** Bản đầy đủ (mô tả, bộ ảnh, dinh dưỡng), tải riêng khi mở trang */
+  protected d = computed(() => (this.p() ? this.ps.full(this.p()!.id) : undefined));
+  private detailLoader = effect(() => { const p = this.p(); if (p) void this.ps.loadDetail(p.id); });
   protected name = computed(() => (this.p() ? this.ps.shortName(this.p()!) : ''));
   protected brandLine = computed(() => [this.p()?.brand, this.p()?.subcategoryName].filter(Boolean).join(' · '));
   protected step = computed(() => (this.p() ? this.ps.step(this.p()!) : 1));
   protected qty = signal(1);
   protected imgIndex = signal(0);
   protected images = computed(() => {
-    const p = this.p();
+    const p = this.d();
     if (!p) return [];
     return [this.ps.img(p, 900), ...(p.img ? [] : (p.gallery ?? []).slice(0, 3).map(u => cdnImage(u, 900)))];
   });
@@ -53,7 +56,7 @@ export class ProductPage {
     return `Giá cho 1 ${u}` + (u === 'kg' ? ' · tính theo cân thực tế khi soạn đơn' : p.netWeightGram ? ` · khoảng ${p.netWeightGram} g` : '');
   });
   protected nutrition = computed(() => {
-    const n = this.p()?.nutrition ?? {};
+    const n = this.d()?.nutrition ?? {};
     const rows: [string, number | undefined, string][] = [['Năng lượng', n.energy_kcal, 'kcal'], ['Đạm', n.protein, 'g'], ['Béo', n.fat, 'g'], ['Tinh bột', n.carbohydrates, 'g'], ['Đường', n.sugars, 'g'], ['Chất xơ', n.fiber, 'g']];
     return rows.filter(r => r[1] != null).map(([label, v, unit]) => ({ label, value: String(v).replace('.', ','), unit }));
   });

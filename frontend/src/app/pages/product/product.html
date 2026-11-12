@@ -45,13 +45,20 @@
         </p>
         <dl class="pd-facts">
           <div><dt>Giao hàng</dt><dd>1–2 giờ nội thành TP.HCM, miễn phí cho đơn từ 300.000 đ</dd></div>
-          <div><dt>Xuất xứ</dt><dd>{{ p.origin || 'Việt Nam' }}</dd></div>
+          @if (p.origin) { <div><dt>Xuất xứ</dt><dd>{{ p.origin }}</dd></div> }
           <div><dt>Đổi trả</dt><dd>Trong 7 ngày nếu hàng không đúng mô tả</dd></div>
         </dl>
-        <div class="pd-desc"><h2 class="f-h">Mô tả</h2><p>{{ p.description }}</p></div>
+        @if (d(); as d) {
+          <div class="pd-desc"><h2 class="f-h">Mô tả</h2>
+            @if (d.description) { <p>{{ d.description }}</p> } @else { <p class="muted">Đang tải mô tả…</p> }
+            @if (d.usage) { <p>{{ d.usage }}</p> }
+            @if (d.storage) { <p><b>Bảo quản:</b> {{ d.storage }}</p> }
+          </div>
+        }
         @if (nutrition().length) {
           <div class="pd-nut">
             <h2 class="f-h">Dinh dưỡng trên 100 g</h2>
+            <p class="small muted">Giá trị tham khảo theo bảng thành phần thực phẩm, có thể chênh lệch theo từng lô hàng.</p>
             <dl class="nut">
               @for (n of nutrition(); track n.label) {
                 <div><dt>{{ n.label }}</dt><dd class="num">{{ n.value }} <span class="small">{{ n.unit }}</span></dd></div>

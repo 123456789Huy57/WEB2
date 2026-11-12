@@ -3,6 +3,11 @@ const v = require('../../lib/validation');
 const products = () => getDatabase().collection('products');
 const categories = () => getDatabase().collection('categories');
 const projection = { _id: 0 };
+// Trường nội bộ (nguồn ảnh, lý do ẩn…) không gửi cho khách.
+const INTERNAL = { sourceImage: 0, sourceUrl: 0, hiddenReason: 0, mergedInto: 0, contentUpdatedAt: 0 };
+const publicDetail = { ...projection, ...INTERNAL };
+// Danh sách chỉ cần dữ liệu cho thẻ sản phẩm; mô tả, bộ ảnh, dinh dưỡng lấy ở GET /products/:id khi mở trang chi tiết.
+const publicList = { ...publicDetail, description: 0, usage: 0, storage: 0, gallery: 0, nutrition: 0 };
 async function productFilter(query, admin = false) {
   const filter = admin ? {} : { active: { $ne: false } };
   if (!admin) {
@@ -43,7 +48,7 @@ async function listProducts(query, admin = false) {
   const sorts = { name: { name: 1, id: 1 }, price_asc: { price: 1, id: 1 }, price_desc: { price: -1, id: 1 }, newest: { createdAt: -1, id: 1 } };
   const sort = query.sort === undefined ? 'name' : v.text(query.sort, 'Sort', 1, 20);
   if (!Object.hasOwn(sorts, sort)) v.bad('Sort không hợp lệ.');
-  const cursor = products().find(filter, { projection }).sort(sorts[sort]);
+  const cursor = products().find(filter, { projection: admin ? projection : publicList }).sort(sorts[sort]);
   if (query.page !== undefined || query.pageSize !== undefined) {
     const { page, pageSize } = v.page(query);
     return { items: await decorateProducts(await cursor.skip((page - 1) * pageSize).limit(pageSize).toArray()), page, pageSize, total: await products().countDocuments(filter) };
@@ -52,7 +57,7 @@ async function listProducts(query, admin = false) {
 }
 async function findProduct(filter, admin = false, options = {}) {
   if (!admin) Object.assign(filter, await productFilter({}, false));
-  const result = await products().findOne(filter, { ...options, projection });
+  const result = await products().findOne(filter, { ...options, projection: admin ? projection : publicDetail });
   return result ? (await decorateProducts([result]))[0] : null;
 }
 function findCategory(id) { return categories().findOne({ id }, { projection }); }

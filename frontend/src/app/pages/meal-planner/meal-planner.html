@@ -146,6 +146,7 @@
       <div class="d-body">
         <p class="muted small">{{ meal[r.mealType] }} · {{ mp.totalTime(r) }} phút · {{ diff[r.difficulty] }} · {{ f().servings }} người</p>
         <h2 class="h2" id="d-name">{{ r.name }}</h2>
+        @if (r.description) { <p class="d-intro">{{ r.description }}</p> }
         <dl class="d-nut">
           <div><dt>Năng lượng</dt><dd class="num">{{ r.nutrition.calories }} <span class="small">kcal</span></dd></div>
           <div><dt>Đạm</dt><dd class="num">{{ r.nutrition.protein }} <span class="small">g</span></dd></div>
@@ -183,8 +184,31 @@
             <button class="btn btn-forest" type="button" (click)="cookNow()">Tôi nấu món này hôm nay</button>
           }
         </div>
+        @if (r.seasonings?.length) {
+          <h3 class="f-h d-h">Gia vị thường có sẵn</h3>
+          <ul class="d-season">
+            @for (g of r.seasonings; track g.name) { <li><span>{{ g.name }}</span><span class="muted num">{{ g.amount }}</span></li> }
+          </ul>
+          @if (f().servings !== r.servings) { <p class="small muted">Định lượng gia vị cho {{ r.servings }} người, nêm lại theo khẩu vị khi nấu cho {{ f().servings }} người.</p> }
+        }
         <h3 class="f-h d-h">Cách làm</h3>
-        <ol class="d-steps">@for (s of r.steps; track $index) { <li>{{ s }}</li> }</ol>
+        <ol class="d-steps">
+          @for (s of r.steps; track $index) {
+            @if (stepTitle(s); as t) { <li><b>{{ t[0] }}</b> {{ t[1] }}</li> } @else { <li>{{ s }}</li> }
+          }
+        </ol>
+        @if (r.tips?.length) {
+          <aside class="d-tips" aria-labelledby="d-tips-h">
+            <h3 class="f-h" id="d-tips-h">Mẹo nấu ngon</h3>
+            <ul>@for (t of r.tips; track $index) { <li>{{ t }}</li> }</ul>
+          </aside>
+        }
+        @if (r.servingNote || r.storage) {
+          <dl class="d-more">
+            @if (r.servingNote) { <div><dt>Ăn kèm</dt><dd>{{ r.servingNote }}</dd></div> }
+            @if (r.storage) { <div><dt>Bảo quản</dt><dd>{{ r.storage }}</dd></div> }
+          </dl>
+        }
       </div>
     </div>
   }

@@ -121,6 +121,11 @@ export class MealPlanner implements AfterViewInit {
     const id = this.mon();
     if (id && this.mp.recipe(id)) setTimeout(() => this.open(id));
   }
+  /** "Sơ chế: rửa sạch…" → ["Sơ chế:", "rửa sạch…"] để in đậm tên bước */
+  protected stepTitle(s: string): [string, string] | null {
+    const m = /^([^:.]{2,28}:)\s*(.+)$/s.exec(s);
+    return m ? [m[1], m[2]] : null;
+  }
   protected toggleBuy(id: string): void {
     this.unchecked.update(u => (u.includes(id) ? u.filter(x => x !== id) : [...u, id]));
   }
