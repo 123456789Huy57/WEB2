@@ -1,0 +1,604 @@
+{
+ "ing-trung-ga-ta": {
+  "ingredientId": "ing-trung-ga-ta",
+  "mealProductId": "p-001",
+  "preferredProductId": "p-0071",
+  "productIds": [
+   "p-0071"
+  ]
+ },
+ "ing-uc-ga-tuoi": {
+  "ingredientId": "ing-uc-ga-tuoi",
+  "mealProductId": "p-002",
+  "preferredProductId": "mp-002",
+  "productIds": [
+   "mp-002"
+  ]
+ },
+ "ing-ba-chi-heo": {
+  "ingredientId": "ing-ba-chi-heo",
+  "mealProductId": "p-003",
+  "preferredProductId": "mp-003",
+  "productIds": [
+   "mp-003"
+  ]
+ },
+ "ing-than-bo": {
+  "ingredientId": "ing-than-bo",
+  "mealProductId": "p-004",
+  "preferredProductId": "mp-004",
+  "productIds": [
+   "mp-004"
+  ]
+ },
+ "ing-tom-su": {
+  "ingredientId": "ing-tom-su",
+  "mealProductId": "p-005",
+  "preferredProductId": "mp-005",
+  "productIds": [
+   "mp-005"
+  ]
+ },
+ "ing-ca-hoi": {
+  "ingredientId": "ing-ca-hoi",
+  "mealProductId": "p-006",
+  "preferredProductId": "mp-006",
+  "productIds": [
+   "mp-006"
+  ]
+ },
+ "ing-muc-ong": {
+  "ingredientId": "ing-muc-ong",
+  "mealProductId": "p-007",
+  "preferredProductId": "mp-007",
+  "productIds": [
+   "mp-007"
+  ]
+ },
+ "ing-ca-basa": {
+  "ingredientId": "ing-ca-basa",
+  "mealProductId": "p-008",
+  "preferredProductId": "p-0053",
+  "productIds": [
+   "p-0053"
+  ]
+ },
+ "ing-ca-chua": {
+  "ingredientId": "ing-ca-chua",
+  "mealProductId": "p-009",
+  "preferredProductId": "mp-009",
+  "productIds": [
+   "mp-009"
+  ]
+ },
+ "ing-rau-muong": {
+  "ingredientId": "ing-rau-muong",
+  "mealProductId": "p-010",
+  "preferredProductId": "p-0004",
+  "productIds": [
+   "p-0004"
+  ]
+ },
+ "ing-dua-leo": {
+  "ingredientId": "ing-dua-leo",
+  "mealProductId": "p-011",
+  "preferredProductId": "mp-011",
+  "productIds": [
+   "mp-011"
+  ]
+ },
+ "ing-ca-rot": {
+  "ingredientId": "ing-ca-rot",
+  "mealProductId": "p-012",
+  "preferredProductId": "mp-012",
+  "productIds": [
+   "mp-012"
+  ]
+ },
+ "ing-xa-lach": {
+  "ingredientId": "ing-xa-lach",
+  "mealProductId": "p-013",
+  "preferredProductId": "mp-013",
+  "productIds": [
+   "mp-013"
+  ]
+ },
+ "ing-xoai-cat": {
+  "ingredientId": "ing-xoai-cat",
+  "mealProductId": "p-014",
+  "preferredProductId": "mp-014",
+  "productIds": [
+   "mp-014"
+  ]
+ },
+ "ing-chuoi-gia": {
+  "ingredientId": "ing-chuoi-gia",
+  "mealProductId": "p-015",
+  "preferredProductId": "p-0026",
+  "productIds": [
+   "p-0026"
+  ]
+ },
+ "ing-tao-do": {
+  "ingredientId": "ing-tao-do",
+  "mealProductId": "p-016",
+  "preferredProductId": "mp-016",
+  "productIds": [
+   "mp-016"
+  ]
+ },
+ "ing-thanh-long": {
+  "ingredientId": "ing-thanh-long",
+  "mealProductId": "p-017",
+  "preferredProductId": "mp-017",
+  "productIds": [
+   "mp-017"
+  ]
+ },
+ "ing-gao-thom": {
+  "ingredientId": "ing-gao-thom",
+  "mealProductId": "p-018",
+  "preferredProductId": "p-0130",
+  "productIds": [
+   "p-0130",
+   "p-0127",
+   "p-0132"
+  ]
+ },
+ "ing-bun-gao": {
+  "ingredientId": "ing-bun-gao",
+  "mealProductId": "p-019",
+  "preferredProductId": "mp-019",
+  "productIds": [
+   "mp-019"
+  ]
+ },
+ "ing-pho-kho": {
+  "ingredientId": "ing-pho-kho",
+  "mealProductId": "p-020",
+  "preferredProductId": "mp-020",
+  "productIds": [
+   "mp-020"
+  ]
+ },
+ "ing-yen-mach": {
+  "ingredientId": "ing-yen-mach",
+  "mealProductId": "p-021",
+  "preferredProductId": "mp-021",
+  "productIds": [
+   "mp-021"
+  ]
+ },
+ "ing-nuoc-mam": {
+  "ingredientId": "ing-nuoc-mam",
+  "mealProductId": "p-022",
+  "preferredProductId": "mp-022",
+  "productIds": [
+   "mp-022"
+  ]
+ },
+ "ing-nuoc-tuong": {
+  "ingredientId": "ing-nuoc-tuong",
+  "mealProductId": "p-023",
+  "preferredProductId": "mp-023",
+  "productIds": [
+   "mp-023"
+  ]
+ },
+ "ing-dau-an": {
+  "ingredientId": "ing-dau-an",
+  "mealProductId": "p-024",
+  "preferredProductId": "p-0160",
+  "productIds": [
+   "p-0160"
+  ]
+ },
+ "ing-muoi-iod": {
+  "ingredientId": "ing-muoi-iod",
+  "mealProductId": "p-025",
+  "preferredProductId": "mp-025",
+  "productIds": [
+   "mp-025"
+  ]
+ },
+ "ing-sua-tuoi-khong-duong": {
+  "ingredientId": "ing-sua-tuoi-khong-duong",
+  "mealProductId": "p-026",
+  "preferredProductId": "p-0079",
+  "productIds": [
+   "p-0079"
+  ]
+ },
+ "ing-sua-chua-uong": {
+  "ingredientId": "ing-sua-chua-uong",
+  "mealProductId": "p-027",
+  "preferredProductId": "mp-027",
+  "productIds": [
+   "mp-027"
+  ]
+ },
+ "ing-nuoc-suoi": {
+  "ingredientId": "ing-nuoc-suoi",
+  "mealProductId": "p-028",
+  "preferredProductId": "mp-028",
+  "productIds": [
+   "mp-028"
+  ]
+ },
+ "ing-tra-xanh-khong-duong": {
+  "ingredientId": "ing-tra-xanh-khong-duong",
+  "mealProductId": "p-029",
+  "preferredProductId": "mp-029",
+  "productIds": [
+   "mp-029"
+  ]
+ },
+ "ing-ca-phe-hoa-tan": {
+  "ingredientId": "ing-ca-phe-hoa-tan",
+  "mealProductId": "p-030",
+  "preferredProductId": "mp-030",
+  "productIds": [
+   "mp-030"
+  ]
+ },
+ "ing-dau-phong": {
+  "ingredientId": "ing-dau-phong",
+  "mealProductId": "p-031",
+  "preferredProductId": "mp-031",
+  "productIds": [
+   "mp-031"
+  ]
+ },
+ "ing-gung": {
+  "ingredientId": "ing-gung",
+  "mealProductId": "p-032",
+  "preferredProductId": "mp-032",
+  "productIds": [
+   "mp-032"
+  ]
+ },
+ "ing-dua-chua": {
+  "ingredientId": "ing-dua-chua",
+  "mealProductId": "p-033",
+  "preferredProductId": "mp-033",
+  "productIds": [
+   "mp-033"
+  ]
+ },
+ "ing-pho-mai": {
+  "ingredientId": "ing-pho-mai",
+  "mealProductId": "p-034",
+  "preferredProductId": "mp-034",
+  "productIds": [
+   "mp-034"
+  ]
+ },
+ "ing-ot-chuong": {
+  "ingredientId": "ing-ot-chuong",
+  "mealProductId": "p-035",
+  "preferredProductId": "mp-035",
+  "productIds": [
+   "mp-035"
+  ]
+ },
+ "ing-mi-trung": {
+  "ingredientId": "ing-mi-trung",
+  "mealProductId": "p-036",
+  "preferredProductId": "mp-036",
+  "productIds": [
+   "mp-036"
+  ]
+ },
+ "ing-luon-tuoi": {
+  "ingredientId": "ing-luon-tuoi",
+  "mealProductId": "p-037",
+  "preferredProductId": "mp-037",
+  "productIds": [
+   "mp-037"
+  ]
+ },
+ "ing-hanh-tay": {
+  "ingredientId": "ing-hanh-tay",
+  "mealProductId": "p-038",
+  "preferredProductId": "mp-038",
+  "productIds": [
+   "mp-038"
+  ]
+ },
+ "ing-banh-trang": {
+  "ingredientId": "ing-banh-trang",
+  "mealProductId": "p-039",
+  "preferredProductId": "mp-039",
+  "productIds": [
+   "mp-039"
+  ]
+ },
+ "ing-nam-huong": {
+  "ingredientId": "ing-nam-huong",
+  "mealProductId": "p-040",
+  "preferredProductId": "mp-040",
+  "productIds": [
+   "mp-040"
+  ]
+ },
+ "ing-nam-dong-co": {
+  "ingredientId": "ing-nam-dong-co",
+  "mealProductId": "p-041",
+  "preferredProductId": "mp-041",
+  "productIds": [
+   "mp-041"
+  ]
+ },
+ "ing-rieng": {
+  "ingredientId": "ing-rieng",
+  "mealProductId": "p-042",
+  "preferredProductId": "mp-042",
+  "productIds": [
+   "mp-042"
+  ]
+ },
+ "ing-sa-te": {
+  "ingredientId": "ing-sa-te",
+  "mealProductId": "p-043",
+  "preferredProductId": "mp-043",
+  "productIds": [
+   "mp-043"
+  ]
+ },
+ "ing-dau-nanh": {
+  "ingredientId": "ing-dau-nanh",
+  "mealProductId": "p-044",
+  "preferredProductId": "mp-044",
+  "productIds": [
+   "mp-044"
+  ]
+ },
+ "ing-nuoc-loc": {
+  "ingredientId": "ing-nuoc-loc",
+  "mealProductId": "p-045",
+  "preferredProductId": "mp-045",
+  "productIds": [
+   "mp-045"
+  ]
+ },
+ "ing-bot-bap": {
+  "ingredientId": "ing-bot-bap",
+  "mealProductId": "p-046",
+  "preferredProductId": "mp-046",
+  "productIds": [
+   "mp-046"
+  ]
+ },
+ "ing-duong-phen": {
+  "ingredientId": "ing-duong-phen",
+  "mealProductId": "p-047",
+  "preferredProductId": "mp-047",
+  "productIds": [
+   "mp-047"
+  ]
+ },
+ "ing-mat-ong": {
+  "ingredientId": "ing-mat-ong",
+  "mealProductId": "p-048",
+  "preferredProductId": "mp-048",
+  "productIds": [
+   "mp-048"
+  ]
+ },
+ "ing-khoai-tay": {
+  "ingredientId": "ing-khoai-tay",
+  "mealProductId": "p-049",
+  "preferredProductId": "p-0015",
+  "productIds": [
+   "p-0015"
+  ]
+ },
+ "ing-bap-my": {
+  "ingredientId": "ing-bap-my",
+  "mealProductId": "p-050",
+  "preferredProductId": "p-0013",
+  "productIds": [
+   "p-0013"
+  ]
+ },
+ "ing-bia": {
+  "ingredientId": "ing-bia",
+  "mealProductId": "p-051",
+  "preferredProductId": "mp-051",
+  "productIds": [
+   "mp-051"
+  ]
+ },
+ "ing-bot-ca-ri": {
+  "ingredientId": "ing-bot-ca-ri",
+  "mealProductId": "p-052",
+  "preferredProductId": "mp-052",
+  "productIds": [
+   "mp-052"
+  ]
+ },
+ "ing-tran-chau": {
+  "ingredientId": "ing-tran-chau",
+  "mealProductId": "p-053",
+  "preferredProductId": "mp-053",
+  "productIds": [
+   "mp-053"
+  ]
+ },
+ "ing-tra-den": {
+  "ingredientId": "ing-tra-den",
+  "mealProductId": "p-054",
+  "preferredProductId": "mp-054",
+  "productIds": [
+   "mp-054"
+  ]
+ },
+ "ing-muc-dong": {
+  "ingredientId": "ing-muc-dong",
+  "mealProductId": "p-055",
+  "preferredProductId": "mp-055",
+  "productIds": [
+   "mp-055"
+  ]
+ },
+ "ing-banh-mi": {
+  "ingredientId": "ing-banh-mi",
+  "mealProductId": "p-056",
+  "preferredProductId": "mp-056",
+  "productIds": [
+   "mp-056"
+  ]
+ },
+ "ing-rau-song": {
+  "ingredientId": "ing-rau-song",
+  "mealProductId": "p-057",
+  "preferredProductId": "mp-057",
+  "productIds": [
+   "mp-057"
+  ]
+ },
+ "ing-bot-banh-xeo": {
+  "ingredientId": "ing-bot-banh-xeo",
+  "mealProductId": "p-058",
+  "preferredProductId": "mp-058",
+  "productIds": [
+   "mp-058"
+  ]
+ },
+ "ing-kem-tuoi": {
+  "ingredientId": "ing-kem-tuoi",
+  "mealProductId": "p-059",
+  "preferredProductId": "mp-059",
+  "productIds": [
+   "mp-059"
+  ]
+ },
+ "ing-kho-qua": {
+  "ingredientId": "ing-kho-qua",
+  "mealProductId": "p-060",
+  "preferredProductId": "mp-060",
+  "productIds": [
+   "mp-060"
+  ]
+ },
+ "ing-bot-san": {
+  "ingredientId": "ing-bot-san",
+  "mealProductId": "p-061",
+  "preferredProductId": "mp-061",
+  "productIds": [
+   "mp-061"
+  ]
+ },
+ "ing-bot-ngot": {
+  "ingredientId": "ing-bot-ngot",
+  "mealProductId": "p-062",
+  "preferredProductId": "mp-062",
+  "productIds": [
+   "mp-062"
+  ]
+ },
+ "ing-duong-cat": {
+  "ingredientId": "ing-duong-cat",
+  "mealProductId": "p-063",
+  "preferredProductId": "mp-063",
+  "productIds": [
+   "mp-063"
+  ]
+ },
+ "ing-hanh-la": {
+  "ingredientId": "ing-hanh-la",
+  "mealProductId": "p-064",
+  "preferredProductId": "mp-064",
+  "productIds": [
+   "mp-064"
+  ]
+ },
+ "ing-mien": {
+  "ingredientId": "ing-mien",
+  "mealProductId": "p-065",
+  "preferredProductId": "mp-065",
+  "productIds": [
+   "mp-065"
+  ]
+ },
+ "ing-ghe-tuoi": {
+  "ingredientId": "ing-ghe-tuoi",
+  "mealProductId": "p-066",
+  "preferredProductId": "mp-066",
+  "productIds": [
+   "mp-066"
+  ]
+ },
+ "ing-dau-hu": {
+  "ingredientId": "ing-dau-hu",
+  "mealProductId": "p-067",
+  "preferredProductId": "mp-067",
+  "productIds": [
+   "mp-067"
+  ]
+ },
+ "ing-ca-ngu": {
+  "ingredientId": "ing-ca-ngu",
+  "mealProductId": "p-068",
+  "preferredProductId": "mp-068",
+  "productIds": [
+   "mp-068"
+  ]
+ },
+ "ing-bong-cai": {
+  "ingredientId": "ing-bong-cai",
+  "mealProductId": "p-069",
+  "preferredProductId": "mp-069",
+  "productIds": [
+   "mp-069"
+  ]
+ },
+ "ing-tra-dao": {
+  "ingredientId": "ing-tra-dao",
+  "mealProductId": "p-070",
+  "preferredProductId": "mp-070",
+  "productIds": [
+   "mp-070"
+  ]
+ },
+ "ing-dao": {
+  "ingredientId": "ing-dao",
+  "mealProductId": "p-071",
+  "preferredProductId": "mp-071",
+  "productIds": [
+   "mp-071"
+  ]
+ },
+ "ing-mi-dong": {
+  "ingredientId": "ing-mi-dong",
+  "mealProductId": "p-072",
+  "preferredProductId": "mp-072",
+  "productIds": [
+   "mp-072"
+  ]
+ },
+ "ing-hat-sen": {
+  "ingredientId": "ing-hat-sen",
+  "mealProductId": "p-073",
+  "preferredProductId": "mp-073",
+  "productIds": [
+   "mp-073"
+  ]
+ },
+ "ing-rau-ngo": {
+  "ingredientId": "ing-rau-ngo",
+  "mealProductId": "p-074",
+  "preferredProductId": "mp-074",
+  "productIds": [
+   "mp-074"
+  ]
+ },
+ "ing-tieu-den": {
+  "ingredientId": "ing-tieu-den",
+  "mealProductId": "p-075",
+  "preferredProductId": "mp-075",
+  "productIds": [
+   "mp-075"
+  ]
+ }
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "freshmart": {
+      "projectType": "application",
+      "schematics": { "@schematics/angular:component": { "style": "css", "skipTests": true } },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "fm",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "src/main.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "tsconfig.app.json",
+            "assets": [{ "glob": "**/*", "input": "public" }],
+            "styles": ["src/styles.css"]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                { "type": "initial", "maximumWarning": "600kB", "maximumError": "1MB" },
+                { "type": "anyComponentStyle", "maximumWarning": "16kB", "maximumError": "24kB" }
+              ],
+              "outputHashing": "all"
+            },
+            "development": { "optimization": false, "extractLicenses": false, "sourceMap": true }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": { "proxyConfig": "src/proxy.conf.json" },
+          "configurations": {
+            "production": { "buildTarget": "freshmart:build:production" },
+            "development": { "buildTarget": "freshmart:build:development" }
+          },
+          "defaultConfiguration": "development"
+        }
+      }
+    }
+  },
+  "cli": { "analytics": false }
+}

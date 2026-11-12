@@ -1,0 +1,74 @@
+<section class="page-head band">
+  <h1 class="h2">Giỏ hàng</h1>
+  @if (cart.lines().length) { <p class="num">{{ cart.lines().length }} sản phẩm · {{ t().sub | vnd }}</p> }
+</section>
+<section class="band">
+  @if (cart.lines().length) {
+    <div class="split">
+      <div>
+        <div class="ship-note">
+          @if (needForFree() > 0) { Mua thêm <b class="num">{{ needForFree() | vnd }}</b> để được miễn phí giao hàng. }
+          @else { <b>Đơn của bạn được miễn phí giao hàng.</b> }
+          <span class="ship-bar" aria-hidden="true" style="display:block"><i [style.width.%]="freePct()"></i></span>
+        </div>
+        <ul class="lines">
+          @for (l of cart.lines(); track l.p.id) {
+            <li>
+              <a class="ph" [routerLink]="['/san-pham', l.p.slug || l.p.id]"><img [fmImg]="l.p.name" [src]="ps.img(l.p)" alt=""></a>
+              <div>
+                <a class="nm" [routerLink]="['/san-pham', l.p.slug || l.p.id]">{{ ps.shortName(l.p) }}</a>
+                <p class="meta num">{{ ps.price(l.p) | vnd }} / {{ ps.unit(l.p) }}@if (ps.off(l.p)) { · giảm {{ ps.off(l.p) }}% }</p>
+              </div>
+              <div class="lp"><span class="price num">{{ ps.price(l.p) * l.qty | vnd }}</span></div>
+              <div class="act">
+                <div class="qty">
+                  <button type="button" (click)="cart.nudge(l.p.id, -1)" [attr.aria-label]="'Bớt ' + ps.shortName(l.p)">−</button>
+                  <span class="num">{{ ps.qtyLabel(l.p, l.qty) }}</span>
+                  <button type="button" (click)="cart.nudge(l.p.id, 1)" [attr.aria-label]="'Thêm ' + ps.shortName(l.p)">+</button>
+                </div>
+                <button class="rm" type="button" (click)="remove(l.p.id)">Xóa</button>
+              </div>
+            </li>
+          }
+        </ul>
+      </div>
+      <aside class="panel sticky" aria-labelledby="h-sum">
+        <h2 class="h3" id="h-sum">Tạm tính</h2>
+        <form class="v-form" (submit)="$event.preventDefault(); apply()">
+          <label class="sr" for="v-code">Mã giảm giá</label>
+          <input id="v-code" name="code" placeholder="Nhập mã giảm giá" autocomplete="off" [value]="code()" (input)="code.set($any($event.target).value)">
+          <button class="btn btn-forest btn-sm" type="submit">Áp dụng</button>
+        </form>
+        <p class="small" [class.ok-note]="!!t().voucher" [class.v-bad]="!t().voucher && !!vMsg()" aria-live="polite" id="v-msg">{{ vMsg() }}</p>
+        <div class="sum">
+          <div><span>Tiền hàng</span><span class="num">{{ t().sub | vnd }}</span></div>
+          <div><span>Phí giao hàng</span><span class="num">{{ t().ship ? (t().ship | vnd) : 'Miễn phí' }}</span></div>
+          @if (t().voucher) { <div><span>Mã {{ t().voucher!.code }}</span><span class="num">−{{ t().disc | vnd }}</span></div> }
+          <div class="total"><span>Tổng cộng</span><b class="num">{{ t().total | vnd }}</b></div>
+        </div>
+        <a class="btn btn-forest w100" routerLink="/thanh-toan">Đặt hàng</a>
+        <a class="link small c-link" routerLink="/san-pham">Tiếp tục đi chợ</a>
+      </aside>
+    </div>
+    @if (learned().length) {
+      <section class="sec" aria-labelledby="h-tog">
+        <div class="sec-head"><div><h2 class="h2" id="h-tog">Thường được mua cùng</h2>
+          <p>Khách mua những món trong giỏ của bạn hay mua thêm các món này.</p></div></div>
+        <div class="p-grid">@for (p of learned(); track p.id) { <fm-product-card [product]="p" /> }</div>
+      </section>
+    }
+    @if (suggest().length) {
+      <section class="sec" aria-labelledby="h-sug">
+        <div class="sec-head"><div><h2 class="h2" id="h-sug">{{ needForFree() > 0 ? 'Thêm chút nữa là miễn phí giao' : 'Đang giảm giá hôm nay' }}</h2>
+          <p>{{ needForFree() > 0 ? 'Đồ tươi đang giảm giá, thêm một vài món là đủ điều kiện.' : 'Đồ tươi giảm nhiều nhất mà giỏ bạn chưa có.' }}</p></div></div>
+        <div class="p-grid">@for (p of suggest(); track p.id) { <fm-product-card [product]="p" /> }</div>
+      </section>
+    }
+  } @else {
+    <div class="empty">
+      <p class="h3">Giỏ hàng đang trống.</p>
+      <p class="muted">Ghé bảng giá sáng nay hoặc mở Meal Planner để biết hôm nay nấu gì.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-forest" routerLink="/san-pham">Đi chợ ngay</a><a class="btn btn-stone" routerLink="/meal-planner">Mở Meal Planner</a></div>
+    </div>
+  }
+</section>

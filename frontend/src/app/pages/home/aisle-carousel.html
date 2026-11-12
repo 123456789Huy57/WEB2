@@ -1,0 +1,34 @@
+<section class="ac band" aria-labelledby="h-aisle" aria-roledescription="carousel"
+  [class.dark]="c.current().dark" [style.--ac-bg]="c.current().bg"
+  (keydown.arrowright)="c.move(1)" (keydown.arrowleft)="c.move(-1)">
+  <div class="ac-head">
+    <h2 class="duo-h" id="h-aisle" fmReveal><span>Đi chợ</span><span><mark class="ac-hl">theo quầy</mark></span></h2>
+  </div>
+
+  <!-- Banner kiểu bìa tạp chí: tên quầy in khổng lồ phía sau, ảnh sản phẩm đè lên, quầy trước và sau mờ ở hai mép.
+       Bấm vào tên, ảnh hay mô tả đều vào quầy (bàn phím dùng nút "Vào quầy" nên các link này không nhận focus) -->
+  <div class="ac-banner" (pointerdown)="swipeStart($event)" (pointerup)="swipeEnd($event)">
+    @for (a of [c.current()]; track a.id) {
+      <a class="ac-giant" routerLink="/san-pham" [queryParams]="{ c: a.id }" tabindex="-1" draggable="false" aria-live="polite" (click)="guard($event)">
+        <h3 [style.--len]="a.name.length">{{ a.name }}</h3>
+      </a>
+    }
+
+    <a class="ac-stage" routerLink="/san-pham" [queryParams]="{ c: c.current().id }" tabindex="-1" aria-hidden="true" draggable="false" (click)="guard($event)">
+      @for (a of c.items; track a.id; let k = $index) {
+        <img [src]="a.img" alt="" [attr.data-pos]="c.pos(k)" [style.--fit]="a.fit" draggable="false">
+      }
+    </a>
+
+    <div class="ac-foot">
+      @for (a of [c.current()]; track a.id) {
+        <a class="ac-desc" routerLink="/san-pham" [queryParams]="{ c: a.id }" tabindex="-1" draggable="false" (click)="guard($event)">{{ a.text }}</a>
+        <a class="btn ac-btn" routerLink="/san-pham" [queryParams]="{ c: a.id }">Vào quầy {{ a.name }}</a>
+      }
+      <div class="ac-nav">
+        <button class="ac-arrow" type="button" aria-label="Quầy trước" (click)="c.move(-1)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+        <button class="ac-arrow" type="button" aria-label="Quầy sau" (click)="c.move(1)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>

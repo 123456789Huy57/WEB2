@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.angular/
+out-tsc/
+.DS_Store
+
+# Ảnh chụp và báo cáo của công cụ kiểm tra thiết kế (Taste Skill)
+.taste-skill/

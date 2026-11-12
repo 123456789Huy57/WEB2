@@ -1,0 +1,86 @@
+[
+ {
+  "id": "s-01",
+  "name": "Quận 1 - Nguyễn Huệ",
+  "address": "123 Nguyễn Huệ, P. Bến Nghé",
+  "phone": "028 3822 1111",
+  "hours": "7:00 – 22:00"
+ },
+ {
+  "id": "s-02",
+  "name": "Quận 3 - Võ Văn Tần",
+  "address": "456 Võ Văn Tần, P. Võ Thị Sáu",
+  "phone": "028 3932 2222",
+  "hours": "7:00 – 22:00"
+ },
+ {
+  "id": "s-03",
+  "name": "Quận 4 - Khánh Hội",
+  "address": "88 Khánh Hội, P. 6",
+  "phone": "028 3940 3333",
+  "hours": "7:00 – 22:00"
+ },
+ {
+  "id": "s-04",
+  "name": "Quận 5 - Trần Hưng Đạo",
+  "address": "210 Trần Hưng Đạo, P. 11",
+  "phone": "028 3855 4444",
+  "hours": "7:00 – 22:00"
+ },
+ {
+  "id": "s-05",
+  "name": "Quận 7 - Tân Hưng",
+  "address": "63 Đường Số 1, P. Tân Hưng",
+  "phone": "038 369 0006",
+  "hours": "7:00 – 22:00"
+ },
+ {
+  "id": "s-06",
+  "name": "Quận 10 - Sư Vạn Hạnh",
+  "address": "540 Sư Vạn Hạnh, P. 12",
+  "phone": "028 3868 5555",
+  "hours": "7:00 – 22:00"
+ },
+ {
+  "id": "s-07",
+  "name": "Bình Thạnh - Xô Viết Nghệ Tĩnh",
+  "address": "321 Xô Viết Nghệ Tĩnh, P. 21",
+  "phone": "028 3512 4444",
+  "hours": "7:00 – 22:00"
+ },
+ {
+  "id": "s-08",
+  "name": "Phú Nhuận - Phan Xích Long",
+  "address": "75 Phan Xích Long, P. 2",
+  "phone": "028 3995 6666",
+  "hours": "7:00 – 22:00"
+ },
+ {
+  "id": "s-09",
+  "name": "Gò Vấp - Quang Trung",
+  "address": "602 Quang Trung, P. 11",
+  "phone": "028 3894 7777",
+  "hours": "7:00 – 22:00"
+ },
+ {
+  "id": "s-10",
+  "name": "Tân Bình - Cộng Hòa",
+  "address": "234 Cộng Hòa, P. 12",
+  "phone": "028 3811 8888",
+  "hours": "7:00 – 22:00"
+ },
+ {
+  "id": "s-11",
+  "name": "Thủ Đức - Võ Văn Ngân",
+  "address": "789 Võ Văn Ngân, P. Linh Chiểu",
+  "phone": "028 3896 3333",
+  "hours": "7:00 – 22:00"
+ },
+ {
+  "id": "s-12",
+  "name": "Bình Tân - Tên Lửa",
+  "address": "110 Tên Lửa, P. Bình Trị Đông B",
+  "phone": "028 3752 9999",
+  "hours": "7:00 – 22:00"
+ }
+]

@@ -1,0 +1,60 @@
+<section class="page-head band acc-head">
+  <div><h1 class="h2">Chào {{ firstName() }}</h1><p class="muted">{{ auth.user()?.email }}</p></div>
+  <button class="btn btn-stone btn-sm" type="button" (click)="logout()">Đăng xuất</button>
+</section>
+<section class="band acc">
+  <nav class="acc-nav" role="tablist" aria-label="Mục tài khoản">
+    @for (t of tabs; track t.key) {
+      <button class="tab" role="tab" type="button" [attr.aria-selected]="tab() === t.key" (click)="tab.set(t.key)">{{ t.label }}</button>
+    }
+  </nav>
+  <div class="acc-body">
+    @switch (tab()) {
+      @case ('orders') {
+        <div class="orders">
+          @for (o of orders(); track o.orderCode) {
+            <fm-order-card [order]="o" (again)="buyAgain($event)" (cancel)="cancelOrder($event)" />
+          } @empty {
+            <div class="empty"><p class="h3">Bạn chưa có đơn hàng nào.</p><p class="muted">Đơn đặt khi đã đăng nhập sẽ hiện ở đây, kèm tiến trình giao hàng.</p><a class="btn btn-forest" routerLink="/san-pham">Đi chợ ngay</a></div>
+          }
+        </div>
+      }
+      @case ('wish') {
+        <div class="p-grid acc-grid">
+          @for (p of wishProducts(); track p.id) { <fm-product-card [product]="p" /> }
+          @empty {
+            <div class="empty" style="grid-column:1/-1"><p class="h3">Chưa có món yêu thích.</p><p class="muted">Bấm biểu tượng trái tim ở trang sản phẩm để lưu lại.</p><a class="btn btn-forest" routerLink="/san-pham">Đi chợ ngay</a></div>
+          }
+        </div>
+      }
+      @case ('vouchers') {
+        @if (savedVouchers().length) {
+          <fm-voucher-list [list]="savedVouchers()" mode="use" (use)="useVoucher($event)" />
+        } @else {
+          <div class="empty"><p class="h3">Chưa lưu mã nào.</p><a class="btn btn-forest" routerLink="/uu-dai">Xem ưu đãi</a></div>
+        }
+      }
+      @case ('profile') {
+        <form class="form-grid prof" #profileForm="ngForm" (ngSubmit)="saveProfile(profileForm)" novalidate>
+          <div class="field"><label for="p-name">Họ và tên</label><input #profileName="ngModel" id="p-name" name="name" autocomplete="name" required minlength="2" [(ngModel)]="profile.fullName">
+            @if (profileName.invalid && (profileName.touched || profileForm.submitted)) { <span class="err">Nhập họ tên, ít nhất 2 ký tự</span> }
+          </div>
+          <div class="field"><label for="p-phone">Số điện thoại</label><input #profilePhone="ngModel" id="p-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required pattern="0[0-9]{9}" [(ngModel)]="profile.phone">
+            @if (profilePhone.invalid && (profilePhone.touched || profileForm.submitted)) { <span class="err">Số điện thoại gồm 10 số, bắt đầu bằng 0</span> }
+          </div>
+          <div class="field full"><label for="p-email">Email</label><input id="p-email" name="email" type="email" [value]="auth.user()?.email" disabled></div>
+          <div class="field full"><label for="p-addr">Địa chỉ giao hàng mặc định</label><input id="p-addr" name="address" autocomplete="street-address" [(ngModel)]="profile.address"></div>
+          <div class="full"><button class="btn btn-forest" type="submit" [disabled]="profileBusy()">{{ profileBusy() ? 'Đang lưu…' : 'Lưu thông tin' }}</button></div>
+        </form>
+        <form class="form-grid prof" [formGroup]="passwordForm" (ngSubmit)="changePassword()" style="margin-top:32px">
+          <h2 class="h3 full">Đổi mật khẩu</h2>
+          <div class="field full"><label for="pw-current">Mật khẩu hiện tại</label><input id="pw-current" name="currentPassword" type="password" autocomplete="current-password" formControlName="current"></div>
+          <div class="field"><label for="pw-next">Mật khẩu mới</label><input id="pw-next" name="newPassword" type="password" autocomplete="new-password" formControlName="next"></div>
+          <div class="field"><label for="pw-confirm">Nhập lại mật khẩu mới</label><input id="pw-confirm" name="confirmPassword" type="password" autocomplete="new-password" formControlName="confirm" [attr.aria-invalid]="(pwTried() || passwordForm.controls.confirm.touched) && passwordForm.hasError('fieldsMismatch')"></div>
+          <p class="err small full" role="status">{{ passwordError() }}</p>
+          <div class="full"><button class="btn btn-forest" type="submit" [disabled]="passwordBusy()">{{ passwordBusy() ? 'Đang xử lý…' : 'Đổi mật khẩu' }}</button></div>
+        </form>
+      }
+    }
+  </div>
+</section>

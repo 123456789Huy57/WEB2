@@ -1,0 +1,18 @@
+const router = require('express').Router();
+const c = require('./catalog.controller');
+const { requireAuth, requireAdmin } = require('../../middleware/auth');
+router.get('/products', c.listProducts);
+router.get('/products/slug/:slug', c.showProductBySlug);
+router.get('/products/:id', c.showProduct);
+router.get('/categories', c.listCategories);
+router.use('/admin/products', requireAuth, requireAdmin);
+router.get('/admin/products', c.listAdminProducts);
+router.post('/admin/products', c.createProduct);
+router.patch('/admin/products/:id', c.updateProduct);
+router.delete('/admin/products/:id', c.hideProduct);
+router.use('/admin/categories', requireAuth, requireAdmin);
+router.get('/admin/categories', c.listAdminCategories);
+router.post('/admin/categories', c.createCategory);
+router.patch('/admin/categories/:id', c.updateCategory);
+router.delete('/admin/categories/:id', c.hideCategory);
+module.exports = router;

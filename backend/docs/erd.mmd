@@ -1,0 +1,120 @@
+erDiagram
+  users {
+    string id PK "u-UUID"
+    string email UK
+    string phone UK
+    string passwordHash "bcrypt"
+    string role "customer | admin"
+    bool isActive
+  }
+  categories {
+    string id PK
+    string slug UK
+    array subcategories "nhúng {id,name}"
+  }
+  products {
+    string id PK "p-0053"
+    string slug UK
+    string category FK
+    number price
+    number sale_price
+    string unit "Kg, Hộp..."
+    number stock "không âm"
+    array gallery "URL ảnh (Cloudinary)"
+    object nutrition "nhúng"
+    number rating "từ reviews"
+  }
+  orders {
+    string id PK "ord-UUID"
+    string orderCode UK "FM-YYYYMMDD-XXXXXXXX"
+    string userId FK
+    object customer "nhúng: tên, SĐT, địa chỉ"
+    array items "nhúng: bản chụp tên, giá, SL"
+    array history "nhúng: lịch sử trạng thái"
+    number total "= subtotal + ship - giảm"
+    string status "pending..delivered|cancelled"
+    string paymentMethod "cod | vnpay"
+    string paymentStatus "unpaid | paid"
+    string idempotencyKey "chống đặt trùng"
+  }
+  vouchers {
+    string id PK
+    string code UK
+    string audience "all | new_customer"
+    number usageLimit "tổng suất"
+    number usedCount "<= usageLimit"
+    number perUserLimit
+  }
+  voucherUsages {
+    string id PK "voucher:user:slot"
+    string voucherId FK
+    string userId FK
+    string orderId FK, UK
+  }
+  savedVouchers {
+    string userId FK
+    string code FK
+  }
+  inventoryMovements {
+    string id PK
+    string operationId UK "chống ghi trùng"
+    string productId FK
+    string orderId FK
+    string type "order | cancel | adjustment"
+    number quantityDelta
+    number stockAfter
+  }
+  payments {
+    string id PK
+    string orderId FK
+    string txnRef UK
+    string provider "vnpay | mock"
+    string status "pending | paid | failed"
+  }
+  reviews {
+    string id PK
+    string productId FK
+    string userId FK
+    string orderId FK "đơn đã giao"
+    number rating "1-5"
+  }
+  recipes {
+    string id PK
+    string slug UK
+    number servings
+    array ingredients "nhúng: ingredientId, lượng, đơn vị"
+    object nutrition
+  }
+  ingredients {
+    string id PK
+    string name
+    number unitWeightGram
+  }
+  ingredientProducts {
+    string ingredientId PK, FK
+    string preferredProductId FK
+    array productIds FK
+  }
+  recipeCooks {
+    string id PK "ngày:món:người"
+    string recipeId FK
+    string actorKey "user hoặc session"
+    string day
+  }
+  categories ||--o{ products : chứa
+  users ||--o{ orders : đặt
+  orders }o--o{ products : "items.productId"
+  users ||--o{ savedVouchers : lưu
+  vouchers ||--o{ savedVouchers : ""
+  vouchers ||--o{ voucherUsages : "được dùng"
+  orders ||--o| voucherUsages : "áp dụng"
+  products ||--o{ inventoryMovements : "biến động"
+  orders ||--o{ inventoryMovements : "trừ/hoàn kho"
+  orders ||--o{ payments : "thanh toán"
+  products ||--o{ reviews : ""
+  users ||--o{ reviews : viết
+  orders ||--o{ reviews : "chứng minh đã mua"
+  recipes }o--o{ ingredients : "ingredients.ingredientId"
+  ingredients ||--|| ingredientProducts : "mua bằng"
+  ingredientProducts }o--o{ products : productIds
+  recipes ||--o{ recipeCooks : "được nấu"

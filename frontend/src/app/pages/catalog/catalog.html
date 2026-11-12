@@ -1,0 +1,92 @@
+<section class="page-head band">
+  <nav class="crumbs" aria-label="Đường dẫn"><a routerLink="/">Trang chủ</a><span aria-hidden="true">/</span>
+    @if (sub()) { <a routerLink="/san-pham" [queryParams]="{ c: cat()!.id }">{{ crumb() }}</a><span aria-hidden="true">/</span><span>{{ subName() }}</span> }
+    @else { <span>{{ crumb() }}</span> }
+  </nav>
+  <h1 class="h2">{{ title() }}</h1>
+  <p>{{ desc() }}</p>
+</section>
+<section class="band cat">
+  <aside class="cat-side" [class.open]="filtersOpen()" aria-label="Bộ lọc">
+    <div class="f-group">
+      <h2 class="f-h">Quầy hàng</h2>
+      <ul class="cat-list">
+        <li><a routerLink="/san-pham" [queryParams]="{}" [attr.aria-current]="!cat() ? 'page' : null"><span>Tất cả quầy</span></a></li>
+        @for (c of ps.categories(); track c.id) {
+          @let active = cat()?.id === c.id;
+          @let multi = c.subcategories.length > 1;
+          <li [class.has-sub]="multi && !active">
+            <a routerLink="/san-pham" [queryParams]="{ c: c.id }" [attr.aria-current]="active && !sub() ? 'page' : null" [class.on]="active">
+              <span>{{ ps.catName(c) }}</span>
+              
+            </a>
+            @if (multi) {
+              <!-- Quầy đang chọn: loại hàng mở ngay bên dưới. Quầy khác: rê chuột để thấy loại hàng ở bảng bên phải -->
+              <ul class="sub-list" [class.inline]="active" [attr.aria-label]="'Loại hàng trong ' + ps.catName(c)">
+                @for (s of c.subcategories; track s.id) {
+                  <li><a routerLink="/san-pham" [queryParams]="{ c: c.id, loai: s.id }" [attr.aria-current]="active && sub() === s.id ? 'page' : null"><span>{{ s.name }}</span></a></li>
+                }
+              </ul>
+            }
+          </li>
+        }
+      </ul>
+    </div>
+    <div class="f-group">
+      <h2 class="f-h">Khoảng giá</h2>
+      <ul class="opt-list" role="radiogroup" aria-label="Khoảng giá">
+        @for (r of priceRanges; track r.key) {
+          <li><button type="button" role="radio" [attr.aria-checked]="price() === r.key" (click)="price.set(price() === r.key ? '' : r.key)">{{ r.label }}</button></li>
+        }
+      </ul>
+    </div>
+    <div class="f-group">
+      <label class="check"><input type="checkbox" [checked]="sale()" (change)="sale.set($any($event.target).checked)"> Đang giảm giá</label>
+      <label class="check" style="margin-top:12px"><input type="checkbox" [checked]="inStock()" (change)="inStock.set($any($event.target).checked)"> Còn hàng</label>
+    </div>
+  </aside>
+  <div class="cat-main">
+    <div class="cat-bar">
+      <p id="count" class="num" aria-live="polite">{{ results().length }} sản phẩm</p>
+      <div class="cat-bar-r">
+        <button class="btn btn-stone btn-sm f-open" type="button" (click)="filtersOpen.set(!filtersOpen())">{{ filtersOpen() ? 'Ẩn bộ lọc' : 'Bộ lọc' }}</button>
+        <label class="sr" for="sort">Sắp xếp</label>
+        <select id="sort" class="sort" [value]="sort()" (change)="sort.set($any($event.target).value)">
+          <option value="pop">Bán chạy nhất</option>
+          <option value="new">Mới nhất</option>
+          <option value="asc">Giá thấp đến cao</option>
+          <option value="desc">Giá cao đến thấp</option>
+          <option value="off">Giảm nhiều nhất</option>
+        </select>
+      </div>
+    </div>
+    @if (active().length) {
+      <div class="active-f">
+        @for (f of active(); track f.key) {
+          <button class="chip" type="button" (click)="clear(f.key)">{{ f.label }} <span aria-hidden="true">×</span><span class="sr">Bỏ lọc</span></button>
+        }
+        @if (active().length > 1) { <button class="chip" type="button" (click)="clear('all')">Xóa tất cả</button> }
+      </div>
+    }
+    <h2 class="sr">Danh sách sản phẩm</h2>
+    <div class="p-grid cat-grid">
+      @for (p of shown(); track p.id) {
+        <fm-product-card [product]="p" />
+      } @empty {
+        <div class="empty cat-empty">
+          <p class="h3">Chưa có sản phẩm khớp bộ lọc này.</p>
+          <p class="muted">Thử bỏ bớt điều kiện hoặc tìm bằng tên gọi khác, ví dụ “ba rọi” thay cho “thịt ba chỉ”.</p>
+          <button class="btn btn-forest" type="button" (click)="clear('all')">Xóa bộ lọc</button>
+        </div>
+      }
+    </div>
+    @if (results().length) {
+      <div class="more">
+        <p class="small muted num">Đang xem {{ shown().length }} trên {{ results().length }} sản phẩm</p>
+        @if (shown().length < results().length) {
+          <button class="btn btn-stone" type="button" (click)="limit.set(limit() + 12)">Xem thêm sản phẩm</button>
+        }
+      </div>
+    }
+  </div>
+</section>

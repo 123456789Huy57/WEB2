@@ -1,0 +1,3697 @@
+[
+  {
+    "id": "rec-001",
+    "slug": "trung-ga-xao-ca-chua",
+    "name": "Trứng gà xào cà chua",
+    "mealType": "breakfast",
+    "servings": 2,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 10,
+    "difficulty": "easy",
+    "imageUrl": "https://i.pinimg.com/736x/bf/51/c6/bf51c64ae21f040012fdc442c689a31b.jpg",
+    "ingredients": [
+      {
+        "productId": "p-001",
+        "quantity": 4,
+        "unit": "quả",
+        "mealProductId": "p-001",
+        "ingredientId": "ing-trung-ga-ta"
+      },
+      {
+        "productId": "p-009",
+        "quantity": 2,
+        "unit": "quả",
+        "mealProductId": "p-009",
+        "ingredientId": "ing-ca-chua"
+      }
+    ],
+    "steps": [
+      "Rửa sạch nguyên liệu.",
+      "Xào cà chua rồi cho trứng vào.",
+      "Nêm gia vị và dùng nóng."
+    ],
+    "nutrition": {
+      "calories": 320,
+      "protein": 18,
+      "carbs": 10,
+      "fat": 20
+    },
+    "tags": [
+      "healthy",
+      "quick"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-002",
+    "slug": "uc-ga-ap-chao",
+    "name": "Ức gà áp chảo",
+    "mealType": "lunch",
+    "servings": 2,
+    "prepTimeMinutes": 15,
+    "cookTimeMinutes": 20,
+    "difficulty": "easy",
+    "imageUrl": "https://i.pinimg.com/736x/f3/2e/d4/f32ed4e0bc62a091c12064beab68cd6f.jpg",
+    "ingredients": [
+      {
+        "productId": "p-002",
+        "quantity": 400,
+        "unit": "g",
+        "mealProductId": "p-002",
+        "ingredientId": "ing-uc-ga-tuoi"
+      },
+      {
+        "productId": "p-013",
+        "quantity": 1,
+        "unit": "cây",
+        "mealProductId": "p-013",
+        "ingredientId": "ing-xa-lach"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Sơ chế và thấm khô ức gà",
+        "description": "Rửa nhanh ức gà dưới vòi nước sạch nếu cần, sau đó dùng khăn giấy thấm thật khô. Có thể khứa nhẹ vài đường ở phần thịt dày để miếng gà chín đều hơn.",
+        "durationMinutes": 5,
+        "tip": "Miếng thịt có độ dày đồng đều sẽ chín ổn định hơn khi áp chảo."
+      },
+      {
+        "title": "Ướp thịt cho thấm vị",
+        "description": "Ướp ức gà với muối, tiêu và gia vị phù hợp khẩu vị. Xoa đều hai mặt rồi để nghỉ trong vài phút trong lúc làm nóng chảo.",
+        "durationMinutes": 10,
+        "tip": "Không cần nêm quá nhiều gia vị; có thể điều chỉnh nước sốt hoặc gia vị khi ăn."
+      },
+      {
+        "title": "Làm nóng chảo",
+        "description": "Đặt chảo lên bếp ở lửa vừa. Thêm một lượng dầu ăn vừa đủ láng mặt chảo. Khi chảo nóng, nhẹ nhàng đặt ức gà vào, tránh để các miếng chồng lên nhau.",
+        "durationMinutes": 2,
+        "tip": "Nếu chảo chưa đủ nóng, thịt dễ tiết nước và khó tạo lớp vàng bên ngoài."
+      },
+      {
+        "title": "Áp chảo đến khi chín",
+        "description": "Áp chảo một mặt đến khi bề mặt vàng nhẹ rồi lật mặt còn lại. Hạ lửa vừa hoặc nhỏ để phần giữa chín mà bên ngoài không bị cháy. Thời gian thực tế tùy độ dày miếng thịt; kiểm tra phần dày nhất đã chín hoàn toàn trước khi dùng.",
+        "durationMinutes": 12,
+        "tip": "Không ấn mạnh miếng gà bằng xẻng vì có thể làm thịt mất nước."
+      },
+      {
+        "title": "Để thịt nghỉ và hoàn thiện món",
+        "description": "Gắp gà ra đĩa, để nghỉ vài phút rồi thái lát vừa ăn. Dùng kèm xà lách đã rửa sạch và để ráo. Nếm lại, điều chỉnh gia vị nếu cần và thưởng thức khi còn ấm.",
+        "durationMinutes": 3,
+        "tip": "Để thịt nghỉ ngắn giúp phần nước trong thịt phân bố lại, miếng gà đỡ khô hơn."
+      }
+    ],
+    "nutrition": {
+      "calories": 410,
+      "protein": 42,
+      "carbs": 8,
+      "fat": 14
+    },
+    "tags": [
+      "high-protein"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-003",
+    "slug": "thit-heo-xao-rau-muong",
+    "name": "Thịt heo xào rau muống",
+    "mealType": "dinner",
+    "servings": 2,
+    "prepTimeMinutes": 15,
+    "cookTimeMinutes": 15,
+    "difficulty": "easy",
+    "imageUrl": "https://i.pinimg.com/736x/a2/17/d0/a217d08f664e6b327819bd82f0fcb5cd.jpg",
+    "ingredients": [
+      {
+        "productId": "p-003",
+        "quantity": 250,
+        "unit": "g",
+        "mealProductId": "p-003",
+        "ingredientId": "ing-ba-chi-heo"
+      },
+      {
+        "productId": "p-010",
+        "quantity": 1,
+        "unit": "bó",
+        "mealProductId": "p-010",
+        "ingredientId": "ing-rau-muong"
+      }
+    ],
+    "steps": [
+      "Rửa và sơ chế rau.",
+      "Xào thịt trước rồi cho rau vào.",
+      "Nêm vừa ăn."
+    ],
+    "nutrition": {
+      "calories": 520,
+      "protein": 26,
+      "carbs": 12,
+      "fat": 35
+    },
+    "tags": [
+      "family"
+    ],
+    "goalTags": [
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-004",
+    "slug": "than-bo-rau-cu",
+    "name": "Thăn bò xào rau củ",
+    "mealType": "dinner",
+    "servings": 2,
+    "prepTimeMinutes": 15,
+    "cookTimeMinutes": 18,
+    "difficulty": "medium",
+    "imageUrl": "https://fujifoods.vn/wp-content/uploads/2020/12/thit-bo-xao-2.jpg",
+    "ingredients": [
+      {
+        "productId": "p-004",
+        "quantity": 300,
+        "unit": "g",
+        "mealProductId": "p-004",
+        "ingredientId": "ing-than-bo"
+      },
+      {
+        "productId": "p-012",
+        "quantity": 2,
+        "unit": "củ",
+        "mealProductId": "p-012",
+        "ingredientId": "ing-ca-rot"
+      },
+      {
+        "productId": "p-011",
+        "quantity": 1,
+        "unit": "kg",
+        "mealProductId": "p-011",
+        "ingredientId": "ing-dua-leo"
+      }
+    ],
+    "steps": [
+      "Ướp bò.",
+      "Xào rau củ.",
+      "Cho bò vào đảo nhanh."
+    ],
+    "nutrition": {
+      "calories": 460,
+      "protein": 32,
+      "carbs": 14,
+      "fat": 28
+    },
+    "tags": [
+      "high-protein",
+      "premium"
+    ],
+    "goalTags": [
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-005",
+    "slug": "tom-salad",
+    "name": "Salad tôm",
+    "mealType": "lunch",
+    "servings": 2,
+    "prepTimeMinutes": 12,
+    "cookTimeMinutes": 8,
+    "difficulty": "easy",
+    "imageUrl": "https://i.pinimg.com/736x/9c/d1/00/9cd1006884449e49e8253de8d89fe56c.jpg",
+    "ingredients": [
+      {
+        "productId": "p-005",
+        "quantity": 250,
+        "unit": "g",
+        "mealProductId": "p-005",
+        "ingredientId": "ing-tom-su"
+      },
+      {
+        "productId": "p-011",
+        "quantity": 2,
+        "unit": "quả",
+        "mealProductId": "p-011",
+        "ingredientId": "ing-dua-leo"
+      },
+      {
+        "productId": "p-013",
+        "quantity": 1,
+        "unit": "cây",
+        "mealProductId": "p-013",
+        "ingredientId": "ing-xa-lach"
+      }
+    ],
+    "steps": [
+      "Luộc tôm.",
+      "Trộn với rau và dưa leo.",
+      "Rưới sốt nhẹ."
+    ],
+    "nutrition": {
+      "calories": 280,
+      "protein": 24,
+      "carbs": 10,
+      "fat": 10
+    },
+    "tags": [
+      "healthy",
+      "quick"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-006",
+    "slug": "ca-hoi-rice-bowl",
+    "name": "Cơm cá hồi",
+    "mealType": "lunch",
+    "servings": 2,
+    "prepTimeMinutes": 15,
+    "cookTimeMinutes": 18,
+    "difficulty": "medium",
+    "imageUrl": "https://i.pinimg.com/736x/02/8b/b2/028bb267de91a27fe3a56e8972b0fd91.jpg",
+    "ingredients": [
+      {
+        "productId": "p-006",
+        "quantity": 300,
+        "unit": "g",
+        "mealProductId": "p-006",
+        "ingredientId": "ing-ca-hoi"
+      },
+      {
+        "productId": "p-018",
+        "quantity": 2,
+        "unit": "chén",
+        "mealProductId": "p-018",
+        "ingredientId": "ing-gao-thom"
+      },
+      {
+        "productId": "p-010",
+        "quantity": 1,
+        "unit": "bó",
+        "mealProductId": "p-010",
+        "ingredientId": "ing-rau-muong"
+      }
+    ],
+    "steps": [
+      "Nướng cá hồi.",
+      "Nấu cơm.",
+      "Ăn kèm rau luộc."
+    ],
+    "nutrition": {
+      "calories": 540,
+      "protein": 34,
+      "carbs": 42,
+      "fat": 22
+    },
+    "tags": [
+      "healthy"
+    ],
+    "goalTags": [
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-007",
+    "slug": "pho-ca-basa",
+    "name": "Phở cá basa",
+    "mealType": "breakfast",
+    "servings": 2,
+    "prepTimeMinutes": 20,
+    "cookTimeMinutes": 25,
+    "difficulty": "medium",
+    "imageUrl": "https://bizweb.dktcdn.net/100/489/006/files/canh-chua-ca-basa-10.jpg?v=1702279140518",
+    "ingredients": [
+      {
+        "productId": "p-008",
+        "quantity": 300,
+        "unit": "g",
+        "mealProductId": "p-008",
+        "ingredientId": "ing-ca-basa"
+      },
+      {
+        "productId": "p-020",
+        "quantity": 1,
+        "unit": "gói",
+        "mealProductId": "p-020",
+        "ingredientId": "ing-pho-kho"
+      },
+      {
+        "productId": "p-009",
+        "quantity": 1,
+        "unit": "quả",
+        "mealProductId": "p-009",
+        "ingredientId": "ing-ca-chua"
+      }
+    ],
+    "steps": [
+      "Nấu nước dùng.",
+      "Luộc phở.",
+      "Bày cá và rau lên tô."
+    ],
+    "nutrition": {
+      "calories": 430,
+      "protein": 22,
+      "carbs": 52,
+      "fat": 12
+    },
+    "tags": [
+      "breakfast"
+    ],
+    "goalTags": [
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-008",
+    "slug": "yen-mach-chuoi",
+    "name": "Yến mạch chuối",
+    "mealType": "breakfast",
+    "servings": 2,
+    "prepTimeMinutes": 5,
+    "cookTimeMinutes": 5,
+    "difficulty": "easy",
+    "imageUrl": "https://i.pinimg.com/1200x/f3/31/f1/f331f169e82168beba8d1ff1e539518f.jpg",
+    "ingredients": [
+      {
+        "productId": "p-021",
+        "quantity": 80,
+        "unit": "g",
+        "mealProductId": "p-021",
+        "ingredientId": "ing-yen-mach"
+      },
+      {
+        "productId": "p-015",
+        "quantity": 2,
+        "unit": "quả",
+        "mealProductId": "p-015",
+        "ingredientId": "ing-chuoi-gia"
+      },
+      {
+        "productId": "p-026",
+        "quantity": 200,
+        "unit": "ml",
+        "mealProductId": "p-026",
+        "ingredientId": "ing-sua-tuoi-khong-duong"
+      }
+    ],
+    "steps": [
+      "Ngâm yến mạch.",
+      "Cắt chuối.",
+      "Trộn cùng sữa."
+    ],
+    "nutrition": {
+      "calories": 310,
+      "protein": 11,
+      "carbs": 47,
+      "fat": 8
+    },
+    "tags": [
+      "healthy",
+      "vegetarian"
+    ],
+    "goalTags": [
+      "healthy",
+      "vegetarian"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-009",
+    "slug": "sua-chua-trai-cay",
+    "name": "Sữa chua trái cây",
+    "mealType": "snack",
+    "servings": 2,
+    "prepTimeMinutes": 5,
+    "cookTimeMinutes": 0,
+    "difficulty": "easy",
+    "imageUrl": "https://kimmyfarm.com/wp-content/uploads/2022/09/trai-cay-tron-sua-chua-3.jpg",
+    "ingredients": [
+      {
+        "productId": "p-027",
+        "quantity": 2,
+        "unit": "chai",
+        "mealProductId": "p-027",
+        "ingredientId": "ing-sua-chua-uong"
+      },
+      {
+        "productId": "p-014",
+        "quantity": 1,
+        "unit": "quả",
+        "mealProductId": "p-014",
+        "ingredientId": "ing-xoai-cat"
+      },
+      {
+        "productId": "p-016",
+        "quantity": 1,
+        "unit": "quả",
+        "mealProductId": "p-016",
+        "ingredientId": "ing-tao-do"
+      }
+    ],
+    "steps": [
+      "Cắt trái cây.",
+      "Trộn với sữa chua.",
+      "Dùng lạnh."
+    ],
+    "nutrition": {
+      "calories": 220,
+      "protein": 8,
+      "carbs": 34,
+      "fat": 5
+    },
+    "tags": [
+      "snack",
+      "vegetarian"
+    ],
+    "goalTags": [
+      "vegetarian"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-010",
+    "slug": "rau-muong-toi",
+    "name": "Rau muống xào tỏi",
+    "mealType": "dinner",
+    "servings": 2,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 8,
+    "difficulty": "easy",
+    "imageUrl": "https://www.hoidaubepaau.com/wp-content/uploads/2019/12/rau-muong-xao-toi.jpg",
+    "ingredients": [
+      {
+        "productId": "p-010",
+        "quantity": 2,
+        "unit": "bó",
+        "mealProductId": "p-010",
+        "ingredientId": "ing-rau-muong"
+      },
+      {
+        "productId": "p-024",
+        "quantity": 1,
+        "unit": "muỗng",
+        "mealProductId": "p-024",
+        "ingredientId": "ing-dau-an"
+      },
+      {
+        "productId": "p-025",
+        "quantity": 1,
+        "unit": "muỗng",
+        "mealProductId": "p-025",
+        "ingredientId": "ing-muoi-iod"
+      }
+    ],
+    "steps": [
+      "Phi tỏi với dầu.",
+      "Cho rau vào xào nhanh.",
+      "Nêm muối vừa ăn."
+    ],
+    "nutrition": {
+      "calories": 150,
+      "protein": 4,
+      "carbs": 12,
+      "fat": 8
+    },
+    "tags": [
+      "vegetarian",
+      "budget"
+    ],
+    "goalTags": [
+      "vegetarian",
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-011",
+    "slug": "com-ga-nuong",
+    "name": "Cơm gà nướng",
+    "mealType": "lunch",
+    "servings": 2,
+    "prepTimeMinutes": 20,
+    "cookTimeMinutes": 25,
+    "difficulty": "medium",
+    "imageUrl": "https://luongthuc.org/wp-content/uploads/2022/09/Cach-lam-com-tam-ga-nuong-ngon-don-gian-hap-dan-scaled.jpg",
+    "ingredients": [
+      {
+        "productId": "p-002",
+        "quantity": 350,
+        "unit": "g",
+        "mealProductId": "p-002",
+        "ingredientId": "ing-uc-ga-tuoi"
+      },
+      {
+        "productId": "p-018",
+        "quantity": 2,
+        "unit": "chén",
+        "mealProductId": "p-018",
+        "ingredientId": "ing-gao-thom"
+      },
+      {
+        "productId": "p-012",
+        "quantity": 2,
+        "unit": "củ",
+        "mealProductId": "p-012",
+        "ingredientId": "ing-ca-rot"
+      }
+    ],
+    "steps": [
+      "Ướp gà.",
+      "Nướng chín.",
+      "Ăn kèm cơm và cà rốt."
+    ],
+    "nutrition": {
+      "calories": 520,
+      "protein": 40,
+      "carbs": 38,
+      "fat": 18
+    },
+    "tags": [
+      "high-protein"
+    ],
+    "goalTags": [
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-012",
+    "slug": "tom-xao-ca-chua",
+    "name": "Tôm xào cà chua",
+    "mealType": "dinner",
+    "servings": 2,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 10,
+    "difficulty": "easy",
+    "imageUrl": "https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/163671/Originals/tom-xao-8.jpg",
+    "ingredients": [
+      {
+        "productId": "p-005",
+        "quantity": 250,
+        "unit": "g",
+        "mealProductId": "p-005",
+        "ingredientId": "ing-tom-su"
+      },
+      {
+        "productId": "p-009",
+        "quantity": 3,
+        "unit": "quả",
+        "mealProductId": "p-009",
+        "ingredientId": "ing-ca-chua"
+      }
+    ],
+    "steps": [
+      "Xào cà chua.",
+      "Cho tôm vào đảo nhanh.",
+      "Nêm vừa ăn."
+    ],
+    "nutrition": {
+      "calories": 260,
+      "protein": 25,
+      "carbs": 12,
+      "fat": 8
+    },
+    "tags": [
+      "seafood",
+      "quick"
+    ],
+    "goalTags": [
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-013",
+    "slug": "muc-nuong",
+    "name": "Mực nướng",
+    "mealType": "lunch",
+    "servings": 2,
+    "prepTimeMinutes": 15,
+    "cookTimeMinutes": 15,
+    "difficulty": "medium",
+    "imageUrl": "https://tiki.vn/blog/wp-content/uploads/2023/10/aFhxqqJ_Id6Yyby10-lNl1usO97f_u6k6p5VR35-zWQVLgh40db-AfPgmnT78JfDYET5BgU9LibB8p1a_wjp8kYeD7WJ4GlzMypp5TgoXERx3U107Jlyb1a8k9S1Uej9l7zFGy5WpmZHK9q6keEmDWI.jpg",
+    "ingredients": [
+      {
+        "productId": "p-007",
+        "quantity": 300,
+        "unit": "g",
+        "mealProductId": "p-007",
+        "ingredientId": "ing-muc-ong"
+      },
+      {
+        "productId": "p-011",
+        "quantity": 1,
+        "unit": "kg",
+        "mealProductId": "p-011",
+        "ingredientId": "ing-dua-leo"
+      }
+    ],
+    "steps": [
+      "Ướp mực.",
+      "Nướng chín.",
+      "Ăn kèm dưa leo."
+    ],
+    "nutrition": {
+      "calories": 300,
+      "protein": 28,
+      "carbs": 10,
+      "fat": 10
+    },
+    "tags": [
+      "seafood"
+    ],
+    "goalTags": [
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-014",
+    "slug": "banh-yen-mach-sua",
+    "name": "Bánh yến mạch sữa",
+    "mealType": "breakfast",
+    "servings": 2,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 10,
+    "difficulty": "easy",
+    "imageUrl": "https://www.dacsanhuongviet.vn/site/wp-content/uploads/2022/12/banh-oatmeal-01-web-1-768x768.jpg",
+    "ingredients": [
+      {
+        "productId": "p-021",
+        "quantity": 100,
+        "unit": "g",
+        "mealProductId": "p-021",
+        "ingredientId": "ing-yen-mach"
+      },
+      {
+        "productId": "p-026",
+        "quantity": 250,
+        "unit": "ml",
+        "mealProductId": "p-026",
+        "ingredientId": "ing-sua-tuoi-khong-duong"
+      },
+      {
+        "productId": "p-015",
+        "quantity": 1,
+        "unit": "quả",
+        "mealProductId": "p-015",
+        "ingredientId": "ing-chuoi-gia"
+      }
+    ],
+    "steps": [
+      "Trộn yến mạch và sữa.",
+      "Nấu cho đặc.",
+      "Thêm chuối lên trên."
+    ],
+    "nutrition": {
+      "calories": 330,
+      "protein": 12,
+      "carbs": 48,
+      "fat": 9
+    },
+    "tags": [
+      "vegetarian",
+      "healthy"
+    ],
+    "goalTags": [
+      "vegetarian",
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-015",
+    "slug": "ca-basa-kho-to",
+    "name": "Cá basa kho tộ",
+    "mealType": "dinner",
+    "servings": 2,
+    "prepTimeMinutes": 15,
+    "cookTimeMinutes": 25,
+    "difficulty": "medium",
+    "imageUrl": "https://yummyday.vn/uploads/images/cach-lam-ca-basa-kho-to.jpg",
+    "ingredients": [
+      {
+        "productId": "p-008",
+        "quantity": 350,
+        "unit": "g",
+        "mealProductId": "p-008",
+        "ingredientId": "ing-ca-basa"
+      },
+      {
+        "productId": "p-022",
+        "quantity": 2,
+        "unit": "muỗng",
+        "mealProductId": "p-022",
+        "ingredientId": "ing-nuoc-mam"
+      },
+      {
+        "productId": "p-018",
+        "quantity": 2,
+        "unit": "chén",
+        "mealProductId": "p-018",
+        "ingredientId": "ing-gao-thom"
+      }
+    ],
+    "steps": [
+      "Ướp cá.",
+      "Kho cá với nước mắm.",
+      "Ăn cùng cơm nóng."
+    ],
+    "nutrition": {
+      "calories": 440,
+      "protein": 29,
+      "carbs": 34,
+      "fat": 16
+    },
+    "tags": [
+      "family"
+    ],
+    "goalTags": [
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-016",
+    "slug": "mon-trai-cay",
+    "name": "Đĩa trái cây",
+    "mealType": "snack",
+    "servings": 2,
+    "prepTimeMinutes": 5,
+    "cookTimeMinutes": 0,
+    "difficulty": "easy",
+    "imageUrl": "http://media.vietq.vn/files/lehoa/2018/02/08/cach-trang-tri-dia-trai-cay.jpg",
+    "ingredients": [
+      {
+        "productId": "p-014",
+        "quantity": 1,
+        "unit": "quả",
+        "mealProductId": "p-014",
+        "ingredientId": "ing-xoai-cat"
+      },
+      {
+        "productId": "p-016",
+        "quantity": 1,
+        "unit": "quả",
+        "mealProductId": "p-016",
+        "ingredientId": "ing-tao-do"
+      },
+      {
+        "productId": "p-017",
+        "quantity": 1,
+        "unit": "quả",
+        "mealProductId": "p-017",
+        "ingredientId": "ing-thanh-long"
+      }
+    ],
+    "steps": [
+      "Rửa sạch trái cây.",
+      "Cắt miếng vừa ăn.",
+      "Bày ra đĩa."
+    ],
+    "nutrition": {
+      "calories": 180,
+      "protein": 2,
+      "carbs": 42,
+      "fat": 1
+    },
+    "tags": [
+      "vegetarian",
+      "snack"
+    ],
+    "goalTags": [
+      "vegetarian",
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-017",
+    "slug": "pho-uc-ga",
+    "name": "Phở ức gà",
+    "mealType": "breakfast",
+    "servings": 2,
+    "prepTimeMinutes": 20,
+    "cookTimeMinutes": 20,
+    "difficulty": "medium",
+    "imageUrl": "https://phonhon.vn/wp-content/uploads/2025/12/Pho-uc-ga.png",
+    "ingredients": [
+      {
+        "productId": "p-002",
+        "quantity": 250,
+        "unit": "g",
+        "mealProductId": "p-002",
+        "ingredientId": "ing-uc-ga-tuoi"
+      },
+      {
+        "productId": "p-020",
+        "quantity": 1,
+        "unit": "gói",
+        "mealProductId": "p-020",
+        "ingredientId": "ing-pho-kho"
+      },
+      {
+        "productId": "p-013",
+        "quantity": 1,
+        "unit": "cây",
+        "mealProductId": "p-013",
+        "ingredientId": "ing-xa-lach"
+      }
+    ],
+    "steps": [
+      "Nấu nước dùng.",
+      "Luộc phở.",
+      "Cho gà và rau vào tô."
+    ],
+    "nutrition": {
+      "calories": 380,
+      "protein": 31,
+      "carbs": 35,
+      "fat": 10
+    },
+    "tags": [
+      "high-protein"
+    ],
+    "goalTags": [
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-018",
+    "slug": "ca-rot-dau",
+    "name": "Cà rốt và dưa leo trộn",
+    "mealType": "lunch",
+    "servings": 2,
+    "prepTimeMinutes": 8,
+    "cookTimeMinutes": 0,
+    "difficulty": "easy",
+    "imageUrl": "https://i.pinimg.com/originals/79/61/ca/7961ca247af6928f69c6a15f900cd41c.jpg",
+    "ingredients": [
+      {
+        "productId": "p-012",
+        "quantity": 2,
+        "unit": "củ",
+        "mealProductId": "p-012",
+        "ingredientId": "ing-ca-rot"
+      },
+      {
+        "productId": "p-011",
+        "quantity": 2,
+        "unit": "quả",
+        "mealProductId": "p-011",
+        "ingredientId": "ing-dua-leo"
+      },
+      {
+        "productId": "p-024",
+        "quantity": 1,
+        "unit": "muỗng",
+        "mealProductId": "p-024",
+        "ingredientId": "ing-dau-an"
+      }
+    ],
+    "steps": [
+      "Bào sợi rau củ.",
+      "Trộn với dầu ăn.",
+      "Dùng như salad."
+    ],
+    "nutrition": {
+      "calories": 120,
+      "protein": 2,
+      "carbs": 12,
+      "fat": 7
+    },
+    "tags": [
+      "vegetarian",
+      "healthy"
+    ],
+    "goalTags": [
+      "vegetarian",
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-019",
+    "slug": "trung-op-la",
+    "name": "Trứng ốp la",
+    "mealType": "breakfast",
+    "servings": 2,
+    "prepTimeMinutes": 5,
+    "cookTimeMinutes": 5,
+    "difficulty": "easy",
+    "imageUrl": "https://cdn.tgdd.vn/2020/09/CookProduct/35-1200x676.jpg",
+    "ingredients": [
+      {
+        "productId": "p-001",
+        "quantity": 4,
+        "unit": "quả",
+        "mealProductId": "p-001",
+        "ingredientId": "ing-trung-ga-ta"
+      },
+      {
+        "productId": "p-024",
+        "quantity": 1,
+        "unit": "muỗng",
+        "mealProductId": "p-024",
+        "ingredientId": "ing-dau-an"
+      }
+    ],
+    "steps": [
+      "Đun nóng chảo.",
+      "Ốp trứng.",
+      "Dùng nóng với muối tiêu."
+    ],
+    "nutrition": {
+      "calories": 290,
+      "protein": 18,
+      "carbs": 1,
+      "fat": 22
+    },
+    "tags": [
+      "high-protein",
+      "quick"
+    ],
+    "goalTags": [
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-020",
+    "slug": "ga-xao-bun-gao",
+    "name": "Gà xào bún gạo",
+    "mealType": "dinner",
+    "servings": 2,
+    "prepTimeMinutes": 15,
+    "cookTimeMinutes": 15,
+    "difficulty": "medium",
+    "imageUrl": "https://cdn.tgdd.vn/Files/2021/10/01/1387170/huong-dan-cach-lam-bun-gao-xao-long-ga-dai-ngon-don-gian-tai-nha-202201061138343942.jpg",
+    "ingredients": [
+      {
+        "productId": "p-002",
+        "quantity": 300,
+        "unit": "g",
+        "mealProductId": "p-002",
+        "ingredientId": "ing-uc-ga-tuoi"
+      },
+      {
+        "productId": "p-019",
+        "quantity": 1,
+        "unit": "gói",
+        "mealProductId": "p-019",
+        "ingredientId": "ing-bun-gao"
+      },
+      {
+        "productId": "p-010",
+        "quantity": 1,
+        "unit": "bó",
+        "mealProductId": "p-010",
+        "ingredientId": "ing-rau-muong"
+      }
+    ],
+    "steps": [
+      "Luộc bún.",
+      "Xào gà.",
+      "Trộn cùng rau muống."
+    ],
+    "nutrition": {
+      "calories": 460,
+      "protein": 33,
+      "carbs": 44,
+      "fat": 14
+    },
+    "tags": [
+      "family"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-021",
+    "slug": "bun-bo-nam-bo",
+    "name": "Bún bò Nam Bộ",
+    "mealType": "lunch",
+    "servings": 2,
+    "prepTimeMinutes": 20,
+    "cookTimeMinutes": 15,
+    "difficulty": "medium",
+    "imageUrl": "https://evivatour.com/wp-content/uploads/2021/11/Bun-bo-nam-bo-67-hang-dieu.jpg",
+    "ingredients": [
+      {
+        "productId": "p-004",
+        "quantity": 200,
+        "unit": "g",
+        "mealProductId": "p-004",
+        "ingredientId": "ing-than-bo"
+      },
+      {
+        "productId": "p-019",
+        "quantity": 1,
+        "unit": "gói",
+        "mealProductId": "p-019",
+        "ingredientId": "ing-bun-gao"
+      },
+      {
+        "productId": "p-013",
+        "quantity": 1,
+        "unit": "cây",
+        "mealProductId": "p-013",
+        "ingredientId": "ing-xa-lach"
+      },
+      {
+        "productId": "p-031",
+        "quantity": 50,
+        "unit": "g",
+        "mealProductId": "p-031",
+        "ingredientId": "ing-dau-phong"
+      }
+    ],
+    "steps": [
+      "Thái bò mỏng, ướp gia vị.",
+      "Xào bò nhanh.",
+      "Trộn với bún, rau sống, đậu phộng."
+    ],
+    "nutrition": {
+      "calories": 480,
+      "protein": 28,
+      "carbs": 52,
+      "fat": 16
+    },
+    "tags": [
+      "family",
+      "premium"
+    ],
+    "goalTags": [
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-022",
+    "slug": "canh-chua-ca-loc",
+    "name": "Canh chua cá lóc",
+    "mealType": "dinner",
+    "servings": 2,
+    "prepTimeMinutes": 15,
+    "cookTimeMinutes": 20,
+    "difficulty": "easy",
+    "imageUrl": "https://phunugioi.com/wp-content/uploads/2020/12/cach-nau-canh-chua-ca-loc.jpg",
+    "ingredients": [
+      {
+        "productId": "p-008",
+        "quantity": 300,
+        "unit": "g",
+        "mealProductId": "p-008",
+        "ingredientId": "ing-ca-basa"
+      },
+      {
+        "productId": "p-009",
+        "quantity": 2,
+        "unit": "quả",
+        "mealProductId": "p-009",
+        "ingredientId": "ing-ca-chua"
+      },
+      {
+        "productId": "p-033",
+        "quantity": 100,
+        "unit": "g",
+        "mealProductId": "p-033",
+        "ingredientId": "ing-dua-chua"
+      }
+    ],
+    "steps": [
+      "Nấu nước dùng chua.",
+      "Cho cá vào nấu chín.",
+      "Thêm rau ngò, hành lá."
+    ],
+    "nutrition": {
+      "calories": 280,
+      "protein": 22,
+      "carbs": 18,
+      "fat": 10
+    },
+    "tags": [
+      "family",
+      "budget"
+    ],
+    "goalTags": [
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-023",
+    "slug": "ga-kho-gung",
+    "name": "Gà kho gừng",
+    "mealType": "dinner",
+    "servings": 2,
+    "prepTimeMinutes": 15,
+    "cookTimeMinutes": 30,
+    "difficulty": "medium",
+    "imageUrl": "https://giadinh.mediacdn.vn/zoom/740_463/2016/news-249-1468207173813-crop-1468207188080.png",
+    "ingredients": [
+      {
+        "productId": "p-002",
+        "quantity": 350,
+        "unit": "g",
+        "mealProductId": "p-002",
+        "ingredientId": "ing-uc-ga-tuoi"
+      },
+      {
+        "productId": "p-032",
+        "quantity": 30,
+        "unit": "g",
+        "mealProductId": "p-032",
+        "ingredientId": "ing-gung"
+      },
+      {
+        "productId": "p-018",
+        "quantity": 2,
+        "unit": "chén",
+        "mealProductId": "p-018",
+        "ingredientId": "ing-gao-thom"
+      },
+      {
+        "productId": "p-022",
+        "quantity": 2,
+        "unit": "muỗng",
+        "mealProductId": "p-022",
+        "ingredientId": "ing-nuoc-mam"
+      }
+    ],
+    "steps": [
+      "Ướp gà với gừng, nước mắm.",
+      "Kho gà đến khi nước sệt.",
+      "Ăn kèm cơm nóng."
+    ],
+    "nutrition": {
+      "calories": 490,
+      "protein": 38,
+      "carbs": 36,
+      "fat": 18
+    },
+    "tags": [
+      "family",
+      "high-protein"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-024",
+    "slug": "salad-uc-ga",
+    "name": "Salad ức gà",
+    "mealType": "lunch",
+    "servings": 2,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 15,
+    "difficulty": "easy",
+    "imageUrl": "https://chefstudio.vn/uploads/r/cach-lam-salad-uc-ga-sot-mayonnaise.jpg",
+    "ingredients": [
+      {
+        "productId": "p-002",
+        "quantity": 250,
+        "unit": "g",
+        "mealProductId": "p-002",
+        "ingredientId": "ing-uc-ga-tuoi"
+      },
+      {
+        "productId": "p-013",
+        "quantity": 2,
+        "unit": "cây",
+        "mealProductId": "p-013",
+        "ingredientId": "ing-xa-lach"
+      },
+      {
+        "productId": "p-011",
+        "quantity": 1,
+        "unit": "quả",
+        "mealProductId": "p-011",
+        "ingredientId": "ing-dua-leo"
+      },
+      {
+        "productId": "p-034",
+        "quantity": 50,
+        "unit": "g",
+        "mealProductId": "p-034",
+        "ingredientId": "ing-pho-mai"
+      }
+    ],
+    "steps": [
+      "Nướng ức gà, cắt lát.",
+      "Trộn rau củ.",
+      "Rưới sốt salad nhẹ."
+    ],
+    "nutrition": {
+      "calories": 320,
+      "protein": 35,
+      "carbs": 12,
+      "fat": 12
+    },
+    "tags": [
+      "healthy",
+      "high-protein",
+      "quick"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-025",
+    "slug": "bo-luc-lac",
+    "name": "Bò lúc lắc",
+    "mealType": "dinner",
+    "servings": 2,
+    "prepTimeMinutes": 20,
+    "cookTimeMinutes": 15,
+    "difficulty": "medium",
+    "imageUrl": "https://bepmina.vn/wp-content/uploads/2022/12/thit-bo-luc-lac.jpeg",
+    "ingredients": [
+      {
+        "productId": "p-004",
+        "quantity": 300,
+        "unit": "g",
+        "mealProductId": "p-004",
+        "ingredientId": "ing-than-bo"
+      },
+      {
+        "productId": "p-035",
+        "quantity": 1,
+        "unit": "quả",
+        "mealProductId": "p-035",
+        "ingredientId": "ing-ot-chuong"
+      },
+      {
+        "productId": "p-009",
+        "quantity": 1,
+        "unit": "quả",
+        "mealProductId": "p-009",
+        "ingredientId": "ing-ca-chua"
+      },
+      {
+        "productId": "p-018",
+        "quantity": 2,
+        "unit": "chén",
+        "mealProductId": "p-018",
+        "ingredientId": "ing-gao-thom"
+      }
+    ],
+    "steps": [
+      "Cắt bò miếng vuông, ướp.",
+      "Xào bò nhanh lửa lớn.",
+      "Ăn kèm cơm hoặc salad."
+    ],
+    "nutrition": {
+      "calories": 520,
+      "protein": 35,
+      "carbs": 42,
+      "fat": 22
+    },
+    "tags": [
+      "premium",
+      "high-protein"
+    ],
+    "goalTags": [
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-026",
+    "slug": "mi-xao-hai-san",
+    "name": "Mì xào hải sản",
+    "mealType": "lunch",
+    "servings": 2,
+    "prepTimeMinutes": 15,
+    "cookTimeMinutes": 12,
+    "difficulty": "medium",
+    "imageUrl": "https://cdn.tgdd.vn/Files/2019/06/08/1171838/cach-lam-mi-xao-hai-san-ai-an-cung-khen-ngon-202202231202471887.jpg",
+    "ingredients": [
+      {
+        "productId": "p-005",
+        "quantity": 150,
+        "unit": "g",
+        "mealProductId": "p-005",
+        "ingredientId": "ing-tom-su"
+      },
+      {
+        "productId": "p-007",
+        "quantity": 200,
+        "unit": "g",
+        "mealProductId": "p-007",
+        "ingredientId": "ing-muc-ong"
+      },
+      {
+        "productId": "p-036",
+        "quantity": 200,
+        "unit": "g",
+        "mealProductId": "p-036",
+        "ingredientId": "ing-mi-trung"
+      },
+      {
+        "productId": "p-010",
+        "quantity": 1,
+        "unit": "bó",
+        "mealProductId": "p-010",
+        "ingredientId": "ing-rau-muong"
+      }
+    ],
+    "steps": [
+      "Luộc mì.",
+      "Xào hải sản.",
+      "Trộn cùng rau và gia vị."
+    ],
+    "nutrition": {
+      "calories": 420,
+      "protein": 32,
+      "carbs": 45,
+      "fat": 10
+    },
+    "tags": [
+      "seafood",
+      "premium"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-027",
+    "slug": "chao-luon",
+    "name": "Cháo lươn",
+    "mealType": "breakfast",
+    "servings": 2,
+    "prepTimeMinutes": 15,
+    "cookTimeMinutes": 35,
+    "difficulty": "medium",
+    "imageUrl": "https://static.vinwonders.com/production/chao-luon-nghe-an-ngon-753x424.jpg",
+    "ingredients": [
+      {
+        "productId": "p-037",
+        "quantity": 200,
+        "unit": "g",
+        "mealProductId": "p-037",
+        "ingredientId": "ing-luon-tuoi"
+      },
+      {
+        "productId": "p-018",
+        "quantity": 1,
+        "unit": "chén",
+        "mealProductId": "p-018",
+        "ingredientId": "ing-gao-thom"
+      },
+      {
+        "productId": "p-038",
+        "quantity": 1,
+        "unit": "củ",
+        "mealProductId": "p-038",
+        "ingredientId": "ing-hanh-tay"
+      }
+    ],
+    "steps": [
+      "Nấu cháo gạo tẻ.",
+      "Xào lươn riêg, cho vào cháo.",
+      "Nêm nước mắm, tiêu, hành lá."
+    ],
+    "nutrition": {
+      "calories": 380,
+      "protein": 24,
+      "carbs": 48,
+      "fat": 10
+    },
+    "tags": [
+      "breakfast",
+      "comfort"
+    ],
+    "goalTags": [
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-028",
+    "slug": "goi-cuon-tom-thit",
+    "name": "Gỏi cuốn tôm thịt",
+    "mealType": "lunch",
+    "servings": 2,
+    "prepTimeMinutes": 20,
+    "cookTimeMinutes": 15,
+    "difficulty": "easy",
+    "imageUrl": "https://cdn.tgdd.vn/Files/2017/03/22/963738/cach-lam-goi-cuon-tom-thit-thom-ngon-cho-bua-com-gian-don-202203021427281747.jpg",
+    "ingredients": [
+      {
+        "productId": "p-005",
+        "quantity": 200,
+        "unit": "g",
+        "mealProductId": "p-005",
+        "ingredientId": "ing-tom-su"
+      },
+      {
+        "productId": "p-003",
+        "quantity": 150,
+        "unit": "g",
+        "mealProductId": "p-003",
+        "ingredientId": "ing-ba-chi-heo"
+      },
+      {
+        "productId": "p-039",
+        "quantity": 100,
+        "unit": "g",
+        "mealProductId": "p-039",
+        "ingredientId": "ing-banh-trang"
+      },
+      {
+        "productId": "p-019",
+        "quantity": 1,
+        "unit": "gói",
+        "mealProductId": "p-019",
+        "ingredientId": "ing-bun-gao"
+      }
+    ],
+    "steps": [
+      "Luộc tôm và thịt.",
+      "Luộc bánh tráng.",
+      "Cuốn với rau và bún."
+    ],
+    "nutrition": {
+      "calories": 350,
+      "protein": 28,
+      "carbs": 38,
+      "fat": 8
+    },
+    "tags": [
+      "healthy",
+      "fresh"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-029",
+    "slug": "sup-nam-huong",
+    "name": "Súp nấm hương",
+    "mealType": "breakfast",
+    "servings": 2,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 15,
+    "difficulty": "easy",
+    "imageUrl": "https://monngonmoingay.com/wp-content/smush-webp/2024/07/sup-ga-moc-nam-huong.jpg.webp",
+    "ingredients": [
+      {
+        "productId": "p-041",
+        "quantity": 200,
+        "unit": "g",
+        "mealProductId": "p-041",
+        "ingredientId": "ing-nam-dong-co"
+      },
+      {
+        "productId": "p-040",
+        "quantity": 100,
+        "unit": "g",
+        "mealProductId": "p-040",
+        "ingredientId": "ing-nam-huong"
+      },
+      {
+        "productId": "p-026",
+        "quantity": 200,
+        "unit": "ml",
+        "mealProductId": "p-026",
+        "ingredientId": "ing-sua-tuoi-khong-duong"
+      }
+    ],
+    "steps": [
+      "Nấm hương ngâm nở, thái lát.",
+      "Đun sữa với nấm, khuấy đều.",
+      "Thêm mắm, tiêu thơm."
+    ],
+    "nutrition": {
+      "calories": 220,
+      "protein": 12,
+      "carbs": 18,
+      "fat": 10
+    },
+    "tags": [
+      "breakfast",
+      "vegetarian",
+      "comfort"
+    ],
+    "goalTags": [
+      "vegetarian",
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-030",
+    "slug": "com-chien-trung",
+    "name": "Cơm chiên trứng",
+    "mealType": "lunch",
+    "servings": 2,
+    "prepTimeMinutes": 5,
+    "cookTimeMinutes": 10,
+    "difficulty": "easy",
+    "imageUrl": "https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/164087/Originals/cach-lam-com-chien-trung-8.jpg",
+    "ingredients": [
+      {
+        "productId": "p-001",
+        "quantity": 2,
+        "unit": "quả",
+        "mealProductId": "p-001",
+        "ingredientId": "ing-trung-ga-ta"
+      },
+      {
+        "productId": "p-018",
+        "quantity": 3,
+        "unit": "chén",
+        "mealProductId": "p-018",
+        "ingredientId": "ing-gao-thom"
+      },
+      {
+        "productId": "p-024",
+        "quantity": 1,
+        "unit": "muỗng",
+        "mealProductId": "p-024",
+        "ingredientId": "ing-dau-an"
+      }
+    ],
+    "steps": [
+      "Đánh trứng, xào tan.",
+      "Cho cơm vào đảo nhanh.",
+      "Nêm nước tương, tiêu."
+    ],
+    "nutrition": {
+      "calories": 450,
+      "protein": 14,
+      "carbs": 62,
+      "fat": 15
+    },
+    "tags": [
+      "quick",
+      "comfort",
+      "budget"
+    ],
+    "goalTags": [
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-031",
+    "slug": "ca-kho-rieng",
+    "name": "Cá khô riềng mặn",
+    "mealType": "dinner",
+    "servings": 2,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 25,
+    "difficulty": "medium",
+    "imageUrl": "https://cakhobakien.com/wp-content/uploads/2015/01/ca-tram-den-kho-rieng.jpg",
+    "ingredients": [
+      {
+        "productId": "p-008",
+        "quantity": 300,
+        "unit": "g",
+        "mealProductId": "p-008",
+        "ingredientId": "ing-ca-basa"
+      },
+      {
+        "productId": "p-042",
+        "quantity": 50,
+        "unit": "g",
+        "mealProductId": "p-042",
+        "ingredientId": "ing-rieng"
+      },
+      {
+        "productId": "p-022",
+        "quantity": 2,
+        "unit": "muỗng",
+        "mealProductId": "p-022",
+        "ingredientId": "ing-nuoc-mam"
+      },
+      {
+        "productId": "p-018",
+        "quantity": 2,
+        "unit": "chén",
+        "mealProductId": "p-018",
+        "ingredientId": "ing-gao-thom"
+      }
+    ],
+    "steps": [
+      "Ướp cá với riềng, mắm.",
+      "Kho cá đến sệt nước.",
+      "Ăn nóng với cơm trắng."
+    ],
+    "nutrition": {
+      "calories": 410,
+      "protein": 30,
+      "carbs": 38,
+      "fat": 14
+    },
+    "tags": [
+      "family",
+      "comfort"
+    ],
+    "goalTags": [
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-032",
+    "slug": "muc-xao-sa-ot",
+    "name": "Mực xào sa tế",
+    "mealType": "dinner",
+    "servings": 2,
+    "prepTimeMinutes": 12,
+    "cookTimeMinutes": 10,
+    "difficulty": "easy",
+    "imageUrl": "https://bepxua.vn/wp-content/uploads/2022/09/1-1.jpg",
+    "ingredients": [
+      {
+        "productId": "p-007",
+        "quantity": 350,
+        "unit": "g",
+        "mealProductId": "p-007",
+        "ingredientId": "ing-muc-ong"
+      },
+      {
+        "productId": "p-043",
+        "quantity": 2,
+        "unit": "muỗng",
+        "mealProductId": "p-043",
+        "ingredientId": "ing-sa-te"
+      },
+      {
+        "productId": "p-012",
+        "quantity": 1,
+        "unit": "củ",
+        "mealProductId": "p-012",
+        "ingredientId": "ing-ca-rot"
+      },
+      {
+        "productId": "p-010",
+        "quantity": 1,
+        "unit": "bó",
+        "mealProductId": "p-010",
+        "ingredientId": "ing-rau-muong"
+      }
+    ],
+    "steps": [
+      "Sơ chế mực, cắt khoanh.",
+      "Xào sa tế thơm, cho mực vào.",
+      "Nêm vừa ăn, ăn kèm rau."
+    ],
+    "nutrition": {
+      "calories": 280,
+      "protein": 26,
+      "carbs": 14,
+      "fat": 12
+    },
+    "tags": [
+      "seafood",
+      "quick"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-033",
+    "slug": "sua-dau-nanh",
+    "name": "Sữa đậu nành",
+    "mealType": "breakfast",
+    "servings": 2,
+    "prepTimeMinutes": 5,
+    "cookTimeMinutes": 10,
+    "difficulty": "easy",
+    "imageUrl": "https://cdn11.dienmaycholon.vn/filewebdmclnew/public/userupload/files/KNMS/cong-dung-cua-sua-dau-nanh.jpg",
+    "ingredients": [
+      {
+        "productId": "p-044",
+        "quantity": 30,
+        "unit": "g",
+        "mealProductId": "p-044",
+        "ingredientId": "ing-dau-nanh"
+      },
+      {
+        "productId": "p-045",
+        "quantity": 500,
+        "unit": "ml",
+        "mealProductId": "p-045",
+        "ingredientId": "ing-nuoc-loc"
+      }
+    ],
+    "steps": [
+      "Ngâm đậu nành qua đêm.",
+      "Xay và lọc lấy nước.",
+      "Đun sôi, thêm đường nếu muốn."
+    ],
+    "nutrition": {
+      "calories": 180,
+      "protein": 10,
+      "carbs": 20,
+      "fat": 8
+    },
+    "tags": [
+      "breakfast",
+      "vegan",
+      "gluten-free"
+    ],
+    "goalTags": [
+      "vegetarian",
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-034",
+    "slug": "tok-bokki-chay",
+    "name": "Tokbokki chay",
+    "mealType": "snack",
+    "servings": 2,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 15,
+    "difficulty": "easy",
+    "imageUrl": "https://daynauan.info.vn/wp-content/uploads/2015/06/tteokbokki-chay.jpg",
+    "ingredients": [
+      {
+        "productId": "p-046",
+        "quantity": 200,
+        "unit": "g",
+        "mealProductId": "p-046",
+        "ingredientId": "ing-bot-bap"
+      },
+      {
+        "productId": "p-043",
+        "quantity": 2,
+        "unit": "muỗng",
+        "mealProductId": "p-043",
+        "ingredientId": "ing-sa-te"
+      },
+      {
+        "productId": "p-035",
+        "quantity": 1,
+        "unit": "quả",
+        "mealProductId": "p-035",
+        "ingredientId": "ing-ot-chuong"
+      }
+    ],
+    "steps": [
+      "Hòa bột với nước, đun nhỏ lửa.",
+      "Nấu sốt ớt, gạo cộng.",
+      "Nhào bột thành viên, luộc chín."
+    ],
+    "nutrition": {
+      "calories": 280,
+      "protein": 6,
+      "carbs": 52,
+      "fat": 6
+    },
+    "tags": [
+      "snack",
+      "vegetarian",
+      "comfort"
+    ],
+    "goalTags": [
+      "vegetarian"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-035",
+    "slug": "ga-nuong-mat-ong",
+    "name": "Gà nướng mật ong",
+    "mealType": "dinner",
+    "servings": 2,
+    "prepTimeMinutes": 20,
+    "cookTimeMinutes": 30,
+    "difficulty": "medium",
+    "imageUrl": "https://www.huongnghiepaau.com/wp-content/uploads/2018/06/ga-nuong-mat-ong.jpg",
+    "ingredients": [
+      {
+        "productId": "p-002",
+        "quantity": 400,
+        "unit": "g",
+        "mealProductId": "p-002",
+        "ingredientId": "ing-uc-ga-tuoi"
+      },
+      {
+        "productId": "p-048",
+        "quantity": 60,
+        "unit": "ml",
+        "mealProductId": "p-048",
+        "ingredientId": "ing-mat-ong"
+      },
+      {
+        "productId": "p-009",
+        "quantity": 1,
+        "unit": "quả",
+        "mealProductId": "p-009",
+        "ingredientId": "ing-ca-chua"
+      },
+      {
+        "productId": "p-018",
+        "quantity": 2,
+        "unit": "chén",
+        "mealProductId": "p-018",
+        "ingredientId": "ing-gao-thom"
+      }
+    ],
+    "steps": [
+      "Ướp gà với mật ong và gia vị.",
+      "Nướng 180°C trong 25 phút.",
+      "Ăn kèm cơm và salad."
+    ],
+    "nutrition": {
+      "calories": 540,
+      "protein": 42,
+      "carbs": 42,
+      "fat": 18
+    },
+    "tags": [
+      "family",
+      "high-protein"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-036",
+    "slug": "bap-xao-rau-cu",
+    "name": "Bắp xào rau củ",
+    "mealType": "snack",
+    "servings": 2,
+    "prepTimeMinutes": 8,
+    "cookTimeMinutes": 10,
+    "difficulty": "easy",
+    "imageUrl": "https://cdn.tgdd.vn/2021/05/CookProduct/BeFunky-collage(11)-1200x676-1.jpg",
+    "ingredients": [
+      {
+        "productId": "p-050",
+        "quantity": 150,
+        "unit": "g",
+        "mealProductId": "p-050",
+        "ingredientId": "ing-bap-my"
+      },
+      {
+        "productId": "p-012",
+        "quantity": 1,
+        "unit": "củ",
+        "mealProductId": "p-012",
+        "ingredientId": "ing-ca-rot"
+      },
+      {
+        "productId": "p-049",
+        "quantity": 1,
+        "unit": "quả",
+        "mealProductId": "p-049",
+        "ingredientId": "ing-khoai-tay"
+      },
+      {
+        "productId": "p-024",
+        "quantity": 1,
+        "unit": "muỗng",
+        "mealProductId": "p-024",
+        "ingredientId": "ing-dau-an"
+      }
+    ],
+    "steps": [
+      "Bắpôcắt hạt, rau củ thái hạt đề.",
+      "Xào bắp với rau củ.",
+      "Nêm nước tương, tiêu nhẹ."
+    ],
+    "nutrition": {
+      "calories": 200,
+      "protein": 6,
+      "carbs": 32,
+      "fat": 6
+    },
+    "tags": [
+      "vegetarian",
+      "snack",
+      "budget"
+    ],
+    "goalTags": [
+      "vegetarian",
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-037",
+    "slug": "chao-ga",
+    "name": "Cháo gà",
+    "mealType": "breakfast",
+    "servings": 2,
+    "prepTimeMinutes": 15,
+    "cookTimeMinutes": 40,
+    "difficulty": "easy",
+    "imageUrl": "https://cdn.tgdd.vn/2020/07/CookProduct/thumbcn-1200x676.jpg",
+    "ingredients": [
+      {
+        "productId": "p-002",
+        "quantity": 200,
+        "unit": "g",
+        "mealProductId": "p-002",
+        "ingredientId": "ing-uc-ga-tuoi"
+      },
+      {
+        "productId": "p-018",
+        "quantity": 1,
+        "unit": "chén",
+        "mealProductId": "p-018",
+        "ingredientId": "ing-gao-thom"
+      },
+      {
+        "productId": "p-038",
+        "quantity": 1,
+        "unit": "củ",
+        "mealProductId": "p-038",
+        "ingredientId": "ing-hanh-tay"
+      }
+    ],
+    "steps": [
+      "Nấu cháo gạo tẻ.",
+      "Gà luộc, xé sợi.",
+      "Cho gà vào cháo, nêm mắm nhạ."
+    ],
+    "nutrition": {
+      "calories": 340,
+      "protein": 25,
+      "carbs": 48,
+      "fat": 6
+    },
+    "tags": [
+      "breakfast",
+      "comfort",
+      "healthy"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-038",
+    "slug": "ga-hap-bia",
+    "name": "Gà hấp bia",
+    "mealType": "dinner",
+    "servings": 2,
+    "prepTimeMinutes": 15,
+    "cookTimeMinutes": 30,
+    "difficulty": "easy",
+    "imageUrl": "https://winecity.vn/wp-content/uploads/2023/10/cach-la-ga-hap-bia.jpg",
+    "ingredients": [
+      {
+        "productId": "p-002",
+        "quantity": 400,
+        "unit": "g",
+        "mealProductId": "p-002",
+        "ingredientId": "ing-uc-ga-tuoi"
+      },
+      {
+        "productId": "p-051",
+        "quantity": 1,
+        "unit": "chai",
+        "mealProductId": "p-051",
+        "ingredientId": "ing-bia"
+      },
+      {
+        "productId": "p-032",
+        "quantity": 20,
+        "unit": "g",
+        "mealProductId": "p-032",
+        "ingredientId": "ing-gung"
+      },
+      {
+        "productId": "p-018",
+        "quantity": 2,
+        "unit": "chén",
+        "mealProductId": "p-018",
+        "ingredientId": "ing-gao-thom"
+      }
+    ],
+    "steps": [
+      "Ướp gà với bia, gừng, hành.",
+      "Hấp cách thủy 25 phút.",
+      "Ăn kèm cơm và salad."
+    ],
+    "nutrition": {
+      "calories": 480,
+      "protein": 40,
+      "carbs": 38,
+      "fat": 16
+    },
+    "tags": [
+      "family",
+      "high-protein"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-039",
+    "slug": "tra-sua-tran-chau",
+    "name": "Trà sữa trân châu",
+    "mealType": "snack",
+    "servings": 2,
+    "prepTimeMinutes": 5,
+    "cookTimeMinutes": 15,
+    "difficulty": "easy",
+    "imageUrl": "https://mixueviet.com/wp-content/uploads/2024/06/Tra-sua-tran-chau-Mixue-Pearl-Milk-Tea.png",
+    "ingredients": [
+      {
+        "productId": "p-054",
+        "quantity": 30,
+        "unit": "g",
+        "mealProductId": "p-054",
+        "ingredientId": "ing-tra-den"
+      },
+      {
+        "productId": "p-026",
+        "quantity": 200,
+        "unit": "ml",
+        "mealProductId": "p-026",
+        "ingredientId": "ing-sua-tuoi-khong-duong"
+      },
+      {
+        "productId": "p-053",
+        "quantity": 50,
+        "unit": "g",
+        "mealProductId": "p-053",
+        "ingredientId": "ing-tran-chau"
+      }
+    ],
+    "steps": [
+      "Nấu trân châu, để nguội.",
+      "Pha trà chín, thêm sữa đặc.",
+      "Lắc đều, thêm đá và trân châu."
+    ],
+    "nutrition": {
+      "calories": 250,
+      "protein": 5,
+      "carbs": 45,
+      "fat": 5
+    },
+    "tags": [
+      "snack",
+      "vegetarian"
+    ],
+    "goalTags": [
+      "vegetarian"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-040",
+    "slug": "doi-sun-xao-mien",
+    "name": "Dồi sụn xào miến",
+    "mealType": "lunch",
+    "servings": 2,
+    "prepTimeMinutes": 15,
+    "cookTimeMinutes": 12,
+    "difficulty": "medium",
+    "imageUrl": "https://trumfood.vn/wp-content/uploads/2022/09/66666-1.jpg",
+    "ingredients": [
+      {
+        "productId": "p-055",
+        "quantity": 200,
+        "unit": "g",
+        "mealProductId": "p-055",
+        "ingredientId": "ing-muc-dong"
+      },
+      {
+        "productId": "p-010",
+        "quantity": 1,
+        "unit": "bó",
+        "mealProductId": "p-010",
+        "ingredientId": "ing-rau-muong"
+      },
+      {
+        "productId": "p-012",
+        "quantity": 1,
+        "unit": "củ",
+        "mealProductId": "p-012",
+        "ingredientId": "ing-ca-rot"
+      },
+      {
+        "productId": "p-038",
+        "quantity": 1,
+        "unit": "củ",
+        "mealProductId": "p-038",
+        "ingredientId": "ing-hanh-tay"
+      }
+    ],
+    "steps": [
+      "Dồi sụn rửa sạch, luộc chín.",
+      "Xào dồi với gia vị đậm đà.",
+      "Ăn với miến hoặc cơm."
+    ],
+    "nutrition": {
+      "calories": 320,
+      "protein": 28,
+      "carbs": 35,
+      "fat": 8
+    },
+    "tags": [
+      "seafood",
+      "family"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-041",
+    "slug": "banh-mi-au",
+    "name": "Bánh mì áp chảo trứng",
+    "mealType": "breakfast",
+    "servings": 2,
+    "prepTimeMinutes": 5,
+    "cookTimeMinutes": 10,
+    "difficulty": "easy",
+    "imageUrl": "https://i.pinimg.com/originals/03/9f/43/039f43d1c59dc464bc2a6d9915cfed6d.jpg",
+    "ingredients": [
+      {
+        "productId": "p-001",
+        "quantity": 3,
+        "unit": "quả",
+        "mealProductId": "p-001",
+        "ingredientId": "ing-trung-ga-ta"
+      },
+      {
+        "productId": "p-056",
+        "quantity": 1,
+        "unit": "quả",
+        "mealProductId": "p-056",
+        "ingredientId": "ing-banh-mi"
+      },
+      {
+        "productId": "p-034",
+        "quantity": 2,
+        "unit": "lát",
+        "mealProductId": "p-034",
+        "ingredientId": "ing-pho-mai"
+      }
+    ],
+    "steps": [
+      "Nướng bánh mì.",
+      "Áp chảo trứng.",
+      "Cho phô mai vào bánh mì nóng."
+    ],
+    "nutrition": {
+      "calories": 340,
+      "protein": 16,
+      "carbs": 32,
+      "fat": 16
+    },
+    "tags": [
+      "breakfast",
+      "comfort"
+    ],
+    "goalTags": [
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-042",
+    "slug": "bun-cha-hanoi",
+    "name": "Bún chả Hà Nội",
+    "mealType": "lunch",
+    "servings": 2,
+    "prepTimeMinutes": 20,
+    "cookTimeMinutes": 15,
+    "difficulty": "medium",
+    "imageUrl": "https://www.seriouseats.com/thmb/J0g7JWjk9r6CHESo1CIrD1BfGd0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/20231204-SEA-VyTran-BunChaHanoi-19-f623913c6ef34a9185bcd6e5680c545f.jpg",
+    "ingredients": [
+      {
+        "productId": "p-003",
+        "quantity": 300,
+        "unit": "g",
+        "mealProductId": "p-003",
+        "ingredientId": "ing-ba-chi-heo"
+      },
+      {
+        "productId": "p-019",
+        "quantity": 2,
+        "unit": "gói",
+        "mealProductId": "p-019",
+        "ingredientId": "ing-bun-gao"
+      },
+      {
+        "productId": "p-022",
+        "quantity": 3,
+        "unit": "muỗng",
+        "mealProductId": "p-022",
+        "ingredientId": "ing-nuoc-mam"
+      },
+      {
+        "productId": "p-057",
+        "quantity": 100,
+        "unit": "g",
+        "mealProductId": "p-057",
+        "ingredientId": "ing-rau-song"
+      }
+    ],
+    "steps": [
+      "Ướp thịt ba chỉ, nướng.",
+      "Pha nước chấm chua ngọt.",
+      "Ăn với bún và chả."
+    ],
+    "nutrition": {
+      "calories": 520,
+      "protein": 32,
+      "carbs": 48,
+      "fat": 20
+    },
+    "tags": [
+      "family",
+      "premium"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-043",
+    "slug": "banh-xeo",
+    "name": "Bánh xèo",
+    "mealType": "lunch",
+    "servings": 2,
+    "prepTimeMinutes": 15,
+    "cookTimeMinutes": 20,
+    "difficulty": "medium",
+    "imageUrl": "https://www.tastingtable.com/img/gallery/bnh-xo-the-delectable-vietnamese-crepes-you-should-know/intro-1666117324.jpg",
+    "ingredients": [
+      {
+        "productId": "p-005",
+        "quantity": 200,
+        "unit": "g",
+        "mealProductId": "p-005",
+        "ingredientId": "ing-tom-su"
+      },
+      {
+        "productId": "p-055",
+        "quantity": 150,
+        "unit": "g",
+        "mealProductId": "p-055",
+        "ingredientId": "ing-muc-dong"
+      },
+      {
+        "productId": "p-001",
+        "quantity": 1,
+        "unit": "quả",
+        "mealProductId": "p-001",
+        "ingredientId": "ing-trung-ga-ta"
+      },
+      {
+        "productId": "p-058",
+        "quantity": 200,
+        "unit": "g",
+        "mealProductId": "p-058",
+        "ingredientId": "ing-bot-banh-xeo"
+      }
+    ],
+    "steps": [
+      "Pha bột bánh xèo cóc đền.",
+      "Xào nhân tôm thịt.",
+      "Đổ bánh giòn, gấp khuôn rau sống."
+    ],
+    "nutrition": {
+      "calories": 400,
+      "protein": 26,
+      "carbs": 38,
+      "fat": 16
+    },
+    "tags": [
+      "family",
+      "seafood"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-044",
+    "slug": "toa-lan-pho-mai",
+    "name": "Tỏa lan phô mai",
+    "mealType": "snack",
+    "servings": 2,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 20,
+    "difficulty": "easy",
+    "imageUrl": "https://lambanhanny.com/wp-content/uploads/2022/09/Cach-lam-banh-bong-lan-pho-mai-chay-nhan-kim-sa-thom-ngon-kho-cuong-1.jpg",
+    "ingredients": [
+      {
+        "productId": "p-059",
+        "quantity": 200,
+        "unit": "ml",
+        "mealProductId": "p-059",
+        "ingredientId": "ing-kem-tuoi"
+      },
+      {
+        "productId": "p-001",
+        "quantity": 2,
+        "unit": "quả",
+        "mealProductId": "p-001",
+        "ingredientId": "ing-trung-ga-ta"
+      },
+      {
+        "productId": "p-034",
+        "quantity": 100,
+        "unit": "g",
+        "mealProductId": "p-034",
+        "ingredientId": "ing-pho-mai"
+      }
+    ],
+    "steps": [
+      "Đun sữa, thêm đường và trứng.",
+      "Đổ vào khuôn, nướng cách thủy.",
+      "Để nguội, ăn lạnh với dâu tây."
+    ],
+    "nutrition": {
+      "calories": 280,
+      "protein": 14,
+      "carbs": 22,
+      "fat": 16
+    },
+    "tags": [
+      "snack",
+      "vegetarian",
+      "dessert"
+    ],
+    "goalTags": [
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-045",
+    "slug": "kho-quet",
+    "name": "Khổ qua xào trứng",
+    "mealType": "dinner",
+    "servings": 2,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 12,
+    "difficulty": "easy",
+    "imageUrl": "https://cdn.tgdd.vn/2020/07/CookRecipe/Avatar/kho-qua-xao-trung-thumbnail.jpg",
+    "ingredients": [
+      {
+        "productId": "p-060",
+        "quantity": 300,
+        "unit": "g",
+        "mealProductId": "p-060",
+        "ingredientId": "ing-kho-qua"
+      },
+      {
+        "productId": "p-001",
+        "quantity": 3,
+        "unit": "quả",
+        "mealProductId": "p-001",
+        "ingredientId": "ing-trung-ga-ta"
+      },
+      {
+        "productId": "p-024",
+        "quantity": 1,
+        "unit": "muỗng",
+        "mealProductId": "p-024",
+        "ingredientId": "ing-dau-an"
+      }
+    ],
+    "steps": [
+      "Bổ khổ qua, muối sát cho bớt đắng.",
+      "Xào khổ qua với trứng.",
+      "Nêm nước mắm, tiêu lài."
+    ],
+    "nutrition": {
+      "calories": 220,
+      "protein": 16,
+      "carbs": 12,
+      "fat": 12
+    },
+    "tags": [
+      "healthy",
+      "vegetarian-friendly"
+    ],
+    "goalTags": [
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-046",
+    "slug": "goi-dua-leo-tom",
+    "name": "Gỏi dưa leo tôm",
+    "mealType": "lunch",
+    "servings": 2,
+    "prepTimeMinutes": 15,
+    "cookTimeMinutes": 5,
+    "difficulty": "easy",
+    "imageUrl": "https://bitifood.com/wp-content/uploads/2024/02/thanh-pham-mon-goi-dua-leo-tron-tom-kho.jpg",
+    "ingredients": [
+      {
+        "productId": "p-005",
+        "quantity": 250,
+        "unit": "g",
+        "mealProductId": "p-005",
+        "ingredientId": "ing-tom-su"
+      },
+      {
+        "productId": "p-011",
+        "quantity": 2,
+        "unit": "quả",
+        "mealProductId": "p-011",
+        "ingredientId": "ing-dua-leo"
+      },
+      {
+        "productId": "p-012",
+        "quantity": 1,
+        "unit": "củ",
+        "mealProductId": "p-012",
+        "ingredientId": "ing-ca-rot"
+      },
+      {
+        "productId": "p-022",
+        "quantity": 2,
+        "unit": "muỗng",
+        "mealProductId": "p-022",
+        "ingredientId": "ing-nuoc-mam"
+      }
+    ],
+    "steps": [
+      "Luộc tôm, để nguội.",
+      "Thái dưa leo, cà rốt mỏng.",
+      "Trộn với nước mắm chua ngọt."
+    ],
+    "nutrition": {
+      "calories": 200,
+      "protein": 24,
+      "carbs": 14,
+      "fat": 4
+    },
+    "tags": [
+      "healthy",
+      "fresh",
+      "low-cal"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-047",
+    "slug": "mi-quang",
+    "name": "Mì Quảng",
+    "mealType": "lunch",
+    "servings": 2,
+    "prepTimeMinutes": 20,
+    "cookTimeMinutes": 25,
+    "difficulty": "medium",
+    "imageUrl": "https://statics.vinpearl.com/mi-quang-quang-nam-2_1698931608.jpg",
+    "ingredients": [
+      {
+        "productId": "p-005",
+        "quantity": 200,
+        "unit": "g",
+        "mealProductId": "p-005",
+        "ingredientId": "ing-tom-su"
+      },
+      {
+        "productId": "p-001",
+        "quantity": 2,
+        "unit": "quả",
+        "mealProductId": "p-001",
+        "ingredientId": "ing-trung-ga-ta"
+      },
+      {
+        "productId": "p-061",
+        "quantity": 200,
+        "unit": "g",
+        "mealProductId": "p-061",
+        "ingredientId": "ing-bot-san"
+      },
+      {
+        "productId": "p-022",
+        "quantity": 2,
+        "unit": "muỗng",
+        "mealProductId": "p-022",
+        "ingredientId": "ing-nuoc-mam"
+      }
+    ],
+    "steps": [
+      "Nấu nước dùng gà.",
+      "Sắn miến Quảng, luộc chín.",
+      "Xếp tôm, trứng, thịt, chan nước."
+    ],
+    "nutrition": {
+      "calories": 440,
+      "protein": 30,
+      "carbs": 50,
+      "fat": 12
+    },
+    "tags": [
+      "family",
+      "premium"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-048",
+    "slug": "ca-ri-ga",
+    "name": "Cà ri gà",
+    "mealType": "dinner",
+    "servings": 2,
+    "prepTimeMinutes": 15,
+    "cookTimeMinutes": 30,
+    "difficulty": "medium",
+    "imageUrl": "https://i.pinimg.com/originals/bd/a0/21/bda0219c0fb2cca6672c51cf4ed3517c.jpg",
+    "ingredients": [
+      {
+        "productId": "p-002",
+        "quantity": 350,
+        "unit": "g",
+        "mealProductId": "p-002",
+        "ingredientId": "ing-uc-ga-tuoi"
+      },
+      {
+        "productId": "p-049",
+        "quantity": 2,
+        "unit": "quả",
+        "mealProductId": "p-049",
+        "ingredientId": "ing-khoai-tay"
+      },
+      {
+        "productId": "p-062",
+        "quantity": 30,
+        "unit": "g",
+        "mealProductId": "p-062",
+        "ingredientId": "ing-bot-ngot"
+      },
+      {
+        "productId": "p-018",
+        "quantity": 2,
+        "unit": "chén",
+        "mealProductId": "p-018",
+        "ingredientId": "ing-gao-thom"
+      }
+    ],
+    "steps": [
+      "Rang nghệ, mắc khén, gừng.",
+      "Phi cà ri, cho gà và khoai tây vào.",
+      "Nấu sệt, ăn với cơm hoặc bánh mì."
+    ],
+    "nutrition": {
+      "calories": 520,
+      "protein": 36,
+      "carbs": 52,
+      "fat": 16
+    },
+    "tags": [
+      "family",
+      "comfort"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-049",
+    "slug": "banh-flan",
+    "name": "Bánh flan",
+    "mealType": "snack",
+    "servings": 2,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 30,
+    "difficulty": "medium",
+    "imageUrl": "https://horneandosabores.net/wp-content/uploads/delicioso-banh-flan-vietnamita-1.webp",
+    "ingredients": [
+      {
+        "productId": "p-001",
+        "quantity": 3,
+        "unit": "quả",
+        "mealProductId": "p-001",
+        "ingredientId": "ing-trung-ga-ta"
+      },
+      {
+        "productId": "p-026",
+        "quantity": 250,
+        "unit": "ml",
+        "mealProductId": "p-026",
+        "ingredientId": "ing-sua-tuoi-khong-duong"
+      },
+      {
+        "productId": "p-063",
+        "quantity": 45,
+        "unit": "g",
+        "mealProductId": "p-063",
+        "ingredientId": "ing-duong-cat"
+      }
+    ],
+    "steps": [
+      "Đun đường thành caramen.",
+      "Đánh bông trứng với sữa.",
+      "Đổ khuôn, hấp cách thủy 25 phút."
+    ],
+    "nutrition": {
+      "calories": 260,
+      "protein": 12,
+      "carbs": 28,
+      "fat": 12
+    },
+    "tags": [
+      "snack",
+      "dessert"
+    ],
+    "goalTags": [
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-050",
+    "slug": "luon-xao-sa-ot",
+    "name": "Lươn xào sa tế",
+    "mealType": "dinner",
+    "servings": 2,
+    "prepTimeMinutes": 15,
+    "cookTimeMinutes": 18,
+    "difficulty": "medium",
+    "imageUrl": "https://amthucvietnam.com.vn/wp-content/uploads/2017/10/luon-xao-cay.jpg",
+    "ingredients": [
+      {
+        "productId": "p-037",
+        "quantity": 250,
+        "unit": "g",
+        "mealProductId": "p-037",
+        "ingredientId": "ing-luon-tuoi"
+      },
+      {
+        "productId": "p-043",
+        "quantity": 2,
+        "unit": "muỗng",
+        "mealProductId": "p-043",
+        "ingredientId": "ing-sa-te"
+      },
+      {
+        "productId": "p-010",
+        "quantity": 1,
+        "unit": "bó",
+        "mealProductId": "p-010",
+        "ingredientId": "ing-rau-muong"
+      },
+      {
+        "productId": "p-018",
+        "quantity": 2,
+        "unit": "chén",
+        "mealProductId": "p-018",
+        "ingredientId": "ing-gao-thom"
+      }
+    ],
+    "steps": [
+      "Lươn luộc, sơ chế sạch.",
+      "Phi sa tế thơm, cho lươn vào xào.",
+      "Ăn kèm cơm trắng hoặc bún."
+    ],
+    "nutrition": {
+      "calories": 420,
+      "protein": 28,
+      "carbs": 42,
+      "fat": 16
+    },
+    "tags": [
+      "seafood",
+      "premium"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-051",
+    "slug": "nuoc-mam",
+    "name": "Nem nướng Nha Trang",
+    "mealType": "lunch",
+    "servings": 2,
+    "prepTimeMinutes": 30,
+    "cookTimeMinutes": 15,
+    "difficulty": "hard",
+    "imageUrl": "https://halotravel.vn/wp-content/uploads/2020/04/nem-nuong-nha-trang-1024x1024.jpg",
+    "ingredients": [
+      {
+        "productId": "p-003",
+        "quantity": 300,
+        "unit": "g",
+        "mealProductId": "p-003",
+        "ingredientId": "ing-ba-chi-heo"
+      },
+      {
+        "productId": "p-001",
+        "quantity": 1,
+        "unit": "quả",
+        "mealProductId": "p-001",
+        "ingredientId": "ing-trung-ga-ta"
+      },
+      {
+        "productId": "p-022",
+        "quantity": 2,
+        "unit": "muỗng",
+        "mealProductId": "p-022",
+        "ingredientId": "ing-nuoc-mam"
+      },
+      {
+        "productId": "p-019",
+        "quantity": 1,
+        "unit": "gói",
+        "mealProductId": "p-019",
+        "ingredientId": "ing-bun-gao"
+      }
+    ],
+    "steps": [
+      "Xay thịt nem, ướp gia vị.",
+      "Phơi nem nướng xém vàng.",
+      "Ăn với bún, rau, nước chấm."
+    ],
+    "nutrition": {
+      "calories": 400,
+      "protein": 24,
+      "carbs": 45,
+      "fat": 12
+    },
+    "tags": [
+      "family",
+      "premium"
+    ],
+    "goalTags": [
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-052",
+    "slug": "nom-dua-leo",
+    "name": "Nộm dưa leo trộn",
+    "mealType": "snack",
+    "servings": 2,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 0,
+    "difficulty": "easy",
+    "imageUrl": "https://cdn.tgdd.vn/Files/2020/05/26/1258482/cach-lam-nom-dua-chuot-voi-dua-goi-dua-leo-voi-t-6.jpg",
+    "ingredients": [
+      {
+        "productId": "p-011",
+        "quantity": 3,
+        "unit": "quả",
+        "mealProductId": "p-011",
+        "ingredientId": "ing-dua-leo"
+      },
+      {
+        "productId": "p-010",
+        "quantity": 1,
+        "unit": "bó",
+        "mealProductId": "p-010",
+        "ingredientId": "ing-rau-muong"
+      },
+      {
+        "productId": "p-022",
+        "quantity": 2,
+        "unit": "muỗng",
+        "mealProductId": "p-022",
+        "ingredientId": "ing-nuoc-mam"
+      },
+      {
+        "productId": "p-064",
+        "quantity": 50,
+        "unit": "g",
+        "mealProductId": "p-064",
+        "ingredientId": "ing-hanh-la"
+      }
+    ],
+    "steps": [
+      "Thái dưa leo mỏng.",
+      "Phi gừng, tỏi, ớt.",
+      "Trộn nước mắm, đường, giấm chua."
+    ],
+    "nutrition": {
+      "calories": 120,
+      "protein": 4,
+      "carbs": 18,
+      "fat": 4
+    },
+    "tags": [
+      "vegetarian",
+      "fresh",
+      "low-cal"
+    ],
+    "goalTags": [
+      "vegetarian",
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-053",
+    "slug": "ghe-xao-bot-mi",
+    "name": "Ghẹ xào bột mì",
+    "mealType": "dinner",
+    "servings": 2,
+    "prepTimeMinutes": 20,
+    "cookTimeMinutes": 20,
+    "difficulty": "medium",
+    "imageUrl": "https://vn1.vdrive.vn/haisancuabien.com/2024/07/Mien-xao-ghe.webp",
+    "ingredients": [
+      {
+        "productId": "p-066",
+        "quantity": 300,
+        "unit": "g",
+        "mealProductId": "p-066",
+        "ingredientId": "ing-ghe-tuoi"
+      },
+      {
+        "productId": "p-001",
+        "quantity": 1,
+        "unit": "quả",
+        "mealProductId": "p-001",
+        "ingredientId": "ing-trung-ga-ta"
+      },
+      {
+        "productId": "p-009",
+        "quantity": 1,
+        "unit": "quả",
+        "mealProductId": "p-009",
+        "ingredientId": "ing-ca-chua"
+      },
+      {
+        "productId": "p-022",
+        "quantity": 1,
+        "unit": "muỗng",
+        "mealProductId": "p-022",
+        "ingredientId": "ing-nuoc-mam"
+      }
+    ],
+    "steps": [
+      "Ghẹ rửa sạch, bỏ yếm đen.",
+      "Bọt bột giòn, chiên sơ.",
+      "Xào cà chua, cho ghẹ vào đảo."
+    ],
+    "nutrition": {
+      "calories": 380,
+      "protein": 24,
+      "carbs": 32,
+      "fat": 16
+    },
+    "tags": [
+      "seafood",
+      "family"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-054",
+    "slug": "khoai-chien",
+    "name": "Khoai tây chiên lốc xoáy",
+    "mealType": "snack",
+    "servings": 2,
+    "prepTimeMinutes": 15,
+    "cookTimeMinutes": 15,
+    "difficulty": "easy",
+    "imageUrl": "https://cdn.tgdd.vn/Files/2020/07/25/1273518/cach-lam-khoai-tay-loc-xoay-ngon-het-say-con-ba-bay-202206271521173667.jpg",
+    "ingredients": [
+      {
+        "productId": "p-049",
+        "quantity": 3,
+        "unit": "quả",
+        "mealProductId": "p-049",
+        "ingredientId": "ing-khoai-tay"
+      },
+      {
+        "productId": "p-024",
+        "quantity": 200,
+        "unit": "ml",
+        "mealProductId": "p-024",
+        "ingredientId": "ing-dau-an"
+      },
+      {
+        "productId": "p-025",
+        "quantity": 1,
+        "unit": "muỗng",
+        "mealProductId": "p-025",
+        "ingredientId": "ing-muoi-iod"
+      }
+    ],
+    "steps": [
+      "Xoắn khoai tây bằng dụng cụ.",
+      "Ngâm đá 10 phút.",
+      "Chiên vàng giòn, rắc muối."
+    ],
+    "nutrition": {
+      "calories": 300,
+      "protein": 4,
+      "carbs": 42,
+      "fat": 14
+    },
+    "tags": [
+      "snack",
+      "comfort"
+    ],
+    "goalTags": [
+      "vegetarian"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-055",
+    "slug": "uc-ga-tron-salad",
+    "name": "Ức gà trộn salad",
+    "mealType": "breakfast",
+    "servings": 2,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 15,
+    "difficulty": "easy",
+    "imageUrl": "https://bepmina.vn/wp-content/uploads/2021/07/salad-uc-ga-dau-giam.jpg",
+    "ingredients": [
+      {
+        "productId": "p-002",
+        "quantity": 250,
+        "unit": "g",
+        "mealProductId": "p-002",
+        "ingredientId": "ing-uc-ga-tuoi"
+      },
+      {
+        "productId": "p-013",
+        "quantity": 1,
+        "unit": "cây",
+        "mealProductId": "p-013",
+        "ingredientId": "ing-xa-lach"
+      },
+      {
+        "productId": "p-016",
+        "quantity": 1,
+        "unit": "quả",
+        "mealProductId": "p-016",
+        "ingredientId": "ing-tao-do"
+      },
+      {
+        "productId": "p-024",
+        "quantity": 1,
+        "unit": "muỗng",
+        "mealProductId": "p-024",
+        "ingredientId": "ing-dau-an"
+      }
+    ],
+    "steps": [
+      "Luộc ức gà, cắt lát.",
+      "Trộn rau củ.",
+      "Rưới dầu ô-liu, giấm táo."
+    ],
+    "nutrition": {
+      "calories": 290,
+      "protein": 32,
+      "carbs": 12,
+      "fat": 12
+    },
+    "tags": [
+      "healthy",
+      "breakfast",
+      "high-protein"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-056",
+    "slug": "ca-ngu-dau-hu",
+    "name": "Cá ngừ đậu hũ sốt cà",
+    "mealType": "dinner",
+    "servings": 2,
+    "prepTimeMinutes": 15,
+    "cookTimeMinutes": 18,
+    "difficulty": "easy",
+    "imageUrl": "https://cookbeo.com/media/2024/01/ca-ngu-sot-ca-chua/thumbnails/thanh-pham-ca-ngu-sot-ca-chua-2-1200.jpg",
+    "ingredients": [
+      {
+        "productId": "p-068",
+        "quantity": 300,
+        "unit": "g",
+        "mealProductId": "p-068",
+        "ingredientId": "ing-ca-ngu"
+      },
+      {
+        "productId": "p-067",
+        "quantity": 200,
+        "unit": "g",
+        "mealProductId": "p-067",
+        "ingredientId": "ing-dau-hu"
+      },
+      {
+        "productId": "p-009",
+        "quantity": 2,
+        "unit": "quả",
+        "mealProductId": "p-009",
+        "ingredientId": "ing-ca-chua"
+      }
+    ],
+    "steps": [
+      "Áp chảo thịt cá ngừ.",
+      "Nấu sốt cà chua.",
+      "Đổ sốt lên cá, ăn kèm cơm."
+    ],
+    "nutrition": {
+      "calories": 420,
+      "protein": 42,
+      "carbs": 18,
+      "fat": 20
+    },
+    "tags": [
+      "healthy",
+      "high-protein",
+      "premium"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-057",
+    "slug": "bong-cai-xao-bo",
+    "name": "Bông cải xào bò",
+    "mealType": "dinner",
+    "servings": 2,
+    "prepTimeMinutes": 15,
+    "cookTimeMinutes": 12,
+    "difficulty": "easy",
+    "imageUrl": "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/1a1fb66d5c975f17b8b6659668182a86/Derivates/c1d42c14faa842a59a9e677da5671f31977584a4.jpg",
+    "ingredients": [
+      {
+        "productId": "p-004",
+        "quantity": 250,
+        "unit": "g",
+        "mealProductId": "p-004",
+        "ingredientId": "ing-than-bo"
+      },
+      {
+        "productId": "p-069",
+        "quantity": 300,
+        "unit": "g",
+        "mealProductId": "p-069",
+        "ingredientId": "ing-bong-cai"
+      },
+      {
+        "productId": "p-024",
+        "quantity": 2,
+        "unit": "muỗng",
+        "mealProductId": "p-024",
+        "ingredientId": "ing-dau-an"
+      }
+    ],
+    "steps": [
+      "Tách bông cải, luộc sơ.",
+      "Xào bò nhanh lửa lớn.",
+      "Cho bông cải vào đảo, nêm gia vị."
+    ],
+    "nutrition": {
+      "calories": 380,
+      "protein": 30,
+      "carbs": 18,
+      "fat": 20
+    },
+    "tags": [
+      "healthy",
+      "quick"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-058",
+    "slug": "tra-dao",
+    "name": "Trà đào",
+    "mealType": "snack",
+    "servings": 2,
+    "prepTimeMinutes": 5,
+    "cookTimeMinutes": 10,
+    "difficulty": "easy",
+    "imageUrl": "https://yeuamthuc.org/wp-content/uploads/2020/03/ly-tra-dao-0b4abead.jpg",
+    "ingredients": [
+      {
+        "productId": "p-070",
+        "quantity": 1,
+        "unit": "gói",
+        "mealProductId": "p-070",
+        "ingredientId": "ing-tra-dao"
+      },
+      {
+        "productId": "p-071",
+        "quantity": 100,
+        "unit": "g",
+        "mealProductId": "p-071",
+        "ingredientId": "ing-dao"
+      },
+      {
+        "productId": "p-029",
+        "quantity": 3,
+        "unit": "chai",
+        "mealProductId": "p-029",
+        "ingredientId": "ing-tra-xanh-khong-duong"
+      }
+    ],
+    "steps": [
+      "Pha trà nóng, nhỏ đường.",
+      "Đào cắt miếng nhỏ, rửa muối.",
+      "Đổ trà đào ly, thêm đá."
+    ],
+    "nutrition": {
+      "calories": 140,
+      "protein": 1,
+      "carbs": 34,
+      "fat": 0
+    },
+    "tags": [
+      "snack",
+      "drink",
+      "fresh"
+    ],
+    "goalTags": [
+      "vegetarian",
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-059",
+    "slug": "dau-hu-xao-mien",
+    "name": "Đậu hũ xào miến",
+    "mealType": "dinner",
+    "servings": 2,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 15,
+    "difficulty": "easy",
+    "imageUrl": "https://lamviet.net/wp-content/uploads/2023/06/mien-han-quoc-xao-chay-voi-rau-cu-va-dau-hu.jpg",
+    "ingredients": [
+      {
+        "productId": "p-067",
+        "quantity": 300,
+        "unit": "g",
+        "mealProductId": "p-067",
+        "ingredientId": "ing-dau-hu"
+      },
+      {
+        "productId": "p-072",
+        "quantity": 1,
+        "unit": "gói",
+        "mealProductId": "p-072",
+        "ingredientId": "ing-mi-dong"
+      },
+      {
+        "productId": "p-010",
+        "quantity": 1,
+        "unit": "bó",
+        "mealProductId": "p-010",
+        "ingredientId": "ing-rau-muong"
+      },
+      {
+        "productId": "p-001",
+        "quantity": 1,
+        "unit": "quả",
+        "mealProductId": "p-001",
+        "ingredientId": "ing-trung-ga-ta"
+      }
+    ],
+    "steps": [
+      "Cắt đậu hũ miếng vuông.",
+      "Chiên đậu vàng giòn.",
+      "Xào với miến và rau sống."
+    ],
+    "nutrition": {
+      "calories": 360,
+      "protein": 18,
+      "carbs": 42,
+      "fat": 14
+    },
+    "tags": [
+      "vegetarian",
+      "quick"
+    ],
+    "goalTags": [
+      "vegetarian",
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-060",
+    "slug": "banh-vong",
+    "name": "Bánh vọng hạt sen",
+    "mealType": "snack",
+    "servings": 2,
+    "prepTimeMinutes": 15,
+    "cookTimeMinutes": 20,
+    "difficulty": "medium",
+    "imageUrl": "https://sendaiviet.com/wp-content/uploads/2022/05/banh-hat-sen-1.jpg",
+    "ingredients": [
+      {
+        "productId": "p-001",
+        "quantity": 2,
+        "unit": "quả",
+        "mealProductId": "p-001",
+        "ingredientId": "ing-trung-ga-ta"
+      },
+      {
+        "productId": "p-021",
+        "quantity": 100,
+        "unit": "g",
+        "mealProductId": "p-021",
+        "ingredientId": "ing-yen-mach"
+      },
+      {
+        "productId": "p-073",
+        "quantity": 100,
+        "unit": "g",
+        "mealProductId": "p-073",
+        "ingredientId": "ing-hat-sen"
+      }
+    ],
+    "steps": [
+      "Nấu hạt sen mềm, nghiền nhuyễn.",
+      "Trộn bột với trứng, sữa tươi.",
+      "Chiên bánh vàng, nhồi hạt sen."
+    ],
+    "nutrition": {
+      "calories": 280,
+      "protein": 12,
+      "carbs": 38,
+      "fat": 10
+    },
+    "tags": [
+      "snack",
+      "dessert",
+      "vegetarian"
+    ],
+    "goalTags": [
+      "vegetarian",
+      "healthy"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-061",
+    "slug": "bun-tom",
+    "name": "Bún tôm tươi",
+    "mealType": "breakfast",
+    "servings": 2,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 10,
+    "difficulty": "easy",
+    "imageUrl": "https://2monngonmoingay.com/wp-content/uploads/2022/07/maxresdefault-13.jpg",
+    "ingredients": [
+      {
+        "productId": "p-005",
+        "quantity": 200,
+        "unit": "g",
+        "mealProductId": "p-005",
+        "ingredientId": "ing-tom-su"
+      },
+      {
+        "productId": "p-019",
+        "quantity": 1,
+        "unit": "gói",
+        "mealProductId": "p-019",
+        "ingredientId": "ing-bun-gao"
+      },
+      {
+        "productId": "p-013",
+        "quantity": 1,
+        "unit": "cây",
+        "mealProductId": "p-013",
+        "ingredientId": "ing-xa-lach"
+      }
+    ],
+    "steps": [
+      "Luộc tôm.",
+      "Trộn nước mắm, đường, giấm.",
+      "Ăn với bún và rau sống."
+    ],
+    "nutrition": {
+      "calories": 320,
+      "protein": 22,
+      "carbs": 42,
+      "fat": 4
+    },
+    "tags": [
+      "seafood",
+      "breakfast",
+      "fresh"
+    ],
+    "goalTags": [
+      "healthy",
+      "seafood"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-062",
+    "slug": "chao-tom",
+    "name": "Cháo tôm",
+    "mealType": "breakfast",
+    "servings": 2,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 25,
+    "difficulty": "easy",
+    "imageUrl": "https://cdn2.fptshop.com.vn/unsafe/Uploads/images/tin-tuc/164517/Originals/chao-tom-16.jpg",
+    "ingredients": [
+      {
+        "productId": "p-005",
+        "quantity": 150,
+        "unit": "g",
+        "mealProductId": "p-005",
+        "ingredientId": "ing-tom-su"
+      },
+      {
+        "productId": "p-018",
+        "quantity": 1,
+        "unit": "chén",
+        "mealProductId": "p-018",
+        "ingredientId": "ing-gao-thom"
+      },
+      {
+        "productId": "p-038",
+        "quantity": 1,
+        "unit": "củ",
+        "mealProductId": "p-038",
+        "ingredientId": "ing-hanh-tay"
+      }
+    ],
+    "steps": [
+      "Nấu cháo gạo tẻ.",
+      "Tôm bóc vỏ, xào thơm.",
+      "Cho tôm vào cháo, nêm nhạt."
+    ],
+    "nutrition": {
+      "calories": 280,
+      "protein": 18,
+      "carbs": 42,
+      "fat": 4
+    },
+    "tags": [
+      "seafood",
+      "breakfast",
+      "comfort"
+    ],
+    "goalTags": [
+      "healthy",
+      "seafood"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-063",
+    "slug": "mi-hoi-sinh",
+    "name": "Mì hải sản",
+    "mealType": "breakfast",
+    "servings": 2,
+    "prepTimeMinutes": 10,
+    "cookTimeMinutes": 12,
+    "difficulty": "easy",
+    "imageUrl": "https://cdn.tgdd.vn/2022/07/CookDish/2-cach-lam-mi-xao-hai-san-thom-ngon-hap-dan-doi-vi-cho-bua-an-avt-1200x676.jpg",
+    "ingredients": [
+      {
+        "productId": "p-005",
+        "quantity": 100,
+        "unit": "g",
+        "mealProductId": "p-005",
+        "ingredientId": "ing-tom-su"
+      },
+      {
+        "productId": "p-007",
+        "quantity": 100,
+        "unit": "g",
+        "mealProductId": "p-007",
+        "ingredientId": "ing-muc-ong"
+      },
+      {
+        "productId": "p-036",
+        "quantity": 1,
+        "unit": "gói",
+        "mealProductId": "p-036",
+        "ingredientId": "ing-mi-trung"
+      },
+      {
+        "productId": "p-009",
+        "quantity": 1,
+        "unit": "quả",
+        "mealProductId": "p-009",
+        "ingredientId": "ing-ca-chua"
+      }
+    ],
+    "steps": [
+      "Luộc mì.",
+      "Xào tôm mực với cà chua.",
+      "Trộn với mì, nêm gia vị."
+    ],
+    "nutrition": {
+      "calories": 350,
+      "protein": 24,
+      "carbs": 48,
+      "fat": 6
+    },
+    "tags": [
+      "seafood",
+      "breakfast",
+      "quick"
+    ],
+    "goalTags": [
+      "healthy",
+      "seafood"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-064",
+    "slug": "sandwich-tom",
+    "name": "Sandwich trộn tôm",
+    "mealType": "breakfast",
+    "servings": 2,
+    "prepTimeMinutes": 5,
+    "cookTimeMinutes": 5,
+    "difficulty": "easy",
+    "imageUrl": "https://toplist.vn/images/800px/sandwich-tom-953789.jpg",
+    "ingredients": [
+      {
+        "productId": "p-005",
+        "quantity": 100,
+        "unit": "g",
+        "mealProductId": "p-005",
+        "ingredientId": "ing-tom-su"
+      },
+      {
+        "productId": "p-056",
+        "quantity": 1,
+        "unit": "quả",
+        "mealProductId": "p-056",
+        "ingredientId": "ing-banh-mi"
+      },
+      {
+        "productId": "p-034",
+        "quantity": 2,
+        "unit": "lát",
+        "mealProductId": "p-034",
+        "ingredientId": "ing-pho-mai"
+      }
+    ],
+    "steps": [
+      "Trộn tôm luộc với sốt mayo.",
+      "Phết lên bánh mì.",
+      "Ăn kèm salad."
+    ],
+    "nutrition": {
+      "calories": 310,
+      "protein": 18,
+      "carbs": 32,
+      "fat": 10
+    },
+    "tags": [
+      "seafood",
+      "breakfast",
+      "quick"
+    ],
+    "goalTags": [
+      "healthy",
+      "seafood"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-065",
+    "slug": "ga-xao-nhanh",
+    "name": "Gà xào nấm nhanh",
+    "mealType": "dinner",
+    "servings": 2,
+    "prepTimeMinutes": 5,
+    "cookTimeMinutes": 10,
+    "difficulty": "easy",
+    "imageUrl": "https://cookbeo.com/media/2023/05/ga-xao-nam/ga-xao-nam.jpg",
+    "ingredients": [
+      {
+        "productId": "p-002",
+        "quantity": 250,
+        "unit": "g",
+        "mealProductId": "p-002",
+        "ingredientId": "ing-uc-ga-tuoi"
+      },
+      {
+        "productId": "p-040",
+        "quantity": 100,
+        "unit": "g",
+        "mealProductId": "p-040",
+        "ingredientId": "ing-nam-huong"
+      },
+      {
+        "productId": "p-024",
+        "quantity": 1,
+        "unit": "muỗng",
+        "mealProductId": "p-024",
+        "ingredientId": "ing-dau-an"
+      }
+    ],
+    "steps": [
+      "Xào gà nhanh.",
+      "Cho nấm vào đảo.",
+      "Nêm nước tương, ăn kèm cơm."
+    ],
+    "nutrition": {
+      "calories": 340,
+      "protein": 35,
+      "carbs": 12,
+      "fat": 16
+    },
+    "tags": [
+      "quick",
+      "high-protein"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  },
+  {
+    "id": "rec-066",
+    "slug": "trung-ca-hoi",
+    "name": "Trứng cuộn cá hồi",
+    "mealType": "dinner",
+    "servings": 2,
+    "prepTimeMinutes": 5,
+    "cookTimeMinutes": 8,
+    "difficulty": "easy",
+    "imageUrl": "https://sushikuan.vn/wp-content/uploads/2024/09/SS34.png",
+    "ingredients": [
+      {
+        "productId": "p-001",
+        "quantity": 3,
+        "unit": "quả",
+        "mealProductId": "p-001",
+        "ingredientId": "ing-trung-ga-ta"
+      },
+      {
+        "productId": "p-006",
+        "quantity": 100,
+        "unit": "g",
+        "mealProductId": "p-006",
+        "ingredientId": "ing-ca-hoi"
+      },
+      {
+        "productId": "p-013",
+        "quantity": 1,
+        "unit": "cây",
+        "mealProductId": "p-013",
+        "ingredientId": "ing-xa-lach"
+      }
+    ],
+    "steps": [
+      "Đánh trứng, tráng mỏng.",
+      "Cuộn với cá hồi xông khói.",
+      "Cắt miếng, ăn kèm rau."
+    ],
+    "nutrition": {
+      "calories": 280,
+      "protein": 22,
+      "carbs": 4,
+      "fat": 18
+    },
+    "tags": [
+      "quick",
+      "seafood",
+      "high-protein"
+    ],
+    "goalTags": [
+      "healthy",
+      "high-protein"
+    ],
+    "isActive": true
+  }
+]

@@ -1,0 +1,13 @@
+const router = require('express').Router();
+const s = require('./vouchers.service');
+const v = require('../../lib/validation');
+const { requireAuth, requireAdmin } = require('../../middleware/auth');
+router.get('/vouchers', async (req, res) => res.json(await s.listPublic()));
+router.get('/users/me/vouchers', requireAuth, async (req, res) => res.json(await s.listMine(req.user.id)));
+router.post('/users/me/vouchers', requireAuth, async (req, res) => { v.object(req.body, ['code']); res.json(await s.save(req.user.id, req.body.code)); });
+router.delete('/users/me/vouchers/:code', requireAuth, async (req, res) => res.json(await s.unsave(req.user.id, req.params.code)));
+router.use('/admin/vouchers', requireAuth, requireAdmin);
+router.get('/admin/vouchers', async (req, res) => res.json(await s.listAdmin()));
+router.post('/admin/vouchers', async (req, res) => res.status(201).json(await s.create(req.body)));
+router.patch('/admin/vouchers/:id', async (req, res) => res.json(await s.update(req.params.id, req.body)));
+module.exports = router;
