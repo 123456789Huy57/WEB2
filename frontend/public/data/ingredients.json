@@ -647,15 +647,16 @@
   "id": "ing-tra-xanh-khong-duong",
   "mealProductId": "p-029",
   "slug": "tra-xanh-khong-duong",
-  "name": "Trà xanh không đường",
+  "name": "Trà xanh túi lọc",
   "categoryId": "beverages",
   "category": "beverages",
-  "defaultUnit": "chai",
+  "defaultUnit": "gói",
   "unitWeightGram": 500,
   "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/1/image/production/2026/1/image/Products/8938/83613/oolong-tea-350ml-chai_202601231344055693.jpg",
   "aliases": [
-   "Trà xanh không đường",
-   "tra-xanh-khong-duong"
+   "trà xanh",
+   "trà lài",
+   "trà túi lọc"
   ],
   "nutritionPer100g": {
    "energy_kcal": 2,

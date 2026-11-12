@@ -1,0 +1,112 @@
+[
+  {
+    "id": "vegetables",
+    "description": "Rau ăn lá, củ quả và rau thơm nhập mỗi sáng, sơ chế gọn để nấu canh, xào, luộc hay làm gỏi.",
+    "subcategories": [
+      {
+        "id": "vegetables-leafy",
+        "name": "Rau ăn lá"
+      },
+      {
+        "id": "vegetables-other",
+        "name": "Củ, nấm và rau khác"
+      },
+      {
+        "id": "vegetables-fruit",
+        "name": "Rau ăn quả"
+      }
+    ]
+  },
+  {
+    "id": "fruits",
+    "description": "Trái cây trong nước theo mùa và trái nhập khẩu, chọn trái chín vừa ăn, ghi rõ cỡ trái và nguồn gốc."
+  },
+  {
+    "id": "meat",
+    "description": "Thịt heo, bò, gà tươi đóng khay theo khối lượng, giữ lạnh suốt đường giao."
+  },
+  {
+    "id": "seafood",
+    "description": "Cá, tôm, mực và nghêu sò đã làm sạch, đóng khay sẵn, tiện kho, chiên hay nấu canh chua."
+  },
+  {
+    "id": "dairy-eggs",
+    "description": "Trứng gà, trứng vịt, sữa tươi, sữa chua và phô mai cho bữa sáng và món bánh.",
+    "subcategories": [
+      {
+        "id": "dairy-eggs",
+        "name": "Trứng"
+      },
+      {
+        "id": "dairy-other",
+        "name": "Sữa - bơ - phô mai"
+      }
+    ]
+  },
+  {
+    "id": "beverages",
+    "description": "Nước suối, nước khoáng, bia và đồ uống đóng chai, có loại lẻ và nguyên thùng."
+  },
+  {
+    "id": "bakery",
+    "description": "Bánh mì sandwich và bánh ngọt đóng gói cho bữa sáng nhanh hoặc ăn xế.",
+    "subcategories": [
+      {
+        "id": "bakery-sweet",
+        "name": "Bánh ngọt"
+      },
+      {
+        "id": "bakery-bread",
+        "name": "Bánh mì"
+      }
+    ]
+  },
+  {
+    "id": "snacks",
+    "description": "Bánh quy, kẹo và snack cho giờ giải lao, đãi khách hay mang đi dã ngoại."
+  },
+  {
+    "id": "rice-grains",
+    "description": "Gạo ngon túi 5kg, các loại bột làm bánh, đậu hạt và đồ khô cho gian bếp."
+  },
+  {
+    "id": "noodles",
+    "description": "Mì gói, miến ăn liền và bún, phở, miến khô để nấu nhanh trong vài phút.",
+    "subcategories": [
+      {
+        "id": "noodles-instant",
+        "name": "Mì ăn liền"
+      },
+      {
+        "id": "noodles-dry",
+        "name": "Bún - phở - miến khô"
+      }
+    ]
+  },
+  {
+    "id": "condiments",
+    "description": "Dầu ăn, nước mắm, nước tương, đường, muối và gia vị nêm nếm hằng ngày.",
+    "subcategories": [
+      {
+        "id": "condiments-oil",
+        "name": "Dầu ăn"
+      },
+      {
+        "id": "condiments-sauce",
+        "name": "Nước chấm - nước sốt"
+      },
+      {
+        "id": "condiments-spice",
+        "name": "Gia vị khô"
+      }
+    ]
+  },
+  {
+    "id": "frozen",
+    "description": "Xúc xích, chả lụa, bánh xếp và đồ chế biến sẵn, bảo quản lạnh, nấu nhanh khi bận."
+  },
+  {
+    "id": "tea-coffee",
+    "description": "Cà phê rang xay, cà phê hòa tan và trà túi lọc cho buổi sáng tỉnh táo."
+  }
+]

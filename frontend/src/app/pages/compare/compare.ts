@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, computed, inject } from '@angular/core';
+import { Component, effect, ViewEncapsulation, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CompareService } from '../../core/compare.service';
 import { ProductService } from '../../core/product.service';
@@ -67,7 +67,9 @@ import { ImgFallbackDirective } from '../../shared/img-fallback.directive';
 export class Compare {
   protected cmp = inject(CompareService);
   protected ps = inject(ProductService);
-  protected items = computed(() => this.cmp.ids().map(id => this.ps.get(id)).filter((p): p is Product => !!p));
+  protected items = computed(() => this.cmp.ids().map(id => this.ps.full(id)).filter((p): p is Product => !!p));
+  /** Dinh dưỡng chỉ có trong bản chi tiết */
+  private loadDetails = effect(() => { for (const id of this.cmp.ids()) void this.ps.loadDetail(id); });
   protected rows = computed(() => {
     const it = this.items();
     const vnd = (n: number) => new VndPipe().transform(n);
@@ -82,7 +84,7 @@ export class Compare {
       { label: 'Giá', values: it.map(p => `${vnd(this.ps.price(p))} / ${this.ps.unit(p)}`), best: pick(it.map(p => this.ps.price(p)), 'min') },
       { label: 'Giảm giá', values: it.map(p => (this.ps.off(p) ? `−${this.ps.off(p)}%` : '—')), best: -1 },
       { label: 'Thương hiệu', values: it.map(p => p.brand || '—'), best: -1 },
-      { label: 'Xuất xứ', values: it.map(p => p.origin || 'Việt Nam'), best: -1 },
+      { label: 'Xuất xứ', values: it.map(p => p.origin || 'Chưa ghi'), best: -1 },
       { label: 'Năng lượng / 100 g', values: n.map(x => num(x.energy_kcal, 'kcal')), best: pick(n.map(x => x.energy_kcal), 'min') },
       { label: 'Đạm', values: n.map(x => num(x.protein, 'g')), best: pick(n.map(x => x.protein), 'max') },
       { label: 'Béo', values: n.map(x => num(x.fat, 'g')), best: pick(n.map(x => x.fat), 'min') },

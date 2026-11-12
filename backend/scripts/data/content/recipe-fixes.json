@@ -1,0 +1,102 @@
+{
+  "note": "Sửa dữ liệu gốc của công thức: tên món không khớp nguyên liệu, định lượng sai đơn vị, nhãn món chay sai.",
+  "fixes": [
+    {
+      "id": "rec-004",
+      "why": "Dưa leo 1 kg cho 2 người là nhập sai đơn vị",
+      "ingredients": {
+        "ing-dua-leo": {
+          "quantity": 1,
+          "unit": "quả"
+        }
+      }
+    },
+    {
+      "id": "rec-013",
+      "why": "Dưa leo 1 kg cho 2 người là nhập sai đơn vị",
+      "ingredients": {
+        "ing-dua-leo": {
+          "quantity": 1,
+          "unit": "quả"
+        }
+      }
+    },
+    {
+      "id": "rec-014",
+      "why": "Món là yến mạch nấu với sữa, không phải bánh",
+      "name": "Yến mạch nấu sữa chuối"
+    },
+    {
+      "id": "rec-022",
+      "why": "Nguyên liệu là cá basa, không có cá lóc",
+      "name": "Canh chua cá basa"
+    },
+    {
+      "id": "rec-031",
+      "why": "Nguyên liệu là cá basa tươi, không phải cá khô",
+      "name": "Cá basa kho riềng"
+    },
+    {
+      "id": "rec-052",
+      "why": "Có nước mắm nên không phải món chay",
+      "removeTags": [
+        "vegetarian"
+      ]
+    },
+    {
+      "id": "rec-053",
+      "why": "Cách làm là ghẹ lăn bột chiên rồi đảo sốt cà",
+      "name": "Ghẹ chiên bột sốt cà"
+    },
+    {
+      "id": "rec-058",
+      "why": "Trà nay là trà túi lọc, 2 gói đủ cho 2 ly",
+      "ingredients": {
+        "ing-tra-xanh-khong-duong": {
+          "quantity": 2,
+          "unit": "gói"
+        }
+      }
+    },
+    {
+      "id": "rec-059",
+      "why": "Có trứng, món chay kiêng trứng",
+      "removeTags": [
+        "vegetarian"
+      ]
+    },
+    {
+      "id": "rec-060",
+      "why": "\"Bánh vọng\" không phải tên món có thật",
+      "name": "Bánh yến mạch nhân hạt sen"
+    },
+    {
+      "id": "rec-040",
+      "why": "Nguyên liệu là mực và rau củ, không có dồi sụn hay miến",
+      "name": "Mực xào rau củ"
+    },
+    {
+      "id": "rec-044",
+      "why": "\"Tỏa lan\" không phải tên món; cách làm là pudding phô mai nướng cách thủy",
+      "name": "Pudding phô mai nướng"
+    },
+    {
+      "id": "rec-045",
+      "why": "Có nước mắm nên không gắn nhãn chay",
+      "removeTags": [
+        "vegetarian-friendly"
+      ]
+    },
+    {
+      "id": "rec-048",
+      "why": "30 g bột ngọt là nhầm với bột cà ri",
+      "ingredients": {
+        "ing-bot-ngot": {
+          "ingredientId": "ing-bot-ca-ri",
+          "quantity": 2,
+          "unit": "gói"
+        }
+      }
+    }
+  ]
+}

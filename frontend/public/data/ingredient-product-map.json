@@ -18,17 +18,17 @@
  "ing-ba-chi-heo": {
   "ingredientId": "ing-ba-chi-heo",
   "mealProductId": "p-003",
-  "preferredProductId": "mp-003",
+  "preferredProductId": "p-0042",
   "productIds": [
-   "mp-003"
+   "p-0042"
   ]
  },
  "ing-than-bo": {
   "ingredientId": "ing-than-bo",
   "mealProductId": "p-004",
-  "preferredProductId": "mp-004",
+  "preferredProductId": "p-0049",
   "productIds": [
-   "mp-004"
+   "p-0049"
   ]
  },
  "ing-tom-su": {
@@ -236,9 +236,9 @@
  "ing-ca-phe-hoa-tan": {
   "ingredientId": "ing-ca-phe-hoa-tan",
   "mealProductId": "p-030",
-  "preferredProductId": "mp-030",
+  "preferredProductId": "p-0189",
   "productIds": [
-   "mp-030"
+   "p-0189"
   ]
  },
  "ing-dau-phong": {
@@ -572,9 +572,9 @@
  "ing-mi-dong": {
   "ingredientId": "ing-mi-dong",
   "mealProductId": "p-072",
-  "preferredProductId": "mp-072",
+  "preferredProductId": "mp-065",
   "productIds": [
-   "mp-072"
+   "mp-065"
   ]
  },
  "ing-hat-sen": {

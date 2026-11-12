@@ -1,0 +1,130 @@
+{
+  "p-0097": {
+    "category": "snacks",
+    "subcategory": "snacks-candy"
+  },
+  "p-0098": {
+    "category": "snacks",
+    "subcategory": "snacks-candy"
+  },
+  "p-0099": {
+    "category": "snacks",
+    "subcategory": "snacks-candy"
+  },
+  "p-0100": {
+    "category": "snacks",
+    "subcategory": "snacks-candy"
+  },
+  "p-0101": {
+    "category": "snacks",
+    "subcategory": "snacks-candy"
+  },
+  "p-0102": {
+    "category": "snacks",
+    "subcategory": "snacks-candy"
+  },
+  "p-0104": {
+    "category": "snacks",
+    "subcategory": "snacks-candy"
+  },
+  "p-0105": {
+    "category": "snacks",
+    "subcategory": "snacks-candy"
+  },
+  "p-0103": {
+    "category": "snacks",
+    "subcategory": "snacks-other"
+  },
+  "p-0196": {
+    "category": "tea-coffee",
+    "subcategory": "coffee"
+  },
+  "mp-070": {
+    "category": "tea-coffee",
+    "subcategory": "tea"
+  },
+  "mp-054": {
+    "category": "tea-coffee",
+    "subcategory": "tea"
+  },
+  "mp-029": {
+    "category": "tea-coffee",
+    "subcategory": "tea"
+  },
+  "p-0089": {
+    "category": "beverages",
+    "subcategory": "beverages-water"
+  },
+  "p-0090": {
+    "category": "beverages",
+    "subcategory": "beverages-water"
+  },
+  "p-0082": {
+    "category": "beverages",
+    "subcategory": "beverages-water"
+  },
+  "p-0079": {
+    "category": "dairy-eggs",
+    "subcategory": "dairy-other"
+  },
+  "mp-063": {
+    "category": "condiments",
+    "subcategory": "condiments-spice"
+  },
+  "mp-047": {
+    "category": "condiments",
+    "subcategory": "condiments-spice"
+  },
+  "mp-075": {
+    "category": "condiments",
+    "subcategory": "condiments-spice"
+  },
+  "mp-052": {
+    "category": "condiments",
+    "subcategory": "condiments-spice"
+  },
+  "mp-025": {
+    "category": "condiments",
+    "subcategory": "condiments-spice"
+  },
+  "mp-062": {
+    "category": "condiments",
+    "subcategory": "condiments-spice"
+  },
+  "mp-033": {
+    "category": "vegetables",
+    "subcategory": "vegetables-other"
+  },
+  "mp-038": {
+    "category": "vegetables",
+    "subcategory": "vegetables-other"
+  },
+  "mp-067": {
+    "category": "vegetables",
+    "subcategory": "vegetables-other"
+  },
+  "mp-041": {
+    "category": "rice-grains",
+    "subcategory": "rice-other"
+  },
+  "mp-036": {
+    "category": "noodles",
+    "subcategory": "noodles-dry"
+  },
+  "mp-065": {
+    "category": "noodles",
+    "subcategory": "noodles-dry"
+  },
+  "mp-019": {
+    "category": "noodles",
+    "subcategory": "noodles-dry"
+  },
+  "mp-020": {
+    "category": "noodles",
+    "subcategory": "noodles-dry"
+  },
+  "mp-056": {
+    "category": "bakery",
+    "subcategory": "bakery-bread"
+  }
+}

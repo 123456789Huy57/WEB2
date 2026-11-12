@@ -45,7 +45,7 @@ const collections = {
         image_url: str, gallery: strings, badges: strings, tags: strings, active: bool,
         origin: strOrNull, sellUnit: strOrNull,
         netWeightGram: { bsonType: ['number', 'null'] }, unitWeightGram: { bsonType: ['number', 'null'] },
-        nutrition: { bsonType: 'object' },
+        nutrition: { bsonType: 'object' }, usage: str, storage: str,
       },
     },
     // Giá giảm (nếu có) phải thấp hơn giá gốc.
@@ -142,7 +142,8 @@ const collections = {
       properties: {
         id: str, slug: str, name: str, mealType: { enum: ['breakfast', 'lunch', 'dinner', 'snack'] },
         servings: positive, prepTimeMinutes: money, cookTimeMinutes: money, difficulty: { enum: ['easy', 'medium', 'hard'] },
-        imageUrl: str, steps: strings, tags: strings, goalTags: strings, isActive: bool, nutrition: { bsonType: 'object' },
+        imageUrl: str, steps: strings, tags: strings, description: str, tips: strings, servingNote: str, storage: str,
+        seasonings: { bsonType: 'array', items: { bsonType: 'object', required: ['name'], properties: { name: str, amount: str } } }, goalTags: strings, isActive: bool, nutrition: { bsonType: 'object' },
         ingredients: {
           bsonType: 'array', minItems: 1,
           items: { bsonType: 'object', required: ['ingredientId', 'quantity', 'unit'], properties: { ingredientId: str, productId: str, quantity: positive, unit: str } },

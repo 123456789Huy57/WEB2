@@ -3,7 +3,7 @@
   "id": "vegetables",
   "slug": "rau-cu",
   "name": "Rau - Củ",
-  "description": "Rau - Củ chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "description": "Rau ăn lá, củ quả và rau thơm nhập mỗi sáng, sơ chế gọn để nấu canh, xào, luộc hay làm gỏi.",
   "productCount": 20,
   "sortOrder": 1,
   "subcategories": [
@@ -13,7 +13,7 @@
    },
    {
     "id": "vegetables-other",
-    "name": "Rau củ khác"
+    "name": "Củ, nấm và rau khác"
    },
    {
     "id": "vegetables-fruit",
@@ -25,7 +25,7 @@
   "id": "fruits",
   "slug": "trai-cay",
   "name": "Trái cây",
-  "description": "Trái cây chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "description": "Trái cây trong nước theo mùa và trái nhập khẩu, chọn trái chín vừa ăn, ghi rõ cỡ trái và nguồn gốc.",
   "productCount": 12,
   "sortOrder": 2,
   "subcategories": [
@@ -39,7 +39,7 @@
   "id": "meat",
   "slug": "thit",
   "name": "Thịt",
-  "description": "Thịt chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "description": "Thịt heo, bò, gà tươi đóng khay theo khối lượng, giữ lạnh suốt đường giao.",
   "productCount": 20,
   "sortOrder": 3,
   "subcategories": [
@@ -61,7 +61,7 @@
   "id": "seafood",
   "slug": "hai-san",
   "name": "Hải sản",
-  "description": "Hải sản chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "description": "Cá, tôm, mực và nghêu sò đã làm sạch, đóng khay sẵn, tiện kho, chiên hay nấu canh chua.",
   "productCount": 12,
   "sortOrder": 4,
   "subcategories": [
@@ -79,7 +79,7 @@
   "id": "dairy-eggs",
   "slug": "sua-trung",
   "name": "Sữa - Trứng",
-  "description": "Sữa - Trứng chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "description": "Trứng gà, trứng vịt, sữa tươi, sữa chua và phô mai cho bữa sáng và món bánh.",
   "productCount": 16,
   "sortOrder": 5,
   "subcategories": [
@@ -97,7 +97,7 @@
   "id": "beverages",
   "slug": "do-uong",
   "name": "Đồ uống",
-  "description": "Đồ uống chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "description": "Nước suối, nước khoáng, bia và đồ uống đóng chai, có loại lẻ và nguyên thùng.",
   "productCount": 16,
   "sortOrder": 6,
   "subcategories": [
@@ -115,13 +115,17 @@
   "id": "bakery",
   "slug": "banh-mi-bakery",
   "name": "Bánh mì - Bakery",
-  "description": "Bánh mì - Bakery chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "description": "Bánh mì sandwich và bánh ngọt đóng gói cho bữa sáng nhanh hoặc ăn xế.",
   "productCount": 12,
   "sortOrder": 7,
   "subcategories": [
    {
     "id": "bakery-sweet",
     "name": "Bánh ngọt"
+   },
+   {
+    "id": "bakery-bread",
+    "name": "Bánh mì"
    }
   ]
  },
@@ -129,7 +133,7 @@
   "id": "snacks",
   "slug": "banh-keo-an-vat",
   "name": "Bánh kẹo - Ăn vặt",
-  "description": "Bánh kẹo - Ăn vặt chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "description": "Bánh quy, kẹo và snack cho giờ giải lao, đãi khách hay mang đi dã ngoại.",
   "productCount": 16,
   "sortOrder": 8,
   "subcategories": [
@@ -151,7 +155,7 @@
   "id": "rice-grains",
   "slug": "gao-ngu-coc",
   "name": "Gạo - Ngũ cốc",
-  "description": "Gạo - Ngũ cốc chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "description": "Gạo ngon túi 5kg, các loại bột làm bánh, đậu hạt và đồ khô cho gian bếp.",
   "productCount": 16,
   "sortOrder": 9,
   "subcategories": [
@@ -169,13 +173,17 @@
   "id": "noodles",
   "slug": "mi-bun-pho",
   "name": "Mì - Bún - Phở",
-  "description": "Mì - Bún - Phở chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "description": "Mì gói, miến ăn liền và bún, phở, miến khô để nấu nhanh trong vài phút.",
   "productCount": 16,
   "sortOrder": 10,
   "subcategories": [
    {
     "id": "noodles-instant",
     "name": "Mì ăn liền"
+   },
+   {
+    "id": "noodles-dry",
+    "name": "Bún - phở - miến khô"
    }
   ]
  },
@@ -183,7 +191,7 @@
   "id": "condiments",
   "slug": "gia-vi-nuoc-sot",
   "name": "Gia vị - Nước sốt",
-  "description": "Gia vị - Nước sốt chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "description": "Dầu ăn, nước mắm, nước tương, đường, muối và gia vị nêm nếm hằng ngày.",
   "productCount": 18,
   "sortOrder": 11,
   "subcategories": [
@@ -193,7 +201,11 @@
    },
    {
     "id": "condiments-sauce",
-    "name": "Nước sốt"
+    "name": "Nước chấm - nước sốt"
+   },
+   {
+    "id": "condiments-spice",
+    "name": "Gia vị khô"
    }
   ]
  },
@@ -201,7 +213,7 @@
   "id": "frozen",
   "slug": "dong-lanh",
   "name": "Đông lạnh",
-  "description": "Đông lạnh chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "description": "Xúc xích, chả lụa, bánh xếp và đồ chế biến sẵn, bảo quản lạnh, nấu nhanh khi bận.",
   "productCount": 14,
   "sortOrder": 12,
   "subcategories": [
@@ -223,7 +235,7 @@
   "id": "tea-coffee",
   "slug": "tra-ca-phe",
   "name": "Trà & cà phê",
-  "description": "Trà & cà phê chọn lọc, phù hợp cho chợ thực phẩm online và giao nhanh trong ngày.",
+  "description": "Cà phê rang xay, cà phê hòa tan và trà túi lọc cho buổi sáng tỉnh táo.",
   "productCount": 12,
   "sortOrder": 13,
   "subcategories": [

@@ -1,4 +1,6 @@
-import { Injectable, computed, inject } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 import { DataService } from './data.service';
 import { Category, Product } from './models';
 import { norm } from './storage';
@@ -16,6 +18,29 @@ export class ProductService {
   private catById = computed(() => new Map(this.categories().map(c => [c.id, c])));
 
   get(id: string | null | undefined): Product | undefined { return id ? this.byId().get(id) : undefined; }
+
+  /** Danh sách chỉ có dữ liệu cho thẻ sản phẩm. Mô tả, bộ ảnh, dinh dưỡng tải khi mở chi tiết rồi nhớ lại (như các sàn lớn). */
+  private http = inject(HttpClient);
+  private details = signal<Record<string, Pick<Product, 'description' | 'usage' | 'storage' | 'gallery' | 'nutrition'>>>({});
+  private pending = new Map<string, Promise<void>>();
+  /** Bản đầy đủ nếu đã tải, không thì bản rút gọn trong danh sách */
+  full(id: string | null | undefined): Product | undefined {
+    const base = this.get(id);
+    const extra = id ? this.details()[id] : undefined;
+    return base && extra ? { ...base, ...extra } : base; // giá, tồn kho luôn lấy từ danh sách mới nhất
+  }
+  loadDetail(id: string): Promise<void> {
+    if (this.details()[id]) return Promise.resolve();
+    let job = this.pending.get(id);
+    if (!job) {
+      job = firstValueFrom(this.http.get<Product>(`/api/products/${encodeURIComponent(id)}`))
+        .then(({ description, usage, storage, gallery, nutrition }) => this.details.update(d => ({ ...d, [id]: { description, usage, storage, gallery: gallery ?? [], nutrition } })))
+        .catch(() => undefined)
+        .finally(() => this.pending.delete(id));
+      this.pending.set(id, job);
+    }
+    return job;
+  }
   bySlug(slug: string | null | undefined): Product | undefined { return this.all().find(p => p.slug === slug); }
   category(id: string | null | undefined): Category | undefined { return id ? this.catById().get(id) : undefined; }
 
