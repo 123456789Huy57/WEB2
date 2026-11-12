@@ -4,3 +4,4 @@ dist/
 out-tsc/
 .env
 .DS_Store
+backend/scripts/data/backups/

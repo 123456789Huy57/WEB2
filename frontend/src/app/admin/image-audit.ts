@@ -5,7 +5,7 @@ import { cdnImage } from '../core/cdn-image';
 import { ToastService } from '../core/toast.service';
 
 type Kind = 'products' | 'ingredients' | 'recipes';
-interface Item { kind: Kind; id: string; name: string; group: string; url: string; link: unknown[] | null; }
+interface Item { kind: Kind; id: string; name: string; group: string; url: string; link: unknown[] | null; temp?: boolean; hidden?: boolean; }
 interface Check { hash?: string; width?: number; error?: boolean; }
 
 const TABS: { key: Kind; label: string }[] = [{ key: 'products', label: 'Sản phẩm' }, { key: 'ingredients', label: 'Nguyên liệu' }, { key: 'recipes', label: 'Món ăn' }];
@@ -80,7 +80,11 @@ export class AdminImageAudit {
   private marks = signal<Set<string>>(this.readMarks());
 
   private items = computed<Item[]>(() => [
-    ...this.data.products().map(p => ({ kind: 'products' as const, id: p.id, name: p.name, group: p.categoryName || p.category, url: p.img || p.image_url || '', link: ['/san-pham', p.slug || p.id] })),
+    ...this.data.products().map(p => ({
+      kind: 'products' as const, id: p.id, name: p.name, group: p.categoryName || p.category, url: p.img || p.image_url || '', link: ['/san-pham', p.slug || p.id],
+      // Sản phẩm "mp-" đã được thay bằng hàng thật (có nguồn) thì không còn là sản phẩm tạm
+      temp: p.id.startsWith('mp-') && !(p as { sourceUrl?: string }).sourceUrl, hidden: p.active === false,
+    })),
     ...this.data.ingredients().map(i => ({ kind: 'ingredients' as const, id: i.id, name: i.name, group: (i as { categoryId?: string }).categoryId ?? '', url: i.imageUrl || '', link: null })),
     ...this.data.recipes().map(r => ({ kind: 'recipes' as const, id: r.id, name: r.name, group: r.mealType ?? '', url: r.imageUrl || '', link: null })),
   ]);
@@ -90,12 +94,12 @@ export class AdminImageAudit {
   private duplicates = computed(() => {
     const list = this.items(), checks = this.checks(), dup = new Map<string, number>();
     const byUrl = new Map<string, Item[]>();
-    for (const it of list) if (it.url) byUrl.set(it.url, [...(byUrl.get(it.url) ?? []), it]);
+    for (const it of list) if (it.url && !it.hidden) byUrl.set(`${it.kind}|${it.url}`, [...(byUrl.get(`${it.kind}|${it.url}`) ?? []), it]);
     for (const g of byUrl.values()) if (g.length > 1) for (const it of g) dup.set(this.key(it), g.length);
-    const hashed = list.filter(it => checks[this.key(it)]?.hash);
+    const hashed = list.filter(it => !it.hidden && checks[this.key(it)]?.hash);
     for (let a = 0; a < hashed.length; a++) {
       let same = 1;
-      for (let b = 0; b < hashed.length; b++) if (a !== b && hamming(checks[this.key(hashed[a])].hash!, checks[this.key(hashed[b])].hash!) <= 4) same++;
+      for (let b = 0; b < hashed.length; b++) if (a !== b && hashed[a].kind === hashed[b].kind && hamming(checks[this.key(hashed[a])].hash!, checks[this.key(hashed[b])].hash!) <= 4) same++;
       if (same > 1) dup.set(this.key(hashed[a]), Math.max(same, dup.get(this.key(hashed[a])) ?? 0));
     }
     return dup;
@@ -105,7 +109,8 @@ export class AdminImageAudit {
     const c = this.checks()[this.key(it)], out: string[] = [];
     if (!it.url) out.push('Thiếu ảnh');
     if (/\/assets\/images\/cat-|placeholder/i.test(it.url)) out.push('Ảnh tạm theo danh mục');
-    if (it.kind === 'products' && it.id.startsWith('mp-')) out.push('Sản phẩm tạm (mp-)');
+    if (it.hidden) return ['Đang ẩn']; // không bán: không tính là lỗi ảnh
+    if (it.temp) out.push('Sản phẩm tạm (mp-)');
     const d = this.duplicates().get(this.key(it)); if (d) out.push(`Trùng ${d} ảnh`);
     if (c?.error) out.push('Không tải được');
     else if (c?.width && c.width < 300) out.push(`Ảnh nhỏ ${c.width}px`);
@@ -116,9 +121,9 @@ export class AdminImageAudit {
     const k = this.q().trim().toLowerCase(), f = this.filter();
     return this.items().filter(it => it.kind === this.tab()
       && (!k || `${it.name} ${it.id}`.toLowerCase().includes(k))
-      && (f === 'all' || (f === 'issue' ? this.flags(it).length > 0 : this.isMarked(it))));
+      && (f === 'all' || (f === 'issue' ? !it.hidden && this.flags(it).length > 0 : this.isMarked(it))));
   });
-  protected issueCount = computed(() => this.items().filter(it => it.kind === this.tab() && this.flags(it).length).length);
+  protected issueCount = computed(() => this.items().filter(it => it.kind === this.tab() && !it.hidden && this.flags(it).length).length);
   protected markedHere = computed(() => this.items().filter(it => it.kind === this.tab() && this.isMarked(it)).length);
   protected progress = computed(() => {
     const all = this.items().filter(it => it.kind === this.tab() && it.url);
@@ -148,7 +153,7 @@ export class AdminImageAudit {
   protected async copy(): Promise<void> {
     const lines: string[] = [];
     for (const t of TABS) {
-      const rows = this.items().filter(it => it.kind === t.key && (this.isMarked(it) || this.flags(it).length));
+      const rows = this.items().filter(it => it.kind === t.key && (this.isMarked(it) || (!it.hidden && this.flags(it).length)));
       if (!rows.length) continue;
       lines.push(`## ${t.label} (${rows.length})`);
       for (const it of rows) lines.push(`${it.id} | ${it.name} | ${[this.isMarked(it) ? 'ĐÁNH DẤU SAI' : '', ...this.flags(it)].filter(Boolean).join(', ')}`);
