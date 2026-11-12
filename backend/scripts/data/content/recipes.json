@@ -360,16 +360,16 @@
   },
   {
     "id": "rec-007",
-    "description": "Phở cá basa là cách biến tấu nhẹ nhàng với nước dùng cá nấu cà chua, ăn cùng bánh phở. Nước dùng thanh vị chua ngọt tự nhiên, thịt cá basa mềm, thích hợp cho bữa sáng.",
+    "description": "Phở cá basa là cách biến tấu nhẹ nhàng với nước dùng cá nấu cà chua, ăn cùng bánh phở, hành lá và rau ngò. Nước dùng thanh vị chua ngọt tự nhiên, thịt cá basa mềm, thích hợp cho bữa sáng.",
     "steps": [
       "Sơ chế cá: Rửa 300g cá basa với nước muối loãng và gừng đập dập để bớt tanh. Thái miếng vừa ăn khoảng 3x4 cm.",
       "Ướp cá: Trộn cá với 1/2 muỗng cà phê muối, chút tiêu và 1 muỗng cà phê nước mắm, ướp 10 phút.",
-      "Sơ chế rau: Bổ múi cau 1 quả cà chua. Băm nhỏ hành tím; hành lá cắt nhỏ.",
+      "Sơ chế rau: Bổ múi cau 1 quả cà chua. Băm nhỏ hành tím; cắt nhỏ 30g hành lá và 20g rau ngò. Chanh cắt múi.",
       "Phi hành và xào cà chua: Đun nóng 1 muỗng canh dầu ăn, phi thơm hành tím, cho cà chua vào xào 2-3 phút đến khi mềm ra nước.",
       "Nấu nước dùng: Đổ khoảng 1 lít nước vào nồi, thêm gừng đập dập, đun sôi rồi hạ lửa liu riu 10 phút. Nêm 1 muỗng canh nước mắm và 1/2 muỗng cà phê đường.",
-      "Chần phở: Chuẩn bị phở khô theo hướng dẫn trên gói (thường ngâm nước ấm hoặc chần nước sôi 1-2 phút), vớt ra, xả qua nước lạnh và chia vào 2 tô.",
+      "Chần phở: Chuẩn bị 1 gói phở khô theo hướng dẫn trên gói (thường ngâm nước ấm hoặc chần nước sôi 1-2 phút), vớt ra, xả qua nước lạnh và chia vào 2 tô.",
       "Nấu cá: Thả cá vào nồi nước dùng đang sôi nhẹ, nấu 4-5 phút đến khi cá trắng đục và chín, không khuấy mạnh để cá không nát. Nêm lại cho vừa miệng.",
-      "Hoàn thành: Chan nước dùng và cá vào tô phở, rắc hành lá, tiêu và dùng nóng."
+      "Hoàn thành: Chan nước dùng và cá vào tô phở, rắc hành lá, rau ngò và tiêu, vắt chanh và dùng nóng."
     ],
     "seasonings": [
       {
@@ -379,10 +379,6 @@
       {
         "name": "Gừng",
         "amount": "1 miếng nhỏ khoảng 3 cm"
-      },
-      {
-        "name": "Hành lá",
-        "amount": "2 cây"
       },
       {
         "name": "Dầu ăn",
@@ -410,7 +406,7 @@
       "Chỉ cho cá vào khi nước đã sôi và nấu lửa nhỏ để cá chín mà không bị nát.",
       "Chần phở riêng và chia vào tô, chan nước dùng sau cùng để sợi phở không bị nở và nát."
     ],
-    "servingNote": "Dùng nóng ngay sau khi chan nước dùng, có thể thêm chanh và ớt cho vừa khẩu vị.",
+    "servingNote": "Dùng nóng ngay sau khi chan nước dùng, vắt thêm chanh và thêm ớt cho vừa khẩu vị.",
     "storage": "Ngon nhất khi dùng ngay; nếu còn nước dùng, để riêng với phở và bảo quản trong tủ lạnh tối đa 1 ngày.",
     "nutrition": {
       "calories": 430,
@@ -497,17 +493,12 @@
     "description": "Rau muống xào tỏi là món rau xào dân dã, phổ biến trong bữa cơm của người Việt. Rau giòn xanh, thơm mùi tỏi phi, vị đậm vừa miệng, thích hợp ăn với cơm vào bữa tối.",
     "steps": [
       "Sơ chế rau: Nhặt bỏ lá già, ngắt 2 bó rau muống thành khúc dài khoảng 6-7 cm. Rửa nhiều lần dưới vòi nước, ngâm nước muối loãng 5 phút rồi để thật ráo.",
-      "Chuẩn bị tỏi: Bóc vỏ và băm nhỏ 4 tép tỏi.",
+      "Chuẩn bị tỏi: Bóc vỏ 1 củ tỏi (khoảng 4-5 tép) và băm nhỏ.",
       "Phi tỏi: Đun nóng chảo lửa lớn với 1 muỗng canh dầu ăn, cho tỏi vào phi 20-30 giây đến khi thơm, vàng nhẹ, tránh để cháy.",
       "Xào rau: Cho phần cọng rau vào xào trước khoảng 30 giây, sau đó cho phần lá vào và đảo nhanh tay lửa lớn trong 2-3 phút đến khi rau vừa chín tới, còn xanh.",
-      "Nêm và hoàn thành: Nêm khoảng 1/2 muỗng cà phê muối, đảo đều 15 giây rồi tắt bếp, nêm thêm nếu cần. Múc ra đĩa ngay."
+      "Nêm và hoàn thành: Nêm khoảng 1/2 muỗng cà phê muối i-ốt, đảo đều 15 giây rồi tắt bếp, nêm thêm nếu cần. Múc ra đĩa ngay."
     ],
-    "seasonings": [
-      {
-        "name": "Tỏi",
-        "amount": "4 tép"
-      }
-    ],
+    "seasonings": [],
     "tips": [
       "Xào lửa thật lớn, không đậy nắp và không xào quá lâu để rau xanh giòn.",
       "Để rau thật ráo nước trước khi xào, tránh rau ra nước nhiều và bị luộc.",
@@ -756,23 +747,19 @@
   },
   {
     "id": "rec-015",
-    "description": "Cá kho tộ là món ăn dân dã của miền Nam, cá kho trong nồi đất với nước màu, nước mắm đậm đà. Cá basa béo mềm ăn cùng cơm nóng rất hao cơm trong bữa tối.",
+    "description": "Cá kho tộ là món ăn dân dã của miền Nam, cá kho trong nồi đất với nước màu, nước mắm đậm đà, thêm hành tím và ớt cho dậy mùi. Cá basa béo mềm ăn cùng cơm nóng rất hao cơm trong bữa tối.",
     "steps": [
       "Sơ chế cá: Cắt 350g cá basa thành khúc dày khoảng 3 cm. Rửa với nước pha 1/2 muỗng cà phê muối và 3 lát gừng đập dập để bớt tanh, rồi để ráo.",
-      "Ướp cá: Trộn cá với 1 muỗng canh nước mắm, 1 muỗng cà phê đường, 2 củ hành tím băm, 2 tép tỏi băm và 1/4 muỗng cà phê tiêu. Ướp 15-20 phút.",
+      "Ướp cá: Trộn cá với 1 muỗng nước mắm truyền thống, 1 muỗng cà phê đường, 2 củ hành tím băm, 2 tép tỏi băm và 1/4 muỗng cà phê tiêu. Ướp 15-20 phút.",
       "Nấu cơm: Vo 2 chén gạo thơm Jasmine 2-3 lần, nấu với nước theo tỉ lệ khoảng 1 gạo : 1,2 nước và ủ 10 phút.",
       "Thắng nước màu: Cho 1 muỗng canh dầu ăn và 1 muỗng canh đường vào nồi nhỏ, đun lửa nhỏ, khuấy nhẹ đến khi đường chuyển màu cánh gián. Cho ngay 2 muỗng canh nước nóng vào để dừng quá trình, tránh để đường cháy đắng.",
-      "Kho cá: Xếp cá vào nồi, đổ thêm khoảng 150 ml nước và 1 muỗng canh nước mắm còn lại. Đun sôi rồi hạ lửa nhỏ, đậy hé nắp, kho khoảng 15 phút và lật cá nhẹ tay 1 lần.",
-      "Hoàn thành: Mở nắp, kho thêm 5 phút cho nước sệt lại, nêm lại cho vừa miệng. Rắc hành lá, tiêu và ớt, dùng nóng với cơm."
+      "Kho cá: Xếp cá vào nồi, đổ thêm khoảng 150 ml nước và 1 muỗng nước mắm còn lại. Đun sôi rồi hạ lửa nhỏ, đậy hé nắp, kho khoảng 15 phút và lật cá nhẹ tay 1 lần.",
+      "Hoàn thành: Mở nắp, kho thêm 5 phút cho nước sệt lại, nêm lại cho vừa miệng. Rắc hành lá, tiêu và 2 trái ớt cắt lát, dùng nóng với cơm."
     ],
     "seasonings": [
       {
         "name": "Đường",
         "amount": "1 muỗng canh + 1 muỗng cà phê"
-      },
-      {
-        "name": "Hành tím",
-        "amount": "2 củ"
       },
       {
         "name": "Tỏi",
@@ -801,10 +788,6 @@
       {
         "name": "Hành lá",
         "amount": "2 cây"
-      },
-      {
-        "name": "Ớt",
-        "amount": "1 trái (tùy chọn)"
       }
     ],
     "tips": [
@@ -859,15 +842,15 @@
   },
   {
     "id": "rec-017",
-    "description": "Phở ức gà là món phở nhẹ bụng với nước dùng ngọt thanh từ gà luộc, hành gừng nướng thơm. Món hợp cho bữa sáng, thịt ức gà ít béo và nhiều đạm.",
+    "description": "Phở ức gà là món phở nhẹ bụng với nước dùng ngọt thanh từ gà luộc, hành gừng nướng thơm, ăn kèm giá đỗ, xà lách, rau ngò và chanh. Món hợp cho bữa sáng, thịt ức gà ít béo và nhiều đạm.",
     "steps": [
       "Nướng hành gừng: Nướng 2 củ hành tím và 1 miếng gừng 3 cm trên bếp lửa nhỏ 3-5 phút đến khi xém vỏ thơm. Bóc vỏ, rửa nhanh và đập dập.",
       "Luộc gà: Đun sôi khoảng 1,2 lít nước với hành, gừng và 1/2 muỗng cà phê muối. Cho 250g ức gà vào, vớt bọt, hạ lửa nhỏ và nấu 15-18 phút. Gà chín khi chọc vào chỗ dày nhất thấy nước trong, không còn màu hồng.",
       "Làm nguội gà: Vớt gà ra, ngâm 2 phút trong nước lạnh rồi để ráo, xé sợi hoặc thái lát mỏng.",
       "Nêm nước dùng: Nêm vào nồi nước dùng 1 1/2 muỗng canh nước mắm và 1/2 muỗng cà phê đường, nêm lại cho vừa miệng và giữ nóng.",
-      "Sơ chế rau: Tách lá xà lách, rửa sạch và để ráo. Hành lá cắt nhỏ.",
-      "Chần phở: Chuẩn bị phở khô theo hướng dẫn trên gói (thường ngâm nước ấm hoặc chần nước sôi 1-2 phút), vớt ra, để ráo rồi chia vào 2 tô.",
-      "Hoàn thành: Xếp gà và xà lách lên phở, rắc hành lá, chan nước dùng thật nóng và thêm chút tiêu."
+      "Sơ chế rau: Tách lá xà lách, rửa sạch và để ráo. Nhặt 100g giá đỗ, rửa sạch; 30g hành lá và 20g rau ngò cắt nhỏ; chanh cắt múi.",
+      "Chần phở và giá: Chuẩn bị 1 gói phở khô theo hướng dẫn trên gói (thường ngâm nước ấm hoặc chần nước sôi 1-2 phút), vớt ra, để ráo rồi chia vào 2 tô. Chần giá trong nước dùng sôi khoảng 10 giây.",
+      "Hoàn thành: Xếp gà, xà lách và giá lên phở, rắc hành lá, rau ngò, chan nước dùng thật nóng, thêm chút tiêu và vắt chanh."
     ],
     "seasonings": [
       {
@@ -877,10 +860,6 @@
       {
         "name": "Gừng",
         "amount": "1 miếng khoảng 3 cm"
-      },
-      {
-        "name": "Hành lá",
-        "amount": "2 cây"
       },
       {
         "name": "Nước mắm",
@@ -904,12 +883,12 @@
       "Luộc gà lửa nhỏ và vớt bọt thường xuyên để nước dùng trong, không bị đục.",
       "Ngâm gà vào nước lạnh sau khi luộc giúp thịt giữ màu trắng và săn, không bị khô."
     ],
-    "servingNote": "Dùng nóng ngay sau khi chan nước dùng, có thể thêm chanh và ớt cho vừa khẩu vị.",
+    "servingNote": "Dùng nóng ngay sau khi chan nước dùng, vắt thêm chanh và thêm ớt cho vừa khẩu vị.",
     "storage": "Ngon nhất khi dùng ngay; nước dùng có thể để riêng trong tủ lạnh tối đa 2 ngày, đun sôi lại trước khi dùng.",
     "nutrition": {
-      "calories": 380,
+      "calories": 390,
       "protein": 31,
-      "carbs": 35,
+      "carbs": 37,
       "fat": 10
     },
     "prepTimeMinutes": 20,
@@ -1057,15 +1036,15 @@
   },
   {
     "id": "rec-021",
-    "description": "Bún bò Nam Bộ là món bún trộn khô đặc trưng của miền Nam: bò xào thơm, bún, rau sống, đậu phộng rang và hành phi, rưới nước mắm chua ngọt. Món có vị mặn ngọt, béo bùi, thường ăn vào bữa trưa hoặc bữa tối.",
+    "description": "Bún bò Nam Bộ là món bún trộn khô đặc trưng của miền Nam: bò xào thơm, bún, giá đỗ, rau sống, đậu phộng rang và hành phi, rưới nước mắm chua ngọt. Món có vị mặn ngọt, béo bùi, thường ăn vào bữa trưa hoặc bữa tối.",
     "steps": [
       "Ướp bò: Thái 200g thăn bò thành lát mỏng ngang thớ. Ướp với 1 muỗng canh nước mắm, 1 muỗng cà phê đường, 1 cây sả băm nhỏ, 2 tép tỏi băm, tiêu và 1 muỗng cà phê dầu trong 20 phút.",
       "Rang đậu phộng: Cho 50g đậu phộng vào chảo khô, rang lửa nhỏ khoảng 5 phút đến khi chín vàng thơm (bỏ qua nếu đã rang sẵn). Để nguội, giã dập thô.",
-      "Chuẩn bị bún và rau: Luộc bún gạo theo hướng dẫn, xả nước lạnh, để ráo. Xà lách rửa sạch, ngâm nước lạnh, để ráo rồi thái sợi.",
-      "Pha nước mắm: Trộn 2 muỗng canh nước mắm, 2 muỗng canh đường, 2 muỗng canh nước cốt chanh, 3 muỗng canh nước ấm, tỏi ớt băm, khuấy cho tan đường.",
+      "Chuẩn bị bún và rau: Luộc bún gạo theo hướng dẫn, xả nước lạnh, để ráo. Xà lách rửa sạch, ngâm nước lạnh, để ráo rồi thái sợi. Rửa 100g rau sống và 100g giá đỗ, để ráo (có thể chần giá 10 giây nếu thích).",
+      "Pha nước mắm: Trộn 2 muỗng canh nước mắm, 2 muỗng canh đường, 2 muỗng canh nước cốt chanh, 3 muỗng canh nước ấm, 2 tép tỏi và ớt băm, khuấy cho tan đường.",
       "Phi hành: Phi 2 củ hành tím thái lát với 1 muỗng canh dầu đến vàng giòn, vớt ra để ráo.",
       "Xào bò: Làm nóng chảo lửa lớn với 1 muỗng canh dầu, cho bò vào xào nhanh làm 2 lượt, mỗi lượt khoảng 1 đến 2 phút đến khi bò vừa chín, đừng xào lâu để thịt không dai.",
-      "Bày tô: Xếp xà lách, bún, bò xào lên tô, rắc đậu phộng và hành phi, rưới nước mắm pha lên và trộn đều khi ăn."
+      "Bày tô: Xếp xà lách, giá, rau sống, bún, bò xào lên tô, rắc đậu phộng và hành phi, rưới nước mắm pha lên và trộn đều khi ăn."
     ],
     "seasonings": [
       {
@@ -1079,10 +1058,6 @@
       {
         "name": "Chanh",
         "amount": "1 quả (lấy 2 muỗng canh nước cốt)"
-      },
-      {
-        "name": "Tỏi",
-        "amount": "4 tép"
       },
       {
         "name": "Sả",
@@ -1113,25 +1088,26 @@
     "servingNote": "Trộn đều khi ăn, có thể thêm vài lát ớt tươi hoặc chút nước mắm chua ngọt nếu thích đậm vị.",
     "storage": "Ngon nhất khi dùng ngay; có thể để riêng bò xào và nước mắm trong hộp kín, ngăn mát tối đa 1 ngày.",
     "nutrition": {
-      "calories": 480,
-      "protein": 28,
-      "carbs": 52,
-      "fat": 16
+      "calories": 500,
+      "protein": 29,
+      "carbs": 54,
+      "fat": 17
     },
-    "prepTimeMinutes": 20,
+    "prepTimeMinutes": 25,
     "cookTimeMinutes": 15,
     "difficulty": "medium"
   },
   {
     "id": "rec-022",
-    "description": "Canh chua là món canh quen thuộc của miền Tây Nam Bộ, có vị chua thanh, ngọt nhẹ từ cá và cà chua. Công thức này dùng cá basa và dưa chua tạo vị chua, hợp ăn với cơm trắng trong bữa tối.",
+    "description": "Canh chua là món canh quen thuộc của miền Tây Nam Bộ, có vị chua thanh, ngọt nhẹ từ cá, cà chua và giá đỗ. Công thức này dùng cá basa và dưa chua tạo vị chua, thêm ngò, hành lá, ớt, hợp ăn với cơm trắng trong bữa tối.",
     "steps": [
       "Sơ chế cá: Rửa 300g cá basa với nước muối loãng cho bớt nhớt, cắt khúc dày khoảng 3 đến 4cm. Ướp với 1/2 muỗng cà phê muối và chút tiêu trong 10 phút.",
-      "Chuẩn bị rau: Cà chua rửa sạch, cắt múi cau. Dưa chua vắt bớt nước, cắt miếng vừa ăn.",
-      "Phi thơm: Bắc nồi lên bếp lửa vừa, cho 1 muỗng canh dầu, phi thơm hành tím và tỏi băm. Cho cà chua vào xào 3 phút đến khi mềm ra nước.",
+      "Chuẩn bị rau: Cà chua rửa sạch, cắt múi cau. Dưa chua vắt bớt nước, cắt miếng vừa ăn. Nhặt rửa giá đỗ; cắt nhỏ hành lá, ngò; ớt cắt lát.",
+      "Phi thơm: Bắc nồi lên bếp lửa vừa, cho 1 muỗng canh dầu, phi thơm hành tím và tỏi băm. Cho 2 quả cà chua vào xào 3 phút đến khi mềm ra nước.",
       "Nấu nước dùng: Đổ 700ml nước lọc vào nồi, thêm dưa chua và 2 muỗng canh nước dưa chua. Đun sôi rồi hạ lửa vừa nấu 5 phút cho ngọt nước.",
       "Nấu cá: Nêm 1 muỗng canh nước mắm, 1 muỗng cà phê đường. Thả cá vào, hạ lửa nhỏ đun liu riu 8 đến 10 phút đến khi thịt cá trắng đục, chín đều. Không khuấy mạnh để cá không nát, thỉnh thoảng hớt bọt.",
-      "Hoàn tất: Nêm nếm lại cho vừa ăn, rắc hành lá và ngò thái nhỏ, tắt bếp."
+      "Cho giá và rau thơm: Thêm giá đỗ vào nồi, đun thêm khoảng 30 giây cho giá vừa tái để giữ độ giòn.",
+      "Hoàn tất: Nêm nếm lại cho vừa ăn, rắc hành lá, ngò và ớt, tắt bếp."
     ],
     "seasonings": [
       {
@@ -1165,23 +1141,19 @@
       {
         "name": "Nước lọc",
         "amount": "700ml"
-      },
-      {
-        "name": "Hành lá và ngò",
-        "amount": "2 nhánh hành lá, 1 nhúm ngò"
       }
     ],
     "tips": [
       "Cho cá vào khi nước đang sôi nhẹ rồi đun lửa nhỏ, không khuấy để cá chín mà không bị nát.",
       "Rửa cá với nước muối loãng và ướp muối tiêu trước để bớt mùi tanh và thịt chắc hơn.",
-      "Nêm nước dưa chua từ từ vì mỗi loại dưa mặn và chua khác nhau, nêm từng chút đến khi vừa miệng."
+      "Nêm nước dưa chua từ từ vì mỗi loại dưa mặn và chua khác nhau; cho giá vào sau cùng để giá giòn."
     ],
     "servingNote": "Dùng nóng với cơm trắng, có thể kèm nước mắm ớt hoặc cá kho.",
     "storage": "Ngon nhất khi dùng ngay; nếu còn có thể để nguội cất ngăn mát tối đa 1 ngày và đun sôi lại trước khi ăn.",
     "nutrition": {
-      "calories": 280,
-      "protein": 22,
-      "carbs": 18,
+      "calories": 290,
+      "protein": 23,
+      "carbs": 20,
       "fat": 10
     },
     "prepTimeMinutes": 15,
@@ -1295,15 +1267,15 @@
   },
   {
     "id": "rec-025",
-    "description": "Bò lúc lắc là món xào nổi tiếng của ẩm thực Nam Bộ, bò thái hạt xúc xắc xào lửa lớn, mềm bên trong, thơm nức mùi tỏi. Món thường ăn với cơm nóng, hợp bữa tối cuối tuần.",
+    "description": "Bò lúc lắc là món xào nổi tiếng của ẩm thực Nam Bộ, bò thái hạt xúc xắc xào lửa lớn cùng hành tây, ớt chuông, mềm bên trong, thơm nức mùi tỏi, dọn trên xà lách. Món thường ăn với cơm nóng, hợp bữa tối cuối tuần.",
     "steps": [
       "Ướp bò: Cắt 300g thăn bò thành hạt xúc xắc khoảng 2cm. Ướp với 1 muỗng canh nước tương, 1 muỗng canh dầu hào, 1 muỗng cà phê đường, 3 tép tỏi băm, 1/2 muỗng cà phê tiêu và 1 muỗng cà phê dầu trong 20 phút.",
-      "Chuẩn bị rau: Ớt chuông bỏ hạt, cắt vuông 2cm. Cà chua cắt múi cau.",
-      "Nấu cơm: Nấu cơm từ gạo thơm Jasmine cho đủ 2 chén cơm chín.",
-      "Xào ớt chuông: Cho 1/2 muỗng canh dầu vào chảo nóng, xào ớt chuông lửa lớn 1 phút, nêm chút muối rồi múc ra.",
+      "Chuẩn bị rau: Ớt chuông bỏ hạt, cắt vuông 2cm. Hành tây (150g) bóc vỏ, cắt múi cau. Cà chua cắt múi cau. Xà lách tách lá, rửa sạch, để ráo.",
+      "Nấu cơm: Nấu cơm từ 2 chén gạo thơm Jasmine cho đủ 2 chén cơm chín.",
+      "Xào ớt chuông và hành tây: Cho 1/2 muỗng canh dầu vào chảo nóng, xào ớt chuông và hành tây lửa lớn 1 đến 2 phút, nêm chút muối rồi múc ra.",
       "Lúc lắc bò: Làm nóng chảo thật già lửa, cho 1 muỗng canh dầu. Cho một nửa lượng bò vào, để yên 30 giây cho vàng mặt rồi lắc hoặc đảo liên tục 1 đến 2 phút. Làm lượt thứ hai tương tự.",
-      "Hoàn tất: Cho bò, ớt chuông trở lại chảo, thêm cà chua, đảo nhanh 30 giây rồi tắt bếp để bò không bị già.",
-      "Dọn: Bày ra đĩa, ăn nóng với cơm."
+      "Hoàn tất: Cho bò, ớt chuông, hành tây trở lại chảo, thêm cà chua, đảo nhanh 30 giây rồi tắt bếp để bò không bị già.",
+      "Dọn: Lót xà lách ra đĩa, xếp bò lúc lắc lên trên, ăn nóng với cơm."
     ],
     "seasonings": [
       {
@@ -1323,10 +1295,6 @@
         "amount": "1 muỗng cà phê"
       },
       {
-        "name": "Tỏi",
-        "amount": "3 tép"
-      },
-      {
         "name": "Tiêu xay",
         "amount": "1/2 muỗng cà phê"
       },
@@ -1340,12 +1308,12 @@
       "Ướp thêm 1 muỗng cà phê dầu để thịt mềm, và đừng ướp quá lâu với nước tương kẻo bò bị mặn.",
       "Tắt bếp ngay khi bò vừa chín tới; bò tiếp tục chín nhờ nhiệt còn lại trong chảo."
     ],
-    "servingNote": "Dùng nóng với cơm trắng, kèm cà chua, dưa leo hoặc rau sống.",
+    "servingNote": "Dùng nóng với cơm trắng, lót xà lách và kèm cà chua, dưa leo.",
     "storage": "Ngon nhất khi dùng ngay vì bò dễ già khi hâm lại.",
     "nutrition": {
-      "calories": 520,
+      "calories": 530,
       "protein": 35,
-      "carbs": 42,
+      "carbs": 44,
       "fat": 22
     },
     "prepTimeMinutes": 20,
@@ -1412,12 +1380,13 @@
   },
   {
     "id": "rec-027",
-    "description": "Cháo lươn là món cháo nổi tiếng của miền Trung (đặc biệt là Nghệ An), cháo mịn ăn cùng lươn xào nghệ thơm, cay nhẹ vị tiêu và rau răm. Thường ăn vào bữa sáng hoặc những ngày trời lạnh.",
+    "description": "Cháo lươn là món cháo nổi tiếng của miền Trung (đặc biệt là Nghệ An), cháo mịn ăn cùng lươn xào nghệ, gừng thơm, cay nhẹ vị tiêu, hành lá và rau răm. Thường ăn vào bữa sáng hoặc những ngày trời lạnh.",
     "steps": [
-      "Sơ chế lươn: Chà lươn với 1 muỗng canh muối hạt và 2 muỗng canh giấm cho sạch nhớt, rửa nhiều lần với nước. Chần lươn trong nước sôi khoảng 1 đến 2 phút, vớt ra ngâm nước lạnh rồi lọc lấy thịt, bỏ xương và cắt khúc 4 đến 5cm.",
+      "Sơ chế lươn: Chà 200g lươn với 1 muỗng canh muối hạt và 2 muỗng canh giấm cho sạch nhớt, rửa nhiều lần với nước. Chần lươn trong nước sôi khoảng 1 đến 2 phút, vớt ra ngâm nước lạnh rồi lọc lấy thịt, bỏ xương và cắt khúc 4 đến 5cm.",
+      "Chuẩn bị gia vị: Gừng (20g) cạo vỏ, băm nhỏ; hành tím băm; hành lá (30g) cắt nhỏ, tách phần trắng và phần xanh; hành tây bóc vỏ, thái lát mỏng.",
       "Ướp lươn: Trộn lươn với 1/2 muỗng cà phê bột nghệ, 1 muỗng canh nước mắm, gừng băm, hành tím băm và chút tiêu trong 15 phút.",
       "Nấu cháo: Vo 1 chén gạo thơm, cho vào nồi với khoảng 1,2 lít nước lọc. Đun sôi rồi hạ lửa nhỏ nấu 25 đến 30 phút, khuấy thỉnh thoảng đến khi hạt gạo nở bung, cháo sánh mịn.",
-      "Xào lươn: Phi thơm hành tím với 1 muỗng canh dầu, cho lươn vào xào lửa lớn 3 đến 4 phút đến khi lươn săn lại. Thêm hành tây thái lát mỏng, xào thêm 30 giây rồi tắt bếp.",
+      "Xào lươn: Phi thơm phần trắng hành lá với 1 muỗng canh dầu, cho lươn vào xào lửa lớn 3 đến 4 phút đến khi lươn săn lại. Thêm hành tây thái lát mỏng, xào thêm 30 giây rồi tắt bếp.",
       "Kết hợp: Cho lươn xào vào nồi cháo, nấu thêm 3 đến 5 phút cho thấm vị. Nêm 1 muỗng canh nước mắm, chút muối và tiêu.",
       "Hoàn tất: Múc cháo ra tô, rắc hành lá, rau răm và tiêu xay, dùng nóng."
     ],
@@ -1433,14 +1402,6 @@
       {
         "name": "Bột nghệ",
         "amount": "1/2 muỗng cà phê"
-      },
-      {
-        "name": "Gừng",
-        "amount": "15g"
-      },
-      {
-        "name": "Hành tím",
-        "amount": "2 củ"
       },
       {
         "name": "Nước mắm",
@@ -1459,8 +1420,8 @@
         "amount": "1,2 lít"
       },
       {
-        "name": "Hành lá và rau răm",
-        "amount": "2 nhánh hành lá, 1 nhúm rau răm"
+        "name": "Rau răm",
+        "amount": "1 nhúm"
       }
     ],
     "tips": [
@@ -1471,12 +1432,12 @@
     "servingNote": "Ăn nóng, thêm tiêu, rau răm và hành lá, có thể kèm chén nước mắm gừng.",
     "storage": "Ngon nhất khi dùng ngay; cháo để nguội sẽ đặc lại, nếu cất ngăn mát 1 ngày thì thêm chút nước khi hâm lại.",
     "nutrition": {
-      "calories": 380,
+      "calories": 390,
       "protein": 24,
-      "carbs": 48,
+      "carbs": 50,
       "fat": 10
     },
-    "prepTimeMinutes": 15,
+    "prepTimeMinutes": 20,
     "cookTimeMinutes": 35,
     "difficulty": "medium"
   },
@@ -1485,10 +1446,10 @@
     "description": "Gỏi cuốn tôm thịt là món cuốn tươi của miền Nam Việt Nam, gồm tôm, thịt ba chỉ luộc, bún và rau sống cuốn trong bánh tráng mỏng. Món ăn mát, thanh, chấm nước mắm chua ngọt, thường dùng làm bữa trưa nhẹ hoặc món khai vị.",
     "steps": [
       "Luộc thịt: Cho 150g ba chỉ vào nồi nước lạnh có 1/2 muỗng cà phê muối, đun sôi rồi hạ lửa nhỏ luộc khoảng 15 phút đến khi chọc đũa vào không còn nước hồng. Vớt ra, để nguội rồi thái lát mỏng.",
-      "Luộc tôm: Rút chỉ lưng 200g tôm sú, luộc trong nước sôi có 1 muỗng cà phê muối 2 đến 3 phút đến khi tôm đỏ cong. Vớt ngâm nước lạnh, bóc vỏ rồi bổ đôi theo chiều dọc.",
-      "Chuẩn bị bún và rau: Luộc bún theo hướng dẫn, xả nước lạnh, để ráo. Rửa sạch rau sống (xà lách, rau thơm), hẹ cắt khúc dài bằng bánh tráng.",
+      "Luộc tôm: Rút chỉ lưng 200g tôm sú, luộc trong nước sôi có 1/2 muỗng cà phê muối 2 đến 3 phút đến khi tôm đỏ cong. Vớt ngâm nước lạnh, bóc vỏ rồi bổ đôi theo chiều dọc.",
+      "Chuẩn bị bún và rau: Luộc bún gạo theo hướng dẫn, xả nước lạnh, để ráo. Rửa sạch 100g rau sống (xà lách, rau thơm), để ráo; hẹ cắt khúc dài bằng bánh tráng.",
       "Pha nước chấm: Trộn 2 muỗng canh nước mắm, 2 muỗng canh đường, 2 muỗng canh nước cốt chanh, 4 muỗng canh nước ấm, tỏi ớt băm cho tan đường.",
-      "Cuốn: Nhúng nhanh từng miếng bánh tráng vào nước 2 đến 3 giây (không luộc), đặt lên mặt thớt ẩm. Xếp tôm úp xuống trước, rồi rau, bún, thịt và hẹ, gấp hai mép, cuốn chặt tay.",
+      "Cuốn: Nhúng nhanh từng miếng bánh tráng vào nước 2 đến 3 giây (không luộc), đặt lên mặt thớt ẩm. Xếp tôm úp xuống trước, rồi rau sống, bún, thịt và hẹ, gấp hai mép, cuốn chặt tay.",
       "Dọn: Xếp gỏi cuốn ra đĩa, dùng ngay với nước chấm."
     ],
     "seasonings": [
@@ -1515,10 +1476,6 @@
       {
         "name": "Ớt",
         "amount": "1 trái"
-      },
-      {
-        "name": "Rau sống (xà lách, rau thơm)",
-        "amount": "1 nắm"
       },
       {
         "name": "Hẹ",
@@ -1610,27 +1567,19 @@
   },
   {
     "id": "rec-030",
-    "description": "Cơm chiên trứng là món cơm chiên giản dị, hạt cơm tơi vàng, thơm trứng và hành tỏi. Món nấu nhanh, tận dụng cơm nguội, thích hợp bữa trưa gấp hoặc bữa tối đơn giản.",
+    "description": "Cơm chiên trứng là món cơm chiên giản dị, hạt cơm tơi vàng, thơm trứng, tỏi và hành lá. Món nấu nhanh, tận dụng cơm nguội, thích hợp bữa trưa gấp hoặc bữa tối đơn giản.",
     "steps": [
       "Chuẩn bị cơm: Nấu cơm từ gạo thơm Jasmine trước (cho khoảng 3 chén cơm chín), để nguội hoàn toàn hoặc để trong ngăn mát vài giờ, dùng tay bóp tơi hạt.",
-      "Đánh trứng: Đánh 2 quả trứng với chút tiêu cho tan đều.",
-      "Phi thơm: Làm nóng chảo chống dính lửa vừa, cho 1 muỗng canh dầu, phi thơm 2 tép tỏi băm và phần trắng hành lá.",
+      "Đánh trứng: Đánh 2 quả trứng với chút tiêu cho tan đều. Cắt nhỏ 30g hành lá, tách phần trắng và phần xanh.",
+      "Phi thơm: Làm nóng chảo chống dính lửa vừa, cho 1 muỗng canh dầu ăn, phi thơm 2 tép tỏi băm và phần trắng hành lá.",
       "Xào trứng: Tăng lửa lớn, đổ trứng vào, để yên vài giây rồi khuấy nhẹ, đảo đến khi trứng gần chín và vỡ thành mảnh nhỏ.",
       "Xào cơm: Cho cơm vào, đảo liên tục lửa lớn 3 đến 4 phút đến khi hạt cơm tơi, nóng đều.",
-      "Nêm: Rưới 1 đến 1,5 muỗng canh nước tương quanh thành chảo, thêm chút muối, tiêu, đảo thêm 1 phút. Rắc hành lá và tắt bếp."
+      "Nêm: Rưới 2 muỗng canh nước tương quanh thành chảo, thêm chút muối, tiêu, đảo thêm 1 phút. Rắc phần xanh hành lá và tắt bếp."
     ],
     "seasonings": [
       {
-        "name": "Nước tương",
-        "amount": "1,5 muỗng canh"
-      },
-      {
         "name": "Tỏi",
         "amount": "2 tép"
-      },
-      {
-        "name": "Hành lá",
-        "amount": "2 nhánh"
       },
       {
         "name": "Muối",
@@ -1873,7 +1822,7 @@
   },
   {
     "id": "rec-035",
-    "description": "Gà nướng mật ong là món ức gà ướp ngọt thơm, nướng đến khi mặt ngoài bóng vàng cánh gián. Vị mặn ngọt hài hòa, thịt gà săn mà vẫn mọng nếu không nướng quá lửa. Hợp cho bữa tối gia đình ăn cùng cơm nóng.",
+    "description": "Gà nướng mật ong là món ức gà ướp ngọt thơm, nướng đến khi mặt ngoài bóng vàng cánh gián. Vị mặn ngọt hài hòa, thịt gà săn mà vẫn mọng nếu không nướng quá lửa. Hợp cho bữa tối gia đình ăn cùng cơm nóng, cà chua và xà lách.",
     "steps": [
       "Sơ chế: Rửa ức gà (400 g), thấm khô bằng khăn giấy rồi rạch vài đường nông trên mặt thịt để gia vị thấm. Nếu miếng gà dày hơn 3 cm, bổ đôi theo chiều ngang cho chín đều.",
       "Ướp gà: Trộn 40 ml mật ong với 1 muỗng canh nước tương, 2 tép tỏi băm, 1/2 muỗng cà phê muối, 1/4 muỗng cà phê tiêu và 1 muỗng canh dầu ăn. Trộn gà với hỗn hợp, ướp ít nhất 15 phút (để ngăn mát 1-2 giờ sẽ đậm vị hơn).",
@@ -1881,16 +1830,12 @@
       "Nướng lần 1: Làm nóng lò ở 180°C. Xếp gà lên khay lót giấy nến hoặc giấy bạc, nướng 15 phút.",
       "Phết mật ong: Lấy khay ra, phết 20 ml mật ong còn lại lên mặt gà, lật mặt rồi nướng thêm 10 phút đến khi bề mặt vàng cánh gián. Nếu cạnh sậm quá nhanh, phủ nhẹ giấy bạc lên trên.",
       "Kiểm tra độ chín: Chọc đũa vào phần dày nhất, nước thịt chảy ra phải trong và thịt bên trong không còn màu hồng. Để gà nghỉ 5 phút rồi thái lát dày khoảng 1 cm.",
-      "Dọn món: Cà chua rửa sạch, thái múi cau xếp cạnh gà, múc cơm ra đĩa và rưới phần nước sốt trên khay lên thịt."
+      "Dọn món: Tách lá xà lách, rửa sạch và lót ra đĩa; cà chua rửa sạch, thái múi cau xếp cạnh gà. Múc cơm ra đĩa và rưới phần nước sốt trên khay lên thịt."
     ],
     "seasonings": [
       {
         "name": "Nước tương",
         "amount": "1 muỗng canh"
-      },
-      {
-        "name": "Tỏi",
-        "amount": "2 tép"
       },
       {
         "name": "Muối",
@@ -1910,7 +1855,7 @@
       "Chỉ phết phần mật ong cuối vào nửa sau của thời gian nướng vì mật ong chứa đường, nướng lâu dễ cháy và đắng.",
       "Để gà nghỉ 5 phút trước khi cắt giúp nước thịt không chảy ra hết, miếng gà mềm và mọng hơn."
     ],
-    "servingNote": "Dùng nóng với cơm trắng và cà chua thái múi, có thể thêm rau xà lách nếu có sẵn.",
+    "servingNote": "Dùng nóng với cơm trắng, cà chua thái múi và xà lách tươi.",
     "storage": "Để nguội, đựng hộp kín trong ngăn mát tối đa 2 ngày và hâm lại bằng lò hoặc lò vi sóng.",
     "nutrition": {
       "calories": 540,
@@ -2121,12 +2066,12 @@
   },
   {
     "id": "rec-040",
-    "description": "Món xào nhanh, đậm đà, thường ăn cùng cơm hoặc miến trong bữa trưa. Theo nguyên liệu trong danh sách, phiên bản này xào mực với rau muống, cà rốt và hành tây nên có vị ngọt của hải sản hòa với rau củ giòn.",
+    "description": "Món xào nhanh, đậm đà, thường ăn cùng cơm trong bữa trưa. Phiên bản này xào mực ống tươi với rau muống, cà rốt và hành tây nên có vị ngọt của hải sản hòa với rau củ giòn.",
     "steps": [
-      "Ngâm mực: Ngâm 200 g mực khô trong nước ấm khoảng 40-60 phút cho mềm, rửa sạch, bóc lớp màng ngoài nếu còn. Cắt mực thành sợi bản nhỏ dài khoảng 5 cm.",
+      "Sơ chế mực: Rửa 300 g mực ống, bỏ ruột, mắt, mai và răng, lột bỏ lớp da ngoài. Cắt thành khoanh dày khoảng 1 cm hoặc khứa chéo rồi cắt miếng vừa ăn.",
       "Sơ chế rau củ: Nhặt rau muống, cắt khúc 5 cm, rửa sạch và để ráo; cà rốt gọt vỏ, thái sợi hoặc lát mỏng; hành tây bóc vỏ, bổ múi cau.",
-      "Ướp mực: Trộn mực với 1 muỗng canh nước mắm, 1 muỗng cà phê đường và 1/2 muỗng cà phê tiêu, để 10 phút.",
-      "Xào mực: Bắc chảo lửa lớn, cho 1 muỗng canh dầu ăn, phi 2 tép tỏi băm thơm rồi cho mực vào xào 3-4 phút đến khi mực săn và thấm gia vị. Xúc mực ra đĩa.",
+      "Ướp mực: Trộn mực với 1 muỗng canh nước mắm, 1 muỗng cà phê đường và 1/2 muỗng cà phê tiêu, để 10 phút. Thấm bớt nước trước khi xào.",
+      "Xào mực: Bắc chảo lửa lớn, cho 1 muỗng canh dầu ăn, phi 2 tép tỏi băm thơm rồi cho mực vào xào 1,5-2 phút đến khi mực cuộn lại và vừa chín. Xúc mực ra đĩa ngay để không bị dai.",
       "Xào rau củ: Cho thêm 1/2 muỗng canh dầu vào chảo, xào cà rốt 2 phút, thêm hành tây xào 1 phút, rồi cho cọng rau muống xào 1 phút và lá rau muống 1 phút nữa, giữ lửa lớn để rau giòn xanh.",
       "Hoàn thành: Cho mực trở lại chảo, nêm thêm 1/2 muỗng canh nước mắm, đảo đều 30 giây rồi tắt bếp. Dọn ngay khi còn nóng."
     ],
@@ -2153,20 +2098,20 @@
       }
     ],
     "tips": [
-      "Ngâm mực khô bằng nước ấm hoặc nước vo gạo ấm giúp mực nở và mềm hơn; xào quá lâu mực sẽ bị dai.",
-      "Xào rau muống ở lửa lớn, không đậy nắp để rau giữ được màu xanh và độ giòn.",
-      "Nếu dùng mực tươi hoặc mực đông lạnh thì rã đông và bỏ bước ngâm, chỉ xào khoảng 2 phút."
+      "Mực ống tươi chỉ cần xào 1,5-2 phút ở lửa lớn; xào quá lâu mực sẽ bị dai và ra nước.",
+      "Thấm khô mực và làm nóng chảo thật kỹ trước khi xào để mực không bị luộc trong nước của chính nó.",
+      "Xào rau muống ở lửa lớn, không đậy nắp để rau giữ được màu xanh và độ giòn."
     ],
     "servingNote": "Dùng nóng với cơm trắng, hoặc với miến luộc riêng nếu bạn có sẵn.",
     "storage": "Ngon nhất khi dùng ngay vì rau muống dễ ra nước và mềm khi để lâu.",
     "nutrition": {
-      "calories": 410,
-      "protein": 58,
-      "carbs": 22,
-      "fat": 12
+      "calories": 280,
+      "protein": 26,
+      "carbs": 18,
+      "fat": 9
     },
     "prepTimeMinutes": 15,
-    "cookTimeMinutes": 12,
+    "cookTimeMinutes": 10,
     "difficulty": "medium"
   },
   {
@@ -2212,39 +2157,32 @@
   },
   {
     "id": "rec-042",
-    "description": "Bún chả là món đặc trưng của Hà Nội: thịt nướng thơm khói ăn cùng bún tươi, rau sống và bát nước chấm chua ngọt. Vị đậm đà, thịt xém cạnh, thường ăn vào bữa trưa.",
+    "description": "Bún chả là món đặc trưng của Hà Nội: thịt ba chỉ nướng và chả viên thơm khói ăn cùng bún tươi, rau sống và bát nước chấm chua ngọt. Vị đậm đà, thịt xém cạnh, thường ăn vào bữa trưa.",
     "steps": [
-      "Sơ chế thịt: Rửa ba chỉ (300 g), để ráo rồi thái lát dày khoảng 0,5 cm.",
-      "Ướp thịt: Trộn thịt với 1 muỗng canh nước mắm, 1 muỗng canh đường, 1 muỗng canh hành tím băm, 2 tép tỏi băm, 1/2 muỗng cà phê tiêu và 1 muỗng canh dầu ăn. Ướp ít nhất 20-30 phút.",
-      "Pha nước chấm: Hòa 2 muỗng canh nước mắm, 3 muỗng canh đường, 3 muỗng canh giấm hoặc nước cốt chanh vào 200 ml nước ấm, khuấy cho đường tan. Thêm tỏi, ớt băm và nếm lại cho chua ngọt vừa ăn.",
-      "Chuẩn bị bún và rau: Chần hoặc luộc bún gạo theo hướng dẫn trên gói, xả nước lạnh rồi để ráo. Rau sống (100 g) nhặt, rửa sạch và để ráo.",
-      "Nướng thịt: Nướng thịt trên vỉ than hoặc bếp nướng 3-4 phút mỗi mặt, hoặc nướng lò 220°C khoảng 10-12 phút, lật giữa chừng. Thịt chín hẳn, không còn hồng và mép hơi xém là được.",
-      "Dọn món: Thả thịt nướng nóng vào bát nước chấm, ăn cùng bún và rau sống."
+      "Sơ chế ba chỉ: Rửa ba chỉ (300 g), để ráo rồi thái lát dày khoảng 0,5 cm.",
+      "Ướp ba chỉ: Trộn thịt với 1/2 muỗng nước mắm truyền thống, 1 muỗng canh đường, 1 muỗng canh hành tím băm, 2 tép tỏi băm, 1/4 muỗng cà phê tiêu và 1/2 muỗng canh dầu ăn. Ướp ít nhất 20-30 phút.",
+      "Làm chả viên: Băm nhỏ 1 củ hành tím còn lại. Trộn 200 g thịt heo xay với hành tím, 2 tép tỏi băm, 1/2 muỗng nước mắm, 1 muỗng canh đường, 1/4 muỗng cà phê muối, 1/4 muỗng cà phê tiêu và 1/2 muỗng canh dầu ăn, vò và nhào kỹ khoảng 3-5 phút cho thịt dẻo. Nắn thành các viên dẹt đường kính khoảng 4 cm, ướp 20 phút.",
+      "Pha nước chấm: Hòa 2 muỗng nước mắm, 3 muỗng canh đường, nước cốt 1/2 quả chanh (và 1 muỗng canh giấm nếu thích chua hơn) vào 200 ml nước ấm, khuấy cho đường tan. Thêm 2 tép tỏi, 2 trái ớt băm và nếm lại cho chua ngọt vừa ăn.",
+      "Chuẩn bị bún và rau: Chần hoặc luộc 2 gói bún gạo theo hướng dẫn trên gói, xả nước lạnh rồi để ráo. Rau sống (100 g) nhặt, rửa sạch và để ráo.",
+      "Nướng thịt và chả: Nướng ba chỉ và chả viên trên vỉ than hoặc bếp nướng 3-4 phút mỗi mặt, hoặc nướng lò 220°C khoảng 12-15 phút, lật giữa chừng. Thịt heo và chả phải chín hẳn, cắt thử không còn hồng, mép hơi xém.",
+      "Dọn món: Thả thịt và chả nướng nóng vào bát nước chấm, thêm vài lát chanh, ăn cùng bún và rau sống."
     ],
     "seasonings": [
       {
         "name": "Đường",
-        "amount": "4 muỗng canh"
+        "amount": "5 muỗng canh"
       },
       {
-        "name": "Giấm hoặc nước cốt chanh",
-        "amount": "3 muỗng canh"
-      },
-      {
-        "name": "Hành tím",
-        "amount": "1 củ"
-      },
-      {
-        "name": "Tỏi",
-        "amount": "4 tép"
-      },
-      {
-        "name": "Ớt",
-        "amount": "1 trái"
+        "name": "Giấm",
+        "amount": "1 muỗng canh (tùy chọn)"
       },
       {
         "name": "Tiêu xay",
         "amount": "1/2 muỗng cà phê"
+      },
+      {
+        "name": "Muối",
+        "amount": "1/4 muỗng cà phê"
       },
       {
         "name": "Dầu ăn",
@@ -2256,33 +2194,33 @@
       }
     ],
     "tips": [
-      "Thái thịt mỏng khoảng 0,5 cm để thịt nhanh chín và xém đều, không bị khô hoặc sống ở giữa.",
-      "Pha nước chấm với nước ấm để đường tan hoàn toàn; thả thịt nóng vào chấm sẽ thơm hơn.",
-      "Nướng ở lửa vừa; mỡ nhỏ xuống than quá nhiều sẽ bốc khói và làm thịt bị cháy đen."
+      "Thái ba chỉ mỏng khoảng 0,5 cm để thịt nhanh chín và xém đều, không bị khô hoặc sống ở giữa.",
+      "Vò thịt xay thật dẻo và nắn viên dẹt để chả chín đều, giữ được độ mọng và không bị vỡ khi nướng.",
+      "Pha nước chấm với nước ấm để đường tan hoàn toàn; thả thịt nóng vào chấm sẽ thơm hơn."
     ],
-    "servingNote": "Ăn với bún gạo, rau sống và chấm thịt trong bát nước chấm chua ngọt.",
+    "servingNote": "Ăn với bún gạo, rau sống và chấm thịt, chả trong bát nước chấm chua ngọt.",
     "storage": "Ngon nhất khi ăn ngay; thịt nướng và nước chấm nên để riêng, bảo quản ngăn mát tối đa 1 ngày.",
     "nutrition": {
-      "calories": 620,
-      "protein": 26,
-      "carbs": 56,
-      "fat": 32
+      "calories": 780,
+      "protein": 38,
+      "carbs": 60,
+      "fat": 42
     },
-    "prepTimeMinutes": 20,
-    "cookTimeMinutes": 15,
+    "prepTimeMinutes": 30,
+    "cookTimeMinutes": 20,
     "difficulty": "medium"
   },
   {
     "id": "rec-043",
-    "description": "Bánh xèo là món bánh bột gạo đổ giòn trên chảo nóng, nhân tôm và mực, gập đôi rồi cuốn với rau sống chấm nước mắm chua ngọt. Món phổ biến ở miền Nam và miền Trung, có tên gọi từ tiếng xèo khi bột đổ vào chảo nóng. Vị béo giòn, hợp bữa trưa hoặc bữa tối cuối tuần.",
+    "description": "Bánh xèo là món bánh bột gạo đổ giòn trên chảo nóng, nhân tôm, ba chỉ và giá đỗ, gập đôi rồi cuốn với rau sống chấm nước mắm chua ngọt. Món phổ biến ở miền Nam và miền Trung, có tên gọi từ tiếng xèo khi bột đổ vào chảo nóng. Vị béo giòn, hợp bữa trưa hoặc bữa tối cuối tuần.",
     "steps": [
-      "Pha bột: Cho 200 g bột bánh xèo vào tô, thêm nước lạnh theo hướng dẫn trên bao bì, 1 quả trứng và 1/4 muỗng cà phê muối. Khuấy mịn đến khi bột loãng như nước sữa, rắc hành lá cắt nhỏ và để nghỉ 15-20 phút.",
-      "Sơ chế nhân: Ngâm 150 g mực khô trong nước ấm 30 phút cho mềm, rửa sạch và cắt sợi nhỏ. Tôm sú (200 g) bóc vỏ, rút chỉ lưng, thấm khô; tôm lớn thì bổ đôi.",
-      "Xào nhân: Đun nóng 1 muỗng canh dầu, phi 2 tép tỏi băm thơm, cho mực xào 2 phút rồi cho tôm vào xào 1-2 phút đến khi tôm cong và đổi màu cam. Nêm chút tiêu và muối rồi để riêng.",
+      "Pha bột: Cho 200 g bột bánh xèo vào tô, thêm nước lạnh theo hướng dẫn trên bao bì, 1 quả trứng và 1/4 muỗng cà phê muối. Khuấy mịn đến khi bột loãng như nước sữa, rắc 20 g hành lá cắt nhỏ và để nghỉ 15-20 phút.",
+      "Sơ chế nhân: Ba chỉ (200 g) thái lát mỏng. Tôm sú (200 g) bóc vỏ, rút chỉ lưng, thấm khô; tôm lớn thì bổ đôi. Nhặt rửa 150 g giá đỗ, để ráo.",
+      "Xào nhân: Đun nóng 1 muỗng canh dầu, phi 2 tép tỏi băm thơm, cho ba chỉ vào xào 3-4 phút đến khi chín hẳn, không còn hồng, rồi cho tôm vào xào 1-2 phút đến khi tôm cong và đổi màu cam. Nêm chút tiêu và muối rồi để riêng.",
       "Pha nước chấm: Hòa 3 muỗng canh nước mắm, 3 muỗng canh đường, nước cốt của 1/2 quả chanh và 100 ml nước ấm. Thêm tỏi và ớt băm, nếm cho chua ngọt vừa ăn.",
-      "Tráng bánh: Làm nóng chảo chống dính lớn, thoa 1 muỗng canh dầu rồi múc 1 vá bột tráng mỏng, rải một ít tôm mực lên. Đậy nắp 1-2 phút cho nhân chín.",
+      "Tráng bánh: Làm nóng chảo chống dính lớn, thoa 1 muỗng canh dầu rồi múc 1 vá bột tráng mỏng, rải một ít tôm, thịt và giá lên. Đậy nắp 1-2 phút cho nhân chín.",
       "Làm giòn: Bỏ nắp, vặn lửa vừa chiên 3-4 phút đến khi viền bánh vàng giòn và bột trong, gập đôi bánh. Làm tiếp các cái còn lại, thêm dầu mỗi lần tráng.",
-      "Dọn món: Xếp bánh ra đĩa, ăn nóng cùng rau sống, xà lách và nước chấm."
+      "Dọn món: Xếp bánh ra đĩa, ăn nóng cùng rau sống (100 g) và nước chấm, cuốn bánh với rau trước khi chấm."
     ],
     "seasonings": [
       {
@@ -2291,11 +2229,7 @@
       },
       {
         "name": "Tỏi",
-        "amount": "3 tép"
-      },
-      {
-        "name": "Hành lá",
-        "amount": "2 cây"
+        "amount": "5 tép (2 tép xào nhân, 3 tép nước chấm)"
       },
       {
         "name": "Muối",
@@ -2331,16 +2265,16 @@
       "Bột để nghỉ 15-20 phút giúp bột nở đều, bánh mỏng giòn hơn; nếu bột đặc quá thì thêm chút nước.",
       "Đậy nắp ở giai đoạn đầu để nhân chín hơi nước, sau đó bỏ nắp để bánh giòn."
     ],
-    "servingNote": "Cuốn bánh nóng với rau sống, xà lách và chấm nước mắm chua ngọt.",
+    "servingNote": "Cuốn bánh nóng với rau sống, giá đỗ và chấm nước mắm chua ngọt.",
     "storage": "Ngon nhất khi ăn ngay lúc còn giòn; bánh để lâu sẽ mềm, nhân có thể để ngăn mát 1 ngày.",
     "nutrition": {
-      "calories": 780,
-      "protein": 70,
-      "carbs": 75,
-      "fat": 18
+      "calories": 820,
+      "protein": 42,
+      "carbs": 78,
+      "fat": 38
     },
-    "prepTimeMinutes": 15,
-    "cookTimeMinutes": 20,
+    "prepTimeMinutes": 20,
+    "cookTimeMinutes": 25,
     "difficulty": "medium"
   },
   {
@@ -2437,13 +2371,13 @@
   },
   {
     "id": "rec-046",
-    "description": "Gỏi dưa leo tôm là món gỏi thanh mát, kết hợp tôm luộc ngọt thịt với dưa leo, cà rốt giòn và nước trộn chua ngọt. Món ít béo, ăn nhanh, thích hợp cho bữa trưa nhẹ hoặc ngày nóng.",
+    "description": "Gỏi dưa leo tôm là món gỏi thanh mát, kết hợp tôm luộc ngọt thịt với dưa leo, cà rốt giòn và nước trộn chua ngọt đậm vị chanh, tỏi, ớt. Món ít béo, ăn nhanh, thích hợp cho bữa trưa nhẹ hoặc ngày nóng.",
     "steps": [
       "Luộc tôm: Đun sôi khoảng 1 lít nước với 1/2 muỗng cà phê muối, cho tôm sú (250 g) đã rửa sạch vào luộc 2-3 phút đến khi tôm cong và đổi màu đỏ cam. Vớt ra ngâm nước đá 2 phút.",
       "Bóc tôm: Bóc vỏ, rút chỉ lưng; tôm lớn thì bổ đôi theo chiều dọc để dễ ngấm gia vị.",
       "Sơ chế dưa leo: Rửa 2 quả dưa leo, bỏ ruột nếu nhiều hạt, thái sợi mỏng hoặc bào sợi. Bóp với 1/2 muỗng cà phê muối 5 phút, rửa nhanh nước lạnh rồi vắt nhẹ cho ráo.",
       "Sơ chế cà rốt: Gọt vỏ cà rốt, bào hoặc thái sợi mỏng cùng cỡ với dưa leo.",
-      "Pha nước trộn: Khuấy 2 muỗng canh nước mắm, 2 muỗng canh đường, 2 muỗng canh nước cốt chanh và 2 muỗng canh nước lọc cho đường tan, thêm tỏi và ớt băm. Nếm cho chua ngọt vừa ăn.",
+      "Pha nước trộn: Vắt lấy khoảng 2 muỗng canh nước cốt chanh. Khuấy với 2 muỗng nước mắm truyền thống, 2 muỗng canh đường và 2 muỗng canh nước lọc cho đường tan, thêm 2 tép tỏi và 1-2 trái ớt băm. Nếm cho chua ngọt vừa ăn.",
       "Trộn gỏi: Cho dưa leo, cà rốt và tôm vào tô lớn, rưới nước trộn, đảo nhẹ tay và để 3-5 phút cho thấm. Rắc đậu phộng rang giã nhỏ lên trên và dùng ngay."
     ],
     "seasonings": [
@@ -2456,19 +2390,11 @@
         "amount": "2 muỗng canh"
       },
       {
-        "name": "Chanh",
-        "amount": "1 quả (lấy khoảng 2 muỗng canh nước cốt)"
-      },
-      {
-        "name": "Tỏi",
-        "amount": "2 tép"
-      },
-      {
-        "name": "Ớt",
-        "amount": "1 trái"
-      },
-      {
         "name": "Đậu phộng rang",
+        "amount": "2 muỗng canh"
+      },
+      {
+        "name": "Nước lọc",
         "amount": "2 muỗng canh"
       }
     ],
@@ -2491,20 +2417,16 @@
   },
   {
     "id": "rec-047",
-    "description": "Mì Quảng là món đặc sản của Quảng Nam, sợi mì bản vừa ăn cùng ít nước dùng đậm đà, thường kèm bánh tráng và rau sống. Phiên bản này dùng tôm sú, trứng và sợi làm từ bột sắn, nước dùng sền sệt màu vàng nghệ. Thích hợp cho bữa trưa đậm vị.",
+    "description": "Mì Quảng là món đặc sản của Quảng Nam, sợi mì Quảng làm từ bột gạo ăn cùng ít nước dùng đậm đà màu vàng nghệ. Phiên bản này dùng tôm sú, ba chỉ, trứng, đậu phộng rang và rau sống. Thích hợp cho bữa trưa đậm vị.",
     "steps": [
-      "Nhào bột: Cho 200 g bột sắn vào tô, rót từ từ khoảng 130-150 ml nước sôi, khuấy nhanh rồi nhào khi còn ấm đến khi bột mịn, dẻo, không dính tay. Dùng một ít bột sắn khô để chống dính.",
-      "Cắt sợi và luộc: Cán bột mỏng khoảng 1-2 mm, cắt sợi bản 5 mm. Luộc trong nước sôi 2-3 phút đến khi sợi trong và nổi, vớt ra, xả nước lạnh, trộn với chút dầu để không dính.",
-      "Sơ chế tôm và trứng: Bóc vỏ tôm (200 g), giữ lại đầu và vỏ, rút chỉ lưng. Luộc 2 quả trứng 8-10 phút, ngâm nước lạnh, bóc vỏ và cắt đôi.",
-      "Nấu nước dùng: Phi 2 củ hành tím băm, 3 tép tỏi và 1/2 muỗng cà phê bột nghệ với 1 muỗng canh dầu, cho đầu và vỏ tôm vào xào 2 phút. Thêm 600 ml nước, ninh lửa nhỏ 15 phút, lọc bỏ xác rồi nêm 1 muỗng canh nước mắm, muối và đường.",
-      "Xào tôm: Phi 1 muỗng canh dầu với chút hành tỏi, cho tôm vào xào 1-2 phút với 1 muỗng canh nước mắm đến khi tôm cong và đổi màu. Thêm khoảng 150 ml nước dùng, đun 3 phút cho nước hơi sệt.",
-      "Dọn món: Cho sợi bột sắn vào tô, xếp tôm và trứng lên trên, chan nước dùng rồi rắc đậu phộng rang giã nhỏ và hành lá. Ăn nóng."
+      "Sơ chế thịt và tôm: Ba chỉ (200 g) rửa sạch, thái lát mỏng. Bóc vỏ tôm sú (200 g), giữ lại đầu và vỏ, rút chỉ lưng.",
+      "Luộc trứng: Luộc 2 quả trứng 8-10 phút, ngâm nước lạnh, bóc vỏ và cắt đôi.",
+      "Chuẩn bị sợi mì và rau: Chần 1 gói sợi mì Quảng trong nước sôi 1-2 phút (hoặc theo hướng dẫn trên gói), vớt ra, để ráo. Rửa 100 g rau sống, để ráo. Rang 50 g đậu phộng trong chảo khô đến khi vàng thơm, để nguội rồi giã dập.",
+      "Nấu nước dùng: Phi 2 củ hành tím băm, 3 tép tỏi và 1/2 muỗng cà phê bột nghệ với 1 muỗng canh dầu, cho đầu và vỏ tôm vào xào 2 phút. Thêm khoảng 600 ml nước, ninh lửa nhỏ 15 phút rồi lọc bỏ xác. Nêm 1 muỗng nước mắm truyền thống, muối và đường.",
+      "Xào thịt và tôm: Phi 1 muỗng canh dầu với chút hành tỏi, cho ba chỉ vào xào 4-5 phút đến khi chín hẳn, không còn hồng. Cho tôm vào xào 1-2 phút với 1 muỗng nước mắm còn lại đến khi tôm cong và đổi màu. Thêm khoảng 150 ml nước dùng, đun 3 phút cho nước hơi sệt.",
+      "Dọn món: Cho sợi mì vào tô cùng rau sống, xếp thịt, tôm và trứng lên trên, chan nước dùng vừa phủ sợi mì rồi rắc đậu phộng rang và hành lá. Ăn nóng."
     ],
     "seasonings": [
-      {
-        "name": "Hành tím",
-        "amount": "2 củ"
-      },
       {
         "name": "Tỏi",
         "amount": "3 tép"
@@ -2526,33 +2448,29 @@
         "amount": "1 muỗng cà phê"
       },
       {
-        "name": "Đậu phộng rang",
-        "amount": "2 muỗng canh"
-      },
-      {
         "name": "Hành lá",
         "amount": "2 cây"
       },
       {
         "name": "Nước lọc",
-        "amount": "khoảng 750 ml (nhào bột, nấu nước dùng)"
+        "amount": "khoảng 750 ml (nấu nước dùng)"
       }
     ],
     "tips": [
-      "Nhào bột sắn khi bột còn ấm sẽ dẻo và dễ cán; để nguội bột sẽ khô và dễ nứt.",
+      "Chỉ chần sợi mì Quảng vừa đủ để sợi dẻo, không nhũn; xả nước nóng lại ngay trước khi cho vào tô.",
       "Đun đầu và vỏ tôm với dầu nghệ giúp nước dùng có màu vàng đẹp và vị ngọt đậm hơn.",
       "Mì Quảng ít nước dùng, chan vừa phủ sợi mì rồi mới rắc đậu phộng để nước không loãng."
     ],
-    "servingNote": "Ăn nóng với đậu phộng rang, bánh tráng nướng và rau sống nếu có.",
+    "servingNote": "Ăn nóng với đậu phộng rang, bánh tráng nướng và rau sống.",
     "storage": "Ngon nhất khi dùng ngay; nước dùng có thể để ngăn mát 1 ngày, sợi bột nên làm mới.",
     "nutrition": {
-      "calories": 630,
-      "protein": 26,
-      "carbs": 92,
-      "fat": 18
+      "calories": 780,
+      "protein": 40,
+      "carbs": 84,
+      "fat": 32
     },
-    "prepTimeMinutes": 30,
-    "cookTimeMinutes": 25,
+    "prepTimeMinutes": 25,
+    "cookTimeMinutes": 30,
     "difficulty": "medium"
   },
   {
@@ -2734,21 +2652,17 @@
   },
   {
     "id": "rec-051",
-    "description": "Nem nướng Nha Trang là đặc sản của Khánh Hòa: thịt heo xay ướp đậm đà, nướng xém thơm rồi ăn cùng rau sống và nước chấm. Phiên bản này dùng ba chỉ và ăn kèm bún, thích hợp cho bữa trưa có khâu chuẩn bị đôi chút công phu.",
+    "description": "Nem nướng Nha Trang là đặc sản của Khánh Hòa: thịt heo xay ướp đậm đà, nướng xém thơm rồi cuốn bánh tráng cùng rau sống, bún và nước chấm. Món thích hợp cho bữa trưa có khâu chuẩn bị đôi chút công phu.",
     "steps": [
-      "Chuẩn bị thịt: Bỏ da ba chỉ (300 g), rửa sạch, thấm khô và cắt nhỏ. Xay hoặc băm nhuyễn bằng máy xay theo từng đợt ngắn để thịt không bị nóng.",
-      "Ướp thịt: Trộn thịt xay với 1 quả trứng, 1 muỗng canh bột năng, 1 muỗng canh tỏi băm, 1 muỗng canh đường, 1/2 muỗng cà phê muối và 1/2 muỗng cà phê tiêu. Nhào hoặc vỗ mạnh tay khoảng 5-7 phút đến khi thịt dẻo, dai; để ngăn mát 30 phút.",
+      "Ướp thịt: Trộn 300 g thịt heo xay với 1 quả trứng, 1 muỗng canh bột năng, 1 muỗng canh tỏi băm, 1 muỗng canh đường, 1/2 muỗng cà phê muối, 1/2 muỗng cà phê tiêu và 1 muỗng nước mắm truyền thống.",
+      "Nhào thịt: Nhào hoặc vỗ mạnh tay khoảng 5-7 phút đến khi thịt dẻo, dai; để ngăn mát 30 phút.",
       "Tạo hình: Tay thấm dầu ăn, nắm khoảng 40-50 g thịt, nắn thành thanh dày khoảng 2 cm hoặc quấn quanh que tre đã ngâm nước.",
       "Nướng nem: Phết mỏng dầu lên nem. Nướng lò 200°C hoặc nướng than 6-8 phút mỗi mặt, tổng khoảng 15 phút, đến khi mặt ngoài vàng xém và bên trong không còn màu hồng.",
-      "Luộc bún: Luộc hoặc chần bún gạo theo hướng dẫn trên gói, xả nước lạnh và để ráo.",
-      "Pha nước chấm: Khuấy 2 muỗng canh nước mắm, 2 muỗng canh đường, 1 muỗng canh nước cốt chanh hoặc giấm với 120 ml nước ấm cho đường tan. Thêm tỏi và ớt băm, nếm cho chua ngọt vừa ăn.",
-      "Dọn món: Cắt nem thành miếng vừa ăn, bày cùng bún, rau sống nếu có và chấm nước chấm."
+      "Luộc bún và chuẩn bị rau: Luộc hoặc chần bún gạo theo hướng dẫn trên gói, xả nước lạnh và để ráo. Rửa 100 g rau sống, để ráo; chuẩn bị bánh tráng và chén nước ấm để nhúng.",
+      "Pha nước chấm: Khuấy 1 muỗng nước mắm còn lại, 2 muỗng canh đường, 1 muỗng canh nước cốt chanh hoặc giấm với 120 ml nước ấm cho đường tan. Thêm 2 tép tỏi và ớt băm, nếm cho chua ngọt vừa ăn.",
+      "Dọn món: Cắt nem thành miếng vừa ăn, bày cùng bún, rau sống và bánh tráng. Nhúng bánh tráng, cuốn nem với bún và rau rồi chấm nước chấm."
     ],
     "seasonings": [
-      {
-        "name": "Tỏi",
-        "amount": "4 tép"
-      },
       {
         "name": "Đường",
         "amount": "3 muỗng canh"
@@ -2787,13 +2701,13 @@
       "Để thịt nghỉ trong ngăn mát 30 phút trước khi tạo hình giúp thịt dễ nắn và giữ form khi nướng.",
       "Nướng ở lửa vừa để nem chín đều cả trong lẫn ngoài; thịt heo phải chín hẳn, không còn màu hồng bên trong."
     ],
-    "servingNote": "Ăn với bún, rau sống và chấm nước chấm chua ngọt; nếu có bánh tráng thì cuốn thêm.",
+    "servingNote": "Cuốn nem nóng với bánh tráng, bún, rau sống và chấm nước chấm chua ngọt.",
     "storage": "Nem nướng ngon nhất khi dùng ngay; nem đã nướng để hộp kín ngăn mát tối đa 1 ngày và hâm lại bằng lò.",
     "nutrition": {
-      "calories": 590,
-      "protein": 28,
-      "carbs": 36,
-      "fat": 36
+      "calories": 680,
+      "protein": 34,
+      "carbs": 68,
+      "fat": 30
     },
     "prepTimeMinutes": 30,
     "cookTimeMinutes": 15,
@@ -2863,20 +2777,16 @@
   },
   {
     "id": "rec-053",
-    "description": "Ghẹ chiên bột sốt cà là món ghẹ lăn trứng, bột rồi chiên vàng, sau đó đảo cùng sốt cà chua chua ngọt. Lớp bột giòn bên ngoài, thịt ghẹ ngọt bên trong, thường dọn trong bữa cơm gia đình hoặc dịp có khách.",
+    "description": "Ghẹ chiên bột sốt cà là món ghẹ lăn trứng, bột mì rồi chiên vàng, sau đó đảo cùng sốt cà chua chua ngọt. Lớp bột giòn bên ngoài, thịt ghẹ ngọt bên trong, thường dọn trong bữa cơm gia đình hoặc dịp có khách.",
     "steps": [
       "Sơ chế ghẹ: Dùng bàn chải cọ sạch vỏ 300 g ghẹ dưới vòi nước. Bẻ mai, bỏ yếm và phần mang xám hai bên, rửa lại cho sạch rồi chặt thành 4-6 miếng, đập nhẹ phần càng cho dễ thấm.",
       "Ướp ghẹ: Trộn ghẹ với 1/4 muỗng cà phê muối và 1/4 muỗng cà phê tiêu, để khoảng 10 phút. Thấm thật khô bằng khăn giấy trước khi lăn bột.",
-      "Lăn bột: Đánh tan 1 quả trứng gà ta trong bát. Cho 4 muỗng canh bột mì ra đĩa, nhúng từng miếng ghẹ vào trứng rồi lăn đều qua bột, giũ nhẹ bỏ bột thừa.",
+      "Lăn bột: Đánh tan 1 quả trứng gà ta trong bát. Cho 50 g bột mì ra đĩa, nhúng từng miếng ghẹ vào trứng rồi lăn đều qua bột, giũ nhẹ bỏ bột thừa.",
       "Chiên ghẹ: Đun nóng khoảng 100 ml dầu ăn trong chảo sâu lòng, lửa vừa. Chiên từng miếng ghẹ 3-4 phút mỗi mặt đến khi lớp bột vàng giòn và vỏ ghẹ chuyển đỏ cam, vớt ra giấy thấm dầu.",
       "Làm sốt cà chua: Chừa lại khoảng 1 muỗng canh dầu trong chảo, phi thơm 3 tép tỏi băm và 1 củ hành tím băm. Cho 1 quả cà chua cắt múi cau vào xào lửa vừa khoảng 3 phút đến khi mềm nhuyễn, thêm 50 ml nước.",
-      "Xào ghẹ: Nêm 1 muỗng nước mắm, 1 muỗng cà phê đường và chút tiêu vào sốt, đun sôi nhẹ cho hơi sánh. Cho ghẹ chiên vào đảo nhanh tay khoảng 1-2 phút cho sốt bám đều rồi tắt bếp."
+      "Xào ghẹ: Nêm 1 muỗng nước mắm truyền thống, 1 muỗng cà phê đường và chút tiêu vào sốt, đun sôi nhẹ cho hơi sánh. Cho ghẹ chiên vào đảo nhanh tay khoảng 1-2 phút cho sốt bám đều rồi tắt bếp."
     ],
     "seasonings": [
-      {
-        "name": "Bột mì",
-        "amount": "4 muỗng canh"
-      },
       {
         "name": "Dầu ăn",
         "amount": "100 ml (khoảng 7 muỗng canh)"
@@ -3087,13 +2997,13 @@
   },
   {
     "id": "rec-057",
-    "description": "Bông cải xào bò là món xào nhanh quen thuộc trong bữa cơm gia đình, thịt bò mềm kết hợp bông cải giòn ngọt. Món cho nhiều đạm và chất xơ, nấu chỉ trong chừng 15 phút.",
+    "description": "Bông cải xào bò là món xào nhanh quen thuộc trong bữa cơm gia đình, thịt bò mềm thơm tỏi kết hợp bông cải giòn ngọt. Món cho nhiều đạm và chất xơ, nấu chỉ trong chừng 15 phút.",
     "steps": [
-      "Ướp bò: Thái 250 g thăn bò thành lát mỏng khoảng 3 mm, cắt ngang thớ. Ướp với 1 muỗng canh nước tương, 1 muỗng cà phê đường, 1/2 muỗng cà phê tiêu, 1 muỗng cà phê bột bắp, 1 muỗng cà phê dầu ăn và 1 tép tỏi băm trong 15 phút.",
+      "Ướp bò: Thái 250 g thăn bò thành lát mỏng khoảng 3 mm, cắt ngang thớ. Ướp với 1 muỗng canh nước tương, 1 muỗng cà phê đường, 1/2 muỗng cà phê tiêu, 1 muỗng cà phê bột bắp và 1 tép tỏi băm trong 15 phút.",
       "Sơ chế bông cải: Cắt 300 g bông cải thành từng cụm nhỏ vừa ăn, ngâm nước muối loãng 5 phút rồi rửa sạch.",
       "Chần bông cải: Đun sôi nước có 1/2 muỗng cà phê muối, chần bông cải 1-2 phút đến khi chuyển xanh tươi, vớt ngay vào nước lạnh rồi để ráo.",
       "Xào bò: Đun nóng 1 muỗng canh dầu ăn trong chảo lửa lớn, trải đều thịt bò vào xào nhanh khoảng 1 phút đến khi thịt vừa chuyển màu nâu, múc ra đĩa ngay để thịt không bị dai.",
-      "Xào bông cải: Cho thêm 1 muỗng canh dầu ăn vào cùng chảo, phi thơm 2 tép tỏi băm. Cho bông cải vào xào lửa lớn 1-2 phút, nêm 1/2 muỗng cà phê muối và 1 muỗng cà phê nước tương.",
+      "Xào bông cải: Cho thêm 1 muỗng canh dầu ăn vào cùng chảo, phi thơm 3 tép tỏi băm còn lại (từ 1 củ tỏi). Cho bông cải vào xào lửa lớn 1-2 phút, nêm 1/2 muỗng cà phê muối và 1 muỗng cà phê nước tương.",
       "Hoàn thành: Cho bò trở lại chảo, đảo nhanh 30 giây cho thịt và rau thấm đều gia vị. Nêm lại vừa miệng, thêm chút tiêu rồi tắt bếp."
     ],
     "seasonings": [
@@ -3110,20 +3020,12 @@
         "amount": "1 muỗng cà phê"
       },
       {
-        "name": "Tỏi",
-        "amount": "3 tép"
-      },
-      {
         "name": "Muối",
         "amount": "1 muỗng cà phê"
       },
       {
         "name": "Tiêu",
         "amount": "1/2 muỗng cà phê"
-      },
-      {
-        "name": "Dầu ăn",
-        "amount": "1 muỗng cà phê (thêm để ướp bò)"
       }
     ],
     "tips": [
@@ -3298,14 +3200,14 @@
   },
   {
     "id": "rec-061",
-    "description": "Bún tôm tươi là món bún nguội đơn giản, tôm sú luộc ngọt thịt ăn cùng bún gạo, xà lách và nước chấm chua ngọt. Món thanh nhẹ, dễ làm, phù hợp cho bữa sáng hoặc bữa trưa ngày nóng.",
+    "description": "Bún tôm tươi là món bún nguội đơn giản, tôm sú luộc ngọt thịt ăn cùng bún gạo, xà lách, rau sống và nước chấm chua ngọt vắt chanh. Món thanh nhẹ, dễ làm, phù hợp cho bữa sáng hoặc bữa trưa ngày nóng.",
     "steps": [
       "Luộc tôm: Rửa sạch 200 g tôm sú, cắt râu và rút chỉ lưng. Đun sôi nước với 2 lát gừng và 1/2 muỗng cà phê muối, cho tôm vào luộc 2-3 phút đến khi vỏ đỏ cam, thịt cong tròn chắc.",
       "Làm nguội tôm: Vớt tôm ngâm ngay vào nước đá khoảng 1 phút để thịt giòn, rồi bóc vỏ, bỏ đầu nếu thích.",
       "Chuẩn bị bún: Luộc 1 gói bún gạo theo hướng dẫn trên bao bì đến khi mềm, vớt ra xả nước lạnh cho tơi rồi để ráo.",
-      "Sơ chế xà lách: Tách lá xà lách, rửa sạch, ngâm nước lạnh 5 phút, vẩy ráo và xé miếng vừa ăn.",
-      "Pha nước chấm: Khuấy 2 muỗng canh nước mắm, 2 muỗng canh đường, 2 muỗng canh giấm và 4 muỗng canh nước lọc đến khi đường tan. Thêm 1 tép tỏi và 1/2 quả ớt băm nhỏ, nêm lại cho chua ngọt vừa ăn.",
-      "Bày món: Xếp xà lách vào đáy tô, cho bún lên trên rồi xếp tôm. Chan nước chấm vào hoặc dọn riêng để chấm."
+      "Sơ chế rau: Tách lá xà lách, rửa sạch, ngâm nước lạnh 5 phút, vẩy ráo và xé miếng vừa ăn. Rửa 100 g rau sống, để ráo. Chanh cắt múi.",
+      "Pha nước chấm: Vắt nước cốt 1/2 quả chanh, khuấy với 2 muỗng canh nước mắm, 2 muỗng canh đường và 4 muỗng canh nước lọc đến khi đường tan. Thêm 1 tép tỏi và 1/2 quả ớt băm nhỏ, nêm lại cho chua ngọt vừa ăn.",
+      "Bày món: Xếp xà lách và rau sống vào đáy tô, cho bún lên trên rồi xếp tôm. Chan nước chấm vào hoặc dọn riêng để chấm, kèm múi chanh còn lại."
     ],
     "seasonings": [
       {
@@ -3314,10 +3216,6 @@
       },
       {
         "name": "Đường",
-        "amount": "2 muỗng canh"
-      },
-      {
-        "name": "Giấm",
         "amount": "2 muỗng canh"
       },
       {
@@ -3346,7 +3244,7 @@
       "Cho vài lát gừng vào nước luộc để tôm thơm và bớt mùi tanh.",
       "Ngâm xà lách trong nước lạnh trước khi ăn giúp rau giòn, xanh tươi."
     ],
-    "servingNote": "Ăn nguội, chan nước chấm chua ngọt; có thể thêm rau thơm nếu có.",
+    "servingNote": "Ăn nguội, chan nước chấm chua ngọt và vắt thêm chanh theo khẩu vị.",
     "storage": "Ngon nhất khi dùng ngay; không nên để lâu vì bún và tôm dễ hỏng.",
     "nutrition": {
       "calories": 320,
@@ -3480,12 +3378,13 @@
   },
   {
     "id": "rec-064",
-    "description": "Sandwich trộn tôm là món bánh mì kẹp nhanh gọn, tôm luộc trộn sốt béo ngậy kẹp cùng phô mai. Món ăn sáng tiện lợi, nấu chưa đến 10 phút.",
+    "description": "Sandwich trộn tôm là món bánh mì kẹp nhanh gọn, tôm luộc trộn sốt béo ngậy kẹp cùng phô mai và xà lách giòn. Món ăn sáng tiện lợi, nấu chưa đến 10 phút.",
     "steps": [
       "Luộc tôm: Bóc vỏ 100 g tôm sú, bỏ chỉ đen. Đun sôi nước với 1/2 muỗng cà phê muối, cho tôm vào luộc 2 phút đến khi tôm cong và chuyển màu đỏ cam. Vớt ra, để nguội.",
       "Trộn nhân: Cắt tôm thành miếng nhỏ cỡ hạt lựu, trộn đều với 2 muỗng canh sốt mayonnaise và chút tiêu.",
+      "Sơ chế xà lách: Tách vài lá xà lách, rửa sạch, vẩy thật ráo để bánh không bị ướt.",
       "Chuẩn bị bánh: Cắt dọc 1 ổ bánh mì thành hai nửa (không cắt đứt hẳn), nướng 1-2 phút trong chảo khô hoặc lò đến khi vỏ giòn nhẹ.",
-      "Lắp bánh: Xếp 2 lát phô mai lên mặt trong của bánh, phết đều nhân tôm lên trên rồi gập bánh lại.",
+      "Lắp bánh: Xếp xà lách và 2 lát phô mai lên mặt trong của bánh, phết đều nhân tôm lên trên rồi gập bánh lại.",
       "Hoàn thành: Áp chảo nhẹ bánh trên chảo khô, lửa nhỏ khoảng 1 phút mỗi mặt cho phô mai mềm chảy. Cắt đôi và dùng ngay."
     ],
     "seasonings": [
@@ -3505,9 +3404,9 @@
     "tips": [
       "Để tôm ráo nước và nguội hẳn trước khi trộn mayonnaise để nhân không bị loãng.",
       "Nướng bánh mì sơ trước khi kẹp giúp bánh giòn, không bị ngấm nước từ nhân.",
-      "Luộc tôm vừa chín tới (khoảng 2 phút); luộc lâu tôm sẽ bị dai."
+      "Vẩy thật ráo xà lách và luộc tôm vừa chín tới (khoảng 2 phút); luộc lâu tôm sẽ bị dai."
     ],
-    "servingNote": "Ăn ngay khi còn ấm, có thể kèm rau xà lách hoặc dưa leo và một ly sữa hoặc trà.",
+    "servingNote": "Ăn ngay khi còn ấm, có thể kèm dưa leo và một ly sữa hoặc trà.",
     "storage": "Ngon nhất khi dùng ngay; nhân tôm trộn sốt để ngăn mát, dùng trong ngày.",
     "nutrition": {
       "calories": 310,
@@ -3515,17 +3414,17 @@
       "carbs": 32,
       "fat": 10
     },
-    "prepTimeMinutes": 5,
+    "prepTimeMinutes": 8,
     "cookTimeMinutes": 5,
     "difficulty": "easy"
   },
   {
     "id": "rec-065",
-    "description": "Gà xào nấm nhanh là món xào đơn giản, ức gà mềm xào cùng nấm hương thơm, nêm nước tương đậm đà. Món nấu chưa đến 15 phút, phù hợp cho bữa cơm tối vội.",
+    "description": "Gà xào nấm nhanh là món xào đơn giản, ức gà mềm xào cùng nấm hương và tỏi thơm, nêm nước tương đậm đà. Món nấu chưa đến 15 phút, phù hợp cho bữa cơm tối vội.",
     "steps": [
       "Ướp gà: Rửa sạch 250 g ức gà, thái lát mỏng khoảng 5 mm theo ngang thớ. Ướp với 1 muỗng canh nước tương, 1/2 muỗng cà phê đường, 1/4 muỗng cà phê tiêu, 1 muỗng cà phê bột bắp và 1 tép tỏi băm trong 10 phút.",
-      "Sơ chế nấm: Cắt bỏ chân 100 g nấm hương, rửa nhanh dưới vòi nước, để ráo rồi cắt đôi hoặc thái lát dày.",
-      "Xào gà: Đun nóng 1 muỗng canh dầu ăn trong chảo lửa lớn, phi thơm 2 tép tỏi băm. Cho gà vào xào 3-4 phút đến khi thịt chuyển trắng đều, cắt thử một miếng thấy không còn hồng.",
+      "Sơ chế nấm: Cắt bỏ chân 100 g nấm hương, rửa nhanh dưới vòi nước, để ráo rồi cắt đôi hoặc thái lát dày. Băm nhỏ các tép tỏi còn lại.",
+      "Xào gà: Đun nóng 1 muỗng canh dầu ăn trong chảo lửa lớn, phi thơm tỏi băm. Cho gà vào xào 3-4 phút đến khi thịt chuyển trắng đều, cắt thử một miếng thấy không còn hồng.",
       "Xào nấm: Cho nấm vào chảo, đảo đều lửa lớn khoảng 2-3 phút đến khi nấm mềm và tiết nước.",
       "Nêm nếm: Nêm thêm 1 muỗng canh nước tương, 2 muỗng canh nước lọc, đảo thêm 1 phút cho nước sốt sánh nhẹ. Rắc tiêu, tắt bếp."
     ],
@@ -3541,10 +3440,6 @@
       {
         "name": "Bột bắp",
         "amount": "1 muỗng cà phê"
-      },
-      {
-        "name": "Tỏi",
-        "amount": "3 tép"
       },
       {
         "name": "Tiêu",

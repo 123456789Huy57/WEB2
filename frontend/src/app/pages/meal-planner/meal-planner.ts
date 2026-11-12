@@ -49,7 +49,7 @@ export class MealPlanner implements AfterViewInit {
   protected useHot(id: string): void {
     if (!this.isSel(id)) this.toggle(id);
     this.tab.set('pick');
-    this.toast.show(`Đã chọn ${this.mp.ingredient(id)?.name ?? 'nguyên liệu'}. Bấm “Gợi ý món” để xem món hợp.`);
+    this.toast.show(`Đã chọn ${this.mp.ingredient(id)?.name ?? 'nguyên liệu'}. Danh sách món đã cập nhật.`);
   }
   /** Ghi một lượt nấu cho tab Cộng đồng (mỗi người một lượt/món/ngày, server tự chặn bấm lặp) */
   private async cooked(r: Recipe): Promise<void> {
@@ -81,22 +81,25 @@ export class MealPlanner implements AfterViewInit {
     this.selected.set(s); store.set('mpSel', s);
   }
 
-  // Bước 2: tiêu chí
+  protected clearAll(): void { this.selected.set([]); store.set('mpSel', []); }
+
+  // Bước 2: tiêu chí (chip bấm là lọc ngay)
   protected f = signal<PlannerFilters>({ mealType: 'all', time: 'all', difficulty: 'all', servings: 2, lowFat: false, highProtein: false, vegetarian: false });
   protected patch<K extends keyof PlannerFilters>(k: K, v: PlannerFilters[K]): void { this.f.update(x => ({ ...x, [k]: v })); }
+  protected resetFilters(): void { this.f.update(x => ({ ...x, mealType: 'all', time: 'all', difficulty: 'all', lowFat: false, highProtein: false, vegetarian: false })); }
+  protected readonly mealOpts: [PlannerFilters['mealType'], string][] = [['all', 'Mọi bữa'], ['breakfast', 'Sáng'], ['lunch', 'Trưa'], ['dinner', 'Tối'], ['snack', 'Ăn vặt']];
+  protected readonly timeOpts: [PlannerFilters['time'], string][] = [['all', 'Mọi thời gian'], ['quick', 'Dưới 15 phút'], ['normal', '15–30 phút'], ['long', '30–60 phút']];
+  protected readonly diffOpts: [PlannerFilters['difficulty'], string][] = [['all', 'Mọi độ khó'], ['easy', 'Dễ'], ['medium', 'Vừa'], ['hard', 'Khó']];
 
-  // Bước 3: kết quả
-  protected results = signal<PlannerResult[] | null>(null);
-  protected loading = signal(false);
+  // Bước 3: kết quả cập nhật ngay khi chọn nguyên liệu hay đổi bộ lọc (tính trên trình duyệt, không cần bấm nút)
+  protected results = computed<PlannerResult[]>(() =>
+    this.selected().length ? this.mp.generate(this.selected(), this.f()) : this.mp.browse(this.f()));
   private resultsEl = viewChild<ElementRef<HTMLElement>>('resultsEl');
-  protected generate(): void {
-    if (!this.selected().length) { this.toast.show('Chọn ít nhất 1 nguyên liệu bạn đang có'); document.getElementById('ing-q')?.focus(); return; }
-    this.loading.set(true);
-    setTimeout(() => {
-      this.results.set(this.mp.generate(this.selected(), this.f()));
-      this.loading.set(false);
-      setTimeout(() => this.resultsEl()?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' }));
-    }, 450);
+  /** Điện thoại: tủ bếp nằm trên, bấm thanh dưới để nhảy xuống danh sách món */
+  protected jump(): void { this.resultsEl()?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  protected missingNames(r: Recipe): string {
+    const names = r.ingredients.filter(l => !this.isSel(l.ingredientId)).map(l => this.mp.ingredient(l.ingredientId)?.name).filter(Boolean) as string[];
+    return names.length > 3 ? `${names.slice(0, 3).join(', ')} +${names.length - 3}` : names.join(', ');
   }
 
   // Bước 4: xem món, thêm phần còn thiếu vào giỏ

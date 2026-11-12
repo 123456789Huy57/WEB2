@@ -8,7 +8,7 @@
   "category": "dairy",
   "defaultUnit": "quả",
   "unitWeightGram": 60,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8783/228775/bhx/hop-10-trung-ga-tuoi-tfood_202509301104427641.jpg",
+  "imageUrl": "/img/ingredients/trung-ga-ta.svg",
   "aliases": [
    "Trứng gà ta",
    "trung-ga-ta"
@@ -31,7 +31,7 @@
   "category": "meat",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/5/image/production/2026/5/image/Products/8790/234105/uc-ga-phi-le-co-da-tui-500g_202605251459043986.jpg",
+  "imageUrl": "/img/ingredients/uc-ga-tuoi.svg",
   "aliases": [
    "Ức gà tươi",
    "uc-ga-tuoi"
@@ -54,7 +54,7 @@
   "category": "meat",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/1/image/production/2026/1/image/Products/8781/226834/ba-roi-heo-1kg_202601271522159288.jpg",
+  "imageUrl": "/img/ingredients/ba-chi-heo.svg",
   "aliases": [
    "Ba chỉ heo",
    "ba-chi-heo"
@@ -77,7 +77,7 @@
   "category": "meat",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8139/358587/bhx/thit-bo-thai-lat-vinabeef-200g_202511041114062610.jpg",
+  "imageUrl": "/img/ingredients/than-bo.svg",
   "aliases": [
    "Thăn bò",
    "than-bo"
@@ -100,7 +100,7 @@
   "category": "seafood",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/tom-su.svg",
   "aliases": [
    "Tôm sú",
    "tom-su"
@@ -123,7 +123,7 @@
   "category": "seafood",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://cdn.tgdd.vn/Products/Images/8400/244643/bhx/ca-hoi-phi-le-sg-food-khay-200g-202404161024189707.jpg",
+  "imageUrl": "/img/ingredients/ca-hoi.svg",
   "aliases": [
    "Cá hồi phi lê",
    "ca-hoi"
@@ -146,7 +146,7 @@
   "category": "seafood",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8400/335959/bhx/muc-ong-nguyen-con-dong-lanh-ao-ao-goi-300g_202504251008330411.jpg",
+  "imageUrl": "/img/ingredients/muc-ong.svg",
   "aliases": [
    "Mực ống",
    "muc-ong"
@@ -169,7 +169,7 @@
   "category": "seafood",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8782/233777/bhx/ca-basa-cat-khuc-500g_202506211712385715.jpg",
+  "imageUrl": "/img/ingredients/ca-basa.svg",
   "aliases": [
    "Cá basa",
    "ca-basa"
@@ -192,7 +192,7 @@
   "category": "vegetables",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/2/image/production/2026/2/image/Products/8785/230449/ca-chua-1kg_202602231534288280.jpg",
+  "imageUrl": "/img/ingredients/ca-chua.svg",
   "aliases": [
    "Cà chua",
    "ca-chua"
@@ -215,7 +215,7 @@
   "category": "vegetables",
   "defaultUnit": "bó",
   "unitWeightGram": 300,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/4/image/production/2026/4/image/Products/8820/335480/rau-muong-nuoc-400gr_202604170932222956.jpg",
+  "imageUrl": "/img/ingredients/rau-muong.svg",
   "aliases": [
    "Rau muống",
    "rau-muong"
@@ -238,7 +238,7 @@
   "category": "vegetables",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://images.unsplash.com/photo-1604977042946-1eecc30f269e?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/dua-leo.svg",
   "aliases": [
    "Dưa leo",
    "dua-leo"
@@ -261,7 +261,7 @@
   "category": "vegetables",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8785/234529/bhx/ca-rot-1kg_202504140920251335.jpg",
+  "imageUrl": "/img/ingredients/ca-rot.svg",
   "aliases": [
    "Cà rốt",
    "ca-rot"
@@ -284,7 +284,7 @@
   "category": "vegetables",
   "defaultUnit": "cây",
   "unitWeightGram": 200,
-  "imageUrl": "https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/xa-lach.svg",
   "aliases": [
    "Xà lách",
    "xa-lach"
@@ -307,7 +307,7 @@
   "category": "fruits",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/xoai-cat.svg",
   "aliases": [
    "Xoài cát Hòa Lộc",
    "xoai-cat"
@@ -330,7 +330,7 @@
   "category": "fruits",
   "defaultUnit": "nải",
   "unitWeightGram": 1500,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8788/221997/bhx/chuoi-gia-nam-my_202504121329129039.jpg",
+  "imageUrl": "/img/ingredients/chuoi-gia.svg",
   "aliases": [
    "Chuối già",
    "chuoi-gia"
@@ -353,7 +353,7 @@
   "category": "fruits",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/3235/245239/bhx/tao-do-co-hat-nguyen-bao-goi-100g_202511171123560495.jpg",
+  "imageUrl": "/img/ingredients/tao-do.svg",
   "aliases": [
    "Táo đỏ",
    "tao-do"
@@ -376,7 +376,7 @@
   "category": "fruits",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://images.unsplash.com/photo-1527325678964-54921661f888?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/thanh-long.svg",
   "aliases": [
    "Thanh long",
    "thanh-long"
@@ -399,7 +399,7 @@
   "category": "pantry",
   "defaultUnit": "5kg",
   "unitWeightGram": 5000,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/2513/309156/bhx/gao-thom-jasmine-neptune-st25-tui-5kg_202504241001542168.jpg",
+  "imageUrl": "/img/ingredients/gao-thom.svg",
   "aliases": [
    "Gạo thơm Jasmine",
    "gao-thom"
@@ -422,7 +422,7 @@
   "category": "pantry",
   "defaultUnit": "gói",
   "unitWeightGram": 1000,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8163/233015/bhx/233015_202411291955079439.jpg",
+  "imageUrl": "/img/ingredients/bun-gao.svg",
   "aliases": [
    "Bún gạo",
    "bun-gao"
@@ -445,7 +445,7 @@
   "category": "pantry",
   "defaultUnit": "gói",
   "unitWeightGram": 500,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8160/262387/bhx/262387_202412031021459553.jpg",
+  "imageUrl": "/img/ingredients/pho-kho.svg",
   "aliases": [
    "Phở khô",
    "pho-kho"
@@ -468,7 +468,7 @@
   "category": "pantry",
   "defaultUnit": "gói",
   "unitWeightGram": 500,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/6/image/Products/Images/2903/229445/bhx/2071626792_202606231528276870.jpg",
+  "imageUrl": "/img/ingredients/yen-mach.svg",
   "aliases": [
    "Yến mạch",
    "yen-mach"
@@ -491,7 +491,7 @@
   "category": "condiments",
   "defaultUnit": "chai",
   "unitWeightGram": 1000,
-  "imageUrl": "https://images.unsplash.com/photo-1607532941433-304659e8198a?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/nuoc-mam.svg",
   "aliases": [
    "Nước mắm truyền thống",
    "nuoc-mam"
@@ -514,7 +514,7 @@
   "category": "condiments",
   "defaultUnit": "chai",
   "unitWeightGram": 1000,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/2683/194598/bhx/194598-thumb-moi_202411071855387601.jpg",
+  "imageUrl": "/img/ingredients/nuoc-tuong.svg",
   "aliases": [
    "Nước tương",
    "nuoc-tuong"
@@ -537,7 +537,7 @@
   "category": "condiments",
   "defaultUnit": "chai",
   "unitWeightGram": 1000,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/2286/83542/bhx/dau-an-tuong-an-can-1-lit_202507021346164590.jpg",
+  "imageUrl": "/img/ingredients/dau-an.svg",
   "aliases": [
    "Dầu ăn",
    "dau-an"
@@ -560,7 +560,7 @@
   "category": "condiments",
   "defaultUnit": "gói",
   "unitWeightGram": 500,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/5/image/production/2026/5/image/Products/2803/5366794/10-goi-muoi-say-i-ot-sosal-group-500g_202605260023364185.jpg",
+  "imageUrl": "/img/ingredients/muoi-iod.svg",
   "aliases": [
    "Muối i-ốt",
    "muoi-iod"
@@ -583,7 +583,7 @@
   "category": "dairy",
   "defaultUnit": "hộp",
   "unitWeightGram": 1000,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/6/image/Products/Images/2386/88762/bhx/88762_202606021435396388.jpg",
+  "imageUrl": "/img/ingredients/sua-tuoi-khong-duong.svg",
   "aliases": [
    "Sữa tươi không đường",
    "sua-tuoi-khong-duong"
@@ -606,7 +606,7 @@
   "category": "dairy",
   "defaultUnit": "chai",
   "unitWeightGram": 500,
-  "imageUrl": "https://images.unsplash.com/photo-1571212515416-fef01fc43637?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/sua-chua-uong.svg",
   "aliases": [
    "Sữa chua uống",
    "sua-chua-uong"
@@ -629,7 +629,7 @@
   "category": "beverages",
   "defaultUnit": "chai",
   "unitWeightGram": 500,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/3226/286224/bhx/286224_202410311735471630.jpg",
+  "imageUrl": "/img/ingredients/nuoc-suoi.svg",
   "aliases": [
    "Nước suối",
    "nuoc-suoi"
@@ -652,7 +652,7 @@
   "category": "beverages",
   "defaultUnit": "gói",
   "unitWeightGram": 500,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/1/image/production/2026/1/image/Products/8938/83613/oolong-tea-350ml-chai_202601231344055693.jpg",
+  "imageUrl": "/img/ingredients/tra-xanh-khong-duong.svg",
   "aliases": [
    "trà xanh",
    "trà lài",
@@ -676,7 +676,7 @@
   "category": "beverages",
   "defaultUnit": "hộp",
   "unitWeightGram": 500,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/6/image/Products/Images/2524/77353/bhx/2071626795_202606231528420196.jpg",
+  "imageUrl": "/img/ingredients/ca-phe-hoa-tan.svg",
   "aliases": [
    "Cà phê hòa tan",
    "ca-phe-hoa-tan"
@@ -699,7 +699,7 @@
   "category": "pantry",
   "defaultUnit": "gói",
   "unitWeightGram": 200,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/3487/338667/bhx/dau-phong-nuoc-cot-dua-tan-tan-goi-20g_202505270928507628.jpg",
+  "imageUrl": "/img/ingredients/dau-phong.svg",
   "aliases": [
    "Đậu phộng",
    "dau-phong"
@@ -722,7 +722,7 @@
   "category": "vegetables",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://images.unsplash.com/photo-1615485500704-8e990f9900f7?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/gung.svg",
   "aliases": [
    "Gừng",
    "gung"
@@ -745,7 +745,7 @@
   "category": "vegetables",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://images.unsplash.com/photo-1589135233689-4b012d3632b4?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/dua-chua.svg",
   "aliases": [
    "Dưa chua",
    "dua-chua"
@@ -768,7 +768,7 @@
   "category": "dairy",
   "defaultUnit": "gói",
   "unitWeightGram": 200,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/2565/337045/bhx/mi-tron-pho-mai-mini-ottogi-goi-80g_202504251123583073.jpg",
+  "imageUrl": "/img/ingredients/pho-mai.svg",
   "aliases": [
    "Phô mai",
    "pho-mai"
@@ -791,7 +791,7 @@
   "category": "vegetables",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/ot-chuong.svg",
   "aliases": [
    "Ớt chuông",
    "ot-chuong"
@@ -814,7 +814,7 @@
   "category": "pantry",
   "defaultUnit": "gói",
   "unitWeightGram": 500,
-  "imageUrl": "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/mi-trung.svg",
   "aliases": [
    "Mì trứng",
    "mi-trung"
@@ -837,7 +837,7 @@
   "category": "seafood",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://images.unsplash.com/photo-1544943910-4c1dc44aab44?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/luon-tuoi.svg",
   "aliases": [
    "Lươn tươi",
    "luon-tuoi"
@@ -860,7 +860,7 @@
   "category": "vegetables",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/2/image/production/2026/2/image/Products/8785/273076/hanh-tay-tui-1kg_202602231417178861.jpg",
+  "imageUrl": "/img/ingredients/hanh-tay.svg",
   "aliases": [
    "Hành tây",
    "hanh-tay"
@@ -883,7 +883,7 @@
   "category": "pantry",
   "defaultUnit": "gói",
   "unitWeightGram": 100,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/6/image/Products/Images/8320/332438/bhx/332438_202606100024303904.jpg",
+  "imageUrl": "/img/ingredients/banh-trang.svg",
   "aliases": [
    "Bánh tráng",
    "banh-trang"
@@ -906,7 +906,7 @@
   "category": "vegetables",
   "defaultUnit": "gói",
   "unitWeightGram": 200,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8779/344634/bhx/nam-huong-150gr_202509060945419279.jpg",
+  "imageUrl": "/img/ingredients/nam-huong.svg",
   "aliases": [
    "Nấm hương",
    "nam-huong"
@@ -929,7 +929,7 @@
   "category": "vegetables",
   "defaultUnit": "gói",
   "unitWeightGram": 150,
-  "imageUrl": "https://images.unsplash.com/photo-1504545102780-26774c1bb073?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/nam-dong-co.svg",
   "aliases": [
    "Nấm đông cô",
    "nam-dong-co"
@@ -952,7 +952,7 @@
   "category": "vegetables",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/rieng.svg",
   "aliases": [
    "Riềng",
    "rieng"
@@ -975,7 +975,7 @@
   "category": "condiments",
   "defaultUnit": "chai",
   "unitWeightGram": 250,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/2809/156048/bhx/156048-thumb-moi_202412191654354257.jpg",
+  "imageUrl": "/img/ingredients/sa-te.svg",
   "aliases": [
    "Sa tế",
    "sa-te"
@@ -998,7 +998,7 @@
   "category": "pantry",
   "defaultUnit": "gói",
   "unitWeightGram": 300,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/2943/85866/bhx/85866-thumb-moi_202411061018102290.jpg",
+  "imageUrl": "/img/ingredients/dau-nanh.svg",
   "aliases": [
    "Đậu nành",
    "dau-nanh"
@@ -1021,7 +1021,7 @@
   "category": "beverages",
   "defaultUnit": "chai",
   "unitWeightGram": 1500,
-  "imageUrl": "https://images.unsplash.com/photo-1523362628745-0c100150b504?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/nuoc-loc.svg",
   "aliases": [
    "Nước lọc",
    "nuoc-loc"
@@ -1044,7 +1044,7 @@
   "category": "pantry",
   "defaultUnit": "gói",
   "unitWeightGram": 500,
-  "imageUrl": "https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/bot-bap.svg",
   "aliases": [
    "Bột bắp",
    "bot-bap"
@@ -1067,7 +1067,7 @@
   "category": "condiments",
   "defaultUnit": "gói",
   "unitWeightGram": 500,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/5/image/Products/Images/2803/5366792/10-goi-muoi-say-i-ot-sosal-group-1kg_202605260022560803.jpg",
+  "imageUrl": "/img/ingredients/duong-phen.svg",
   "aliases": [
    "Đường phèn",
    "duong-phen"
@@ -1090,7 +1090,7 @@
   "category": "condiments",
   "defaultUnit": "chai",
   "unitWeightGram": 500,
-  "imageUrl": "https://images.unsplash.com/photo-1587049352851-8d4e89133924?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/mat-ong.svg",
   "aliases": [
    "Mật ong",
    "mat-ong"
@@ -1113,7 +1113,7 @@
   "category": "vegetables",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/2/image/production/2026/2/image/Products/8785/230468/khoai-tay-500g_202602231555463854.jpg",
+  "imageUrl": "/img/ingredients/khoai-tay.svg",
   "aliases": [
    "Khoai tây",
    "khoai-tay"
@@ -1136,7 +1136,7 @@
   "category": "vegetables",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8785/241815/bhx/bap-my-1-trai_202504140933150847.jpg",
+  "imageUrl": "/img/ingredients/bap-my.svg",
   "aliases": [
    "Bắp Mỹ",
    "bap-my"
@@ -1159,7 +1159,7 @@
   "category": "beverages",
   "defaultUnit": "chai",
   "unitWeightGram": 330,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/6/image/production/2026/6/image/Products/2282/319270/2-thung-bia-sai-gon-lager-330ml_202606191438338231.jpg",
+  "imageUrl": "/img/ingredients/bia.svg",
   "aliases": [
    "Bia",
    "bia"
@@ -1182,7 +1182,7 @@
   "category": "condiments",
   "defaultUnit": "hộp",
   "unitWeightGram": 100,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8271/158077/bhx/bot-ca-ri-vianco-goi-10g_202507071357431114.jpg",
+  "imageUrl": "/img/ingredients/bot-ca-ri.svg",
   "aliases": [
    "Bột cà ri",
    "bot-ca-ri"
@@ -1205,7 +1205,7 @@
   "category": "pantry",
   "defaultUnit": "gói",
   "unitWeightGram": 300,
-  "imageUrl": "https://cdn.tgdd.vn/Products/Images/2385/320951/bhx/tra-sua-tran-chau-hillway-hop-416g-clone-202401031430147436.jpg",
+  "imageUrl": "/img/ingredients/tran-chau.svg",
   "aliases": [
    "Trân châu",
    "tran-chau"
@@ -1228,7 +1228,7 @@
   "category": "beverages",
   "defaultUnit": "hộp",
   "unitWeightGram": 200,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/3/image/production/2026/3/image/Products/8938/364044/thung-24-chai-tra-den-c2-huong-tac-chai-455ml_202603121520171001.jpg",
+  "imageUrl": "/img/ingredients/tra-den.svg",
   "aliases": [
    "Trà đen",
    "tra-den"
@@ -1251,7 +1251,7 @@
   "category": "seafood",
   "defaultUnit": "gói",
   "unitWeightGram": 300,
-  "imageUrl": "https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/muc-dong.svg",
   "aliases": [
    "Mực khô",
    "muc-dong"
@@ -1274,7 +1274,7 @@
   "category": "pantry",
   "defaultUnit": "quả",
   "unitWeightGram": 200,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/6/image/Products/Images/9027/261728/bhx/frame-62_202606100029238599.jpg",
+  "imageUrl": "/img/ingredients/banh-mi.svg",
   "aliases": [
    "Bánh mì",
    "banh-mi"
@@ -1297,7 +1297,7 @@
   "category": "vegetables",
   "defaultUnit": "bó",
   "unitWeightGram": 300,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/1/image/production/2026/1/image/Products/8820/337165/cai-ngong-goi-400g_202601141627578886.jpg",
+  "imageUrl": "/img/ingredients/rau-song.svg",
   "aliases": [
    "Rau sống",
    "rau-song"
@@ -1320,7 +1320,7 @@
   "category": "pantry",
   "defaultUnit": "gói",
   "unitWeightGram": 500,
-  "imageUrl": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/bot-banh-xeo.svg",
   "aliases": [
    "Bột bánh xèo",
    "bot-banh-xeo"
@@ -1343,7 +1343,7 @@
   "category": "dairy",
   "defaultUnit": "hộp",
   "unitWeightGram": 500,
-  "imageUrl": "https://images.unsplash.com/photo-1567206563064-6f60f40a2b57?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/kem-tuoi.svg",
   "aliases": [
    "Kem tươi",
    "kem-tuoi"
@@ -1366,7 +1366,7 @@
   "category": "vegetables",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://images.unsplash.com/photo-1603046891744-76e6481be1ea?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/kho-qua.svg",
   "aliases": [
    "Khổ qua",
    "kho-qua"
@@ -1389,7 +1389,7 @@
   "category": "pantry",
   "defaultUnit": "gói",
   "unitWeightGram": 500,
-  "imageUrl": "https://images.unsplash.com/photo-1627485937980-221c88ac04f9?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/bot-san.svg",
   "aliases": [
    "Bột sắn",
    "bot-san"
@@ -1412,7 +1412,7 @@
   "category": "condiments",
   "defaultUnit": "gói",
   "unitWeightGram": 500,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/2806/330509/bhx/bot-ngot-meizan-goi-400g_202506041045487567.jpg",
+  "imageUrl": "/img/ingredients/bot-ngot.svg",
   "aliases": [
    "Bột ngọt",
    "bot-ngot"
@@ -1435,7 +1435,7 @@
   "category": "condiments",
   "defaultUnit": "gói",
   "unitWeightGram": 500,
-  "imageUrl": "https://images.unsplash.com/photo-1581441363689-1f3c3c414635?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/duong-cat.svg",
   "aliases": [
    "Đường cát",
    "duong-cat"
@@ -1458,7 +1458,7 @@
   "category": "vegetables",
   "defaultUnit": "bó",
   "unitWeightGram": 100,
-  "imageUrl": "https://images.unsplash.com/photo-1622205313162-be1d5712a43f?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/hanh-la.svg",
   "aliases": [
    "Hành lá",
    "hanh-la"
@@ -1481,7 +1481,7 @@
   "category": "pantry",
   "defaultUnit": "gói",
   "unitWeightGram": 500,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8160/262390/bhx/262390_202412031022449191.jpg",
+  "imageUrl": "/img/ingredients/mien.svg",
   "aliases": [
    "Miến dong",
    "mien"
@@ -1504,7 +1504,7 @@
   "category": "seafood",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://images.unsplash.com/photo-1559737558-2f5a35f4523b?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/ghe-tuoi.svg",
   "aliases": [
    "Ghẹ tươi",
    "ghe-tuoi"
@@ -1527,7 +1527,7 @@
   "category": "pantry",
   "defaultUnit": "hộp",
   "unitWeightGram": 300,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/7461/342386/bhx/dau-hu-chien-momen-ichiban-hop-330g_202508131312220673.jpg",
+  "imageUrl": "/img/ingredients/dau-hu.svg",
   "aliases": [
    "Đậu hũ",
    "dau-hu"
@@ -1550,7 +1550,7 @@
   "category": "seafood",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/3237/230040/bhx/ca-ngu-ngam-dau-tuna-viet-nam-lon-140g_202511201341292518.jpg",
+  "imageUrl": "/img/ingredients/ca-ngu.svg",
   "aliases": [
    "Cá ngừ",
    "ca-ngu"
@@ -1573,7 +1573,7 @@
   "category": "vegetables",
   "defaultUnit": "kg",
   "unitWeightGram": 1000,
-  "imageUrl": "https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/bong-cai.svg",
   "aliases": [
    "Bông cải",
    "bong-cai"
@@ -1596,7 +1596,7 @@
   "category": "beverages",
   "defaultUnit": "gói",
   "unitWeightGram": 500,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/8938/338157/bhx/loc-6-chai-tra-dao-lac-fruit-deli-1-lit_202505141455555938.jpg",
+  "imageUrl": "/img/ingredients/tra-dao.svg",
   "aliases": [
    "Trà đào",
    "tra-dao"
@@ -1619,7 +1619,7 @@
   "category": "fruits",
   "defaultUnit": "hộp",
   "unitWeightGram": 300,
-  "imageUrl": "https://images.unsplash.com/photo-1531171596281-8b5d26917d8b?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/dao.svg",
   "aliases": [
    "Đào",
    "dao"
@@ -1642,7 +1642,7 @@
   "category": "pantry",
   "defaultUnit": "gói",
   "unitWeightGram": 500,
-  "imageUrl": "https://images.unsplash.com/photo-1612927601601-6638404737ce?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/mi-dong.svg",
   "aliases": [
    "Miến",
    "mi-dong"
@@ -1665,7 +1665,7 @@
   "category": "pantry",
   "defaultUnit": "gói",
   "unitWeightGram": 250,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/3235/248325/bhx/248325_202411171046029385.jpg",
+  "imageUrl": "/img/ingredients/hat-sen.svg",
   "aliases": [
    "Hạt sen",
    "hat-sen"
@@ -1688,7 +1688,7 @@
   "category": "vegetables",
   "defaultUnit": "bó",
   "unitWeightGram": 100,
-  "imageUrl": "https://images.unsplash.com/photo-1600628422019-336e5f0b0e93?auto=format&fit=crop&w=900&q=80",
+  "imageUrl": "/img/ingredients/rau-ngo.svg",
   "aliases": [
    "Rau ngò",
    "rau-ngo"
@@ -1711,7 +1711,7 @@
   "category": "condiments",
   "defaultUnit": "gói",
   "unitWeightGram": 50,
-  "imageUrl": "https://cdnv2.tgdd.vn/bhx-static/bhx/Products/Images/2809/227716/bhx/227716-thumb-moi_202412191649360546.jpg",
+  "imageUrl": "/img/ingredients/tieu-den.svg",
   "aliases": [
    "Tiêu đen",
    "tieu-den"
@@ -1722,6 +1722,181 @@
    "carbohydrates": 128,
    "fat": 6,
    "fiber": 0
+  },
+  "isActive": true
+ },
+ {
+  "id": "ing-toi",
+  "slug": "toi",
+  "name": "Tỏi",
+  "categoryId": "vegetables",
+  "category": "vegetables",
+  "defaultUnit": "củ",
+  "unitWeightGram": 40,
+  "imageUrl": "/img/ingredients/toi.svg",
+  "aliases": [
+   "tỏi",
+   "tỏi tím",
+   "tỏi băm"
+  ],
+  "nutritionPer100g": {
+   "energy_kcal": 149,
+   "protein": 6.4,
+   "carbohydrates": 33,
+   "fat": 0.5,
+   "fiber": 2.1
+  },
+  "isActive": true
+ },
+ {
+  "id": "ing-thit-heo-xay",
+  "slug": "thit-heo-xay",
+  "name": "Thịt heo xay",
+  "categoryId": "meat",
+  "category": "meat",
+  "defaultUnit": "g",
+  "unitWeightGram": 1,
+  "imageUrl": "/img/ingredients/thit-heo-xay.svg",
+  "aliases": [
+   "thịt xay",
+   "thịt băm",
+   "thịt heo băm"
+  ],
+  "nutritionPer100g": {
+   "energy_kcal": 263,
+   "protein": 16.9,
+   "carbohydrates": 0,
+   "fat": 21.2,
+   "fiber": 0
+  },
+  "isActive": true
+ },
+ {
+  "id": "ing-gia-do",
+  "slug": "gia-do",
+  "name": "Giá đỗ",
+  "categoryId": "vegetables",
+  "category": "vegetables",
+  "defaultUnit": "g",
+  "unitWeightGram": 1,
+  "imageUrl": "/img/ingredients/gia-do.svg",
+  "aliases": [
+   "giá",
+   "giá sống",
+   "giá đỗ xanh"
+  ],
+  "nutritionPer100g": {
+   "energy_kcal": 30,
+   "protein": 3,
+   "carbohydrates": 5.9,
+   "fat": 0.2,
+   "fiber": 1.8
+  },
+  "isActive": true
+ },
+ {
+  "id": "ing-mi-quang",
+  "slug": "mi-quang",
+  "name": "Sợi mì Quảng",
+  "categoryId": "pantry",
+  "category": "pantry",
+  "defaultUnit": "gói",
+  "unitWeightGram": 300,
+  "imageUrl": "/img/ingredients/mi-quang.svg",
+  "aliases": [
+   "mì quảng",
+   "sợi mì quảng"
+  ],
+  "isActive": true
+ },
+ {
+  "id": "ing-hanh-tim",
+  "slug": "hanh-tim",
+  "name": "Hành tím",
+  "categoryId": "vegetables",
+  "category": "vegetables",
+  "defaultUnit": "củ",
+  "unitWeightGram": 15,
+  "imageUrl": "/img/ingredients/hanh-tim.svg",
+  "aliases": [
+   "hành tím",
+   "hành khô",
+   "hành đỏ"
+  ],
+  "nutritionPer100g": {
+   "energy_kcal": 72,
+   "protein": 2.5,
+   "carbohydrates": 16.8,
+   "fat": 0.1,
+   "fiber": 3.2
+  },
+  "isActive": true
+ },
+ {
+  "id": "ing-chanh",
+  "slug": "chanh",
+  "name": "Chanh",
+  "categoryId": "vegetables",
+  "category": "vegetables",
+  "defaultUnit": "trái",
+  "unitWeightGram": 60,
+  "imageUrl": "/img/ingredients/chanh.svg",
+  "aliases": [
+   "chanh",
+   "chanh không hạt",
+   "chanh tươi"
+  ],
+  "nutritionPer100g": {
+   "energy_kcal": 30,
+   "protein": 0.7,
+   "carbohydrates": 10.5,
+   "fat": 0.2,
+   "fiber": 2.8
+  },
+  "isActive": true
+ },
+ {
+  "id": "ing-ot",
+  "slug": "ot",
+  "name": "Ớt",
+  "categoryId": "vegetables",
+  "category": "vegetables",
+  "defaultUnit": "trái",
+  "unitWeightGram": 3,
+  "imageUrl": "/img/ingredients/ot.svg",
+  "aliases": [
+   "ớt",
+   "ớt hiểm",
+   "ớt tươi"
+  ],
+  "nutritionPer100g": {
+   "energy_kcal": 40,
+   "protein": 1.9,
+   "carbohydrates": 8.8,
+   "fat": 0.4,
+   "fiber": 1.5
+  },
+  "isActive": true
+ },
+ {
+  "id": "ing-bot-mi",
+  "slug": "bot-mi",
+  "name": "Bột mì",
+  "categoryId": "pantry",
+  "category": "pantry",
+  "defaultUnit": "g",
+  "unitWeightGram": 1,
+  "imageUrl": "/img/ingredients/bot-mi.svg",
+  "aliases": [
+   "bột mì",
+   "bột mì đa dụng"
+  ],
+  "nutritionPer100g": {
+   "energy_kcal": 364,
+   "protein": 10.3,
+   "carbohydrates": 76.3,
+   "fat": 1,
+   "fiber": 2.7
   },
   "isActive": true
  }

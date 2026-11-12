@@ -28,6 +28,8 @@ const content = {
   recipes: read('content/recipes.json'),
   recipeFixes: read('content/recipe-fixes.json').fixes,
   ingredientFixes: read('content/ingredient-fixes.json'),
+  newIngredients: read('content/new-ingredients.json'),
+  recipeAdditions: read('content/recipe-additions.json'),
   newProducts: read('new-products.json'),
 };
 // Câu mô tả sinh tự động trong dữ liệu mẫu cũ: thay được mà không mất công sức của ai.
@@ -134,6 +136,13 @@ async function main() {
       if (fix.ingredients) set.ingredients = set.ingredients.map(l => (fix.ingredients[l.ingredientId] ? { ...l, ...fix.ingredients[l.ingredientId] } : l));
       console.log(`   ${r.id} ${old.name}${fix.name ? ` -> ${fix.name}` : ''}: ${fix.why}`);
     }
+    // Bổ sung nguyên liệu chính còn thiếu; chạy lại không thêm trùng
+    const extra = content.recipeAdditions.find(a => a.id === r.id);
+    if (extra) {
+      if (extra.replace) set.ingredients = set.ingredients.map(l => (l.ingredientId === extra.replace.from ? extra.replace.to : l));
+      for (const line of extra.add || []) if (!set.ingredients.some(l => l.ingredientId === line.ingredientId)) set.ingredients.push(line);
+      console.log(`   ${r.id} ${set.name ?? old.name}: thêm ${(extra.add || []).length + (extra.replace ? 1 : 0)} nguyên liệu (${extra.why})`);
+    }
     recOps.push({ updateOne: { filter: { id: r.id }, update: { $set: set } } });
   }
   console.log(`== Công thức: cập nhật ${recOps.length} món (bước làm, gia vị, mẹo nấu, giới thiệu)`);
@@ -141,11 +150,24 @@ async function main() {
   // 5. Nguyên liệu đặt tên/đơn vị sai so với sản phẩm đang bán
   const ingOps = content.ingredientFixes.map(({ id, why, ...set }) => { console.log(`== Nguyên liệu ${id} -> ${set.name}: ${why}`); return { updateOne: { filter: { id }, update: { $set: set } } }; });
 
+  // 6. Nguyên liệu mới (tỏi, thịt xay, giá, sợi mì Quảng…) + sản phẩm tương ứng; icon SVG cho mọi nguyên liệu
+  const newIng = content.newIngredients;
+  console.log(`== Thêm ${newIng.length} nguyên liệu mới: ${newIng.map(x => x.ingredient.name).join(', ')}`);
+  const ingDocs = await db.collection('ingredients').find({}, { projection: { id: 1, slug: 1, imageUrl: 1 } }).toArray();
+  const iconOps = ingDocs.filter(i => !String(i.imageUrl || '').startsWith('/img/ingredients/'))
+    .map(i => ({ updateOne: { filter: { id: i.id }, update: { $set: { imageUrl: `/img/ingredients/${i.id.replace(/^ing-/, '')}.svg` } } } }));
+  console.log(`== Ảnh nguyên liệu: chuyển ${iconOps.length} ảnh bao bì sang icon SVG vẽ phẳng`);
+
   if (!APPLY) { console.log('\nĐây là bản xem trước. Chạy lại với --apply để ghi: npm run db:sync -- --apply'); return; }
   if (catOps.length) await categories.bulkWrite(catOps);
   if (ops.length) await products.bulkWrite(ops);
   if (recOps.length) await recipes.bulkWrite(recOps);
   if (ingOps.length) await db.collection('ingredients').bulkWrite(ingOps);
+  for (const { ingredient, map } of newIng) {
+    await db.collection('ingredients').updateOne({ id: ingredient.id }, { $setOnInsert: { ...ingredient, _id: ingredient.id } }, { upsert: true });
+    await db.collection('ingredientProducts').updateOne({ ingredientId: map.ingredientId }, { $setOnInsert: map }, { upsert: true });
+  }
+  if (iconOps.length) await db.collection('ingredients').bulkWrite(iconOps);
   const live = await products.countDocuments({ active: { $ne: false } });
   const noDesc = await products.countDocuments({ active: { $ne: false }, description: { $regex: TEMPLATE.source, $options: 'i' } });
   console.log(`\nXong. Sản phẩm đang bán: ${live}; còn mô tả mẫu: ${noDesc}. Mở web, tải lại trang (Ctrl+F5) để xem.`);
