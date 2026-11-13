@@ -6,6 +6,10 @@ async function start() {
   if (env.mongodbUri) {
     await connectDatabase(env.mongodbUri, env.mongodbDb);
     await require('./config/indexes').ensureIndexes();
+    // Cập nhật luật kiểm tra dữ liệu theo schema.js mỗi lần khởi động (thêm cách thanh toán, trường mới...).
+    // Cần user database có quyền dbAdmin; thiếu quyền thì chỉ ghi log, web vẫn chạy với luật cũ.
+    try { await require('../scripts/db-setup').applyValidators(require('./config/database').getDatabase()); }
+    catch (error) { console.error('Không cập nhật được luật kiểm tra dữ liệu:', error.codeName || error.name, '- cấp quyền dbAdmin hoặc chạy npm run db:setup.'); }
     console.log('MongoDB connected. Sessions use MongoDB.');
     // Mỗi phút hủy đơn VNPay quá hạn chưa trả tiền để trả hàng về kho.
     const { expireUnpaid } = require('./modules/orders/orders.service');
