@@ -66,6 +66,6 @@ Cập nhật: 12/11/2026 · Nhánh `huy-phan-b`
 
 ## 4. Còn lại
 
-1. **9 nguyên liệu không có hàng** (mật ong, ghẹ, đào, kem tươi, ớt chuông, riềng, đậu nành hạt, trân châu, mực khô): Meal Planner báo "chưa có sản phẩm phù hợp".
+1. **Nguyên liệu không có hàng**: chỉ còn Mực khô (không món nào dùng). Mật ong, riềng, trân châu, ớt chuông, kem tươi, đào ngâm lấy theo hàng WinMart; ghẹ và đậu nành hạt là hàng nhãn FreshMart (ảnh Unsplash).
 2. **Trang Cộng đồng đã có backend thật** (`/api/community`): bài viết, cảm xúc, bình luận, bình chọn, bài và công thức đã lưu theo tài khoản; admin ẩn bài qua `PATCH /admin/community/posts/:id`. 8 bài mẫu nạp bằng `db:setup`, gắn cờ `sample` và nhãn "Bài mẫu". Màn hình admin duyệt bài và upload ảnh qua Cloudinary/local đã được nối vào frontend.
 3. **Tài khoản demo** trên trang đăng nhập chỉ hiện khi chạy ở localhost. Trước khi deploy, đổi mật khẩu `admin@freshmart.vn` trên Atlas.

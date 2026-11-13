@@ -19,7 +19,17 @@
   },
   {
     "id": "fruits",
-    "description": "Trái cây trong nước theo mùa và trái nhập khẩu, chọn trái chín vừa ăn, ghi rõ cỡ trái và nguồn gốc."
+    "description": "Trái cây trong nước theo mùa và trái nhập khẩu, chọn trái chín vừa ăn, ghi rõ cỡ trái và nguồn gốc.",
+    "subcategories": [
+      {
+        "id": "fruits-fresh",
+        "name": "Trái cây tươi"
+      },
+      {
+        "id": "fruits-other",
+        "name": "Trái cây chế biến"
+      }
+    ]
   },
   {
     "id": "meat",

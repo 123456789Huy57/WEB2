@@ -477,6 +477,78 @@
       "price": 40000,
       "image": "https://cdnv2.tgdd.vn/bhx-static/bhx/production/2026/10/image/production/2026/10/image/Products/2385/325064/tra-lai-tui-loc-phuc-long-hop-50g-25-goi-x-2g_202610010957468375.jpg",
       "source": "https://www.bachhoaxanh.com/tra-kho-tui-loc/tra-lai-tui-loc-phuc-long-hop-50g-25-goi-x-2g"
+    },
+    {
+      "id": "mp-048",
+      "name": "Mật ong hoa rừng Vinabee chai 1kg",
+      "unit": "chai",
+      "netWeightGram": 1000,
+      "price": 125000,
+      "image": "https://s3-hcmc02.higiocloud.vn/images/2022/mat-ong-hoa-rung-vinabee-chai-1kg.jpeg",
+      "source": "https://winmart.vn/products/vinabee-mat-ong-hoa-rung-chai-1kg--s10007560"
+    },
+    {
+      "id": "mp-042",
+      "name": "Củ riềng gói 100g",
+      "unit": "gói",
+      "netWeightGram": 100,
+      "price": 4500,
+      "image": "https://s3-hcmc02.higiocloud.vn/images/2023/02/cu-rieng-100g.jpg",
+      "source": "https://winmart.vn/products/cu-rieng-100g--s10241438"
+    },
+    {
+      "id": "mp-053",
+      "name": "Trân châu đường đen Oppa Bubble hộp 350g",
+      "unit": "hộp",
+      "netWeightGram": 350,
+      "price": 43500,
+      "image": "https://s3-hcmc02.higiocloud.vn/images/2022/oppa.png",
+      "source": "https://winmart.vn/products/oppa-bubble-tran-chau-duong-den-hop-350g--s10141781"
+    },
+    {
+      "id": "mp-035",
+      "name": "Ớt chuông đỏ (1 trái khoảng 200g)",
+      "unit": "trái",
+      "netWeightGram": 200,
+      "price": 20000,
+      "image": "https://images.unsplash.com/photo-1669524943640-44a43585ee88?w=1000&q=80&fit=crop&auto=format",
+      "source": "https://winmart.vn/products/ot-chuong-ot-ngot-do-qua--s10241747"
+    },
+    {
+      "id": "mp-059",
+      "name": "Kem tươi whipping cream hộp 200ml",
+      "unit": "hộp",
+      "netWeightGram": 200,
+      "price": 83000,
+      "image": "https://images.unsplash.com/photo-1583130879758-db8ac95a9b68?w=1000&q=80&fit=crop&auto=format",
+      "source": "https://winmart.vn/products/emborg-kem-sua-tuoi-whipping-cream-200ml--s10005882"
+    },
+    {
+      "id": "mp-071",
+      "name": "Đào ngâm đường lon 820g",
+      "unit": "lon",
+      "netWeightGram": 820,
+      "price": 102200,
+      "image": "https://images.unsplash.com/photo-1600707482842-ea7ec73daa90?w=1000&q=80&fit=crop&auto=format",
+      "source": "https://winmart.vn/products/dao-cat-nua-trai-ngam-duong-pavlide-820g--s10628962"
+    },
+    {
+      "id": "mp-066",
+      "name": "Ghẹ xanh tươi khay 500g",
+      "unit": "khay",
+      "netWeightGram": 500,
+      "price": 175000,
+      "image": "https://images.unsplash.com/photo-1766069334857-266d475bdc59?w=1000&q=80&fit=crop&auto=format",
+      "source": "https://unsplash.com"
+    },
+    {
+      "id": "mp-044",
+      "name": "Đậu nành hạt gói 500g",
+      "unit": "gói",
+      "netWeightGram": 500,
+      "price": 32000,
+      "image": "https://images.unsplash.com/photo-1601993488142-d3050a16478d?w=1000&q=80&fit=crop&auto=format",
+      "source": "https://unsplash.com"
     }
   ],
   "merge": [
@@ -503,40 +575,8 @@
   ],
   "hide": [
     {
-      "id": "mp-048",
-      "why": "Bách Hóa Xanh không bán mật ong"
-    },
-    {
-      "id": "mp-044",
-      "why": "Bách Hóa Xanh không bán đậu nành hạt"
-    },
-    {
-      "id": "mp-066",
-      "why": "Bách Hóa Xanh không bán ghẹ tươi"
-    },
-    {
-      "id": "mp-059",
-      "why": "Bách Hóa Xanh không bán kem tươi"
-    },
-    {
       "id": "mp-055",
       "why": "Bách Hóa Xanh không bán mực khô"
-    },
-    {
-      "id": "mp-053",
-      "why": "Bách Hóa Xanh không bán trân châu"
-    },
-    {
-      "id": "mp-071",
-      "why": "Bách Hóa Xanh không bán đào"
-    },
-    {
-      "id": "mp-035",
-      "why": "Bách Hóa Xanh không bán ớt chuông"
-    },
-    {
-      "id": "mp-042",
-      "why": "Bách Hóa Xanh không bán riềng"
     }
   ],
   "images": [
