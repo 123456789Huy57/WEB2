@@ -35,8 +35,8 @@ type Errors = Partial<Record<'identifier' | 'password' | 'fullName' | 'phone' | 
               </div>
               <span id="in-pw-err" class="err small">{{ fe().password }}</span>
               @if (showDemo) { <span class="hint demo-hint">Tài khoản demo:
-                <button type="button" (click)="fillDemo('customer')">Khách {{ demo.customer.id }} / {{ demo.customer.pw }}</button> ·
-                <button type="button" (click)="fillDemo('admin')">Quản trị {{ demo.admin.id }} / {{ demo.admin.pw }}</button>
+                <button type="button" (click)="fillDemo('customer')">Khách {{ demo.customer.id }}</button> ·
+                <button type="button" (click)="fillDemo('admin')">Quản trị {{ demo.admin.id }}</button>
               </span> }
             </div>
             <div class="auth-row">
@@ -106,16 +106,15 @@ export class Login {
   protected fullName = '';
   protected phone = '';
 
-  /** Tài khoản dùng khi demo, bấm vào để điền sẵn. Phải tạo hai tài khoản này trong database trước. */
-  /** Chỉ hiện trên máy dev; bản deploy không lộ mật khẩu quản trị cho người lạ */
+  /** Chỉ hiện trên máy dev; mật khẩu không nằm trong frontend bundle. */
   protected readonly showDemo = ['localhost', '127.0.0.1'].includes(location.hostname);
   protected readonly demo = {
-    customer: { id: 'khach@freshmart.vn', pw: 'Khach@123' },
-    admin: { id: 'admin@freshmart.vn', pw: 'Admin@123' }
+    customer: { id: 'khach@freshmart.vn' },
+    admin: { id: 'admin@freshmart.vn' }
   };
   protected fillDemo(kind: 'customer' | 'admin'): void {
     this.identifier = this.demo[kind].id;
-    this.password = this.demo[kind].pw;
+    this.password = '';
     this.fe.set({}); this.err.set('');
   }
 

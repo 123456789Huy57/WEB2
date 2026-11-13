@@ -38,7 +38,13 @@ services:
       - key: CLOUDINARY_FOLDER
         sync: false
       - key: PAYMENT_PROVIDER
-        value: mock
+        sync: false
+      - key: VNPAY_TMN_CODE
+        sync: false
+      - key: VNPAY_HASH_SECRET
+        sync: false
+      - key: VNPAY_URL
+        value: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
       - key: MAIL_TRANSPORT
         value: smtp
       - key: SMTP_HOST

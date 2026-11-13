@@ -51,7 +51,7 @@ export class AdminShell {
   protected pending = computed(() => this.orders.all().filter(o => o.status === 'pending').length);
   protected nav = [
     { path: '/admin', label: 'Tổng quan' }, { path: '/admin/don-hang', label: 'Đơn hàng' }, { path: '/admin/san-pham', label: 'Sản phẩm' }, { path: '/admin/danh-muc', label: 'Danh mục' },
-    { path: '/admin/ton-kho', label: 'Tồn kho' }, { path: '/admin/voucher', label: 'Voucher' }, { path: '/admin/khach-hang', label: 'Khách hàng' }, { path: '/admin/danh-gia', label: 'Đánh giá' }, { path: '/admin/ra-anh', label: 'Rà ảnh' }
+    { path: '/admin/ton-kho', label: 'Tồn kho' }, { path: '/admin/voucher', label: 'Voucher' }, { path: '/admin/khach-hang', label: 'Khách hàng' }, { path: '/admin/danh-gia', label: 'Đánh giá' }, { path: '/admin/cong-dong', label: 'Cộng đồng' }, { path: '/admin/ra-anh', label: 'Rà ảnh' }
   ];
   protected async logout(): Promise<void> {
     try { await this.auth.logout(); this.router.navigateByUrl('/'); } catch (error) { this.toast.show(apiMessage(error)); }

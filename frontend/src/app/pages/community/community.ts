@@ -120,6 +120,7 @@ export class Community {
   protected dTagInput = signal('');
   protected dRecipe = signal<string | null>(null);
   protected dImage = signal('');
+  protected dFile = signal<File | null>(null);
   protected dChallenge = signal(false);
   protected dPoll = signal(false);
   protected dPollQ = signal('');
@@ -135,7 +136,7 @@ export class Community {
 
   protected openComposer(type: PostType = 'discussion', recipeId?: string, challenge = false): void {
     if (!this.cs.requireLogin('Đăng nhập để đăng bài')) return;
-    this.dType.set(type); this.dText.set(''); this.dTags.set([]); this.dTagInput.set(''); this.dImage.set('');
+    this.dType.set(type); this.dText.set(''); this.dTags.set([]); this.dTagInput.set(''); this.dImage.set(''); this.dFile.set(null);
     this.dRecipe.set(recipeId ?? null); this.dRecipeQ.set(''); this.dChallenge.set(challenge); this.dPoll.set(false); this.dPollQ.set(''); this.dPollOpts.set(['', '']);
     if (recipeId) { const r = this.mp.recipe(recipeId); if (r) this.dTags.set([this.mealTag(r.mealType)]); }
     if (challenge) this.dTags.update(t => [...t, CHALLENGE.tag]);
@@ -168,6 +169,7 @@ export class Community {
       const c = document.createElement('canvas');
       c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
       c.getContext('2d')?.drawImage(img, 0, 0, c.width, c.height);
+      this.dFile.set(file);
       this.dImage.set(c.toDataURL('image/jpeg', 0.78)); URL.revokeObjectURL(url);
     };
     img.onerror = () => { URL.revokeObjectURL(url); this.toast.show('Không đọc được ảnh này, thử ảnh khác nhé'); };
@@ -183,9 +185,14 @@ export class Community {
   protected async publish(): Promise<void> {
     if (!this.canPublish() || this.dBusy()) return;
     this.dBusy.set(true);
+    let image = this.dImage() || undefined;
+    if (this.dFile()) {
+      try { image = await this.cs.uploadImage(this.dFile()!); }
+      catch { this.toast.show('Không tải được ảnh lên máy chủ, thử lại nhé'); this.dBusy.set(false); return; }
+    }
     const post = await this.cs.publish({
       type: this.dType(), text: this.dText(), tags: this.dTags(), recipeId: this.dType() === 'recipe' ? this.dRecipe() ?? undefined : undefined,
-      image: this.dImage() || undefined, challenge: this.dChallenge(),
+      image, challenge: this.dChallenge(),
       poll: this.dPoll() ? { question: this.dPollQ(), options: this.dPollOpts() } : undefined
     });
     this.dBusy.set(false);
