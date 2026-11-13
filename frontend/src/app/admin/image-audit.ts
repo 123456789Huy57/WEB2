@@ -6,7 +6,7 @@ import { ToastService } from '../core/toast.service';
 
 type Kind = 'products' | 'ingredients' | 'recipes';
 interface Item { kind: Kind; id: string; name: string; group: string; url: string; link: unknown[] | null; temp?: boolean; hidden?: boolean; }
-interface Check { hash?: string; width?: number; error?: boolean; }
+interface Check { hash?: string; color?: number[]; width?: number; error?: boolean; }
 
 const TABS: { key: Kind; label: string }[] = [{ key: 'products', label: 'Sản phẩm' }, { key: 'ingredients', label: 'Nguyên liệu' }, { key: 'recipes', label: 'Món ăn' }];
 const MARK_KEY = 'fm.imageAudit.marks';
@@ -99,7 +99,13 @@ export class AdminImageAudit {
     const hashed = list.filter(it => !it.hidden && checks[this.key(it)]?.hash);
     for (let a = 0; a < hashed.length; a++) {
       let same = 1;
-      for (let b = 0; b < hashed.length; b++) if (a !== b && hashed[a].kind === hashed[b].kind && hamming(checks[this.key(hashed[a])].hash!, checks[this.key(hashed[b])].hash!) <= 4) same++;
+      const ca = checks[this.key(hashed[a])];
+      for (let b = 0; b < hashed.length; b++) {
+        if (a === b || hashed[a].kind !== hashed[b].kind) continue;
+        const cb = checks[this.key(hashed[b])];
+        // Trùng khi cả hình dạng (dHash 256 bit) lẫn màu (lưới 4x4) gần như nhau: chai dầu vàng và chai nước mắm nâu không còn bị coi là một
+        if (hamming(ca.hash!, cb.hash!) <= 14 && colorDistance(ca.color, cb.color) <= 12) same++;
+      }
       if (same > 1) dup.set(this.key(hashed[a]), Math.max(same, dup.get(this.key(hashed[a])) ?? 0));
     }
     return dup;
@@ -113,7 +119,7 @@ export class AdminImageAudit {
     if (it.temp) out.push('Sản phẩm tạm (mp-)');
     const d = this.duplicates().get(this.key(it)); if (d) out.push(`Trùng ${d} ảnh`);
     if (c?.error) out.push('Không tải được');
-    else if (c?.width && c.width < 300) out.push(`Ảnh nhỏ ${c.width}px`);
+    else if (c?.width && c.width < 300 && !/\.svg(\?|$)/i.test(it.url)) out.push(`Ảnh nhỏ ${c.width}px`); // SVG là ảnh vector, không có độ phân giải
     return out;
   }
 
@@ -190,18 +196,32 @@ function dHash(url: string): Promise<Check> {
     img.onload = () => {
       clearTimeout(done);
       try {
-        const c = document.createElement('canvas'); c.width = 9; c.height = 8;
+        const W = 17, H = 16;
+        const c = document.createElement('canvas'); c.width = W; c.height = H;
         const ctx = c.getContext('2d', { willReadFrequently: true })!;
-        ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, 9, 8); ctx.drawImage(img, 0, 0, 9, 8);
-        const d = ctx.getImageData(0, 0, 9, 8).data;
-        const g = (x: number, y: number) => { const i = (y * 9 + x) * 4; return d[i] * 0.299 + d[i + 1] * 0.587 + d[i + 2] * 0.114; };
+        ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, H); ctx.drawImage(img, 0, 0, W, H);
+        const d = ctx.getImageData(0, 0, W, H).data;
+        const g = (x: number, y: number) => { const i = (y * W + x) * 4; return d[i] * 0.299 + d[i + 1] * 0.587 + d[i + 2] * 0.114; };
         let bits = '';
-        for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) bits += g(x, y) > g(x + 1, y) ? '1' : '0';
-        resolve({ hash: bits, width: img.naturalWidth });
+        for (let y = 0; y < H; y++) for (let x = 0; x < W - 1; x++) bits += g(x, y) > g(x + 1, y) ? '1' : '0';
+        // Màu trung bình từng ô của lưới 4x4 (48 số)
+        const color: number[] = [];
+        for (let by = 0; by < 4; by++) for (let bx = 0; bx < 4; bx++) {
+          const sum = [0, 0, 0]; let n = 0;
+          for (let y = by * 4; y < by * 4 + 4; y++) for (let x = bx * 4; x < bx * 4 + 4; x++) { const i = (y * W + x) * 4; sum[0] += d[i]; sum[1] += d[i + 1]; sum[2] += d[i + 2]; n++; }
+          color.push(...sum.map(v => v / n));
+        }
+        resolve({ hash: bits, color, width: img.naturalWidth });
       } catch { resolve({ width: img.naturalWidth }); } // máy chủ ảnh không cho đọc điểm ảnh (CORS): vẫn biết kích thước, chỉ không so trùng được
     };
     img.onerror = () => { clearTimeout(done); resolve({ error: true }); };
     img.src = url;
   });
+}
+/** Độ lệch màu trung bình giữa hai ảnh (0–255); thiếu dữ liệu màu thì coi như khác */
+function colorDistance(a?: number[], b?: number[]): number {
+  if (!a || !b || a.length !== b.length) return 255;
+  let s = 0; for (let i = 0; i < a.length; i++) s += Math.abs(a[i] - b[i]);
+  return s / a.length;
 }
 function hamming(a: string, b: string): number { let n = 0; for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) n++; return n; }
