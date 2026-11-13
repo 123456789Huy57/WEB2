@@ -23,7 +23,8 @@
     "test:integration": "node --test tests/part-a.integration.cjs",
     "test:b": "node --test tests/part-b.integration.cjs",
     "mail:inbox": "node scripts/mail-inbox.js",
-    "db:sync": "node scripts/sync-content.js"
+    "db:sync": "node scripts/sync-content.js",
+    "check:hidden": "node scripts/check-hidden.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
