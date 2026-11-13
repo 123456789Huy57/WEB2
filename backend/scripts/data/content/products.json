@@ -2737,5 +2737,125 @@
       "fiber": 2.7,
       "salt": 0
     }
+  },
+  {
+    "id": "mp-048",
+    "description": "Mật ong hoa rừng màu hổ phách, sánh, vị ngọt đậm và thơm mùi hoa. Chai 1 kg dùng lâu cho cả nhà, hợp pha nước ấm buổi sáng hay làm nước sốt ướp thịt.",
+    "usage": "Gợi ý dùng: Ướp gà nướng mật ong, pha nước chanh mật ong, rưới lên sữa chua hoặc bánh kếp.",
+    "storage": "Đậy kín nắp, để nơi khô mát, không cần tủ lạnh; mật ong kết tinh khi trời lạnh là bình thường.",
+    "origin": "Việt Nam",
+    "netWeightGram": 1000,
+    "nutrition": {
+      "energy_kcal": 304,
+      "protein": 0.3,
+      "fat": 0,
+      "carbohydrates": 82.4,
+      "sugars": 82.1,
+      "fiber": 0.2,
+      "salt": 0.01
+    }
+  },
+  {
+    "id": "mp-042",
+    "description": "Củ riềng tươi, vỏ hồng nhạt, thịt chắc, mùi thơm cay nồng đặc trưng. Gói 100 g vừa đủ cho một nồi kho hay một mẻ ướp.",
+    "usage": "Gợi ý dùng: Cá kho riềng, chả cá Lã Vọng, thịt chó giả cầy, ướp mắm tôm.",
+    "storage": "Để nơi thoáng mát trong vài ngày, hoặc bọc kín cho ngăn mát dùng trong 2 tuần.",
+    "origin": "Việt Nam",
+    "netWeightGram": 100,
+    "nutrition": {
+      "energy_kcal": 71,
+      "protein": 1.2,
+      "fat": 0.6,
+      "carbohydrates": 15.3,
+      "sugars": 1.7,
+      "fiber": 2,
+      "salt": 0.03
+    }
+  },
+  {
+    "id": "mp-053",
+    "description": "Trân châu đường đen làm sẵn, chỉ cần luộc hoặc hâm là dùng được, hạt dai mềm và thơm vị đường đen. Tiện cho trà sữa tự pha tại nhà.",
+    "usage": "Gợi ý dùng: Trà sữa trân châu, sữa tươi trân châu đường đen, chè và sương sáo.",
+    "storage": "Chưa mở để nơi khô mát; đã nấu thì dùng trong ngày, không để tủ lạnh vì hạt sẽ cứng.",
+    "origin": null,
+    "netWeightGram": 350,
+    "nutrition": null
+  },
+  {
+    "id": "mp-035",
+    "description": "Ớt chuông đỏ trái to, vỏ bóng dày, thịt giòn ngọt, không cay. Màu đỏ tươi làm món xào và salad thêm bắt mắt.",
+    "usage": "Gợi ý dùng: Bò lúc lắc, gà xào ớt chuông, salad, nướng xiên cùng thịt.",
+    "storage": "Giữ ngăn mát trong túi giấy, dùng trong 1 tuần; đã cắt thì bọc kín, dùng trong 2 ngày.",
+    "origin": "Việt Nam",
+    "netWeightGram": 200,
+    "nutrition": {
+      "energy_kcal": 31,
+      "protein": 1,
+      "fat": 0.3,
+      "carbohydrates": 6,
+      "sugars": 4.2,
+      "fiber": 2.1,
+      "salt": 0.01
+    }
+  },
+  {
+    "id": "mp-059",
+    "description": "Kem sữa tươi có hàm lượng béo cao, đánh bông được để trang trí bánh hoặc nấu sốt kem. Hộp 200 ml vừa cho một mẻ bánh nhỏ.",
+    "usage": "Gợi ý dùng: Đánh bông phủ bánh, pudding phô mai, sốt kem nấm, súp kem.",
+    "storage": "Bảo quản ngăn mát 2–6°C; đã mở dùng trong 3 ngày. Để lạnh trước khi đánh bông sẽ nhanh bông hơn.",
+    "origin": null,
+    "netWeightGram": 200,
+    "nutrition": {
+      "energy_kcal": 340,
+      "protein": 2.1,
+      "fat": 36,
+      "carbohydrates": 2.8,
+      "sugars": 2.9,
+      "fiber": 0,
+      "salt": 0.07
+    }
+  },
+  {
+    "id": "mp-071",
+    "description": "Đào cắt nửa trái ngâm nước đường, thịt vàng mềm, giữ được vị ngọt thơm. Mở nắp dùng ngay cho trà đào hay tráng miệng.",
+    "usage": "Gợi ý dùng: Trà đào cam sả, sữa chua đào, bánh tart đào, thạch đào.",
+    "storage": "Chưa mở để nơi khô mát; đã mở chuyển sang hộp thủy tinh, để ngăn mát dùng trong 3 ngày.",
+    "origin": null,
+    "netWeightGram": 820,
+    "nutrition": null
+  },
+  {
+    "id": "mp-066",
+    "description": "Ghẹ xanh còn tươi, mai chắc, thịt ngọt và nhiều gạch vào mùa. Khay 500 g khoảng 2–3 con, đủ một bữa cho 2 người.",
+    "usage": "Gợi ý dùng: Ghẹ hấp sả, ghẹ rang me, ghẹ chiên bột sốt cà, lẩu hải sản.",
+    "storage": "Nấu trong ngày khi ghẹ còn tươi; chưa nấu ngay thì để ngăn mát tối đa 12 giờ.",
+    "origin": "Việt Nam",
+    "netWeightGram": 500,
+    "nutrition": {
+      "energy_kcal": 87,
+      "protein": 18.1,
+      "fat": 1.1,
+      "carbohydrates": 0,
+      "sugars": 0,
+      "fiber": 0,
+      "salt": 0.74
+    }
+  },
+  {
+    "id": "mp-044",
+    "description": "Hạt đậu nành vàng khô, hạt tròn đều, không mốc mọt. Ngâm qua đêm rồi xay là có sữa đậu nành thơm béo tại nhà.",
+    "usage": "Gợi ý dùng: Sữa đậu nành, đậu hũ non tự làm, hầm canh xương, nảy mầm làm giá.",
+    "storage": "Buộc kín, để nơi khô ráo, tránh ẩm; dùng trong 6 tháng.",
+    "origin": "Việt Nam",
+    "netWeightGram": 500,
+    "nutrition": {
+      "energy_kcal": 446,
+      "protein": 36.5,
+      "fat": 19.9,
+      "carbohydrates": 30.2,
+      "sugars": 7.3,
+      "fiber": 9.3,
+      "salt": 0
+    }
   }
 ]

@@ -2,7 +2,9 @@
 //   - replace: thay 66 sản phẩm tạm "mp-" bằng sản phẩm thật (tên, đơn vị, khối lượng, giá, ảnh), GIỮ NGUYÊN MÃ
 //     để giỏ hàng, đơn cũ, Meal Planner và công thức không gãy liên kết.
 //   - merge:   món tạm trùng với sản phẩm thật đã có -> Meal Planner trỏ sang sản phẩm thật, ẩn món tạm.
-//   - hide:    món Bách Hóa Xanh không bán -> ẩn (Meal Planner báo "chưa có sản phẩm phù hợp").
+//   - hide:    món không có hàng -> ẩn (Meal Planner báo "chưa có sản phẩm phù hợp").
+//   - Nguồn: phần lớn từ Bách Hóa Xanh; mật ong, riềng, trân châu, giá ớt chuông/kem tươi/đào từ WinMart;
+//     ghẹ, đậu nành hạt là hàng nhãn FreshMart (ảnh Unsplash).
 //   - images:  sản phẩm thật dùng nhầm ảnh / ảnh có khung -> ảnh nền trắng đúng sản phẩm.
 // Không xóa gì. Trước khi ghi, lưu bản sao các bản ghi bị đổi vào scripts/data/backups/.
 //   npm run fix:catalog              xem trước, không ghi
@@ -61,7 +63,7 @@ async function main() {
         image_url: image, gallery: [], sourceImage: r.image, sourceUrl: r.source, active: true, updatedAt: now,
         ...(String(old.description || '').length < 40 ? { description: `${r.name}, hàng chính hãng do FreshMart chọn lọc, đóng gói và giao trong ngày.` } : {}),
       },
-      $unset: { img: '' },
+      $unset: { img: '', hiddenReason: '', mergedInto: '' },
     });
     changed++;
   }

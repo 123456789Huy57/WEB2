@@ -32,6 +32,10 @@
    {
     "id": "fruits-fresh",
     "name": "Trái cây tươi"
+   },
+   {
+    "id": "fruits-other",
+    "name": "Trái cây chế biến"
    }
   ]
  },
