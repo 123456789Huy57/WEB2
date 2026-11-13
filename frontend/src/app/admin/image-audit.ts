@@ -226,9 +226,9 @@ function dHash(url: string): Promise<Check> {
     img.src = url;
   });
 }
-/** Hai tên cùng bốn chữ đầu (bỏ dấu) là hai cỡ của một món, ví dụ "Bí đỏ hồ lô (trái nhỏ)" và "Bí đỏ hồ lô trái 750g" */
+/** Hai tên cùng năm chữ đầu (bỏ dấu) là hai cỡ của một món, ví dụ "Bí đỏ hồ lô (trái nhỏ)" và "Bí đỏ hồ lô trái 750g" */
 function sameProduct(a = '', b = ''): boolean {
-  const key = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(Boolean).slice(0, 4).join(' ');
+  const key = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(Boolean).slice(0, 5).join(' ');
   return key(a).length > 5 && key(a) === key(b);
 }
 /** Độ lệch màu trung bình giữa hai ảnh (0–255); thiếu dữ liệu màu thì coi như khác */
