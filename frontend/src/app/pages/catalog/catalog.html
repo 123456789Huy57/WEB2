@@ -11,20 +11,20 @@
     <div class="f-group">
       <h2 class="f-h">Quầy hàng</h2>
       <ul class="cat-list">
-        <li><a routerLink="/san-pham" [queryParams]="{}" [attr.aria-current]="!cat() ? 'page' : null"><span>Tất cả quầy</span><span class="n num">{{ ps.all().length }}</span></a></li>
+        <li><a routerLink="/san-pham" [queryParams]="{}" [attr.aria-current]="!cat() ? 'page' : null"><span>Tất cả quầy</span></a></li>
         @for (c of ps.categories(); track c.id) {
           @let active = cat()?.id === c.id;
           @let multi = c.subcategories.length > 1;
           <li [class.has-sub]="multi && !active">
             <a routerLink="/san-pham" [queryParams]="{ c: c.id }" [attr.aria-current]="active && !sub() ? 'page' : null" [class.on]="active">
               <span>{{ ps.catName(c) }}</span>
-              <span class="n num">{{ c.productCount }}</span>
+              
             </a>
             @if (multi) {
               <!-- Quầy đang chọn: loại hàng mở ngay bên dưới. Quầy khác: rê chuột để thấy loại hàng ở bảng bên phải -->
               <ul class="sub-list" [class.inline]="active" [attr.aria-label]="'Loại hàng trong ' + ps.catName(c)">
                 @for (s of c.subcategories; track s.id) {
-                  <li><a routerLink="/san-pham" [queryParams]="{ c: c.id, loai: s.id }" [attr.aria-current]="active && sub() === s.id ? 'page' : null"><span>{{ s.name }}</span><span class="n num">{{ subCount(s.id) }}</span></a></li>
+                  <li><a routerLink="/san-pham" [queryParams]="{ c: c.id, loai: s.id }" [attr.aria-current]="active && sub() === s.id ? 'page' : null"><span>{{ s.name }}</span></a></li>
                 }
               </ul>
             }

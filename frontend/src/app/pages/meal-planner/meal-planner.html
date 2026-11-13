@@ -1,19 +1,22 @@
-<section class="mp-head band">
-  <div class="mp-head-in">
-    <div class="mp-head-t">
-      <h1 class="h2">Có gì trong bếp, nấu món đó</h1>
-      <p class="lead">Chọn nguyên liệu bạn đang có, danh sách món hợp nhất cập nhật ngay. Thiếu gì thì thêm vào giỏ một lần.</p>
-    </div>
-    <dl class="mp-stats">
-      <div><dt>Công thức món Việt</dt><dd class="num">{{ recipeCount() }}</dd></div>
-      <div><dt>Nguyên liệu</dt><dd class="num">{{ mp.ingredients().length }}</dd></div>
-    </dl>
+<section class="mp-hero band">
+  <div class="mp-hero-copy">
+    <p class="mp-kicker"><span></span> FRESHMART MEAL PLANNER</p>
+    <h1 class="display">CÓ GÌ TRONG BẾP,<br><em>NẤU MÓN ĐÓ.</em></h1>
+    <p class="lead">Từ những nguyên liệu bạn đang có, tìm cảm hứng cho bữa ăn tiếp theo — theo đúng khẩu vị và thời gian của bạn.</p>
+    <div class="mp-hero-meta"><span>{{ recipeCount() }}+ công thức gợi ý</span><i></i><span>Lên món dễ dàng mỗi ngày</span></div>
   </div>
-  <nav class="mp-tabs" aria-label="Cách tìm món">
-    <button type="button" [attr.aria-pressed]="tab() === 'pick'" (click)="tab.set('pick')">Từ bếp của bạn</button>
-    <button type="button" [attr.aria-pressed]="tab() === 'community'" (click)="showCommunity()">Cộng đồng hôm nay</button>
-  </nav>
+  <div class="mp-hero-photo" aria-label="FreshMart Meal Planner – khám phá món ngon từ nguyên liệu sẵn có">
+    <video class="mp-hero-video" autoplay muted loop playsinline preload="metadata" poster="/img/bep.jpg" aria-label="Video giới thiệu FreshMart Meal Planner">
+      <source src="/video/banner_mealplanner.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="mp-hero-stamp" aria-hidden="true"><span>GOOD FOOD</span><b>GOOD<br>MOOD</b></div>
 </section>
+
+<nav class="band mp-tabs" aria-label="Cách tìm món">
+  <button type="button" class="chip" [attr.aria-pressed]="tab() === 'pick'" (click)="tab.set('pick')">Từ bếp của bạn</button>
+  <button type="button" class="chip" [attr.aria-pressed]="tab() === 'community'" (click)="showCommunity()">Cộng đồng hôm nay</button>
+</nav>
 
 @if (tab() === 'community') {
   <section class="band mp-community" aria-labelledby="h-comm">
@@ -25,22 +28,28 @@
     </div>
     @if (trend(); as tr) {
       @if (tr.ingredients.length) {
-        <div class="chips" style="margin-bottom:24px" aria-label="Nguyên liệu được dùng nhiều">
+        <div class="mp-groups" style="margin-bottom:24px" aria-label="Nguyên liệu được dùng nhiều">
           @for (i of tr.ingredients; track i.ingredientId) {
             <button class="chip" type="button" (click)="useHot(i.ingredientId)">{{ i.name }} <span class="muted num">· {{ i.count }}</span></button>
           }
         </div>
       }
-      <div class="rec-grid">
+      <div class="mp-grid mp-grid-wide">
         @for (x of tr.recipes; track x.recipeId; let i = $index) {
-          <button class="rec" type="button" (click)="open(x.recipeId)">
-            <span class="img"><img [fmImg]="x.name" [src]="x.imageUrl" alt="" loading="lazy"></span>
-            <span class="m num">#{{ i + 1 }} · {{ meal[x.mealType] }} · {{ x.count }} người nấu</span>
-            <span class="h3">{{ x.name }}</span>
-          </button>
+          <article class="mp-rec">
+            <button class="mp-rec-img" type="button" (click)="open(x.recipeId)" [attr.aria-label]="'Xem ' + x.name">
+              <img [fmImg]="x.name" [src]="x.imageUrl" alt="" loading="lazy">
+              <span class="mp-rec-pct num">#{{ i + 1 }}</span>
+            </button>
+            <div class="mp-rec-body">
+              <h4 class="mp-rec-name">{{ x.name }}</h4>
+              <p class="mp-rec-meta num">{{ x.count }} người đã nấu</p>
+              <div class="mp-rec-cta"><button class="mp-link" type="button" (click)="open(x.recipeId)">Xem công thức</button></div>
+            </div>
+          </article>
         } @empty {
-          <div class="empty" style="grid-column:1/-1">
-            <p class="h3">Chưa có ai nấu món nào gần đây.</p>
+          <div class="mp-placeholder" style="grid-column:1/-1">
+            <p class="h3">Chưa có ai nấu món nào gần đây</p>
             <p class="muted">Hãy là người đầu tiên: chọn nguyên liệu bạn có, mở một món và thêm phần còn thiếu vào giỏ.</p>
             <button class="btn btn-forest" type="button" style="margin-top:12px" (click)="tab.set('pick')">Chọn nguyên liệu</button>
           </div>
@@ -50,167 +59,309 @@
   </section>
 }
 
-<section class="band mp-wrap" [hidden]="tab() !== 'pick'">
-  <aside class="mp-pantry" aria-labelledby="h-pantry">
-    <div class="pt-head">
-      <h2 class="f-h" id="h-pantry">Tủ bếp của bạn @if (selected().length) { <span class="cnt num">{{ selected().length }}</span> }</h2>
-      @if (selected().length) { <button class="link-btn" type="button" (click)="clearAll()">Bỏ chọn hết</button> }
-    </div>
-    <div class="mp-search"><label class="sr" for="ing-q">Tìm nguyên liệu</label>
-      <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="m14 14 4 4"/></svg>
-      <input id="ing-q" type="search" placeholder="Tìm: trứng, cà chua, tôm…" autocomplete="off" [value]="q()" (input)="q.set($any($event.target).value)">
-    </div>
-    <div class="pt-groups" role="group" aria-label="Nhóm nguyên liệu">
-      @for (g of groups; track g[0]) {
-        <button type="button" [attr.aria-pressed]="group() === g[0]" (click)="group.set(g[0])">{{ g[1] }}</button>
-      }
-    </div>
-    <div class="ing-grid" role="listbox" aria-multiselectable="true" aria-label="Nguyên liệu">
-      @for (i of visible(); track i.id) {
-        <button class="ing" type="button" role="option" [attr.aria-selected]="isSel(i.id)" (click)="toggle(i.id)">
-          <img [fmImg]="i.name" [src]="mp.ingredientImage(i)" alt="" width="44" height="44" loading="lazy">
-          <span>{{ i.name }}</span>
-          <svg class="tick" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>
-        </button>
-      } @empty {
-        <p class="ing-empty">Chưa có “{{ q() }}”. Thử tên gọi khác, ví dụ “thịt heo” thay cho “thịt lợn”.</p>
-      }
-    </div>
-  </aside>
-
-  <div class="mp-main" #resultsEl>
-    <div class="mp-filters" aria-label="Lọc món">
-      <div class="fl" role="group" aria-label="Bữa và thời gian nấu">
-        @for (m of mealOpts; track m[0]) { <button type="button" [attr.aria-pressed]="f().mealType === m[0]" (click)="patch('mealType', m[0])">{{ m[1] }}</button> }
-        <span class="sep" aria-hidden="true"></span>
-        @for (t of timeOpts; track t[0]) { <button type="button" [attr.aria-pressed]="f().time === t[0]" (click)="patch('time', t[0])" [attr.aria-label]="'Thời gian: ' + t[1]">{{ t[1] }}</button> }
-      </div>
-      <div class="fl" role="group" aria-label="Độ khó và chế độ ăn">
-        @for (d of diffOpts; track d[0]) { <button type="button" [attr.aria-pressed]="f().difficulty === d[0]" (click)="patch('difficulty', d[0])">{{ d[1] }}</button> }
-        <span class="sep" aria-hidden="true"></span>
-        <button type="button" [attr.aria-pressed]="f().lowFat" (click)="patch('lowFat', !f().lowFat)">Ít dầu mỡ</button>
-        <button type="button" [attr.aria-pressed]="f().highProtein" (click)="patch('highProtein', !f().highProtein)">Nhiều đạm</button>
-        <button type="button" [attr.aria-pressed]="f().vegetarian" (click)="patch('vegetarian', !f().vegetarian)">Món chay</button>
-        <span class="sep" aria-hidden="true"></span>
-        <span class="serv" role="radiogroup" aria-label="Khẩu phần">
-          <span>Nấu cho</span>
-          @for (n of [1, 2, 4]; track n) { <button type="button" role="radio" [attr.aria-checked]="f().servings === n" (click)="patch('servings', n)">{{ n }}</button> }
-          <span>người</span>
-        </span>
-      </div>
-    </div>
-
-    <div class="mp-res-head" aria-live="polite">
-      @if (selected().length) {
-        <h2 class="h3">{{ results().length ? results().length + ' món hợp với bếp của bạn' : 'Chưa có món khớp' }}</h2>
-        <p class="muted">{{ results().length ? 'Xếp theo số nguyên liệu bạn đã có. Bấm vào món để xem cách làm và mua phần còn thiếu.' : 'Bỏ bớt bộ lọc như “Nhiều đạm”, “Món chay”, hoặc chọn thêm nguyên liệu.' }}</p>
-      } @else {
-        <h2 class="h3">Gợi ý cho bạn</h2>
-        <p class="muted">Chọn nguyên liệu bên cạnh để xếp món theo đúng bếp nhà bạn.</p>
-      }
-    </div>
-    <div class="rec-grid">
-      @for (x of results(); track x.recipe.id) {
-        <button class="rec" type="button" (click)="open(x.recipe.id)">
-          <span class="img">
-            <img [fmImg]="x.recipe.name" [src]="x.recipe.imageUrl" alt="" loading="lazy">
-            @if (selected().length) { <span class="match num" [class.full]="!x.missing">{{ x.missing ? 'Có ' + x.matched + '/' + (x.matched + x.missing) : 'Đủ nguyên liệu' }}</span> }
-          </span>
-          <span class="m num">{{ meal[x.recipe.mealType] }} · {{ mp.totalTime(x.recipe) }} phút · {{ x.recipe.nutrition.calories }} kcal</span>
-          <span class="nm">{{ x.recipe.name }}</span>
-          <span class="ings">
-            @for (l of x.recipe.ingredients; track l.ingredientId) {
-              @if (mp.ingredient(l.ingredientId); as ing) {
-                <img [src]="mp.ingredientImage(ing)" [alt]="ing.name" [title]="ing.name + (isSel(l.ingredientId) ? ' (đã có)' : '')" [class.have]="isSel(l.ingredientId)" width="26" height="26" loading="lazy">
-              }
-            }
-          </span>
-          @if (selected().length && x.missing) { <span class="need">Cần thêm: {{ missingNames(x.recipe) }}</span> }
-        </button>
-      } @empty {
-        <div class="empty" style="grid-column:1/-1">
-          <p class="h3">Chưa có món khớp cả nguyên liệu lẫn bộ lọc.</p>
-          <button class="btn btn-stone" type="button" (click)="resetFilters()">Bỏ bộ lọc</button>
+<section class="mp-work band" #tool [hidden]="tab() !== 'pick'">
+  <!-- Hàng trên: ô 1 chọn nguyên liệu, ô 2 tiêu chí đặt cạnh nhau -->
+  <div class="mp-side">
+    <section class="mp-card" aria-labelledby="mp-s1">
+      <header class="mp-card-head">
+        <span class="mp-no">1</span>
+        <div><h2 class="mp-card-title" id="mp-s1">Nguyên liệu bạn đang có</h2><p class="mp-card-sub">Chọn hoặc tìm nhanh những gì đang có trong bếp.</p></div>
+      </header>
+      <div class="mp-card-body">
+        <div class="mp-search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg>
+          <label class="sr" for="ing-q">Tìm nguyên liệu</label>
+          <input id="ing-q" type="search" placeholder="Tìm: trứng, cà chua, thịt heo…" autocomplete="off" [value]="q()" (input)="setQuery($any($event.target).value)">
         </div>
-      }
-    </div>
+        <div class="mp-groups" role="group" aria-label="Nhóm nguyên liệu">
+          @for (g of groups; track g[0]) {
+            <button class="chip chip-sm" type="button" [attr.aria-pressed]="group() === g[0]" (click)="setGroup(g[0])">{{ g[1] }}</button>
+          }
+        </div>
+        <div class="mp-ings" role="listbox" aria-multiselectable="true" aria-label="Chọn nguyên liệu">
+          @for (i of pagedIngs(); track i.id) {
+            <button class="mp-ing" type="button" role="option" [attr.aria-selected]="isSel(i.id)" (click)="toggle(i.id)">
+              <span class="ph"><img [fmImg]="i.name" [src]="mp.ingredientImage(i)" alt="" loading="lazy"></span>
+              <span class="nm"><b>{{ i.name }}</b><small>{{ groupName().get(i.categoryId) }}</small></span>
+              <span class="dot" aria-hidden="true"></span>
+            </button>
+          } @empty {
+            <p class="mp-empty-line">Chưa có “{{ q() }}”. Thử tên gọi khác nhé.</p>
+          }
+        </div>
+        @if (ingPages() > 1) {
+          <nav class="mp-pager" aria-label="Trang nguyên liệu">
+            <button type="button" aria-label="Trang trước" [disabled]="ingPage() === 0" (click)="ingPage.set(ingPage() - 1)">‹</button>
+            <span class="num">{{ ingPage() + 1 }} / {{ ingPages() }} · {{ visible().length }} nguyên liệu</span>
+            <button type="button" aria-label="Trang sau" [disabled]="ingPage() >= ingPages() - 1" (click)="ingPage.set(ingPage() + 1)">›</button>
+          </nav>
+        }
+        @if (selected().length) {
+          <div class="mp-picked">
+            <div class="mp-picked-head"><b>Đã chọn {{ selected().length }}</b><button class="mp-text-btn" type="button" (click)="clearSelected()">Xóa tất cả</button></div>
+            <div class="mp-picked-list">
+              @for (id of selected(); track id) {
+                <button class="mp-tag" type="button" (click)="toggle(id)" [attr.aria-label]="'Bỏ ' + mp.ingredient(id)?.name">{{ mp.ingredient(id)?.name }}<span aria-hidden="true">×</span></button>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section class="mp-card" aria-labelledby="mp-s2">
+      <header class="mp-card-head">
+        <span class="mp-no">2</span>
+        <div><h2 class="mp-card-title" id="mp-s2">Tiêu chí món ăn</h2><p class="mp-card-sub">Chỉnh theo bữa, thời gian và khẩu phần.</p></div>
+      </header>
+      <div class="mp-card-body mp-criteria">
+        <div class="field"><label for="mp-meal">Bữa ăn</label>
+          <select id="mp-meal" [value]="f().mealType" (change)="patch('mealType', $any($event.target).value)">@for (m of mealOptions; track m.v) { <option [value]="m.v">{{ m.l }}</option> }</select></div>
+        <div class="mp-row2">
+          <div class="field"><label for="mp-diff">Độ khó</label>
+            <select id="mp-diff" [value]="f().difficulty" (change)="patch('difficulty', $any($event.target).value)">@for (d of difficultyOptions; track d.v) { <option [value]="d.v">{{ d.l }}</option> }</select></div>
+          <div class="field"><label for="mp-time">Thời gian</label>
+            <select id="mp-time" [value]="f().time" (change)="patch('time', $any($event.target).value)">@for (t of timeOptions; track t.v) { <option [value]="t.v">{{ t.l }}</option> }</select></div>
+        </div>
+        <div class="field"><span class="mp-label" id="mp-serv">Khẩu phần</span>
+          <div class="mp-seg" role="group" aria-labelledby="mp-serv">
+            @for (n of servingOptions; track n) { <button type="button" [attr.aria-pressed]="f().servings === n" (click)="patch('servings', n)">{{ n }}</button> }
+          </div>
+          <span class="hint">Định lượng mua tự quy theo {{ f().servings }} người.</span>
+        </div>
+        <div class="field"><span class="mp-label" id="mp-req">Yêu cầu</span>
+          <div class="mp-groups" role="group" aria-labelledby="mp-req">
+            <button class="chip chip-sm" type="button" [attr.aria-pressed]="f().lowFat" (click)="patch('lowFat', !f().lowFat)">Ít dầu mỡ</button>
+            <button class="chip chip-sm" type="button" [attr.aria-pressed]="f().highProtein" (click)="patch('highProtein', !f().highProtein)">Nhiều đạm</button>
+            <button class="chip chip-sm" type="button" [attr.aria-pressed]="f().vegetarian" (click)="patch('vegetarian', !f().vegetarian)">Món chay</button>
+          </div>
+        </div>
+        <div class="mp-actions">
+          <button class="btn btn-forest" type="button" [disabled]="loading()" (click)="generate()">{{ loading() ? 'Đang tìm món…' : 'Gợi ý món' + (selected().length ? ' · ' + selected().length + ' nguyên liệu' : '') }}</button>
+          <button class="btn btn-stone" type="button" (click)="reset()">Đặt lại</button>
+        </div>
+      </div>
+    </section>
   </div>
 
-  @if (selected().length) {
-    <a class="mp-jump" href="#" (click)="$event.preventDefault(); jump()"><span class="num">{{ selected().length }}</span> nguyên liệu · Xem {{ results().length }} món</a>
-  }
+  <!-- Bên dưới: kết quả trải hết chiều ngang -->
+  <section class="mp-main" #resultsEl aria-labelledby="mp-s3">
+    <header class="mp-card-head mp-main-head">
+      <span class="mp-no">3</span>
+      <div>
+        <h2 class="mp-card-title" id="mp-s3">Kết quả gợi ý</h2>
+        <p class="mp-card-sub">@if (results(); as res) { Tìm thấy <b class="num">{{ res.length }}</b> món, xếp theo số nguyên liệu bạn đã có } @else { Chọn nguyên liệu rồi bấm Gợi ý món }</p>
+      </div>
+    </header>
+
+    @if (loading()) {
+      <div class="mp-placeholder" aria-live="polite"><p class="h3">Đang ghép món với bếp của bạn…</p></div>
+    } @else if (!results()) {
+      <div class="mp-placeholder">
+        <p class="h3">Bắt đầu trong ba bước</p>
+        <ol class="mp-how">
+          <li><b>Chọn nguyên liệu</b><span>Tích những gì đang có, không cần đủ cả.</span></li>
+          <li><b>Chỉnh tiêu chí</b><span>Bữa nào, nấu bao lâu, cho mấy người.</span></li>
+          <li><b>Nấu hoặc mua thêm</b><span>Thiếu gì thì thêm thẳng vào giỏ, đúng số lượng.</span></li>
+        </ol>
+      </div>
+    } @else if (featured(); as x) {
+      @let r = x.recipe;
+      <article class="mp-feature" #featureEl aria-labelledby="mp-fname">
+        <div class="mp-feature-copy">
+          <span class="mp-badge">{{ x === results()![0] ? 'Hợp nhất với bếp của bạn' : 'Món bạn đang xem' }}</span>
+          <h3 class="mp-feature-name" id="mp-fname">{{ r.name }}</h3>
+          <p class="mp-meta num">{{ mp.totalTime(r) }} phút · {{ meal[r.mealType] }} · {{ f().servings }} người · {{ r.nutrition.calories }} kcal</p>
+          <p class="mp-match"><b>Đã có {{ x.matched }}/{{ r.ingredients.length }} nguyên liệu</b> · {{ x.missing ? 'cần mua thêm ' + x.missing : 'nấu được ngay' }}</p>
+          <div class="mp-feature-cta">
+            <button class="btn btn-forest" type="button" (click)="open(r.id)">Xem chi tiết món</button>
+          </div>
+        </div>
+        <div class="mp-plate">
+          <div class="mp-plate-img"><img [fmImg]="r.name" [src]="r.imageUrl" [alt]="r.name"></div>
+          @for (c of callouts(); track c.line.ingredientId; let i = $index) {
+            <span class="mp-callout pos-{{ i }}" [class.need]="!isSel(c.line.ingredientId)">
+              <span class="mp-callout-ph"><img [fmImg]="c.ingredient?.name ?? ''" [src]="c.product ? ps.img(c.product, 120) : (c.ingredient?.imageUrl ?? '')" alt=""></span>
+              <span><b>{{ c.ingredient?.name }}</b><small>{{ isSel(c.line.ingredientId) ? 'Bạn có sẵn' : 'Cần mua' }}</small></span>
+            </span>
+          }
+        </div>
+      </article>
+
+      <section class="mp-shop" aria-labelledby="mp-shop-h">
+        <header class="mp-shop-head">
+          <div>
+            <h3 class="mp-card-title" id="mp-shop-h">{{ featMissing().length ? 'Cần mua thêm ' + featMissing().length + ' nguyên liệu' : 'Bạn đã có đủ nguyên liệu' }}</h3>
+            <p class="mp-card-sub">{{ featMissing().length ? 'Số lượng đã quy theo ' + f().servings + ' người và làm tròn theo đơn vị bán.' : 'Sẵn sàng nấu ngay, cách làm ở bên dưới.' }}</p>
+          </div>
+          @if (featMissing().length) {
+            <button class="btn btn-forest btn-sm" type="button" [disabled]="!!busy()" (click)="addRecipe(r, true)">{{ busy() === r.id ? 'Đang thêm…' : 'Thêm tất cả vào giỏ' }}</button>
+          } @else {
+            <button class="btn btn-forest btn-sm" type="button" (click)="cookNow2(r)">Tôi nấu món này hôm nay</button>
+          }
+        </header>
+        @if (featMissing().length) {
+          <ul class="mp-shop-list">
+            @for (l of featMissing(); track l.line.ingredientId) {
+              <li class="mp-shop-row">
+                @if (l.product; as p) {
+                  <span class="ph"><img [fmImg]="p.name" [src]="ps.img(p, 160)" alt=""></span>
+                  <span class="nm"><b>{{ ps.shortName(p) }}</b><small class="num">{{ l.ingredient?.name }} · dùng {{ l.need }} · {{ ps.price(p) | vnd }}/{{ ps.unit(p) }}</small>
+                    @if (l.bulk || l.ingredient?.categoryId === 'condiments') { <small class="mp-note">{{ l.bulk ? 'Bán nguyên ' + ps.unit(p) + ', không tự thêm' : 'Gia vị, nhà thường có sẵn' }}</small> }</span>
+                  <span class="mp-step" role="group" [attr.aria-label]="'Số lượng ' + ps.shortName(p)">
+                    <button type="button" aria-label="Giảm" (click)="bump(l, -1)">−</button>
+                    <span class="num">{{ ps.qty(lineQty(l)) }}</span>
+                    <button type="button" aria-label="Tăng" (click)="bump(l, 1)">+</button>
+                  </span>
+                  <button class="mp-link" type="button" [disabled]="!!busy()" (click)="addLine(l)">{{ busy() === l.line.ingredientId ? '…' : '+ Thêm' }}</button>
+                } @else {
+                  <span class="ph"></span>
+                  <span class="nm"><b>{{ l.ingredient?.name }}</b><small>Chưa có sản phẩm phù hợp trong kho</small></span>
+                }
+              </li>
+            }
+          </ul>
+        }
+      </section>
+
+      <section class="mp-tabs-card">
+        <div class="mp-seg mp-seg-tabs" role="tablist" aria-label="Thông tin món">
+          <button type="button" role="tab" [attr.aria-selected]="featTab() === 'steps'" (click)="featTab.set('steps')">Cách làm</button>
+          <button type="button" role="tab" [attr.aria-selected]="featTab() === 'nutrition'" (click)="featTab.set('nutrition')">Dinh dưỡng</button>
+          <button type="button" role="tab" [attr.aria-selected]="featTab() === 'tips'" (click)="featTab.set('tips')">Mẹo nấu</button>
+        </div>
+        @switch (featTab()) {
+          @case ('steps') {
+            <ol class="mp-steps">@for (s of r.steps; track $index) { <li><b>{{ stepTitle(s, $index) }}</b><span>{{ stepDescription(s) }}</span></li> }</ol>
+          }
+          @case ('nutrition') {
+            <dl class="mp-nut">
+              <div><dt>Năng lượng</dt><dd class="num">{{ r.nutrition.calories }}<small>kcal</small></dd></div>
+              <div><dt>Đạm</dt><dd class="num">{{ r.nutrition.protein }}<small>g</small></dd></div>
+              <div><dt>Tinh bột</dt><dd class="num">{{ r.nutrition.carbs }}<small>g</small></dd></div>
+              <div><dt>Chất béo</dt><dd class="num">{{ r.nutrition.fat }}<small>g</small></dd></div>
+            </dl>
+            <p class="mp-card-sub">Ước tính cho một khẩu phần.</p>
+          }
+          @case ('tips') {
+            @if (featTips().length) { <ul class="mp-tips">@for (t of featTips(); track $index) { <li>{{ t }}</li> }</ul> }
+            @else { <p class="mp-card-sub">Món này chưa có mẹo riêng. Nêm nếm từ từ và nếm thử trước khi tắt bếp nhé.</p> }
+          }
+        }
+      </section>
+
+      @if (others().length) {
+        <h3 class="mp-grid-title">Món khác hợp với bếp của bạn</h3>
+        <div class="mp-grid">
+          @for (o of pagedOthers(); track o.recipe.id) {
+            <article class="mp-rec">
+              <button class="mp-rec-img" type="button" (click)="feature(o.recipe.id)" [attr.aria-label]="'Xem ' + o.recipe.name + ' ở phần trên'">
+                <img [fmImg]="o.recipe.name" [src]="o.recipe.imageUrl" alt="" loading="lazy">
+                <span class="mp-rec-pct num">{{ matchPct(o) }}% khớp</span>
+              </button>
+              <div class="mp-rec-body">
+                <h4 class="mp-rec-name">{{ o.recipe.name }}</h4>
+                <p class="mp-rec-meta num">{{ mp.totalTime(o.recipe) }} phút · {{ o.recipe.nutrition.calories }} kcal · <span class="mp-rec-need" [class.full]="!o.missing">{{ o.missing ? 'thiếu ' + o.missing : 'đủ nguyên liệu' }}</span></p>
+                <div class="mp-rec-cta">
+                  <button class="mp-link" type="button" (click)="open(o.recipe.id)">Xem công thức</button>
+                  @if (o.missing) { <button class="mp-link" type="button" [disabled]="!!busy()" (click)="addRecipe(o.recipe)">{{ busy() === o.recipe.id ? 'Đang thêm…' : '+ Thêm phần thiếu' }}</button> }
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+        @if (otherPages() > 1) {
+          <nav class="mp-pager mp-pager-wide" aria-label="Trang món khác">
+            <button type="button" aria-label="Trang trước" [disabled]="otherPage() === 0" (click)="otherPage.set(otherPage() - 1)">‹</button>
+            <span class="num">{{ otherPage() + 1 }} / {{ otherPages() }}</span>
+            <button type="button" aria-label="Trang sau" [disabled]="otherPage() >= otherPages() - 1" (click)="otherPage.set(otherPage() + 1)">›</button>
+          </nav>
+        }
+      }
+    } @else {
+      <div class="mp-placeholder"><p class="h3">Chưa có món khớp nguyên liệu và tiêu chí</p><p class="muted">Thử bỏ bớt yêu cầu, đổi bữa ăn hoặc chọn thêm nguyên liệu nhé.</p></div>
+    }
+  </section>
 </section>
 
 <dialog class="rec-dlg" #dlg aria-labelledby="d-name" (click)="$event.target === dlg && dlg.close()" (close)="current.set(null)">
   @if (current(); as r) {
     <div class="d-in">
       <button class="d-x btn btn-stone round" type="button" aria-label="Đóng" (click)="dlg.close()">×</button>
-      <div class="d-media"><img [fmImg]="r.name" [src]="r.imageUrl" alt=""></div>
-      <div class="d-body">
-        <p class="muted small">{{ meal[r.mealType] }} · {{ mp.totalTime(r) }} phút · {{ diff[r.difficulty] }} · {{ f().servings }} người</p>
-        <h2 class="h2" id="d-name">{{ r.name }}</h2>
-        @if (r.description) { <p class="d-intro">{{ r.description }}</p> }
-        <dl class="d-nut">
-          <div><dt>Năng lượng</dt><dd class="num">{{ r.nutrition.calories }} <span class="small">kcal</span></dd></div>
-          <div><dt>Đạm</dt><dd class="num">{{ r.nutrition.protein }} <span class="small">g</span></dd></div>
-          <div><dt>Tinh bột</dt><dd class="num">{{ r.nutrition.carbs }} <span class="small">g</span></dd></div>
-          <div><dt>Béo</dt><dd class="num">{{ r.nutrition.fat }} <span class="small">g</span></dd></div>
-        </dl>
-        <h3 class="f-h d-h">Nguyên liệu</h3>
-        <ul class="d-ings">
-          @for (x of purchase(); track x.line.ingredientId) {
-            <li><span class="di">@if (x.ingredient; as ing) { <img [src]="mp.ingredientImage(ing)" alt="" width="28" height="28"> }{{ x.ingredient?.name }} <span class="muted num">{{ x.need }}</span></span><span class="st" [class.ok]="isSel(x.line.ingredientId)">{{ isSel(x.line.ingredientId) ? 'Đã có' : 'Cần mua' }}</span></li>
-          }
-        </ul>
-        <div class="d-buy">
-          @if (missing().length) {
-            <p class="h">Mua phần còn thiếu</p>
-            <p class="small muted">Bỏ chọn món bạn không cần. Số lượng đã làm tròn theo đơn vị bán.</p>
-            @for (x of missing(); track x.line.ingredientId) {
-              @if (x.product; as pr) {
-                <label class="b-row">
-                  <input type="checkbox" [checked]="!unchecked().includes(x.line.ingredientId)" (change)="toggleBuy(x.line.ingredientId)">
-                  <span class="ph"><img [fmImg]="pr.name" [src]="ps.img(pr)" alt=""></span>
-                  <span class="nm">{{ ps.shortName(pr) }}<span class="q num" style="display:block">{{ ps.qty(x.cartQty) }} {{ ps.unit(pr) }} · dùng {{ x.need }}@if (x.bulk) { · bán nguyên {{ ps.unit(pr) }}, bỏ chọn sẵn }</span></span>
-                  <span class="num">{{ x.total | vnd }}</span>
-                </label>
-              } @else {
-                <div class="b-row"><span></span><span></span><span class="nm">{{ x.ingredient?.name }}<span class="q" style="display:block">Chưa có sản phẩm phù hợp trong kho</span></span><span></span></div>
-              }
-            }
-            <button class="btn btn-forest" type="button" [disabled]="!chosen().length || adding()" (click)="addMissing()">
-              {{ adding() ? 'Đang thêm vào giỏ…' : chosen().length ? 'Thêm ' + chosen().length + ' món vào giỏ · ' + (chosenTotal() | vnd) : 'Chọn ít nhất 1 món' }}
-            </button>
-          } @else {
-            <p class="h">Bạn đã có đủ nguyên liệu.</p>
-            <p class="small muted">Vào bếp thôi, cách làm ở ngay bên dưới.</p>
-            <button class="btn btn-forest" type="button" (click)="cookNow()">Tôi nấu món này hôm nay</button>
-          }
+
+      <!-- Recipe hero: ưu tiên hình ảnh món ăn, chỉ giữ tên và thông tin thiết yếu -->
+      <header class="d-hero">
+        <img class="d-hero-image" [fmImg]="r.name" [src]="r.imageUrl" [alt]="r.name">
+        <div class="d-hero-shade"></div>
+        <div class="d-hero-copy">
+          <span class="d-hero-kicker">FRESHMART · RECIPE</span>
+          <h2 id="d-name">{{ r.name }}</h2>
+          <div class="d-hero-meta">
+            <span><b>{{ mp.totalTime(r) }}</b> phút</span><i></i>
+            <span><b>{{ f().servings }}</b> người</span><i></i>
+            <span>{{ diff[r.difficulty] }}</span>
+          </div>
         </div>
-        @if (r.seasonings?.length) {
-          <h3 class="f-h d-h">Gia vị thường có sẵn</h3>
-          <ul class="d-season">
-            @for (g of r.seasonings; track g.name) { <li><span>{{ g.name }}</span><span class="muted num">{{ g.amount }}</span></li> }
-          </ul>
-          @if (f().servings !== r.servings) { <p class="small muted">Định lượng gia vị cho {{ r.servings }} người, nêm lại theo khẩu vị khi nấu cho {{ f().servings }} người.</p> }
-        }
-        <h3 class="f-h d-h">Cách làm</h3>
-        <ol class="d-steps">
-          @for (s of r.steps; track $index) {
-            @if (stepTitle(s); as t) { <li><b>{{ t[0] }}</b> {{ t[1] }}</li> } @else { <li>{{ s }}</li> }
-          }
-        </ol>
-        @if (r.tips?.length) {
-          <aside class="d-tips" aria-labelledby="d-tips-h">
-            <h3 class="f-h" id="d-tips-h">Mẹo nấu ngon</h3>
-            <ul>@for (t of r.tips; track $index) { <li>{{ t }}</li> }</ul>
-          </aside>
-        }
-        @if (r.servingNote || r.storage) {
-          <dl class="d-more">
-            @if (r.servingNote) { <div><dt>Ăn kèm</dt><dd>{{ r.servingNote }}</dd></div> }
-            @if (r.storage) { <div><dt>Bảo quản</dt><dd>{{ r.storage }}</dd></div> }
+      </header>
+
+      <div class="d-content">
+        <section class="d-section d-nutrition-section">
+          <div class="d-section-heading"><span class="d-section-index">01</span><div><p class="mp-eyebrow">NUTRITION FACTS</p><h3>Giá trị dinh dưỡng</h3><p class="d-section-sub">Thông tin ước tính cho một khẩu phần.</p></div></div>
+          <dl class="d-nut">
+            <div><dt>Năng lượng</dt><dd class="num">{{ r.nutrition.calories }} <span>kcal</span></dd></div>
+            <div><dt>Đạm</dt><dd class="num">{{ r.nutrition.protein }} <span>g</span></dd></div>
+            <div><dt>Tinh bột</dt><dd class="num">{{ r.nutrition.carbs }} <span>g</span></dd></div>
+            <div><dt>Chất béo</dt><dd class="num">{{ r.nutrition.fat }} <span>g</span></dd></div>
           </dl>
+        </section>
+
+        <section class="d-section">
+          <div class="d-section-heading"><span class="d-section-index">02</span><div><p class="mp-eyebrow">WHAT YOU NEED</p><h3>Chuẩn bị nguyên liệu</h3><p class="d-section-sub">Định lượng đã được điều chỉnh theo {{ f().servings }} khẩu phần.</p></div></div>
+          <ul class="d-ings">@for (x of purchase(); track x.line.ingredientId) {
+            <li><span class="d-ing-name">{{ x.ingredient?.name }} <span class="muted num">{{ x.need }}</span></span><span class="st" [class.ok]="isSel(x.line.ingredientId)">{{ isSel(x.line.ingredientId) ? '✓ Đã có' : 'Cần mua' }}</span></li>
+          }</ul>
+          <div class="d-buy">
+            @if (missing().length) {
+              <div class="d-buy-heading"><div><p class="mp-eyebrow">FRESHMART SHOPPING LIST</p><p class="h">Mua phần nguyên liệu còn thiếu</p><p class="small muted">Bỏ chọn sản phẩm bạn không cần. Số lượng được làm tròn theo đơn vị bán.</p></div><span class="d-buy-count">{{ chosen().length }} món</span></div>
+              @for (x of missing(); track x.line.ingredientId) {
+                @if (x.product; as pr) {
+                  <label class="b-row"><input type="checkbox" [checked]="!unchecked().includes(x.line.ingredientId)" (change)="toggleBuy(x.line.ingredientId)"><span class="ph"><img [fmImg]="pr.name" [src]="ps.img(pr)" [alt]="pr.name"></span><span class="nm">{{ ps.shortName(pr) }}<span class="q num">{{ ps.qty(x.cartQty) }} {{ ps.unit(pr) }} · dùng {{ x.need }}@if (x.bulk) { · bán nguyên {{ ps.unit(pr) }}, bỏ chọn sẵn }</span></span><span class="num d-buy-price">{{ x.total | vnd }}</span></label>
+                } @else {
+                  <div class="b-row d-unavailable"><span></span><span></span><span class="nm">{{ x.ingredient?.name }}<span class="q">Chưa có sản phẩm phù hợp trong kho</span></span><span></span></div>
+                }
+              }
+              <button class="btn btn-forest" type="button" [disabled]="!chosen().length || adding()" (click)="addMissing()">{{ adding() ? 'ĐANG THÊM VÀO GIỎ…' : chosen().length ? 'THÊM ' + chosen().length + ' SẢN PHẨM VÀO GIỎ · ' + (chosenTotal() | vnd) : 'CHỌN ÍT NHẤT 1 SẢN PHẨM' }}</button>
+            } @else { <p class="h">Bạn đã có đủ nguyên liệu!</p><p class="small muted">Mọi thứ đã sẵn sàng — cùng bắt đầu nấu nhé.</p><button class="btn btn-forest" type="button" (click)="cookNow()">TÔI NẤU MÓN NÀY HÔM NAY</button> }
+          </div>
+        </section>
+
+        <section class="d-section d-cooking">
+          <div class="d-section-heading"><span class="d-section-index">03</span><div><p class="mp-eyebrow">LET'S GET COOKING</p><h3>Bắt đầu chế biến</h3><p class="d-section-sub">Làm theo từng bước để món ăn đạt hương vị ngon nhất.</p></div></div>
+          <ol class="d-steps">@for (step of r.steps; track $index) {
+            <li class="d-step-card">
+              <span class="d-step-number">{{ ($index + 1).toString().padStart(2, '0') }}</span>
+              <div class="d-step-copy">
+                <h4>{{ stepTitle(step, $index) }}</h4>
+                <p>{{ stepDescription(step) }}</p>
+                @if (stepDuration(step)) { <span class="d-step-time">◷ {{ stepDuration(step) }} phút</span> }
+                @if (stepTip(step)) { <aside class="d-step-tip"><b>MẸO NHỎ</b>{{ stepTip(step) }}</aside> }
+              </div>
+            </li>
+          }</ol>
+          <p class="d-nutrition-note">Thời gian và định lượng có thể thay đổi tùy nguyên liệu, thiết bị và khẩu vị thực tế.</p>
+        </section>
+
+        @if (relatedRecipes().length) {
+          <section class="d-section d-related">
+            <div class="d-section-heading"><span class="d-section-index">04</span><div><p class="mp-eyebrow">MORE TO EXPLORE</p><h3>Nấu thêm món ngon</h3><p class="d-section-sub">Một vài gợi ý có thể tận dụng nguyên liệu bạn đang có.</p></div></div>
+            <div class="d-related-grid">@for (item of relatedRecipes(); track item.id) {
+              <button type="button" class="d-related-card" (click)="openRelated(item.id)">
+                <span class="d-related-image"><img [fmImg]="item.name" [src]="item.imageUrl" [alt]="item.name" loading="lazy"></span>
+                <span class="d-related-name">{{ item.name }}</span>
+                <span class="d-related-meta">{{ mp.totalTime(item) }} phút · {{ item.nutrition.calories }} kcal</span>
+              </button>
+            }</div>
+          </section>
         }
       </div>
     </div>

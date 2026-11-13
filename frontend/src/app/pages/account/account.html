@@ -35,9 +35,13 @@
         }
       }
       @case ('profile') {
-        <form class="form-grid prof" (ngSubmit)="saveProfile()">
-          <div class="field"><label for="p-name">Họ và tên</label><input id="p-name" name="name" autocomplete="name" [(ngModel)]="profile.fullName"></div>
-          <div class="field"><label for="p-phone">Số điện thoại</label><input id="p-phone" name="phone" type="tel" autocomplete="tel" [(ngModel)]="profile.phone"></div>
+        <form class="form-grid prof" #profileForm="ngForm" (ngSubmit)="saveProfile(profileForm)" novalidate>
+          <div class="field"><label for="p-name">Họ và tên</label><input #profileName="ngModel" id="p-name" name="name" autocomplete="name" required minlength="2" [(ngModel)]="profile.fullName">
+            @if (profileName.invalid && (profileName.touched || profileForm.submitted)) { <span class="err">Nhập họ tên, ít nhất 2 ký tự</span> }
+          </div>
+          <div class="field"><label for="p-phone">Số điện thoại</label><input #profilePhone="ngModel" id="p-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required pattern="0[0-9]{9}" [(ngModel)]="profile.phone">
+            @if (profilePhone.invalid && (profilePhone.touched || profileForm.submitted)) { <span class="err">Số điện thoại gồm 10 số, bắt đầu bằng 0</span> }
+          </div>
           <div class="field full"><label for="p-email">Email</label><input id="p-email" name="email" type="email" [value]="auth.user()?.email" disabled></div>
           <div class="field full"><label for="p-addr">Địa chỉ giao hàng mặc định</label><input id="p-addr" name="address" autocomplete="street-address" [(ngModel)]="profile.address"></div>
           <div class="full"><button class="btn btn-forest" type="submit" [disabled]="profileBusy()">{{ profileBusy() ? 'Đang lưu…' : 'Lưu thông tin' }}</button></div>
