@@ -445,10 +445,13 @@ test('Chuyển khoản QR, tự xác nhận qua webhook SePay', async t => {
 });
 
 test('Thêm nhiều món vào giỏ một lượt; số điện thoại sai đầu số bị chặn từ lúc đăng ký', async () => {
+  // Sản phẩm riêng cho bài này: p-a đã bị các bài trước mua gần hết kho.
+  const now = new Date().toISOString();
+  await db.getDatabase().collection('products').insertOne({ _id: 'p-bulk', id: 'p-bulk', name: 'SP p-bulk', slug: 'sp-p-bulk', category: 'c-test', price: 50000, sale_price: 0, unit: 'Hộp', stock: 10, sold_count: 0, image_url: '', active: true, createdAt: now, updatedAt: now });
   const c = await new Client().register(57);
-  const r = await c.post('/api/cart/items/bulk', { items: [{ productId: 'p-a', quantity: 1 }, { productId: 'p-khong-co', quantity: 1 }, { productId: 'p-a', quantity: 1 }] });
+  const r = await c.post('/api/cart/items/bulk', { items: [{ productId: 'p-bulk', quantity: 1 }, { productId: 'p-khong-co', quantity: 1 }, { productId: 'p-bulk', quantity: 1 }] });
   assert.equal(r.status, 200, JSON.stringify(r.data));
-  assert.equal(r.data.items.find(i => i.productId === 'p-a').quantity, 2, 'món trùng được cộng dồn');
+  assert.equal(r.data.items.find(i => i.productId === 'p-bulk')?.quantity, 2, 'món trùng được cộng dồn: ' + JSON.stringify(r.data));
   assert.deepEqual(r.data.failed.map(f => f.productId), ['p-khong-co'], 'món không có thì báo lại, món khác vẫn vào giỏ');
   assert.equal((await c.post('/api/cart/items/bulk', { items: [] })).status, 400);
   const bad = await new Client().start();
