@@ -32,7 +32,7 @@ Chỉ **leader** làm các bước dưới. Không đưa chuỗi kết nối, m�
 | `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`, `CLOUDINARY_FOLDER` | như trong `backend/.env` của leader |
 | `SMTP_USER`, `SMTP_PASSWORD`, `MAIL_FROM` | Gmail + **mật khẩu ứng dụng** (Google Account → Bảo mật → Mật khẩu ứng dụng). Bỏ trống thì "Quên mật khẩu" báo chưa cấu hình, phần còn lại vẫn chạy |
 
-`SESSION_SECRET` Render tự sinh. Muốn VNPay sandbox thật: đổi `PAYMENT_PROVIDER` thành `vnpay`, thêm `VNPAY_TMN_CODE`, `VNPAY_HASH_SECRET`.
+`SESSION_SECRET` Render tự sinh. Khi chưa điền `PAYMENT_PROVIDER` hoặc chưa có TMN code, backend vẫn dùng cổng mock để demo. Muốn VNPay sandbox thật, đặt `PAYMENT_PROVIDER=vnpay`, thêm `VNPAY_TMN_CODE`, `VNPAY_HASH_SECRET` và dùng đúng `BACKEND_URL` public để VNPay gọi IPN/return.
 
 3. Chờ deploy xong, mở `https://freshmart-api.onrender.com/api/health` → thấy `"status":"ok"` và `"database":"connected"`.
    Nếu Render đặt tên khác (tên đã có người dùng), sửa hai dòng `destination` trong `frontend/vercel.json` cho đúng rồi commit.

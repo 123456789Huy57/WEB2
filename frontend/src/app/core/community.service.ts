@@ -90,6 +90,11 @@ export class CommunityService {
   private putSave(kind: 'post' | 'recipe', id: string, saved: boolean) {
     return firstValueFrom(this.http.put<{ postIds: string[]; recipeIds: string[] }>('/api/community/saves', { kind, id, saved }));
   }
+  uploadImage(file: File): Promise<string> {
+    const body = new FormData();
+    body.append('image', file);
+    return firstValueFrom(this.http.post<{ imageUrl: string }>('/api/community/uploads', body)).then(r => r.imageUrl);
+  }
   private replace(p: CPost): void { this.posts.update(l => l.map(x => (x.id === p.id ? p : x))); }
   private async call(req: Promise<CPost>, fail = 'Không thực hiện được, thử lại sau'): Promise<CPost | null> {
     try { const p = await req; this.replace(p); return p; }

@@ -8,11 +8,12 @@ const { requireAuth, requireAdmin } = require('../../middleware/auth');
 const { HttpError } = require('../../lib/http-error');
 const cloudinary = require('../../lib/cloudinary');
 const uploadDirectory = () => path.resolve(process.env.UPLOAD_DIR || path.join(__dirname, '../../../public/images/uploads'));
-router.post('/admin/uploads', requireAuth, requireAdmin, fileUpload({
+const uploadMiddleware = fileUpload({
   limits: { fileSize: 2 * 1024 * 1024, files: 2, fields: 0 },
   abortOnLimit: true,
   limitHandler: (req, res) => res.status(413).json({ error: { code: 'UPLOAD_TOO_LARGE', message: 'Ảnh tối đa 2 MB.' } }),
-}), async (req, res) => {
+});
+async function uploadImage(req, res) {
   const file = req.files?.image;
   if (!file || Array.isArray(file) || Object.keys(req.files).length !== 1) throw new HttpError(400, 'IMAGE_REQUIRED', 'Chọn một ảnh PNG, JPEG hoặc WebP.');
   if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.mimetype) || file.truncated) throw new HttpError(400, 'IMAGE_INVALID', 'Chỉ nhận ảnh PNG, JPEG hoặc WebP.');
@@ -35,5 +36,7 @@ router.post('/admin/uploads', requireAuth, requireAdmin, fileUpload({
   await fs.mkdir(uploadDirectory(), { recursive: true });
   await fs.writeFile(path.join(uploadDirectory(), name), buffer, { flag: 'wx' });
   res.status(201).json({ imageUrl: `/images/uploads/${name}` });
-});
+}
+router.post('/admin/uploads', requireAuth, requireAdmin, uploadMiddleware, uploadImage);
+router.post('/community/uploads', requireAuth, uploadMiddleware, uploadImage);
 module.exports = { router, uploadDirectory };
