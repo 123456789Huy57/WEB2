@@ -6,7 +6,7 @@ import { ToastService } from '../core/toast.service';
 
 type Kind = 'products' | 'ingredients' | 'recipes';
 interface Item { kind: Kind; id: string; name: string; group: string; url: string; link: unknown[] | null; temp?: boolean; hidden?: boolean; }
-interface Check { hash?: string; color?: number[]; width?: number; error?: boolean; }
+interface Check { hash?: string; color?: number[]; fg?: number[]; width?: number; error?: boolean; }
 
 const TABS: { key: Kind; label: string }[] = [{ key: 'products', label: 'Sản phẩm' }, { key: 'ingredients', label: 'Nguyên liệu' }, { key: 'recipes', label: 'Món ăn' }];
 const MARK_KEY = 'fm.imageAudit.marks';
@@ -102,9 +102,10 @@ export class AdminImageAudit {
       const ca = checks[this.key(hashed[a])];
       for (let b = 0; b < hashed.length; b++) {
         if (a === b || hashed[a].kind !== hashed[b].kind) continue;
+        if (sameProduct(hashed[a].name, hashed[b].name)) continue; // hai cỡ của cùng một món (Bí đỏ hồ lô nhỏ / lớn) dùng chung ảnh là hợp lệ
         const cb = checks[this.key(hashed[b])];
         // Trùng khi cả hình dạng (dHash 256 bit) lẫn màu (lưới 4x4) gần như nhau: chai dầu vàng và chai nước mắm nâu không còn bị coi là một
-        if (hamming(ca.hash!, cb.hash!) <= 14 && colorDistance(ca.color, cb.color) <= 12) same++;
+        if (hamming(ca.hash!, cb.hash!) <= 14 && colorDistance(ca.color, cb.color) <= 12 && colorDistance(ca.fg, cb.fg) <= 30) same++;
       }
       if (same > 1) dup.set(this.key(hashed[a]), Math.max(same, dup.get(this.key(hashed[a])) ?? 0));
     }
@@ -211,12 +212,24 @@ function dHash(url: string): Promise<Check> {
           for (let y = by * 4; y < by * 4 + 4; y++) for (let x = bx * 4; x < bx * 4 + 4; x++) { const i = (y * W + x) * 4; sum[0] += d[i]; sum[1] += d[i + 1]; sum[2] += d[i + 2]; n++; }
           color.push(...sum.map(v => v / n));
         }
-        resolve({ hash: bits, color, width: img.naturalWidth });
+        // Màu của chính vật (bỏ nền trắng): chai mật ong vàng, xúc xích đỏ, hành xanh trên cùng nền trắng không còn bị coi là một
+        const F = document.createElement('canvas'); F.width = F.height = 32;
+        const fx = F.getContext('2d', { willReadFrequently: true })!;
+        fx.fillStyle = '#fff'; fx.fillRect(0, 0, 32, 32); fx.drawImage(img, 0, 0, 32, 32);
+        const fd = fx.getImageData(0, 0, 32, 32).data, fs = [0, 0, 0]; let fn = 0;
+        for (let i = 0; i < fd.length; i += 4) { if (fd[i] > 235 && fd[i + 1] > 235 && fd[i + 2] > 235) continue; fs[0] += fd[i]; fs[1] += fd[i + 1]; fs[2] += fd[i + 2]; fn++; }
+        const fg = fn ? fs.map(v => v / fn) : [255, 255, 255];
+        resolve({ hash: bits, color, fg, width: img.naturalWidth });
       } catch { resolve({ width: img.naturalWidth }); } // máy chủ ảnh không cho đọc điểm ảnh (CORS): vẫn biết kích thước, chỉ không so trùng được
     };
     img.onerror = () => { clearTimeout(done); resolve({ error: true }); };
     img.src = url;
   });
+}
+/** Hai tên cùng bốn chữ đầu (bỏ dấu) là hai cỡ của một món, ví dụ "Bí đỏ hồ lô (trái nhỏ)" và "Bí đỏ hồ lô trái 750g" */
+function sameProduct(a = '', b = ''): boolean {
+  const key = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(Boolean).slice(0, 4).join(' ');
+  return key(a).length > 5 && key(a) === key(b);
 }
 /** Độ lệch màu trung bình giữa hai ảnh (0–255); thiếu dữ liệu màu thì coi như khác */
 function colorDistance(a?: number[], b?: number[]): number {
