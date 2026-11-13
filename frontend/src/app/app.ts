@@ -1,6 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { filter, map } from 'rxjs';
 import { Header } from './layout/header';
 import { Footer } from './layout/footer';
@@ -13,6 +13,7 @@ import { DataService } from './core/data.service';
   selector: 'fm-root',
   imports: [RouterOutlet, Header, Footer, CartDrawer, ConfirmDialog],
   template: `
+    <div class="route-bar" [class.on]="navigating()" aria-hidden="true"></div>
     @if (!isAdmin()) {
       <p class="notice">Miễn phí giao cho đơn từ 300.000 đ · Đặt trước 16:00, nhận hàng trong 1–2 giờ</p>
       <fm-header />
@@ -33,5 +34,14 @@ export class App {
   protected toast = inject(ToastService);
   protected data = inject(DataService);
   /** Khu quản trị có khung riêng, không dùng header/footer của cửa hàng */
+  /** Thanh mảnh trên đầu trang khi chuyển trang chậm hơn 120 ms (tải code trang, chờ dữ liệu) thay cho vòng xoay */
+  protected navigating = signal(false);
+  constructor() {
+    let t: ReturnType<typeof setTimeout> | undefined;
+    inject(Router).events.subscribe(e => {
+      if (e instanceof NavigationStart) { clearTimeout(t); t = setTimeout(() => this.navigating.set(true), 120); }
+      else if (e instanceof NavigationEnd || e instanceof NavigationCancel || e instanceof NavigationError) { clearTimeout(t); this.navigating.set(false); }
+    });
+  }
   protected isAdmin = toSignal(inject(Router).events.pipe(filter(e => e instanceof NavigationEnd), map(e => (e as NavigationEnd).urlAfterRedirects.startsWith('/admin'))), { initialValue: location.pathname.startsWith('/admin') });
 }

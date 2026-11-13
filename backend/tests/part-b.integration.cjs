@@ -444,6 +444,18 @@ test('Chuyển khoản QR, tự xác nhận qua webhook SePay', async t => {
   });
 });
 
+test('Thêm nhiều món vào giỏ một lượt; số điện thoại sai đầu số bị chặn từ lúc đăng ký', async () => {
+  const c = await new Client().register(57);
+  const r = await c.post('/api/cart/items/bulk', { items: [{ productId: 'p-a', quantity: 1 }, { productId: 'p-khong-co', quantity: 1 }, { productId: 'p-a', quantity: 1 }] });
+  assert.equal(r.status, 200, JSON.stringify(r.data));
+  assert.equal(r.data.items.find(i => i.productId === 'p-a').quantity, 2, 'món trùng được cộng dồn');
+  assert.deepEqual(r.data.failed.map(f => f.productId), ['p-khong-co'], 'món không có thì báo lại, món khác vẫn vào giỏ');
+  assert.equal((await c.post('/api/cart/items/bulk', { items: [] })).status, 400);
+  const bad = await new Client().start();
+  const reg = await bad.post('/api/auth/register', { fullName: 'Khách đầu số lạ', email: 'dauso@example.com', phone: '0123456789', password: 'password123' });
+  assert.equal(reg.status, 400, 'đầu số 01 không đặt hàng được nên cũng không cho đăng ký');
+});
+
 // Các lỗi trong backend/docs/backend-review.md (rà soát 05/11): mỗi ca là một lần tái hiện, giữ lại để không tái phát.
 test('Regression từ backend-review', async t => {
   const admin = await new Client().start();

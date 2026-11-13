@@ -21,7 +21,7 @@ import { ToastService } from '../core/toast.service';
   `,
   template: `
     <div class="ph-wrap">
-      <a class="ph" [routerLink]="['/san-pham', p().slug || p().id]" tabindex="-1" aria-hidden="true">
+      <a class="ph" [routerLink]="['/san-pham', p().slug || p().id]" tabindex="-1" aria-hidden="true" (pointerenter)="prefetch()" (click)="morph($event)">
         <img [fmImg]="name()" [src]="ps.img(p())" [alt]="name()" loading="lazy">
       </a>
       <button class="p-wish" type="button" [attr.aria-pressed]="wished()" [attr.aria-label]="wished() ? 'Bỏ ' + name() + ' khỏi yêu thích' : 'Lưu ' + name() + ' vào yêu thích'" (click)="toggleWish()">
@@ -29,7 +29,7 @@ import { ToastService } from '../core/toast.service';
       </button>
       <div class="add"><fm-add-control [product]="p()" /></div>
     </div>
-    <h3><a [routerLink]="['/san-pham', p().slug || p().id]">{{ name() }}</a></h3>
+    <h3><a [routerLink]="['/san-pham', p().slug || p().id]" (pointerenter)="prefetch()" (focus)="prefetch()" (click)="morph($event)">{{ name() }}</a></h3>
     <p class="sub">{{ p().subcategoryName || p().categoryName }} · {{ ps.unit(p()) }}</p>
     <div class="price-row">
       <span class="price num">{{ ps.price(p()) | vnd }}</span>
@@ -42,6 +42,15 @@ import { ToastService } from '../core/toast.service';
 export class ProductCard {
   readonly p = input.required<Product>({ alias: 'product' });
   protected ps = inject(ProductService);
+  /** Rê chuột vào là tải sẵn mô tả, bộ ảnh: bấm vào trang chi tiết hiện đủ ngay */
+  protected prefetch(): void { void this.ps.loadDetail(this.p().id); }
+  /** Ảnh của thẻ vừa bấm "bay" sang ảnh lớn ở trang chi tiết (View Transitions; chỉ gắn tên cho đúng một thẻ) */
+  protected morph(e: MouseEvent): void {
+    const img = (e.currentTarget as HTMLElement).closest('fm-product-card')?.querySelector('img');
+    if (!img || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    img.style.viewTransitionName = 'pd-hero';
+    setTimeout(() => (img.style.viewTransitionName = ''), 800);
+  }
   private wishlist = inject(WishlistService);
   private toast = inject(ToastService);
   readonly name = computed(() => this.ps.shortName(this.p()));

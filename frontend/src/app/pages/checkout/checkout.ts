@@ -76,6 +76,8 @@ export class Checkout {
     void this.cart.load().then(() => { if (!this.cart.lines().length && !this.done()) this.router.navigateByUrl('/gio-hang'); });
     // Sửa thông tin là một yêu cầu đặt đơn mới (khóa chống trùng mới).
     this.form.valueChanges.pipe(takeUntilDestroyed()).subscribe(() => this.orders.resetAttempt());
+    // Thông tin điền sẵn từ tài khoản mà sai định dạng (tài khoản cũ) thì báo ngay, không đợi bấm đặt hàng.
+    for (const k of ['name', 'phone', 'address'] as const) { const c = this.form.controls[k]; if (c.value && c.invalid) c.markAsTouched(); }
   }
 
   protected phoneError = () => phoneMessage(this.form.controls.phone.errors);
@@ -86,7 +88,14 @@ export class Checkout {
 
   protected async submit(): Promise<void> {
     this.tried.set(true); this.form.markAllAsTouched();
-    if (this.form.invalid || this.sending()) return;
+    if (this.form.invalid) {
+      // Ô lỗi có thể nằm phía trên, ngoài màn hình: cuộn tới và đặt con trỏ vào ô đầu tiên cần sửa.
+      const first = document.querySelector<HTMLElement>('.checkout [aria-invalid="true"], form [aria-invalid="true"]');
+      first?.scrollIntoView({ behavior: 'smooth', block: 'center' }); first?.focus({ preventScroll: true });
+      this.toast.show('Kiểm tra lại thông tin nhận hàng được đánh dấu đỏ');
+      return;
+    }
+    if (this.sending()) return;
     if (!this.auth.user()) { this.router.navigate(['/dang-nhap'], { queryParams: { next: '/thanh-toan' } }); return; }
     if (this.cart.issues().length) { this.toast.show('Giỏ có sản phẩm vừa hết hàng hoặc ngừng bán. Sửa giỏ trước khi đặt.'); this.router.navigateByUrl('/gio-hang'); return; }
     this.sending.set(true);

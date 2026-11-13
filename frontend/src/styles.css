@@ -333,7 +333,26 @@ a.ph, button.ph { display: block; }
 ::view-transition-new(root) { animation: vtIn .32s var(--ease) both; }
 @keyframes vtOut { to { opacity: 0; } }
 @keyframes vtIn { from { opacity: 0; transform: translateY(10px); } }
-@media (prefers-reduced-motion: reduce) { ::view-transition-old(root), ::view-transition-new(root) { animation: none; } }
+::view-transition-group(pd-hero) { animation-duration: .38s; animation-timing-function: var(--ease); }
+@media (prefers-reduced-motion: reduce) { ::view-transition-old(root), ::view-transition-new(root), ::view-transition-group(*) { animation: none; } }
+
+/* Thanh tiến trình khi chuyển trang (thay vòng xoay): chạy dần tới 85% rồi chờ, xong thì mờ đi */
+.route-bar { position: fixed; inset: 0 auto auto 0; z-index: 1000; height: 3px; width: 100%; background: var(--forest); transform-origin: left; transform: scaleX(0); opacity: 0; pointer-events: none; transition: transform .2s ease, opacity .3s ease .1s; }
+.route-bar.on { opacity: 1; transform: scaleX(.85); transition: transform 2.5s cubic-bezier(.1, .7, .2, 1), opacity .1s; }
+
+/* Khung xám chờ dữ liệu (skeleton): giữ đúng chỗ của nội dung thật để trang không nhảy khi dữ liệu về */
+.skel { display: block; border-radius: 6px; background: linear-gradient(90deg, var(--stone) 25%, color-mix(in srgb, var(--stone) 40%, #fff) 45%, var(--stone) 65%) 0 0 / 300% 100%; animation: skel 1.3s ease-in-out infinite; }
+@keyframes skel { from { background-position: 100% 0; } to { background-position: 0 0; } }
+.skel-lines { display: grid; gap: 10px; }
+.skel-lines .skel { height: 14px; }
+.skel-lines .skel.short { width: 60%; }
+.skel-card .skel.img { aspect-ratio: 1; border-radius: var(--r, 10px); }
+.skel-card .skel.t { height: 16px; margin-top: 14px; width: 85%; }
+.skel-card .skel.s { height: 12px; margin-top: 8px; width: 55%; }
+.skel-card .skel.p { height: 18px; margin-top: 12px; width: 40%; }
+.fade-in { animation: fadeIn .35s var(--ease) both; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } }
+@media (prefers-reduced-motion: reduce) { .skel, .fade-in { animation: none; } .route-bar, .route-bar.on { transition: none; } }
 
 /* Giỏ hàng trượt từ bên phải */
 .drawer { margin: 0 0 0 auto; height: 100dvh; max-height: 100dvh; width: min(440px, 100%); max-width: 100%; padding: 0; border: 0; background: var(--paper); color: var(--ink); box-shadow: var(--shadow-float); }
@@ -422,3 +441,7 @@ a.ph, button.ph { display: block; }
 @media (hover: none) {
   :is(.p-card, .aisle, .pick, .home-recipe, .ship, .rec, .cook-card, .post-card):hover img { transform: none !important; }
 }
+.skel-post { display: grid; gap: 18px; }
+.skel-row { display: flex; align-items: center; gap: 12px; }
+.skel.av { width: 44px; height: 44px; border-radius: 50%; flex: none; }
+.skel-lines.grow { flex: 1; }

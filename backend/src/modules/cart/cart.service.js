@@ -76,6 +76,32 @@ async function add(req, body) {
   return view(req);
 }
 
+// Thêm nhiều món một lượt (Meal Planner, mua lại): một lần gọi thay cho N lần. Món nào không thêm được
+// (hết hàng, vượt tồn kho, giỏ đầy) thì bỏ qua và báo lại, các món khác vẫn vào giỏ.
+async function addMany(req, body) {
+  v.object(body, ['items']);
+  if (!Array.isArray(body.items) || !body.items.length || body.items.length > 50) throw new HttpError(400, 'VALIDATION_ERROR', 'Danh sách món cần từ 1 đến 50 dòng.');
+  const wanted = body.items.map(i => { v.object(i, ['productId', 'quantity']); return { productId: v.id(i.productId), qty: quantity(i.quantity) }; });
+  const failed = [];
+  await withCart(req, async () => {
+    const items = readCart(req);
+    for (const w of wanted) {
+      const existing = items.find(i => i.productId === w.productId);
+      try {
+        if (!existing && items.length >= MAX_LINES) throw new HttpError(409, 'CART_FULL', `Giỏ tối đa ${MAX_LINES} sản phẩm.`);
+        const next = Math.round(((existing?.quantity || 0) + w.qty) * 1000) / 1000;
+        await assertLine(w.productId, next);
+        if (existing) existing.quantity = next; else items.push({ productId: w.productId, quantity: next });
+      } catch (error) {
+        if (!(error instanceof HttpError)) throw error;
+        failed.push({ productId: w.productId, code: error.code, message: error.message });
+      }
+    }
+    writeCart(req, items);
+  });
+  return { ...(await view(req)), failed };
+}
+
 async function set(req, productIdParam, body) {
   v.object(body, ['quantity']);
   const productId = v.id(productIdParam), qty = quantity(body.quantity);
@@ -110,4 +136,4 @@ async function quote(req, body = {}) {
   return { ...cart, ...totals(cart.subtotal, cart.shippingFee, result), voucherCode: result.voucher?.code || null };
 }
 
-module.exports = { readCart, writeCart, withCart, view, add, set, remove, clear, quote, MAX_LINES };
+module.exports = { readCart, writeCart, withCart, view, add, addMany, set, remove, clear, quote, MAX_LINES };

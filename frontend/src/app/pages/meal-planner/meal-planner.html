@@ -163,7 +163,7 @@
       </div>
     } @else if (featured(); as x) {
       @let r = x.recipe;
-      <article class="mp-feature" #featureEl aria-labelledby="mp-fname">
+      <article class="mp-feature fade-in" #featureEl aria-labelledby="mp-fname">
         <div class="mp-feature-copy">
           <span class="mp-badge">{{ x === results()![0] ? 'Hợp nhất với bếp của bạn' : 'Món bạn đang xem' }}</span>
           <h3 class="mp-feature-name" id="mp-fname">{{ r.name }}</h3>

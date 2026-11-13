@@ -135,7 +135,7 @@ export class MealPlanner {
       this.loading.set(false);
       // Kết quả nằm dưới hai ô chọn nên cuộn xuống cho khách thấy ngay.
       setTimeout(() => this.resultsEl()?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' }));
-    }, 450);
+    }); // tính ngay trên máy (không giả vờ chờ); kết quả hiện dần bằng hiệu ứng .fade-in
   }
 
   /** Đưa bộ chọn về như lúc mới mở trang */

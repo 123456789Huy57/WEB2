@@ -145,8 +145,10 @@ export class Login {
   protected async register(): Promise<void> {
     const name = this.fullName.trim(), phone = this.phone.trim(), email = this.email.trim();
     const e: Errors = {};
+    // Cùng luật với trang thanh toán: đăng ký được thì đặt hàng được, không bị chặn ở bước cuối.
     if (name.length < 2) e.fullName = 'Nhập họ và tên';
-    if (!isPhone(phone)) e.phone = 'Số điện thoại gồm 10 số, bắt đầu bằng 0';
+    else if (!/^[\p{L}\p{M}\s.'-]+$/u.test(name)) e.fullName = 'Họ tên không chứa số hoặc ký tự đặc biệt';
+    if (!/^0[235789]\d{8}$/.test(phone)) e.phone = 'Số điện thoại gồm 10 số, đầu số 02, 03, 05, 07, 08 hoặc 09';
     if (!isEmail(email)) e.email = 'Email chưa đúng định dạng';
     if (this.password.length < 8) e.password = 'Mật khẩu cần ít nhất 8 ký tự';
     if (this.confirm !== this.password) e.confirm = 'Mật khẩu nhập lại chưa khớp';

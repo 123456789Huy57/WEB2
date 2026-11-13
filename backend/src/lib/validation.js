@@ -25,7 +25,8 @@ function email(value) {
 }
 function phone(value) {
   const result = text(value, 'Số điện thoại', 10, 10);
-  if (!/^0\d{9}$/.test(result)) bad('Số điện thoại cần 10 số, bắt đầu bằng 0.');
+  // Cùng luật với form ở frontend: đầu số di động 03, 05, 07, 08, 09 hoặc cố định 02.
+  if (!/^0[235789]\d{8}$/.test(result)) bad('Số điện thoại cần 10 số, đầu số 02, 03, 05, 07, 08 hoặc 09.');
   return result;
 }
 function password(value) {

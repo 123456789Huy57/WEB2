@@ -207,11 +207,17 @@
           }
         </article>
       } @empty {
+        @if (!cs.loaded()) {
+          @for (i of [1, 2, 3]; track i) {
+            <div class="cm-card skel-post" aria-hidden="true"><div class="skel-row"><span class="skel av"></span><span class="skel-lines grow"><span class="skel short"></span><span class="skel" style="width:30%"></span></span></div><div class="skel-lines"><span class="skel"></span><span class="skel"></span><span class="skel short"></span></div></div>
+          }
+        } @else {
         <div class="cm-card cm-empty">
           <p class="h3">{{ filter() === 'saved' ? 'Bạn chưa lưu bài viết nào' : 'Chưa có bài viết phù hợp' }}</p>
           <p class="muted">{{ filter() === 'saved' ? 'Bấm “Lưu bài” ở bài viết bạn muốn xem lại sau.' : 'Thử bỏ bộ lọc hoặc là người đầu tiên đăng bài.' }}</p>
           <button class="btn btn-forest" type="button" style="margin-top:12px" (click)="openComposer('discussion')">Đăng bài mới</button>
         </div>
+        }
       }
     </div>
 
