@@ -31,7 +31,8 @@
             <span class="num">{{ ps.qty(qty()) }} {{ ps.unit(p) }}</span>
             <button type="button" (click)="qty.set(qty() + step() <= p.stock ? qty() + step() : qty())" aria-label="Thêm">+</button>
           </div>
-          <button class="btn btn-forest pd-add" type="button" [disabled]="!p.stock" (click)="add()">{{ p.stock ? 'Thêm vào giỏ' : 'Tạm hết hàng' }}</button>
+          <button class="btn btn-forest pd-add" type="button" [disabled]="p.stock < step()" (click)="add()">{{ p.stock >= step() ? 'Thêm vào giỏ' : 'Tạm hết hàng' }}</button>
+          <button class="btn btn-stone pd-buy-now" type="button" [disabled]="p.stock < step()" (click)="buyNow()">Mua ngay</button>
           <button class="btn btn-stone round" id="pd-wish" type="button" [attr.aria-pressed]="wished()" [attr.aria-label]="wished() ? 'Bỏ khỏi yêu thích' : 'Lưu vào yêu thích'" (click)="toggleWish()">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>
           </button>
@@ -40,7 +41,8 @@
         @if (compared() && cmp.ids().length > 1) { <a class="link small" routerLink="/so-sanh" style="margin-left:12px">Xem bảng so sánh</a> }
         <p class="small" id="pd-stock">
           @if (p.stock > 10) { <span class="ok-note">Còn hàng</span> · đã bán {{ p.sold_count.toLocaleString('vi-VN') }} }
-          @else if (p.stock > 0) { <span class="off">Chỉ còn {{ p.stock }} {{ ps.unit(p) }}</span> }
+          @else if (p.stock >= step()) { <span class="off">Chỉ còn {{ p.stock }} {{ ps.unit(p) }}</span> }
+          @else if (p.stock > 0) { <span class="off">Tồn kho chưa đủ lượng bán tối thiểu {{ ps.qty(step()) }} {{ ps.unit(p) }}</span> }
           @else { <span class="off">Tạm hết hàng</span> }
         </p>
         <dl class="pd-facts">

@@ -27,6 +27,12 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 .done-facts { margin: 40px 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 40px; }
 .done-facts dt { color: var(--muted); font-size: var(--t-small); }
 .done-facts dd { margin: 4px 0 0; font-family: var(--display); font-size: 28px; }
+.done-items { list-style: none; margin: 32px 0 0; padding: 0; border-top: 1px solid var(--stone-2); }
+.done-items li { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--stone-2); }
+.done-items .ph { width: 56px; height: 56px; }
+.done-items .ph img { padding: 8%; }
+.done-sum { margin-top: 20px; }
 .done-cta { margin-top: 44px; display: flex; gap: 10px; flex-wrap: wrap; }
 @media (max-width: 760px) { .slots { grid-template-columns: repeat(2, minmax(0, 1fr)); } .done-facts { grid-template-columns: 1fr; } }
 .done-note { margin-top: 28px; max-width: 520px; }
+@media (max-width: 480px) { .done-items li { grid-template-columns: 48px minmax(0, 1fr); } .done-items .ph { width: 48px; height: 48px; } .done-items li > b { grid-column: 2; } }
