@@ -57,6 +57,7 @@ import { ImgFallbackDirective } from '../shared/img-fallback.directive';
       <a routerLink="/san-pham" routerLinkActive #all="routerLinkActive" [routerLinkActiveOptions]="{ exact: true }" [attr.aria-current]="all.isActive ? 'page' : null">Tất cả quầy</a>
       <span class="sep nav-cat" aria-hidden="true"></span>
       <a routerLink="/meal-planner" routerLinkActive #mp="routerLinkActive" [attr.aria-current]="mp.isActive ? 'page' : null">Meal Planner</a>
+      <a routerLink="/cong-dong" routerLinkActive #cm="routerLinkActive" [attr.aria-current]="cm.isActive ? 'page' : null">Cộng đồng</a>
       <a routerLink="/uu-dai" routerLinkActive #of="routerLinkActive" [attr.aria-current]="of.isActive ? 'page' : null">Ưu đãi</a>
       <a routerLink="/cua-hang" routerLinkActive #st="routerLinkActive" [attr.aria-current]="st.isActive ? 'page' : null">Về FreshMart</a>
     </nav>

@@ -1,10 +1,12 @@
-import { AfterViewInit, Component, ElementRef, ViewEncapsulation, computed, inject, input, signal, viewChild } from '@angular/core';
+import { Component, ElementRef, ViewEncapsulation, computed, effect, inject, input, signal, viewChild } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { DataService } from '../../core/data.service';
 import { ProductService } from '../../core/product.service';
 import { CartService } from '../../core/cart.service';
 import { ToastService } from '../../core/toast.service';
+import { CommunityService } from '../../core/community.service';
 import { DIFF_LABEL, INGREDIENT_GROUPS, MEAL_LABEL, MealPlannerService, PlannerFilters, PlannerResult, PurchaseLine } from '../../core/meal-planner.service';
 import { Recipe } from '../../core/models';
 import { norm, store } from '../../core/storage';
@@ -20,22 +22,26 @@ interface Trending {
 
 @Component({
   selector: 'fm-meal-planner',
-  imports: [VndPipe, ImgFallbackDirective],
+  imports: [VndPipe, ImgFallbackDirective, RouterLink],
   templateUrl: './meal-planner.html',
   styleUrl: './meal-planner.css',
   encapsulation: ViewEncapsulation.None
 })
-export class MealPlanner implements AfterViewInit {
+export class MealPlanner {
   /** /meal-planner?mon=rec-003 mở thẳng công thức (link từ trang chủ) */
   readonly mon = input<string>();
   /** ?co=ing-a,ing-b : nguyên liệu đang có, chọn sẵn khi mở từ link */
   readonly co = input<string>();
+  /** ?tu=cong-dong : mở từ bài trong Cộng đồng, hiện nút quay lại */
+  readonly tu = input<string>();
   protected mp = inject(MealPlannerService);
   protected ps = inject(ProductService);
   private cart = inject(CartService);
   private toast = inject(ToastService);
   private data = inject(DataService);
   private http = inject(HttpClient);
+  private router = inject(Router);
+  protected cs = inject(CommunityService);
 
   // Tab: tự chọn nguyên liệu / xem cộng đồng đang nấu gì
   protected tab = signal<'pick' | 'community'>('pick');
@@ -44,6 +50,11 @@ export class MealPlanner implements AfterViewInit {
     this.tab.set('community');
     try { this.trend.set(await firstValueFrom(this.http.get<Trending>('/api/recipes/trending'))); }
     catch { this.trend.set({ period: 'today', day: '', cooks: 0, recipes: [], ingredients: [] }); }
+  }
+  protected explore(event: Event): void {
+    event.preventDefault();
+    this.tab.set('pick');
+    setTimeout(() => this.toolEl()?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' }));
   }
   /** Bấm nguyên liệu hot: chọn sẵn rồi quay về tab tự chọn */
   protected useHot(id: string): void {
@@ -71,8 +82,6 @@ export class MealPlanner implements AfterViewInit {
   protected groups = INGREDIENT_GROUPS;
   protected meal = MEAL_LABEL;
   protected diff = DIFF_LABEL;
-  protected recipeCount = computed(() => this.data.recipes().length);
-
   // Bước 1: chọn nguyên liệu đang có (nhớ lại lần trước)
   protected selected = signal<string[]>(store.get('mpSel', []));
   protected group = signal('all');
@@ -112,6 +121,7 @@ export class MealPlanner implements AfterViewInit {
   // Bước 3: kết quả
   protected results = signal<PlannerResult[] | null>(null);
   protected loading = signal(false);
+  private toolEl = viewChild<ElementRef<HTMLElement>>('tool');
   private resultsEl = viewChild<ElementRef<HTMLElement>>('resultsEl');
   protected generate(): void {
     if (!this.selected().length) { this.toast.show('Chọn ít nhất 1 nguyên liệu bạn đang có'); document.getElementById('ing-q')?.focus(); return; }
@@ -226,9 +236,37 @@ export class MealPlanner implements AfterViewInit {
       .map(recipe => ({ recipe, overlap: recipe.ingredients.filter(line => ids.has(line.ingredientId)).length }))
       .filter(item => item.overlap > 0)
       .sort((a, b) => b.overlap - a.overlap)
-      .slice(0, 3)
+      .slice(0, 4)
       .map(item => item.recipe);
   });
+
+  // ---- Trang chi tiết món: lưu công thức, chia sẻ lên Cộng đồng, tiến độ nấu ----
+  protected doneSteps = signal<number[]>([]);
+  protected stepsLeft = computed(() => { const r = this.current(); return r ? r.steps.length - this.doneSteps().length : 0; });
+  protected currentStep = computed(() => { const r = this.current(); return r ? r.steps.findIndex((_, i) => !this.doneSteps().includes(i)) : -1; });
+  protected progress = computed(() => { const r = this.current(); return r?.steps.length ? Math.round((this.doneSteps().length / r.steps.length) * 100) : 0; });
+  protected toggleStep(i: number): void { this.doneSteps.update(l => (l.includes(i) ? l.filter(x => x !== i) : [...l, i])); }
+  protected communityPosts = computed(() => { const r = this.current(); return r ? this.cs.postsForRecipe(r.id) : []; });
+  /** Mô tả ngắn dựng từ dữ liệu có sẵn (công thức chưa có trường mô tả riêng) */
+  protected describe(r: Recipe): string {
+    const names = r.ingredients.map(l => this.mp.ingredient(l.ingredientId)?.name).filter((x): x is string => !!x);
+    const main = names.slice(0, 3).join(', ');
+    return `${this.meal[r.mealType]} mức ${this.diff[r.difficulty].toLowerCase()}, xong trong khoảng ${this.mp.totalTime(r)} phút${main ? ', từ ' + main + (names.length > 3 ? ' và ' + (names.length - 3) + ' nguyên liệu khác' : '') : ''}.`;
+  }
+  /** Tỷ lệ năng lượng từ đạm, tinh bột, chất béo (4 – 4 – 9 kcal/g) để vẽ thanh dinh dưỡng */
+  protected macros(r: Recipe): { label: string; g: number; pct: number }[] {
+    const n = r.nutrition, p = n.protein * 4, c = n.carbs * 4, f = n.fat * 9, t = p + c + f || 1;
+    return [{ label: 'Đạm', g: n.protein, pct: Math.round((p / t) * 100) }, { label: 'Tinh bột', g: n.carbs, pct: Math.round((c / t) * 100) }, { label: 'Chất béo', g: n.fat, pct: Math.round((f / t) * 100) }];
+  }
+  protected ingImg(x: PurchaseLine): string { return x.ingredient ? this.mp.ingredientImage(x.ingredient) : ''; }
+  protected setServings(n: number): void { this.patch('servings', Math.min(6, Math.max(1, n))); }
+  protected saveRecipe(r: Recipe): void { this.cs.toggleRecipeSaved(r.id); }
+  /** Luồng A: mở khung đăng bài trong Cộng đồng, điền sẵn món này (tên, ảnh, nguyên liệu lấy theo id món) */
+  protected shareToCommunity(r: Recipe): void {
+    this.dlg().nativeElement.close();
+    void this.router.navigate(['/cong-dong'], { queryParams: { 'chia-se': r.id } });
+  }
+  protected startCooking(): void { this.dlg().nativeElement.querySelector('#d-steps')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
 
   protected stepTitle(step: Recipe['steps'][number], index: number): string {
     return typeof step === 'string' ? `Bước ${index + 1}` : step.title;
@@ -247,21 +285,29 @@ export class MealPlanner implements AfterViewInit {
     if (!recipe) return;
     this.current.set(recipe);
     this.unchecked.set([]);
+    this.doneSteps.set([]);
     this.dlg().nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   protected open(id: string): void {
     this.current.set(this.mp.recipe(id) ?? null);
+    this.doneSteps.set([]);
     // Không tự chọn: hàng bán nguyên thùng/bao (thùng sữa 48 hộp) và gia vị (nhà thường có sẵn). Khách tự tick nếu cần.
     this.unchecked.set(this.purchase().filter(x => x.bulk || x.ingredient?.categoryId === 'condiments').map(x => x.line.ingredientId));
     this.dlg().nativeElement.showModal();
     this.dlg().nativeElement.scrollTop = 0;
   }
-  ngAfterViewInit(): void {
+  constructor() {
+    // ?co=...: chọn sẵn nguyên liệu. ?mon=...: mở công thức. Công thức nạp nền nên chờ có dữ liệu rồi mới mở (link từ Cộng đồng đến rất nhanh).
     const have = (this.co() ?? '').split(',').filter(id => this.mp.ingredient(id));
     if (have.length) { this.selected.set(have); store.set('mpSel', have); }
-    const id = this.mon();
-    if (id && this.mp.recipe(id)) setTimeout(() => this.open(id));
+    let opened = '';
+    effect(() => {
+      const id = this.mon();
+      if (!id || id === opened || !this.mp.recipe(id)) return;
+      opened = id;
+      setTimeout(() => this.open(id));
+    });
   }
   protected toggleBuy(id: string): void {
     this.unchecked.update(u => (u.includes(id) ? u.filter(x => x !== id) : [...u, id]));
