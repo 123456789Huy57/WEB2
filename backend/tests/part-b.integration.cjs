@@ -582,6 +582,31 @@ test('Cộng đồng: bài viết, cảm xúc, bình luận, bình chọn, đã 
     assert.equal((await guest.get('/api/community/posts?sort=top')).data.items[0].id, post.id);
   });
 
+  await t.test('ảnh bài viết: cần đăng nhập, ảnh tải lên dùng được khi đăng bài, production bắt buộc Cloudinary', async () => {
+    const os = require('node:os'), path = require('node:path'), fs = require('node:fs/promises');
+    const saved = Object.fromEntries(['CLOUDINARY_CLOUD_NAME', 'CLOUDINARY_API_KEY', 'CLOUDINARY_API_SECRET', 'UPLOAD_DIR', 'NODE_ENV'].map(k => [k, process.env[k]]));
+    for (const k of ['CLOUDINARY_CLOUD_NAME', 'CLOUDINARY_API_KEY', 'CLOUDINARY_API_SECRET']) delete process.env[k]; // không đẩy ảnh thật lên Cloudinary khi test
+    process.env.UPLOAD_DIR = await fs.mkdtemp(path.join(os.tmpdir(), 'fm-up-'));
+    // PNG 1x1 hợp lệ
+    const png = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==', 'base64');
+    const upload = c => { const body = new FormData(); body.append('image', new Blob([png], { type: 'image/png' }), 'a.png'); return fetch(base + '/api/community/uploads', { method: 'POST', headers: { ...(c.cookie ? { Cookie: c.cookie } : {}), ...(c.token ? { 'X-CSRF-Token': c.token } : {}) }, body }); };
+    try {
+      assert.equal((await upload(guest)).status, 401);
+      const r = await upload(b);
+      assert.equal(r.status, 201);
+      const { imageUrl } = await r.json();
+      assert.match(imageUrl, /^\/images\/uploads\/[a-f0-9-]+\.webp$/);
+      const p = await b.post('/api/community/posts', { type: 'discussion', text: 'Ảnh món tối nay của mình', image: imageUrl });
+      assert.equal(p.status, 201, JSON.stringify(p.data));
+      assert.equal((await b.post('/api/community/posts', { type: 'discussion', text: 'Ảnh lạ từ trang khác', image: 'http://evil.example/x.png' })).status, 400);
+      process.env.NODE_ENV = 'production';
+      assert.equal((await upload(b)).status, 503, 'production không lưu ảnh xuống ổ đĩa');
+      await b.del(`/api/community/posts/${p.data.id}`);
+    } finally {
+      for (const [k, val] of Object.entries(saved)) { if (val === undefined) delete process.env[k]; else process.env[k] = val; }
+    }
+  });
+
   await t.test('đã lưu theo tài khoản; chỉ tác giả xóa bài; admin ẩn bài', async () => {
     assert.deepEqual((await a.request('PUT', '/api/community/saves', { kind: 'post', id: post.id, saved: true })).data, { postIds: [post.id], recipeIds: [] });
     assert.deepEqual((await a.request('PUT', '/api/community/saves', { kind: 'recipe', id: 'rec-1', saved: true })).data.recipeIds, ['rec-1']);

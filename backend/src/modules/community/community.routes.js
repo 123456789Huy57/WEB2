@@ -79,7 +79,8 @@ router.post('/community/posts', requireAuth, async (req, res) => {
   }
   if (body.image !== undefined && body.image !== '') {
     const image = v.text(body.image, 'Ảnh', 1, 500);
-    if (!/^(\/img\/|https:\/\/)/.test(image)) throw v.bad('Ảnh phải là đường dẫn https hoặc ảnh trong trang.');
+    // https (Cloudinary), ảnh có sẵn của trang, hoặc ảnh vừa tải lên máy chủ khi chạy local (POST /community/uploads)
+    if (!/^(\/img\/|\/images\/uploads\/[a-f0-9-]+\.webp$|https:\/\/)/.test(image)) throw v.bad('Ảnh phải là đường dẫn https hoặc ảnh trong trang.');
     post.image = image;
   }
   if (body.challengeId !== undefined) post.challengeId = v.id(body.challengeId);

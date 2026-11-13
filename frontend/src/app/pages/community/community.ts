@@ -3,6 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { CHALLENGE, COMMUNITY_TAGS, CPost, POST_TYPE_LABEL, PostType, REACTIONS, CommunityService } from '../../core/community.service';
 import { DIFF_LABEL, MEAL_LABEL, MealPlannerService } from '../../core/meal-planner.service';
 import { DataService } from '../../core/data.service';
+import { apiMessage } from '../../core/auth.service';
 import { ToastService } from '../../core/toast.service';
 import { ImgFallbackDirective } from '../../shared/img-fallback.directive';
 
@@ -188,7 +189,7 @@ export class Community {
     let image = this.dImage() || undefined;
     if (this.dFile()) {
       try { image = await this.cs.uploadImage(this.dFile()!); }
-      catch { this.toast.show('Không tải được ảnh lên máy chủ, thử lại nhé'); this.dBusy.set(false); return; }
+      catch (e: unknown) { this.toast.show(apiMessage(e)); this.dBusy.set(false); return; }
     }
     const post = await this.cs.publish({
       type: this.dType(), text: this.dText(), tags: this.dTags(), recipeId: this.dType() === 'recipe' ? this.dRecipe() ?? undefined : undefined,
