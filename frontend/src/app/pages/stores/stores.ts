@@ -1,6 +1,7 @@
-import { Component, ViewEncapsulation, inject } from '@angular/core';
+import { Component, ViewEncapsulation, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DataService } from '../../core/data.service';
+import { norm } from '../../core/storage';
 
 @Component({
   selector: 'fm-stores',
@@ -135,6 +136,37 @@ import { DataService } from '../../core/data.service';
         <div><strong class="about-fact-num">07:00–22:00</strong><span>giờ hoạt động mỗi ngày</span></div>
       </section>
 
+      <section class="about-stores band" id="cua-hang" aria-labelledby="about-stores-title">
+        <div class="st-head">
+          <div>
+            <p class="about-kicker"><span aria-hidden="true"></span>Hệ thống cửa hàng</p>
+            <h2 class="h2" id="about-stores-title">{{ data.stores().length || 12 }} cửa hàng ở TP.HCM</h2>
+            <p class="muted">Đơn online được soạn ở cửa hàng gần bạn nhất. Ghé trực tiếp: mở cửa 7:00 – 22:00 mỗi ngày.</p>
+          </div>
+          <div class="st-search"><label class="sr" for="st-q">Tìm theo quận hoặc tên đường</label><input id="st-q" type="search" placeholder="Tìm quận hoặc tên đường" (input)="q.set($any($event.target).value)"></div>
+        </div>
+        <ul class="stores">
+          @for (s of list(); track s.id) {
+            <li>
+              <span class="small muted">{{ s.district }}</span>
+              <h3 class="h3">{{ s.street }}</h3>
+              <p class="a">{{ s.address }}, {{ s.district }}, TP.HCM</p>
+              <div class="row">
+                <span class="open" [class.closed]="!open">{{ open ? 'Đang mở cửa · đến 22:00' : 'Đã đóng cửa · mở lại 7:00' }}</span>
+                <a class="link num" [href]="'tel:' + s.tel">{{ s.phone }}</a>
+              </div>
+              <a class="small link" [href]="'https://www.google.com/maps/search/?api=1&query=' + encode(s.address + ', ' + s.district + ', TP.HCM')" target="_blank" rel="noopener">Chỉ đường</a>
+            </li>
+          } @empty {
+            @if (!data.stores().length) {
+              @for (i of [1, 2, 3]; track i) { <li aria-hidden="true"><span class="skel" style="height:12px;width:30%"></span><span class="skel" style="height:24px;width:70%"></span><span class="skel" style="height:14px"></span></li> }
+            } @else {
+              <li class="empty"><p class="h3">Chưa có cửa hàng ở khu vực này.</p><p class="muted">Đơn online vẫn giao toàn TP.HCM trong 1–2 giờ.</p></li>
+            }
+          }
+        </ul>
+      </section>
+
       <section class="about-faq band" id="faq" aria-labelledby="about-faq-title">
         <div class="about-faq-heading">
           <p class="about-kicker"><span></span> GOOD TO KNOW</p>
@@ -166,6 +198,17 @@ import { DataService } from '../../core/data.service';
 })
 export class Stores {
   protected data = inject(DataService);
+  protected q = signal('');
+  protected open = (() => { const h = new Date().getHours(); return h >= 7 && h < 22; })();
+  protected encode = encodeURIComponent;
+  /** Danh sách 12 cửa hàng (bị mất khi trang này đổi thành "Về FreshMart"), lọc theo quận/tên đường không dấu */
+  protected list = computed(() => {
+    const k = norm(this.q().trim());
+    return this.data.stores()
+      .filter(s => !k || norm(s.name + ' ' + s.address).includes(k))
+      .map(s => { const [district, street] = s.name.split(' - '); return { ...s, district, street: street ?? s.name, tel: s.phone.replace(/\s/g, '') }; });
+  });
+  constructor() { void this.data.loadExtras(); }
   protected faqs = [
     { q: 'FreshMart giao hàng trong bao lâu?', a: 'Đơn nội thành TP.HCM đặt trước 16:00 dự kiến được giao trong 1–2 giờ. Nếu đặt sau 16:00, bạn có thể chọn khung giao vào sáng hôm sau khi thanh toán.', link: { path: '/thong-tin/giao-hang', label: 'Xem chính sách giao hàng' } },
     { q: 'Phí giao hàng được tính như thế nào?', a: 'Đơn hàng từ 300.000 đ được miễn phí giao. Với đơn thấp hơn, phí giao được tính theo khoảng cách; hệ thống đang tạm tính 20.000 đ khi đặt hàng.', link: { path: '/thong-tin/giao-hang', label: 'Chi tiết phí giao' } },

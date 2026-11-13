@@ -12,6 +12,9 @@
   <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
   <!-- Trang chủ: tải ngay ảnh nền hero (phần tử lớn nhất màn hình đầu), không đợi Angular khởi động xong -->
   <script>if (location.pathname === '/') { const l = document.createElement('link'); l.rel = 'preload'; l.as = 'image'; l.href = '/video/cho-noi.jpg'; l.fetchPriority = 'high'; document.head.appendChild(l); }</script>
+  <!-- Bắt đầu tải dữ liệu catalog ngay khi trang mở, song song với tải code (không đợi Angular khởi động xong, nhanh hơn ~1 giây).
+       Trùng URL và chế độ cookie với HttpClient (withCredentials) nên trình duyệt dùng lại kết quả này. -->
+  <script>if (!location.pathname.startsWith('/admin')) for (const u of ['/api/products', '/api/categories', '/api/vouchers']) { const l = document.createElement('link'); l.rel = 'preload'; l.as = 'fetch'; l.crossOrigin = 'use-credentials'; l.href = u; document.head.appendChild(l); }</script>
   <link rel="preload" href="fonts/Oswald-Variable.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/BeVietnamPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
 </head>
