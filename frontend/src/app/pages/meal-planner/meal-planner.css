@@ -333,3 +333,17 @@
 .mp-pager button:hover:not(:disabled) { border-color: var(--ink); }
 .mp-pager button:disabled { opacity: .35; cursor: default; }
 .mp-pager-wide { justify-content: center; gap: 16px; }
+
+/* Dữ liệu công thức đầy đủ (npm run db:sync): gia vị, mẹo, ăn kèm, bảo quản */
+.d-season { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--stone-2); }
+.d-season .h { font-weight: 600; margin-bottom: 8px; }
+.d-season ul { list-style: none; margin: 0 0 6px; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; }
+.d-season li { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-bottom: 1px dashed var(--stone-2); font-size: 15px; }
+.d-tips { margin-top: 20px; padding: 16px 18px; border-radius: var(--r); background: var(--butter); }
+.d-tips b { display: block; font-size: 12px; letter-spacing: .08em; margin-bottom: 8px; }
+.d-tips ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; line-height: 1.55; }
+.d-more { margin: 16px 0 0; display: flex; flex-direction: column; gap: 8px; }
+.d-more div { display: grid; grid-template-columns: 84px 1fr; gap: 12px; }
+.d-more dt { font-weight: 600; }
+.d-more dd { margin: 0; line-height: 1.55; }
+@media (max-width: 600px) { .d-season ul { grid-template-columns: 1fr; } }
