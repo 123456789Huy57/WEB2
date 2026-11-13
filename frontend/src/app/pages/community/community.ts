@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewEncapsulation, computed, effect, inject, input, signal, viewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { CHALLENGE, COMMUNITY_TAGS, CPost, MEMBERS, POST_TYPE_LABEL, PostType, REACTIONS, CommunityService } from '../../core/community.service';
+import { CHALLENGE, COMMUNITY_TAGS, CPost, POST_TYPE_LABEL, PostType, REACTIONS, CommunityService } from '../../core/community.service';
 import { DIFF_LABEL, MEAL_LABEL, MealPlannerService } from '../../core/meal-planner.service';
 import { DataService } from '../../core/data.service';
 import { ToastService } from '../../core/toast.service';
@@ -69,7 +69,7 @@ export class Community {
     });
     return [...score.values()].sort((a, b) => b.likes + b.posts * 3 - (a.likes + a.posts * 3)).slice(0, 4);
   });
-  protected stats = computed(() => ({ members: 1280 + new Set(this.cs.posts().map(p => p.authorId)).size - MEMBERS.length, recipes: this.counts().recipe, talks: this.counts().question + this.counts().discussion }));
+  protected stats = computed(() => ({ members: new Set(this.cs.posts().map(p => p.authorId)).size, recipes: this.counts().recipe, talks: this.counts().question + this.counts().discussion }));
   protected challengeDays = computed(() => Math.max(0, Math.ceil((CHALLENGE.endsAt - Date.now()) / 86_400_000)));
   protected setFilter(f: Filter): void { this.filter.set(f); this.tagFilter.set(''); }
   protected setTag(t: string): void { this.tagFilter.set(this.tagFilter() === t ? '' : t); this.filter.set('all'); }
@@ -180,13 +180,15 @@ export class Community {
     if (this.dPoll() && (this.dPollQ().trim().length < 3 || this.dPollOpts().filter(o => o.trim()).length < 2)) return false;
     return t.length >= 3 || (this.dPoll() && this.dPollQ().trim().length >= 3);
   });
-  protected publish(): void {
+  protected async publish(): Promise<void> {
     if (!this.canPublish() || this.dBusy()) return;
-    const post = this.cs.publish({
+    this.dBusy.set(true);
+    const post = await this.cs.publish({
       type: this.dType(), text: this.dText(), tags: this.dTags(), recipeId: this.dType() === 'recipe' ? this.dRecipe() ?? undefined : undefined,
       image: this.dImage() || undefined, challenge: this.dChallenge(),
       poll: this.dPoll() ? { question: this.dPollQ(), options: this.dPollOpts() } : undefined
     });
+    this.dBusy.set(false);
     if (!post) return;
     this.closeComposer();
     this.filter.set('all'); this.sort.set('new'); this.tagFilter.set(''); this.challengeOnly.set(false);

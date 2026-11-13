@@ -221,3 +221,5 @@
   .cm-dlg-foot .btn { flex: 1; }
 }
 @media (prefers-reduced-motion: reduce) { .cm * { transition: none !important; animation: none !important; } }
+
+.cm-sample { padding: 1px 6px; border-radius: 8px; background: var(--stone); font-size: 11px; letter-spacing: .02em; }

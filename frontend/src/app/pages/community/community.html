@@ -99,7 +99,7 @@
             <span class="cm-av" [style.background]="cs.avatarColor(p.authorId)" [style.color]="cs.avatarInk(cs.avatarColor(p.authorId))">{{ cs.initial(p.authorName) }}</span>
             <div class="cm-who">
               <b>{{ p.authorName }}</b>
-              <small>{{ cs.member(p.authorId)?.title ?? 'Thành viên FreshMart' }} · {{ cs.timeAgo(p.createdAt) }}</small>
+              <small>{{ cs.member(p.authorId)?.title ?? 'Thành viên FreshMart' }} · {{ cs.timeAgo(p.createdAt) }}@if (p.sample) { · <span class="cm-sample">Bài mẫu</span> }</small>
             </div>
             <span class="cm-type t-{{ p.type }}">{{ typeLabel[p.type] }}</span>
             @if (p.challengeId) { <span class="cm-type t-challenge">Thử thách</span> }

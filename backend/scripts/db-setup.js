@@ -37,6 +37,8 @@ async function seed(db) {
   await insertMissing(db, 'recipes', await read('recipes'));
   await insertMissing(db, 'ingredients', await read('ingredients'));
   await insertMissing(db, 'stores', await read('stores'));
+  // Bài mẫu Cộng đồng (sample: true, hiện nhãn "Bài mẫu"); bài thật của người dùng nằm cùng bảng
+  await insertMissing(db, 'communityPosts', await read('community-posts'));
   const map = await read('ingredient-product-map');
   await insertMissing(db, 'ingredientProducts', Object.entries(map).map(([ingredientId, v]) => ({ ...v, ingredientId, productIds: v.productIds || [] })), 'ingredientId');
 }

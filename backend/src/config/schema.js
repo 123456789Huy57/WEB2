@@ -184,6 +184,23 @@ const collections = {
     },
   },
 
+  communityPosts: {
+    schema: {
+      required: ['id', 'type', 'authorId', 'authorName', 'text', 'tags', 'reactions', 'comments', 'createdAt'],
+      properties: {
+        id: str, type: { enum: ['recipe', 'question', 'discussion'] }, authorId: str, authorName: str, text: { bsonType: 'string', maxLength: 2000 },
+        tags: strings, image: str, recipeId: str, challengeId: str, sample: bool, hidden: bool, score: { bsonType: 'number' },
+        reactions: { bsonType: 'object' },
+        comments: { bsonType: 'array', items: { bsonType: 'object', required: ['id', 'authorId', 'authorName', 'text', 'createdAt'], properties: { id: str, authorId: str, authorName: str, text: { bsonType: 'string', maxLength: 600 }, createdAt: { bsonType: 'number' }, parentId: str } } },
+        poll: { bsonType: 'object', required: ['question', 'options'], properties: { question: str, options: { bsonType: 'array', items: { bsonType: 'object', required: ['id', 'label', 'votes'], properties: { id: str, label: str, votes: strings } } } } },
+        createdAt: { bsonType: 'number' }, updatedAt: str,
+      },
+    },
+  },
+  communitySaves: {
+    schema: { required: ['userId', 'postIds', 'recipeIds'], properties: { userId: str, postIds: strings, recipeIds: strings } },
+  },
+
   payments: {
     schema: {
       required: ['id', 'orderId', 'userId', 'provider', 'txnRef', 'amount', 'status', 'createdAt'],

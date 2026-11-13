@@ -534,3 +534,66 @@ test('Gợi ý "Thường được mua cùng" (luật kết hợp)', async t => 
     assert.equal((await fetch(`${base}/api/products/khong-co`)).headers.get('cache-control'), 'no-store', 'lỗi 404 không cache');
   });
 });
+
+test('Cộng đồng: bài viết, cảm xúc, bình luận, bình chọn, đã lưu', async t => {
+  const admin = await new Client().start();
+  await admin.post('/api/auth/login', { identifier: 'admin@example.com', password: 'adminpass123' });
+  const a = await new Client().register(60), b = await new Client().register(61), guest = await new Client().start();
+  await db.getDatabase().collection('recipes').insertOne({ _id: 'rec-t', id: 'rec-t', slug: 'rec-t', name: 'Món thử', mealType: 'lunch', servings: 2, prepTimeMinutes: 5, cookTimeMinutes: 5, difficulty: 'easy', imageUrl: '', ingredients: [], steps: ['x'], nutrition: { calories: 1, protein: 1, carbs: 1, fat: 1 }, tags: [], isActive: true });
+  let post;
+
+  await t.test('đăng bài cần đăng nhập, kiểm tra dữ liệu, công thức phải có thật', async () => {
+    assert.equal((await guest.post('/api/community/posts', { type: 'recipe', text: 'Nấu thử món này rất ngon' })).status, 401);
+    assert.equal((await a.post('/api/community/posts', { type: 'blog', text: 'Nấu thử món này rất ngon' })).status, 400);
+    assert.equal((await a.post('/api/community/posts', { type: 'recipe', text: 'ngắn' })).status, 400);
+    assert.equal((await a.post('/api/community/posts', { type: 'recipe', text: 'Nấu thử món này rất ngon', recipeId: 'rec-none' })).data.error.code, 'RECIPE_NOT_FOUND');
+    const r = await a.post('/api/community/posts', { type: 'recipe', text: 'Nấu thử món này rất ngon', recipeId: 'rec-t', tags: ['Món Nhanh', 'món nhanh', 'eat-clean'], poll: { question: 'Bạn thích gì?', options: ['A', 'B', ''] } });
+    assert.equal(r.status, 201, JSON.stringify(r.data));
+    post = r.data;
+    assert.deepEqual(post.tags, ['mon-nhanh', 'eat-clean']);
+    assert.equal(post.authorName, 'Khách 60');
+    assert.equal(post.poll.options.length, 2);
+    assert.equal((await guest.get('/api/community/posts?recipe=rec-t')).data.total, 1, 'khách xem được');
+  });
+
+  await t.test('cảm xúc mỗi người một loại, bấm lại thì bỏ; bình luận và trả lời; bình chọn một lựa chọn', async () => {
+    const react = (c, type) => c.post(`/api/community/posts/${post.id}/reactions`, { type });
+    assert.equal((await react(a, 'love')).data.reactions[(await a.get('/api/users/me')).data.id], 'love');
+    await react(b, 'yum');
+    let p = (await react(a, 'like')).data;
+    assert.equal(Object.keys(p.reactions).length, 2, 'đổi cảm xúc không nhân đôi');
+    p = (await react(a, 'like')).data;
+    assert.equal(Object.keys(p.reactions).length, 1, 'bấm lại thì bỏ');
+    assert.equal((await react(a, 'wow')).status, 400);
+    p = (await b.post(`/api/community/posts/${post.id}/comments`, { text: 'Ngon quá' })).data;
+    const cid = p.comments[0].id;
+    p = (await a.post(`/api/community/posts/${post.id}/comments`, { text: 'Cảm ơn', parentId: cid })).data;
+    assert.equal(p.comments.length, 2);
+    assert.equal(p.comments[1].parentId, cid);
+    assert.equal((await a.post(`/api/community/posts/${post.id}/comments`, { text: 'x', parentId: 'c-none' })).status, 400);
+    assert.equal((await a.del(`/api/community/posts/${post.id}/comments/${cid}`)).status, 403, 'không xóa bình luận người khác');
+    p = (await b.del(`/api/community/posts/${post.id}/comments/${cid}`)).data;
+    assert.equal(p.comments.length, 0, 'xóa bình luận gốc kéo theo trả lời');
+    const vote = (c, o) => c.post(`/api/community/posts/${post.id}/votes`, { optionId: o });
+    await vote(a, 'o1'); await vote(b, 'o1');
+    p = (await vote(a, 'o2')).data;
+    assert.deepEqual(p.poll.options.map(o => o.votes.length), [1, 1], 'đổi lựa chọn');
+    assert.equal(p.score, 1 + 2, 'điểm nổi bật = cảm xúc + phiếu');
+    assert.equal((await guest.get('/api/community/posts?sort=top')).data.items[0].id, post.id);
+  });
+
+  await t.test('đã lưu theo tài khoản; chỉ tác giả xóa bài; admin ẩn bài', async () => {
+    assert.deepEqual((await a.request('PUT', '/api/community/saves', { kind: 'post', id: post.id, saved: true })).data, { postIds: [post.id], recipeIds: [] });
+    assert.deepEqual((await a.request('PUT', '/api/community/saves', { kind: 'recipe', id: 'rec-t', saved: true })).data.recipeIds, ['rec-t']);
+    assert.deepEqual((await a.get('/api/community/saves')).data.postIds, [post.id]);
+    assert.equal((await b.get('/api/community/saves')).data.postIds.length, 0);
+    assert.equal((await b.del(`/api/community/posts/${post.id}`)).status, 403);
+    assert.equal((await b.patch(`/api/admin/community/posts/${post.id}`, { hidden: true })).status, 403);
+    assert.equal((await admin.patch(`/api/admin/community/posts/${post.id}`, { hidden: true })).data.hidden, true);
+    assert.equal((await guest.get(`/api/community/posts/${post.id}`)).status, 404, 'bài ẩn khách không thấy');
+    assert.equal((await admin.get('/api/admin/community/posts?hidden=true')).data.total, 1);
+    await admin.patch(`/api/admin/community/posts/${post.id}`, { hidden: false });
+    assert.equal((await a.del(`/api/community/posts/${post.id}`)).status, 200);
+    assert.equal((await guest.get('/api/community/posts')).data.total, 0);
+  });
+});

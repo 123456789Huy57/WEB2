@@ -55,6 +55,7 @@ function createApp() {
   app.use('/api', require('./modules/dashboard/dashboard.routes'));
   app.use('/api', require('./modules/recipes/recipes.routes'));
   app.use('/api', require('./modules/reviews/reviews.routes'));
+  app.use('/api', require('./modules/community/community.routes'));
   app.use('/api', require('./modules/payments/payments.routes'));
   app.use('/api', require('./modules/recommendations/recommendations.routes'));
   app.use(notFound);

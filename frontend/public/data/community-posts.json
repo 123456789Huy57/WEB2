@@ -1,0 +1,302 @@
+[
+ {
+  "id": "post-seed-1",
+  "type": "recipe",
+  "authorId": "m-minhanh",
+  "authorName": "Minh Anh",
+  "createdAt": 1794265200000,
+  "recipeId": "rec-022",
+  "tags": [
+   "mon-nuoc",
+   "bua-toi"
+  ],
+  "text": "Cuối tuần nấu canh chua cá basa cho cả nhà. Mẹo nhỏ: nêm me sau cùng và cho rau thơm lúc tắt bếp thì nước canh thơm hơn hẳn. Cả nhà ăn sạch nồi luôn!",
+  "reactions": {
+   "m-thuha": "love",
+   "m-quocbao": "yum",
+   "m-lanphuong": "like",
+   "m-duchuy": "yum",
+   "m-ngoctram": "love"
+  },
+  "comments": [
+   {
+    "id": "c1",
+    "authorId": "m-thuha",
+    "authorName": "Thu Hà",
+    "text": "Nhìn ngon quá, tuần sau mình nấu thử. Bạn dùng cá lóc đồng hay cá nuôi vậy?",
+    "createdAt": 1794267000000
+   },
+   {
+    "id": "c2",
+    "authorId": "m-minhanh",
+    "authorName": "Minh Anh",
+    "text": "Mình dùng cá nuôi mua ở FreshMart, ít tanh, thịt chắc nên nấu rất ổn.",
+    "createdAt": 1794268200000,
+    "parentId": "c1"
+   },
+   {
+    "id": "c3",
+    "authorId": "m-duchuy",
+    "authorName": "Đức Huy",
+    "text": "Lưu lại công thức rồi nha!",
+    "createdAt": 1794270000000
+   }
+  ],
+  "sample": true,
+  "score": 11,
+  "updatedAt": "2026-11-10T01:00:00.000Z"
+ },
+ {
+  "id": "post-seed-2",
+  "type": "question",
+  "authorId": "m-quocbao",
+  "authorName": "Quốc Bảo",
+  "createdAt": 1794254400000,
+  "tags": [
+   "meo-bep",
+   "hoi-dap"
+  ],
+  "text": "Mình kho thịt ba rọi hay bị dai và khô nước. Mọi người kho khoảng bao lâu, lửa to hay nhỏ thì thịt mềm mà vẫn giữ màu đẹp ạ?",
+  "reactions": {
+   "m-ngoctram": "like",
+   "m-lanphuong": "like"
+  },
+  "comments": [
+   {
+    "id": "c4",
+    "authorId": "m-ngoctram",
+    "authorName": "Ngọc Trâm",
+    "text": "Chần thịt qua nước sôi trước, sau đó kho lửa nhỏ liu riu khoảng 60–75 phút. Nước dừa tươi sẽ giúp thịt mềm và ngọt tự nhiên.",
+    "createdAt": 1794258000000
+   },
+   {
+    "id": "c5",
+    "authorId": "m-quocbao",
+    "authorName": "Quốc Bảo",
+    "text": "Cảm ơn bạn, cuối tuần mình thử lại theo cách này!",
+    "createdAt": 1794261600000,
+    "parentId": "c4"
+   }
+  ],
+  "sample": true,
+  "score": 6,
+  "updatedAt": "2026-11-10T01:00:00.000Z"
+ },
+ {
+  "id": "post-seed-3",
+  "type": "discussion",
+  "authorId": "m-thuha",
+  "authorName": "Thu Hà",
+  "createdAt": 1794240000000,
+  "tags": [
+   "bua-sang",
+   "mon-nhanh"
+  ],
+  "text": "Sáng nào cũng 15 phút là phải xong bữa sáng cho cả nhà. Các bạn hay chọn gì để vừa nhanh vừa đủ chất?",
+  "reactions": {
+   "m-minhanh": "like",
+   "m-duchuy": "like",
+   "m-lanphuong": "yum"
+  },
+  "poll": {
+   "question": "Bữa sáng nhanh gọn của bạn thường là…",
+   "options": [
+    {
+     "id": "o1",
+     "label": "Trứng ốp la + bánh mì",
+     "votes": [
+      "m-duchuy",
+      "m-minhanh",
+      "m-quocbao",
+      "m-thuha"
+     ]
+    },
+    {
+     "id": "o2",
+     "label": "Yến mạch + trái cây",
+     "votes": [
+      "m-lanphuong",
+      "m-ngoctram"
+     ]
+    },
+    {
+     "id": "o3",
+     "label": "Phở / bún nấu sẵn",
+     "votes": [
+      "m-ngoctram"
+     ]
+    },
+    {
+     "id": "o4",
+     "label": "Sữa chua + ngũ cốc",
+     "votes": []
+    }
+   ]
+  },
+  "comments": [
+   {
+    "id": "c6",
+    "authorId": "m-lanphuong",
+    "authorName": "Lan Phương",
+    "text": "Mình ưu tiên yến mạch chuối, làm tối hôm trước để sáng chỉ việc lấy ra ăn.",
+    "createdAt": 1794247200000
+   }
+  ],
+  "sample": true,
+  "score": 12,
+  "updatedAt": "2026-11-10T01:00:00.000Z"
+ },
+ {
+  "id": "post-seed-4",
+  "type": "recipe",
+  "authorId": "m-duchuy",
+  "authorName": "Đức Huy",
+  "createdAt": 1794178800000,
+  "recipeId": "rec-001",
+  "challengeId": "tc-15-phut",
+  "tags": [
+   "mon-nhanh",
+   "thachthuc15phut"
+  ],
+  "text": "Tham gia thử thách 15 phút với món trứng xào cà chua quen thuộc. Xong trong 12 phút, tốn đúng 2 quả cà chua và 3 quả trứng. Sinh viên nấu trọ chỉ cần vậy là đủ!",
+  "reactions": {
+   "m-minhanh": "love",
+   "m-thuha": "like",
+   "m-quocbao": "like"
+  },
+  "comments": [
+   {
+    "id": "c7",
+    "authorId": "m-minhanh",
+    "authorName": "Minh Anh",
+    "text": "Cho thêm chút đường khi xào cà chua là bí quyết nhé bạn!",
+    "createdAt": 1794186000000
+   }
+  ],
+  "sample": true,
+  "score": 5,
+  "updatedAt": "2026-11-10T01:00:00.000Z"
+ },
+ {
+  "id": "post-seed-5",
+  "type": "recipe",
+  "authorId": "m-lanphuong",
+  "authorName": "Lan Phương",
+  "createdAt": 1794164400000,
+  "recipeId": "rec-028",
+  "challengeId": "tc-15-phut",
+  "tags": [
+   "eat-clean",
+   "thachthuc15phut"
+  ],
+  "text": "Gỏi cuốn tôm thịt cho bữa tối nhẹ nhàng. Chuẩn bị rau sẵn từ chiều thì lúc cuốn chỉ mất đúng 15 phút. Nước chấm mình pha thêm chút tắc cho thơm.",
+  "reactions": {
+   "m-minhanh": "yum",
+   "m-thuha": "love",
+   "m-duchuy": "yum",
+   "m-ngoctram": "like"
+  },
+  "comments": [],
+  "sample": true,
+  "score": 4,
+  "updatedAt": "2026-11-10T01:00:00.000Z"
+ },
+ {
+  "id": "post-seed-6",
+  "type": "discussion",
+  "authorId": "m-ngoctram",
+  "authorName": "Ngọc Trâm",
+  "createdAt": 1794099600000,
+  "image": "/img/quay-rau.jpg",
+  "tags": [
+   "meo-bep",
+   "an-chay"
+  ],
+  "text": "Sáng nay đi chợ gặp mẻ rau muống non mơn mởn. Mình hay quấn khăn giấy ẩm rồi bỏ ngăn mát, để được 4–5 ngày vẫn giòn. Còn bạn bảo quản rau lá thế nào?",
+  "reactions": {
+   "m-minhanh": "like",
+   "m-thuha": "like",
+   "m-lanphuong": "love",
+   "m-quocbao": "like"
+  },
+  "comments": [
+   {
+    "id": "c8",
+    "authorId": "m-thuha",
+    "authorName": "Thu Hà",
+    "text": "Mình cắm gốc vào ly nước như cắm hoa, rau thơm sống được cả tuần luôn.",
+    "createdAt": 1794106800000
+   }
+  ],
+  "sample": true,
+  "score": 6,
+  "updatedAt": "2026-11-10T01:00:00.000Z"
+ },
+ {
+  "id": "post-seed-7",
+  "type": "recipe",
+  "authorId": "m-quocbao",
+  "authorName": "Quốc Bảo",
+  "createdAt": 1794013200000,
+  "recipeId": "rec-035",
+  "tags": [
+   "mon-nuong",
+   "cuoi-tuan"
+  ],
+  "text": "Gà nướng mật ong cho buổi tụ họp cuối tuần: ướp qua đêm, nướng 200°C khoảng 35 phút, giữa chừng phết thêm mật ong để da lên màu cánh gián.",
+  "reactions": {
+   "m-minhanh": "yum",
+   "m-thuha": "yum",
+   "m-lanphuong": "like",
+   "m-duchuy": "love",
+   "m-ngoctram": "yum"
+  },
+  "comments": [
+   {
+    "id": "c9",
+    "authorId": "m-duchuy",
+    "authorName": "Đức Huy",
+    "text": "Không có lò nướng thì dùng nồi chiên không dầu được không bạn?",
+    "createdAt": 1794034800000
+   },
+   {
+    "id": "c10",
+    "authorId": "m-quocbao",
+    "authorName": "Quốc Bảo",
+    "text": "Được nhé, 180°C khoảng 25 phút, nhớ lật mặt giữa chừng.",
+    "createdAt": 1794042000000,
+    "parentId": "c9"
+   }
+  ],
+  "sample": true,
+  "score": 9,
+  "updatedAt": "2026-11-10T01:00:00.000Z"
+ },
+ {
+  "id": "post-seed-8",
+  "type": "question",
+  "authorId": "m-duchuy",
+  "authorName": "Đức Huy",
+  "createdAt": 1793926800000,
+  "tags": [
+   "hoi-dap",
+   "mon-nhanh"
+  ],
+  "text": "Nhà mình không có sa tế, muốn xào mực cho đậm vị thì có thể thay bằng gì? Mong mọi người chỉ giúp.",
+  "reactions": {
+   "m-ngoctram": "like"
+  },
+  "comments": [
+   {
+    "id": "c11",
+    "authorId": "m-ngoctram",
+    "authorName": "Ngọc Trâm",
+    "text": "Phi tỏi với ớt băm, thêm chút dầu hào và đường là có vị cay mặn khá giống sa tế.",
+    "createdAt": 1793941200000
+   }
+  ],
+  "sample": true,
+  "score": 3,
+  "updatedAt": "2026-11-10T01:00:00.000Z"
+ }
+]

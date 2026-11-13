@@ -67,4 +67,5 @@ Cập nhật: 12/11/2026 · Nhánh `huy-phan-b`
 ## 4. Còn lại
 
 1. **9 nguyên liệu không có hàng** (mật ong, ghẹ, đào, kem tươi, ớt chuông, riềng, đậu nành hạt, trân châu, mực khô): Meal Planner báo "chưa có sản phẩm phù hợp".
-2. **Tab Cộng đồng**: dữ liệu là lượt nấu thật. Database mới thì trống cho tới khi có người dùng; không tạo lượt nấu giả.
+2. **Trang Cộng đồng đã có backend thật** (`/api/community`): bài viết, cảm xúc, bình luận, bình chọn, bài và công thức đã lưu theo tài khoản; admin ẩn bài qua `PATCH /admin/community/posts/:id`. 8 bài mẫu nạp bằng `db:setup`, gắn cờ `sample` và nhãn "Bài mẫu". Còn thiếu: màn hình admin duyệt bài (hiện chỉ có API), tải ảnh lên cho bài viết (hiện chỉ nhận đường dẫn ảnh).
+3. **Tài khoản demo** trên trang đăng nhập chỉ hiện khi chạy ở localhost. Trước khi deploy, đổi mật khẩu `admin@freshmart.vn` trên Atlas.
