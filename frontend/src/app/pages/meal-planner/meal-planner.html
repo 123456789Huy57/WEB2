@@ -51,7 +51,7 @@
           </div>
         }
       </div>
-    } @else { <p class="muted">Đang tải…</p> }
+    } @else { <div class="skel-lines" aria-label="Đang tải nguyên liệu"><span class="skel" style="height:44px"></span><span class="skel" style="height:44px"></span><span class="skel" style="height:44px"></span></div> }
   </section>
 }
 
@@ -146,7 +146,7 @@
       <span class="mp-no">3</span>
       <div>
         <h2 class="mp-card-title" id="mp-s3">Kết quả gợi ý</h2>
-        <p class="mp-card-sub">@if (results(); as res) { Tìm thấy <b class="num">{{ res.length }}</b> món, xếp theo số nguyên liệu bạn đã có } @else { Chọn nguyên liệu rồi bấm Gợi ý món }</p>
+        <p class="mp-card-sub">@if (results(); as res) { Tìm thấy <b class="num">{{ res.length }}</b> món, món có sẵn nhiều nguyên liệu nhất đứng đầu } @else { Chọn nguyên liệu rồi bấm Gợi ý món }</p>
       </div>
     </header>
 

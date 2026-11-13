@@ -25,7 +25,7 @@ export const INGREDIENT_GROUPS: [string, string][] = [
   ['dairy', 'Sữa, trứng'], ['pantry', 'Đồ khô'], ['condiments', 'Gia vị']
 ];
 
-/** Thuật toán giữ nguyên Web1 (js/meal-planner.js → filterRecipes) để nhóm dễ đối chiếu khi chấm. */
+/** Gợi ý món, quy đổi nguyên liệu ra hàng cần mua. Thuật toán gợi ý cải tiến từ Web1 (js/meal-planner.js → filterRecipes), xem generate(). */
 @Injectable({ providedIn: 'root' })
 export class MealPlannerService {
   private data = inject(DataService);
@@ -65,26 +65,39 @@ export class MealPlannerService {
     return p ? this.products.img(p) : i.imageUrl;
   }
 
+  /**
+   * Gợi ý món từ nguyên liệu đang có (bản cải tiến từ filterRecipes của Web1).
+   * Khác Web1:
+   * - Xếp theo TỈ LỆ nguyên liệu đã có, không theo số lượng: món đủ 3/3 đứng trên món có 3/15.
+   * - Gia vị (nước mắm, muối, đường…) nhà nào cũng có nên chỉ tính 1/4 trọng số, và chỉ có gia vị
+   *   thì chưa đủ để gợi ý món (trừ khi khách chỉ chọn gia vị).
+   * - Bữa ăn, độ khó, thời gian nấu là bộ lọc thật: chọn "Bữa sáng" thì chỉ ra món bữa sáng.
+   * Số người ăn không loại món vì định lượng tự quy đổi theo số người.
+   */
   generate(selected: string[], f: PlannerFilters): PlannerResult[] {
-    const timeOk = (t: number) => ({ all: true, quick: t < 15, normal: t >= 15 && t <= 30, long: t > 30 && t <= 60 })[f.time];
+    const timeOk = (t: number) => ({ all: true, quick: t < 15, normal: t >= 15 && t <= 30, long: t > 30 })[f.time];
+    const sel = new Set(selected);
+    const weight = (id: string) => (this.ingredient(id)?.categoryId === 'condiments' ? 0.25 : 1);
+    const onlyStaples = selected.every(id => weight(id) < 1);
     return this.data.recipes()
-      .map(r => {
-        const ids = r.ingredients.map(l => l.ingredientId);
-        const matched = ids.filter(id => selected.includes(id)).length;
-        if (!matched) return null;
-        let score = matched * 10;
-        const t = this.totalTime(r);
-        if (f.mealType !== 'all' && r.mealType === f.mealType) score += 10;
-        if (f.difficulty !== 'all' && r.difficulty === f.difficulty) score += 5;
-        if (f.time !== 'all' && timeOk(t)) score += 5;
-        if (r.servings === f.servings) score += 5; else if (Math.abs(r.servings - f.servings) <= 2) score += 2;
-        if (f.vegetarian && !r.tags.includes('vegetarian')) return null;
-        if (f.lowFat && (r.nutrition?.fat ?? 0) > 15) return null;
-        if (f.highProtein && (r.nutrition?.protein ?? 0) < 20) return null;
-        return { recipe: r, score, matched, missing: ids.length - matched };
+      .flatMap(r => {
+        if (f.mealType !== 'all' && r.mealType !== f.mealType) return [];
+        if (f.difficulty !== 'all' && r.difficulty !== f.difficulty) return [];
+        if (!timeOk(this.totalTime(r))) return [];
+        if (f.vegetarian && !r.tags.includes('vegetarian')) return [];
+        if (f.lowFat && (r.nutrition?.fat ?? 0) > 15) return [];
+        if (f.highProtein && (r.nutrition?.protein ?? 0) < 20) return [];
+        const ids = [...new Set(r.ingredients.map(l => l.ingredientId))];
+        const have = ids.filter(id => sel.has(id));
+        const main = have.filter(id => weight(id) === 1).length;
+        if (!have.length || (!onlyStaples && !main)) return [];
+        const coverage = have.reduce((s, id) => s + weight(id), 0) / ids.reduce((s, id) => s + weight(id), 0);
+        const missingMain = ids.filter(id => !sel.has(id) && weight(id) === 1).length;
+        // Tỉ lệ đã có là chính; cùng tỉ lệ thì ưu tiên món dùng được nhiều nguyên liệu chính của khách, ít phải mua thêm.
+        const score = Math.round(coverage * 100) + main * 3 - missingMain;
+        return [{ recipe: r, score, matched: have.length, missing: ids.length - have.length }];
       })
-      .filter((x): x is PlannerResult => !!x)
-      .sort((a, b) => b.score - a.score)
+      .sort((a, b) => b.score - a.score || a.missing - b.missing)
       .slice(0, 12);
   }
 
