@@ -58,14 +58,11 @@ Cập nhật: 12/11/2026 · Nhánh `huy-phan-b`
    - Bánh xèo có giá và thịt thay cho mực khô.
    - Nem nướng dùng thịt xay và cuốn bánh tráng.
    - Cách làm của 22 món được viết lại theo danh sách mới.
-4. **Giao diện Meal Planner**:
-   - Đầu trang gọn hơn.
-   - Hai cột: "Tủ bếp của bạn" dính bên trái, bộ lọc dạng chip và danh sách món bên phải.
-   - Kết quả cập nhật ngay khi chọn, không cần bấm nút.
-   - Chưa chọn gì thì hiện món gợi ý theo bộ lọc.
-   - Thẻ món hiện icon nguyên liệu (đã có thì đậm), nhãn "Có 3/5" và tên các nguyên liệu cần thêm.
-   - Trên điện thoại có thanh nổi "Xem n món" để nhảy xuống danh sách.
-   - Thuật toán xếp món giữ nguyên như Web1.
+4. **Giao diện Meal Planner**: dùng giao diện của nhóm (nhánh `pa`/`lu` và trang Cộng đồng của nhánh `hn`). Phần dữ liệu mới được nối vào mà không đổi bố cục:
+   - Tên bước thật thay cho "Bước 1, 2…".
+   - Tab "Mẹo nấu" dùng mẹo của từng món.
+   - Giới thiệu món, bảng gia vị, ăn kèm, bảo quản.
+   - Icon nguyên liệu.
 
 ## 4. Còn lại
 
