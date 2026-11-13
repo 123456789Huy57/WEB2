@@ -539,7 +539,7 @@ test('Cộng đồng: bài viết, cảm xúc, bình luận, bình chọn, đã 
   const admin = await new Client().start();
   await admin.post('/api/auth/login', { identifier: 'admin@example.com', password: 'adminpass123' });
   const a = await new Client().register(60), b = await new Client().register(61), guest = await new Client().start();
-  await db.getDatabase().collection('recipes').insertOne({ _id: 'rec-t', id: 'rec-t', slug: 'rec-t', name: 'Món thử', mealType: 'lunch', servings: 2, prepTimeMinutes: 5, cookTimeMinutes: 5, difficulty: 'easy', imageUrl: '', ingredients: [], steps: ['x'], nutrition: { calories: 1, protein: 1, carbs: 1, fat: 1 }, tags: [], isActive: true });
+  // Dùng rec-1 do test Meal Planner đã tạo (đúng schema)
   let post;
 
   await t.test('đăng bài cần đăng nhập, kiểm tra dữ liệu, công thức phải có thật', async () => {
@@ -547,13 +547,13 @@ test('Cộng đồng: bài viết, cảm xúc, bình luận, bình chọn, đã 
     assert.equal((await a.post('/api/community/posts', { type: 'blog', text: 'Nấu thử món này rất ngon' })).status, 400);
     assert.equal((await a.post('/api/community/posts', { type: 'recipe', text: 'ngắn' })).status, 400);
     assert.equal((await a.post('/api/community/posts', { type: 'recipe', text: 'Nấu thử món này rất ngon', recipeId: 'rec-none' })).data.error.code, 'RECIPE_NOT_FOUND');
-    const r = await a.post('/api/community/posts', { type: 'recipe', text: 'Nấu thử món này rất ngon', recipeId: 'rec-t', tags: ['Món Nhanh', 'món nhanh', 'eat-clean'], poll: { question: 'Bạn thích gì?', options: ['A', 'B', ''] } });
+    const r = await a.post('/api/community/posts', { type: 'recipe', text: 'Nấu thử món này rất ngon', recipeId: 'rec-1', tags: ['Món Nhanh', 'món nhanh', 'eat-clean'], poll: { question: 'Bạn thích gì?', options: ['A', 'B', ''] } });
     assert.equal(r.status, 201, JSON.stringify(r.data));
     post = r.data;
     assert.deepEqual(post.tags, ['mon-nhanh', 'eat-clean']);
     assert.equal(post.authorName, 'Khách 60');
     assert.equal(post.poll.options.length, 2);
-    assert.equal((await guest.get('/api/community/posts?recipe=rec-t')).data.total, 1, 'khách xem được');
+    assert.equal((await guest.get('/api/community/posts?recipe=rec-1')).data.total, 1, 'khách xem được');
   });
 
   await t.test('cảm xúc mỗi người một loại, bấm lại thì bỏ; bình luận và trả lời; bình chọn một lựa chọn', async () => {
@@ -584,7 +584,7 @@ test('Cộng đồng: bài viết, cảm xúc, bình luận, bình chọn, đã 
 
   await t.test('đã lưu theo tài khoản; chỉ tác giả xóa bài; admin ẩn bài', async () => {
     assert.deepEqual((await a.request('PUT', '/api/community/saves', { kind: 'post', id: post.id, saved: true })).data, { postIds: [post.id], recipeIds: [] });
-    assert.deepEqual((await a.request('PUT', '/api/community/saves', { kind: 'recipe', id: 'rec-t', saved: true })).data.recipeIds, ['rec-t']);
+    assert.deepEqual((await a.request('PUT', '/api/community/saves', { kind: 'recipe', id: 'rec-1', saved: true })).data.recipeIds, ['rec-1']);
     assert.deepEqual((await a.get('/api/community/saves')).data.postIds, [post.id]);
     assert.equal((await b.get('/api/community/saves')).data.postIds.length, 0);
     assert.equal((await b.del(`/api/community/posts/${post.id}`)).status, 403);
