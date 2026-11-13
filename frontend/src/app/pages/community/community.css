@@ -8,7 +8,7 @@
 .cm { padding-block: clamp(24px, 3vw, 40px) 72px; background: var(--stone); }
 .cm-layout { display: grid; grid-template-columns: 240px minmax(0, 1fr) 320px; gap: 24px; align-items: start; max-width: 1400px; margin: 0 auto; }
 .cm-left, .cm-right { display: grid; gap: 16px; position: sticky; top: calc(var(--header-h) - 20px); }
-.cm-main { display: grid; gap: 16px; min-width: 0; }
+.cm-main { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; min-width: 0; }
 .cm-card { background: var(--paper); border: 1px solid var(--stone-2); border-radius: var(--r); padding: 18px; }
 .cm-h { margin-bottom: 12px; font-family: var(--display); font-size: 18px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; }
 .cm-link { padding: 2px 0; border: 0; background: none; font-size: 14px; font-weight: 600; color: var(--forest); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
@@ -46,7 +46,7 @@
 .cm-compose-row { display: flex; gap: 12px; align-items: center; }
 .cm-compose-input { flex: 1; min-width: 0; height: 48px; padding: 0 18px; border: 1.5px solid var(--stone-2); border-radius: var(--r); background: var(--stone); text-align: left; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .cm-compose-input:hover { border-color: var(--ink); }
-.cm-compose-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding-top: 12px; border-top: 1px solid var(--stone-2); }
+.cm-compose-actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding-top: 12px; border-top: 1px solid var(--stone-2); }
 .cm-compose-actions button { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; border: 0; border-radius: var(--r); background: none; font-weight: 600; font-size: 14px; }
 .cm-compose-actions button:hover { background: var(--stone); }
 .cm-compose-actions i { font-style: normal; }
@@ -207,7 +207,7 @@
   .cm-right { position: static; grid-column: 1 / -1; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
 }
 @media (max-width: 820px) {
-  .cm-layout { grid-template-columns: 1fr; }
+  .cm-layout { grid-template-columns: minmax(0, 1fr); }
   .cm-left { position: static; grid-template-columns: 1fr; }
   .cm-left .cm-nav, .cm-left .cm-cta { display: none; }
   .cm-challenge { grid-template-columns: 1fr; }
