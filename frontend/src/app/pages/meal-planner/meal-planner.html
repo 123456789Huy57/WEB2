@@ -325,6 +325,13 @@
                 <span class="st" [class.ok]="isSel(x.line.ingredientId)">{{ isSel(x.line.ingredientId) ? '✓ Đã có' : 'Cần mua' }}</span>
               </li>
             }</ul>
+            @if (r.seasonings?.length) {
+              <div class="d-season">
+                <p class="h">Gia vị thường có sẵn</p>
+                <ul>@for (g of r.seasonings; track g.name) { <li><span>{{ g.name }}</span><span class="muted num">{{ g.amount }}</span></li> }</ul>
+                @if (f().servings !== r.servings) { <p class="small muted">Lượng gia vị ghi cho {{ r.servings }} người, nêm lại theo khẩu vị khi nấu cho {{ f().servings }} người.</p> }
+              </div>
+            }
             <div class="d-buy">
               @if (missing().length) {
                 <div class="d-buy-heading"><div><p class="mp-eyebrow">FRESHMART SHOPPING LIST</p><p class="h">Mua phần còn thiếu</p><p class="small muted">Bỏ chọn món bạn không cần. Số lượng làm tròn theo đơn vị bán.</p></div><span class="d-buy-count">{{ chosen().length }} món</span></div>
@@ -358,6 +365,15 @@
                 </div>
               </li>
             }</ol>
+            @if (r.tips?.length) {
+              <aside class="d-tips" aria-label="Mẹo nấu ngon"><b>MẸO NẤU NGON</b><ul>@for (t of r.tips; track $index) { <li>{{ t }}</li> }</ul></aside>
+            }
+            @if (r.servingNote || r.storage) {
+              <dl class="d-more">
+                @if (r.servingNote) { <div><dt>Ăn kèm</dt><dd>{{ r.servingNote }}</dd></div> }
+                @if (r.storage) { <div><dt>Bảo quản</dt><dd>{{ r.storage }}</dd></div> }
+              </dl>
+            }
             <p class="d-nutrition-note">Thời gian và định lượng có thể thay đổi tùy nguyên liệu, thiết bị và khẩu vị thực tế.</p>
           </section>
         </div>

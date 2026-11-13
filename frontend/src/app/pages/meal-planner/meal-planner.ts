@@ -171,7 +171,8 @@ export class MealPlanner {
   protected callouts = computed(() => [...this.featLines()].sort((a, b) => Number(this.isSel(b.line.ingredientId)) - Number(this.isSel(a.line.ingredientId))).slice(0, 4));
   protected featTips = computed(() => {
     const r = this.featured()?.recipe;
-    return r ? r.steps.map(s => this.stepTip(s)).filter((t): t is string => !!t) : [];
+    if (!r) return [];
+    return r.tips?.length ? r.tips : r.steps.map(s => this.stepTip(s)).filter((t): t is string => !!t);
   });
   private featureEl = viewChild<ElementRef<HTMLElement>>('featureEl');
   protected feature(id: string): void {
@@ -249,6 +250,7 @@ export class MealPlanner {
   protected communityPosts = computed(() => { const r = this.current(); return r ? this.cs.postsForRecipe(r.id) : []; });
   /** Mô tả ngắn dựng từ dữ liệu có sẵn (công thức chưa có trường mô tả riêng) */
   protected describe(r: Recipe): string {
+    if (r.description) return r.description;
     const names = r.ingredients.map(l => this.mp.ingredient(l.ingredientId)?.name).filter((x): x is string => !!x);
     const main = names.slice(0, 3).join(', ');
     return `${this.meal[r.mealType]} mức ${this.diff[r.difficulty].toLowerCase()}, xong trong khoảng ${this.mp.totalTime(r)} phút${main ? ', từ ' + main + (names.length > 3 ? ' và ' + (names.length - 3) + ' nguyên liệu khác' : '') : ''}.`;
@@ -268,11 +270,16 @@ export class MealPlanner {
   }
   protected startCooking(): void { this.dlg().nativeElement.querySelector('#d-steps')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
 
+  /** Bước dạng chữ "Sơ chế: rửa sạch…" (dữ liệu db:sync) tách thành tiêu đề + nội dung; bước dạng object giữ nguyên */
+  private splitStep(step: string): [string, string] | null {
+    const m = /^([^:.]{2,40}):\s*(.+)$/s.exec(step);
+    return m ? [m[1], m[2]] : null;
+  }
   protected stepTitle(step: Recipe['steps'][number], index: number): string {
-    return typeof step === 'string' ? `Bước ${index + 1}` : step.title;
+    return typeof step === 'string' ? this.splitStep(step)?.[0] ?? `Bước ${index + 1}` : step.title;
   }
   protected stepDescription(step: Recipe['steps'][number]): string {
-    return typeof step === 'string' ? step : step.description;
+    return typeof step === 'string' ? this.splitStep(step)?.[1] ?? step : step.description;
   }
   protected stepDuration(step: Recipe['steps'][number]): number | null {
     return typeof step === 'string' ? null : step.durationMinutes ?? null;
