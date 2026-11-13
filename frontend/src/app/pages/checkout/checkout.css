@@ -5,6 +5,8 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 .choices { display: flex; flex-direction: column; gap: 10px; }
 .choice span span { display: block; margin-top: 2px; }
 .slots { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.slot-day { margin: 14px 0 8px; font-weight: 600; }
+.slot-day:first-of-type { margin-top: 0; }
 .slots .choice { flex-direction: column; gap: 4px; padding: 16px; }
 .slots .choice input { position: absolute; opacity: 0; pointer-events: none; }
 .slots .choice b { font-family: var(--display); font-size: 24px; font-weight: 400; }

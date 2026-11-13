@@ -695,3 +695,24 @@ test('Cộng đồng: bài viết, cảm xúc, bình luận, bình chọn, đã 
     assert.equal((await guest.get('/api/community/posts')).data.total, 0);
   });
 });
+
+// Đặt cuối file: quét đơn với thời điểm giả lập +49 giờ sẽ hủy mọi đơn COD đang chờ của các bài trước.
+test('Khung giờ giao do server kiểm tra; đơn COD bỏ quên quá 48 giờ tự hủy và trả kho', async () => {
+  const c = await new Client().register(58);
+  const slots = (await c.get('/api/delivery-slots')).data;
+  assert.ok(slots.length >= 4 && slots.every(s => /^\d{4}-\d{2}-\d{2} \d{2}:00-\d{2}:00$/.test(s.value)));
+  await c.post('/api/cart/items', { productId: 'p-bulk', quantity: 1 });
+  const past = await order(c, { customer: { ...customer, slot: '2020-01-01 09:00-11:00' } });
+  assert.equal(past.data.error?.code, 'DELIVERY_SLOT_UNAVAILABLE');
+  const pick = slots[slots.length - 1];
+  const ok = await order(c, { customer: { ...customer, slot: pick.value } });
+  assert.equal(ok.status, 201, JSON.stringify(ok.data));
+  assert.equal(ok.data.customer.slot, pick.label, 'đơn lưu khung giờ kèm ngày giao');
+  const stockBefore = (await db.getDatabase().collection('products').findOne({ id: 'p-bulk' })).stock;
+  const svc = require('../src/modules/orders/orders.service');
+  await svc.expireUnpaid(new Date(Date.now() + 47 * 3600000));
+  assert.equal((await c.get(`/api/users/me/orders/${ok.data.id}`)).data.status, 'pending', 'chưa tới 48 giờ thì giữ');
+  await svc.expireUnpaid(new Date(Date.now() + 49 * 3600000));
+  assert.equal((await c.get(`/api/users/me/orders/${ok.data.id}`)).data.status, 'cancelled');
+  assert.equal((await db.getDatabase().collection('products').findOne({ id: 'p-bulk' })).stock, stockBefore + 1, 'trả hàng về kho');
+});

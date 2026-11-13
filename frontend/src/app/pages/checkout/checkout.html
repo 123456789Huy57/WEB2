@@ -22,14 +22,19 @@
         </fieldset>
         <fieldset class="co-step">
           <legend class="h3">Giờ nhận hàng</legend>
-          <div class="slots">
-            @for (s of slots; track s.value) {
-              <label class="choice">
-                <input type="radio" formControlName="slot" [value]="s.value" [attr.disabled]="s.disabled ? '' : null">
-                <span class="small muted">{{ s.day }}</span><b class="num">{{ s.from }}</b><span class="small muted num">đến {{ s.to }}</span>
-              </label>
-            }
-          </div>
+          @for (g of slotGroups(); track g.day) {
+            <p class="small muted slot-day">{{ g.label }}</p>
+            <div class="slots">
+              @for (s of g.slots; track s.value) {
+                <label class="choice">
+                  <input type="radio" formControlName="slot" [value]="s.value">
+                  <b class="num">{{ s.time.split('–')[0] }}</b><span class="small muted num">đến {{ s.time.split('–')[1] }}</span>
+                </label>
+              }
+            </div>
+          } @empty {
+            <div class="slots" aria-hidden="true">@for (i of [1, 2, 3, 4]; track i) { <span class="skel" style="height:64px"></span> }</div>
+          }
         </fieldset>
         <fieldset class="co-step">
           <legend class="h3">Thanh toán</legend>

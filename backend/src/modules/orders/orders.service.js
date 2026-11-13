@@ -19,6 +19,7 @@ const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-
 const publicOrder = ({ _id, idempotencyKey, requestHash, stockRestored, ...order }) => order;
 const payments = () => getDatabase().collection('payments');
 const SYSTEM_ACTOR = 'system';
+const COD_STALE_HOURS = 48;
 
 function idempotencyKey(req) {
   const key = req.get('idempotency-key');
@@ -35,7 +36,8 @@ function parseOrderBody(body) {
     email: c.email ? v.email(c.email) : '',
     address: v.text(c.address, 'Địa chỉ', 5, 300),
     note: c.note === undefined ? '' : v.text(c.note, 'Ghi chú', 0, 500),
-    slot: c.slot === undefined ? '' : v.text(c.slot, 'Giờ nhận', 0, 60),
+    // Khung giờ do server kiểm tra theo giờ Việt Nam; lưu kèm ngày giao để admin biết giao hôm nào.
+    slot: require('./delivery').resolveSlot(c.slot === undefined ? undefined : v.text(c.slot, 'Giờ nhận', 0, 60)).label,
   };
   if (!PAYMENT_METHODS.includes(body.paymentMethod)) throw new HttpError(400, 'PAYMENT_METHOD_UNSUPPORTED', 'Chỉ hỗ trợ thanh toán khi nhận hàng (COD), VNPay hoặc chuyển khoản QR.');
   if (body.paymentMethod === 'bank' && !require('../../config/env').bank.enabled) throw new HttpError(400, 'PAYMENT_METHOD_UNSUPPORTED', 'Cửa hàng chưa bật chuyển khoản QR.');
@@ -174,7 +176,7 @@ async function changeStatus({ orderId, to, expectedStatus, actor, ownerId, expir
   return publicOrder(result);
 }
 
-// Hủy các đơn VNPay quá hạn mà khách chưa trả tiền: hoàn kho và lượt voucher. Chạy định kỳ và trước khi tạo thanh toán.
+// Hủy các đơn trả trước quá hạn mà khách chưa trả tiền, và đơn COD bị bỏ quên: hoàn kho và lượt voucher. Chạy định kỳ.
 async function expireUnpaid(now = new Date()) {
   const due = await orders().find(
     { paymentMethod: { $in: ONLINE_METHODS }, paymentStatus: 'unpaid', status: 'pending', paymentDueAt: { $lte: now.toISOString() } },
@@ -187,6 +189,19 @@ async function expireUnpaid(now = new Date()) {
       expired += 1;
     } catch (error) {
       if (!(error instanceof HttpError)) throw error; // đơn vừa được trả tiền hoặc vừa đổi trạng thái: bỏ qua
+    }
+  }
+  // Đơn COD chờ xác nhận quá 48 giờ (khách đặt thử rồi bỏ, cửa hàng không liên lạc được): hủy để trả hàng về kho.
+  const stale = await orders().find(
+    { paymentMethod: 'cod', status: 'pending', createdAt: { $lte: new Date(now.getTime() - COD_STALE_HOURS * 3600000).toISOString() } },
+    { projection: { id: 1 } },
+  ).limit(100).toArray();
+  for (const { id } of stale) {
+    try {
+      await changeStatus({ orderId: id, to: 'cancelled', expectedStatus: 'pending', actor: SYSTEM_ACTOR, expireUnpaid: true });
+      expired += 1;
+    } catch (error) {
+      if (!(error instanceof HttpError)) throw error;
     }
   }
   return expired;

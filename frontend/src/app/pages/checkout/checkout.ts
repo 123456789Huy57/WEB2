@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation, computed, inject, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -13,14 +14,8 @@ import { PaymentMethod, Product } from '../../core/models';
 import { VndPipe } from '../../shared/vnd.pipe';
 import { ImgFallbackDirective } from '../../shared/img-fallback.directive';
 
-/** Khung giờ giao: khung nào bắt đầu trong vòng 1 giờ tới thì không chọn được */
-function buildSlots() {
-  const h = new Date().getHours();
-  const raw: [string, string, number][] = [['9:00', '11:00', 9], ['12:00', '14:00', 12], ['16:00', '18:00', 16], ['18:00', '20:00', 18]];
-  const first = raw.findIndex(s => s[2] - 1 > h);
-  const day = first < 0 ? 'Ngày mai' : 'Hôm nay';
-  return raw.map(([from, to], i) => ({ day, from, to, value: `${day} ${from}–${to}`, disabled: first >= 0 && i < first, preferred: first < 0 ? i === 0 : i === first }));
-}
+/** Khung giờ giao lấy từ server (giờ Việt Nam): hôm nay còn kịp và ngày mai. Server kiểm tra lại khi đặt đơn. */
+interface Slot { value: string; date: string; day: 'today' | 'tomorrow'; dayLabel: string; time: string; label: string; }
 
 import { normalizePhone, personNameValidator, phoneMessage, vnPhoneValidator } from '../../shared/validators';
 
@@ -39,9 +34,13 @@ export class Checkout {
   protected orders = inject(OrderService);
   private toast = inject(ToastService);
   private router = inject(Router);
+  private http = inject(HttpClient);
 
   protected t = this.cart.totals;
-  protected slots = buildSlots();
+  protected slots = signal<Slot[]>([]);
+  protected slotGroups = computed(() => (['today', 'tomorrow'] as const)
+    .map(day => ({ day, label: this.slots().find(s => s.day === day)?.dayLabel ?? '', slots: this.slots().filter(s => s.day === day) }))
+    .filter(g => g.slots.length));
   protected sending = signal(false);
   protected done = signal<{
     code: string; subtotal: number; shipping: number; discount: number; total: number;
@@ -57,7 +56,7 @@ export class Checkout {
     email: [this.u?.email ?? '', [Validators.email]],
     address: [this.u?.address ?? '', [Validators.required, Validators.minLength(6)]],
     note: [''],
-    slot: [this.slots.find(s => s.preferred)!.value],
+    slot: [''],
     payment: ['cod' as PaymentMethod]
   });
 
@@ -78,6 +77,18 @@ export class Checkout {
     this.form.valueChanges.pipe(takeUntilDestroyed()).subscribe(() => this.orders.resetAttempt());
     // Thông tin điền sẵn từ tài khoản mà sai định dạng (tài khoản cũ) thì báo ngay, không đợi bấm đặt hàng.
     for (const k of ['name', 'phone', 'address'] as const) { const c = this.form.controls[k]; if (c.value && c.invalid) c.markAsTouched(); }
+    this.loadSlots();
+  }
+  /** Tải khung giờ; chọn sẵn khung sớm nhất. Lỗi mạng thì để trống, server tự gán khung sớm nhất. */
+  private loadSlots(keep = false): void {
+    this.http.get<Slot[]>('/api/delivery-slots').subscribe({
+      next: list => {
+        this.slots.set(list);
+        const cur = this.form.controls.slot.value;
+        if (!keep || !list.some(x => x.value === cur)) this.form.controls.slot.setValue(list[0]?.value ?? '', { emitEvent: false });
+      },
+      error: () => {}
+    });
   }
 
   protected phoneError = () => phoneMessage(this.form.controls.phone.errors);
@@ -113,7 +124,7 @@ export class Checkout {
       }
       this.done.set({
         code: o.orderCode, subtotal: o.subtotal, shipping: o.shippingFee - o.shippingDiscount, discount: o.productDiscount, total: o.total,
-        slot: f.slot, payment: PAYMENT_LABEL[o.paymentMethod], name: f.name, phone: f.phone, address: f.address, note: f.note,
+        slot: o.customer.slot ?? f.slot, payment: PAYMENT_LABEL[o.paymentMethod], name: f.name, phone: f.phone, address: f.address, note: f.note,
         items, guest: false
       });
       window.scrollTo({ top: 0 });
@@ -121,6 +132,8 @@ export class Checkout {
       this.toast.show(apiMessage(error));
       // Giá/tồn kho/voucher vừa đổi: tải lại giỏ để khách thấy số mới rồi bấm lại.
       if (error instanceof HttpErrorResponse && error.status === 409) { this.orders.resetAttempt(); await this.cart.load(); }
+      // Khung giờ vừa qua trong lúc khách điền form: tải lại danh sách, giữ khung đang chọn nếu còn.
+      if (error instanceof HttpErrorResponse && error.error?.error?.code === 'DELIVERY_SLOT_UNAVAILABLE') { this.orders.resetAttempt(); this.loadSlots(true); }
     } finally { this.sending.set(false); }
   }
 }

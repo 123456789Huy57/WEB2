@@ -15,18 +15,21 @@ export class ImgFallbackDirective {
     const img = this.el.nativeElement;
     if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
     if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
+    // Ảnh hiện dần khi tải xong thay vì bật ra từng mảng; trong lúc chờ khung chứa có ánh sáng chạy nhẹ.
+    img.classList.add('img-wait', 'img-in');
   }
 
   @HostListener('error') onError(): void {
     const img = this.el.nativeElement;
     img.classList.add('img-missing');
+    img.classList.remove('img-wait');
     const box = img.parentElement;
     const name = (this.fmImg() || img.alt || '').trim();
     if (box && name) { box.classList.add('ph-missing'); box.dataset['initial'] = name.charAt(0).toUpperCase(); }
   }
   @HostListener('load') onLoad(): void {
     const img = this.el.nativeElement;
-    img.classList.remove('img-missing');
+    img.classList.remove('img-missing', 'img-wait');
     img.parentElement?.classList.remove('ph-missing');
   }
 }

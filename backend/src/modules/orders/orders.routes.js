@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const c = require('./orders.controller');
 const { requireAuth, requireAdmin } = require('../../middleware/auth');
+router.get('/delivery-slots', (req, res) => res.json(require('./delivery').slotsFor()));
 router.post('/orders', requireAuth, c.create);
 router.get('/users/me/orders', requireAuth, c.myOrders);
 router.get('/users/me/orders/:id', requireAuth, c.myOrder);
