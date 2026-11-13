@@ -105,7 +105,7 @@ export class AdminImageAudit {
         if (sameProduct(hashed[a].name, hashed[b].name)) continue; // hai cỡ của cùng một món (Bí đỏ hồ lô nhỏ / lớn) dùng chung ảnh là hợp lệ
         const cb = checks[this.key(hashed[b])];
         // Trùng khi cả hình dạng (dHash 256 bit) lẫn màu (lưới 4x4) gần như nhau: chai dầu vàng và chai nước mắm nâu không còn bị coi là một
-        if (hamming(ca.hash!, cb.hash!) <= 14 && colorDistance(ca.color, cb.color) <= 12 && colorDistance(ca.fg, cb.fg) <= 30) same++;
+        if (hamming(ca.hash!, cb.hash!) <= 8 && colorDistance(ca.color, cb.color) <= 12 && colorDistance(ca.fg, cb.fg) <= 30) same++;
       }
       if (same > 1) dup.set(this.key(hashed[a]), Math.max(same, dup.get(this.key(hashed[a])) ?? 0));
     }
