@@ -34,7 +34,7 @@ Chỉ **leader** làm các bước dưới. Không đưa chuỗi kết nối, m�
 
 `SESSION_SECRET` Render tự sinh. Khi chưa điền `PAYMENT_PROVIDER` hoặc chưa có TMN code, backend vẫn dùng cổng mock để demo. Muốn VNPay sandbox thật, đặt `PAYMENT_PROVIDER=vnpay`, thêm `VNPAY_TMN_CODE`, `VNPAY_HASH_SECRET` và dùng đúng `BACKEND_URL` public để VNPay gọi IPN/return.
 
-3. Chờ deploy xong, mở `https://freshmart-api.onrender.com/api/health` → thấy `"status":"ok"` và `"database":"connected"`.
+3. Chờ deploy xong, mở `https://freshmart-api-j7f6.onrender.com/api/health` → thấy `"status":"ok"` và `"database":"connected"`.
    Nếu Render đặt tên khác (tên đã có người dùng), sửa hai dòng `destination` trong `frontend/vercel.json` cho đúng rồi commit.
 
 ## 2. Frontend lên Vercel

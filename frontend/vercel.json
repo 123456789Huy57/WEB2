@@ -5,11 +5,11 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://freshmart-api.onrender.com/api/:path*"
+      "destination": "https://freshmart-api-j7f6.onrender.com/api/:path*"
     },
     {
       "source": "/images/:path*",
-      "destination": "https://freshmart-api.onrender.com/images/:path*"
+      "destination": "https://freshmart-api-j7f6.onrender.com/images/:path*"
     },
     {
       "source": "/(.*)",
