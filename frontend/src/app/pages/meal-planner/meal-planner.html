@@ -1,16 +1,11 @@
-<section class="mp-hero band">
+<section class="mp-hero band" aria-labelledby="mp-hero-title">
   <div class="mp-hero-copy">
     <p class="mp-kicker"><span></span> FRESHMART MEAL PLANNER</p>
-    <h1 class="display">CÓ GÌ TRONG BẾP,<br><em>NẤU MÓN ĐÓ.</em></h1>
+    <h1 class="display" id="mp-hero-title">CÓ GÌ TRONG BẾP?<br><em>NẤU NGAY MÓN ĐÓ.</em></h1>
     <p class="lead">Từ những nguyên liệu bạn đang có, tìm cảm hứng cho bữa ăn tiếp theo — theo đúng khẩu vị và thời gian của bạn.</p>
-    <div class="mp-hero-meta"><span>{{ recipeCount() }}+ công thức gợi ý</span><i></i><span>Lên món dễ dàng mỗi ngày</span></div>
+    <div class="mp-hero-meta"><span>66+ CÔNG THỨC GỢI Ý</span><span>LÊN MÓN DỄ DÀNG MỖI NGÀY</span></div>
+    <a class="btn btn-ink mp-hero-cta" href="#meal-planner-tool" (click)="explore($event)">KHÁM PHÁ NGAY</a>
   </div>
-  <div class="mp-hero-photo" aria-label="FreshMart Meal Planner – khám phá món ngon từ nguyên liệu sẵn có">
-    <video class="mp-hero-video" autoplay muted loop playsinline preload="metadata" poster="/img/bep.jpg" aria-label="Video giới thiệu FreshMart Meal Planner">
-      <source src="/video/banner_mealplanner.mp4" type="video/mp4">
-    </video>
-  </div>
-  <div class="mp-hero-stamp" aria-hidden="true"><span>GOOD FOOD</span><b>GOOD<br>MOOD</b></div>
 </section>
 
 <nav class="band mp-tabs" aria-label="Cách tìm món">
@@ -34,6 +29,7 @@
           }
         </div>
       }
+      <p style="margin-bottom:20px"><a class="btn btn-ink btn-sm" routerLink="/cong-dong">Vào Cộng đồng FreshMart →</a></p>
       <div class="mp-grid mp-grid-wide">
         @for (x of tr.recipes; track x.recipeId; let i = $index) {
           <article class="mp-rec">
@@ -59,7 +55,7 @@
   </section>
 }
 
-<section class="mp-work band" #tool [hidden]="tab() !== 'pick'">
+<section class="mp-work band" id="meal-planner-tool" #tool [hidden]="tab() !== 'pick'">
   <!-- Hàng trên: ô 1 chọn nguyên liệu, ô 2 tiêu chí đặt cạnh nhau -->
   <div class="mp-side">
     <section class="mp-card" aria-labelledby="mp-s1">
@@ -175,6 +171,7 @@
           <p class="mp-match"><b>Đã có {{ x.matched }}/{{ r.ingredients.length }} nguyên liệu</b> · {{ x.missing ? 'cần mua thêm ' + x.missing : 'nấu được ngay' }}</p>
           <div class="mp-feature-cta">
             <button class="btn btn-forest" type="button" (click)="open(r.id)">Xem chi tiết món</button>
+            <button class="btn btn-stone" type="button" [attr.aria-pressed]="cs.isRecipeSaved(r.id)" (click)="saveRecipe(r)">{{ cs.isRecipeSaved(r.id) ? '✓ Đã lưu' : '♡ Lưu công thức' }}</button>
           </div>
         </div>
         <div class="mp-plate">
@@ -284,81 +281,121 @@
   </section>
 </section>
 
-<dialog class="rec-dlg" #dlg aria-labelledby="d-name" (click)="$event.target === dlg && dlg.close()" (close)="current.set(null)">
+<dialog class="rec-dlg" #dlg aria-labelledby="d-name" (click)="$event.target === dlg ? dlg.close() : null" (close)="current.set(null)">
   @if (current(); as r) {
     <div class="d-in">
       <button class="d-x btn btn-stone round" type="button" aria-label="Đóng" (click)="dlg.close()">×</button>
 
-      <!-- Recipe hero: ưu tiên hình ảnh món ăn, chỉ giữ tên và thông tin thiết yếu -->
+      <!-- Hero: ảnh món lớn, tên, mô tả ngắn -->
       <header class="d-hero">
-        <img class="d-hero-image" [fmImg]="r.name" [src]="r.imageUrl" [alt]="r.name">
+        <img class="d-hero-image" [fmImg]="r.name" [src]="r.imageUrl" [alt]="r.name" loading="eager">
         <div class="d-hero-shade"></div>
         <div class="d-hero-copy">
-          <span class="d-hero-kicker">FRESHMART · RECIPE</span>
+          @if (tu() === 'cong-dong') { <a class="d-back" routerLink="/cong-dong">← Quay lại Cộng đồng</a> }
+          <div class="d-hero-tags"><span class="d-hero-kicker">FRESHMART · RECIPE</span><span class="d-chip">{{ meal[r.mealType] }}</span>@for (t of r.tags.slice(0, 2); track t) { <span class="d-chip">#{{ t }}</span> }</div>
           <h2 id="d-name">{{ r.name }}</h2>
-          <div class="d-hero-meta">
-            <span><b>{{ mp.totalTime(r) }}</b> phút</span><i></i>
-            <span><b>{{ f().servings }}</b> người</span><i></i>
-            <span>{{ diff[r.difficulty] }}</span>
-          </div>
+          <p class="d-desc">{{ describe(r) }}</p>
         </div>
       </header>
 
+      <!-- Thông tin chính -->
+      <dl class="d-stats">
+        <div><dt>Thời gian</dt><dd class="num">{{ mp.totalTime(r) }}<small> phút</small></dd><span class="num">chuẩn bị {{ r.prepTimeMinutes }} · nấu {{ r.cookTimeMinutes }}</span></div>
+        <div><dt>Độ khó</dt><dd>{{ diff[r.difficulty] }}</dd><span>{{ r.difficulty === 'easy' ? 'Người mới cũng làm được' : r.difficulty === 'medium' ? 'Cần chút kinh nghiệm' : 'Dành cho người thích thử thách' }}</span></div>
+        <div><dt>Khẩu phần</dt><dd class="num d-serv"><button type="button" aria-label="Giảm khẩu phần" [disabled]="f().servings <= 1" (click)="setServings(f().servings - 1)">−</button>{{ f().servings }}<button type="button" aria-label="Tăng khẩu phần" [disabled]="f().servings >= 6" (click)="setServings(f().servings + 1)">+</button></dd><span>người ăn, định lượng tự điều chỉnh</span></div>
+        <div><dt>Năng lượng</dt><dd class="num">{{ r.nutrition.calories }}<small> kcal</small></dd><span>mỗi khẩu phần</span></div>
+      </dl>
+
+      <!-- Hành động chính -->
+      <div class="d-actions" role="toolbar" aria-label="Hành động với món này">
+        <button class="btn btn-forest btn-sm" type="button" (click)="startCooking()">Bắt đầu nấu</button>
+        <button class="btn btn-stone btn-sm" type="button" [attr.aria-pressed]="cs.isRecipeSaved(r.id)" (click)="saveRecipe(r)">{{ cs.isRecipeSaved(r.id) ? '✓ Đã lưu công thức' : '♡ Lưu công thức' }}</button>
+        <button class="btn btn-ink btn-sm" type="button" (click)="shareToCommunity(r)">Chia sẻ lên Cộng đồng</button>
+      </div>
+
       <div class="d-content">
-        <section class="d-section d-nutrition-section">
-          <div class="d-section-heading"><span class="d-section-index">01</span><div><p class="mp-eyebrow">NUTRITION FACTS</p><h3>Giá trị dinh dưỡng</h3><p class="d-section-sub">Thông tin ước tính cho một khẩu phần.</p></div></div>
+        <div class="d-cols">
+          <!-- Nguyên liệu và mua hàng -->
+          <section class="d-section d-col-ing" aria-labelledby="d-h-ing">
+            <div class="d-section-heading"><span class="d-section-index">01</span><div><p class="mp-eyebrow">WHAT YOU NEED</p><h3 id="d-h-ing">Nguyên liệu</h3><p class="d-section-sub">Định lượng cho {{ f().servings }} khẩu phần · {{ r.ingredients.length }} nguyên liệu.</p></div></div>
+            <ul class="d-ings">@for (x of purchase(); track x.line.ingredientId) {
+              <li>
+                <span class="d-ing-ph"><img [fmImg]="x.ingredient?.name ?? ''" [src]="ingImg(x)" alt="" loading="lazy"></span>
+                <span class="d-ing-name"><b>{{ x.ingredient?.name }}</b><span class="muted num">{{ x.need }}</span></span>
+                <span class="st" [class.ok]="isSel(x.line.ingredientId)">{{ isSel(x.line.ingredientId) ? '✓ Đã có' : 'Cần mua' }}</span>
+              </li>
+            }</ul>
+            <div class="d-buy">
+              @if (missing().length) {
+                <div class="d-buy-heading"><div><p class="mp-eyebrow">FRESHMART SHOPPING LIST</p><p class="h">Mua phần còn thiếu</p><p class="small muted">Bỏ chọn món bạn không cần. Số lượng làm tròn theo đơn vị bán.</p></div><span class="d-buy-count">{{ chosen().length }} món</span></div>
+                @for (x of missing(); track x.line.ingredientId) {
+                  @if (x.product; as pr) {
+                    <label class="b-row"><input type="checkbox" [checked]="!unchecked().includes(x.line.ingredientId)" (change)="toggleBuy(x.line.ingredientId)"><span class="ph"><img [fmImg]="pr.name" [src]="ps.img(pr)" [alt]="pr.name"></span><span class="nm">{{ ps.shortName(pr) }}<span class="q num">{{ ps.qty(x.cartQty) }} {{ ps.unit(pr) }} · dùng {{ x.need }}@if (x.bulk) { · bán nguyên {{ ps.unit(pr) }}, bỏ chọn sẵn }</span></span><span class="num d-buy-price">{{ x.total | vnd }}</span></label>
+                  } @else {
+                    <div class="b-row d-unavailable"><span></span><span></span><span class="nm">{{ x.ingredient?.name }}<span class="q">Chưa có sản phẩm phù hợp trong kho</span></span><span></span></div>
+                  }
+                }
+                <button class="btn btn-forest" type="button" [disabled]="!chosen().length || adding()" (click)="addMissing()">{{ adding() ? 'ĐANG THÊM VÀO GIỎ…' : chosen().length ? 'THÊM ' + chosen().length + ' SẢN PHẨM VÀO GIỎ · ' + (chosenTotal() | vnd) : 'CHỌN ÍT NHẤT 1 SẢN PHẨM' }}</button>
+              } @else { <p class="h">Bạn đã có đủ nguyên liệu!</p><p class="small muted">Mọi thứ đã sẵn sàng — cùng bắt đầu nấu nhé.</p><button class="btn btn-forest" type="button" (click)="cookNow()">TÔI NẤU MÓN NÀY HÔM NAY</button> }
+            </div>
+          </section>
+
+          <!-- Cách làm từng bước -->
+          <section class="d-section d-cooking d-col-steps" id="d-steps" aria-labelledby="d-h-steps">
+            <div class="d-section-heading"><span class="d-section-index">02</span><div><p class="mp-eyebrow">LET'S GET COOKING</p><h3 id="d-h-steps">Cách làm</h3><p class="d-section-sub">Bấm vào từng bước để đánh dấu đã xong.</p></div></div>
+            <div class="d-progress" role="progressbar" aria-label="Tiến độ nấu" aria-valuemin="0" aria-valuemax="100" [attr.aria-valuenow]="progress()">
+              <span class="d-progress-bar"><i [style.width.%]="progress()"></i></span>
+              <span class="num">{{ stepsLeft() ? 'Còn ' + stepsLeft() + ' bước' : 'Hoàn thành, chúc ngon miệng!' }}</span>
+            </div>
+            <ol class="d-steps">@for (step of r.steps; track $index) {
+              <li class="d-step-card" [class.done]="doneSteps().includes($index)" [class.now]="currentStep() === $index">
+                <button type="button" class="d-step-number" [attr.aria-pressed]="doneSteps().includes($index)" [attr.aria-label]="'Bước ' + ($index + 1) + (doneSteps().includes($index) ? ', đã xong' : ', chưa xong')" (click)="toggleStep($index)">{{ doneSteps().includes($index) ? '✓' : ($index + 1).toString().padStart(2, '0') }}</button>
+                <div class="d-step-copy">
+                  <h4>{{ stepTitle(step, $index) }}</h4>
+                  <p>{{ stepDescription(step) }}</p>
+                  @if (stepDuration(step)) { <span class="d-step-time">◷ {{ stepDuration(step) }} phút</span> }
+                  @if (stepTip(step)) { <aside class="d-step-tip"><b>MẸO NHỎ</b>{{ stepTip(step) }}</aside> }
+                </div>
+              </li>
+            }</ol>
+            <p class="d-nutrition-note">Thời gian và định lượng có thể thay đổi tùy nguyên liệu, thiết bị và khẩu vị thực tế.</p>
+          </section>
+        </div>
+
+        <!-- Dinh dưỡng -->
+        <section class="d-section d-nutrition-section" aria-labelledby="d-h-nut">
+          <div class="d-section-heading"><span class="d-section-index">03</span><div><p class="mp-eyebrow">NUTRITION FACTS</p><h3 id="d-h-nut">Giá trị dinh dưỡng</h3><p class="d-section-sub">Ước tính cho một khẩu phần.</p></div></div>
           <dl class="d-nut">
-            <div><dt>Năng lượng</dt><dd class="num">{{ r.nutrition.calories }} <span>kcal</span></dd></div>
-            <div><dt>Đạm</dt><dd class="num">{{ r.nutrition.protein }} <span>g</span></dd></div>
-            <div><dt>Tinh bột</dt><dd class="num">{{ r.nutrition.carbs }} <span>g</span></dd></div>
-            <div><dt>Chất béo</dt><dd class="num">{{ r.nutrition.fat }} <span>g</span></dd></div>
+            <div class="d-nut-main"><dt>Năng lượng</dt><dd class="num">{{ r.nutrition.calories }} <span>kcal</span></dd></div>
+            @for (m of macros(r); track m.label) {
+              <div><dt>{{ m.label }}</dt><dd class="num">{{ m.g }} <span>g · {{ m.pct }}%</span></dd><span class="d-nut-bar"><i [style.width.%]="m.pct"></i></span></div>
+            }
           </dl>
         </section>
 
-        <section class="d-section">
-          <div class="d-section-heading"><span class="d-section-index">02</span><div><p class="mp-eyebrow">WHAT YOU NEED</p><h3>Chuẩn bị nguyên liệu</h3><p class="d-section-sub">Định lượng đã được điều chỉnh theo {{ f().servings }} khẩu phần.</p></div></div>
-          <ul class="d-ings">@for (x of purchase(); track x.line.ingredientId) {
-            <li><span class="d-ing-name">{{ x.ingredient?.name }} <span class="muted num">{{ x.need }}</span></span><span class="st" [class.ok]="isSel(x.line.ingredientId)">{{ isSel(x.line.ingredientId) ? '✓ Đã có' : 'Cần mua' }}</span></li>
-          }</ul>
-          <div class="d-buy">
-            @if (missing().length) {
-              <div class="d-buy-heading"><div><p class="mp-eyebrow">FRESHMART SHOPPING LIST</p><p class="h">Mua phần nguyên liệu còn thiếu</p><p class="small muted">Bỏ chọn sản phẩm bạn không cần. Số lượng được làm tròn theo đơn vị bán.</p></div><span class="d-buy-count">{{ chosen().length }} món</span></div>
-              @for (x of missing(); track x.line.ingredientId) {
-                @if (x.product; as pr) {
-                  <label class="b-row"><input type="checkbox" [checked]="!unchecked().includes(x.line.ingredientId)" (change)="toggleBuy(x.line.ingredientId)"><span class="ph"><img [fmImg]="pr.name" [src]="ps.img(pr)" [alt]="pr.name"></span><span class="nm">{{ ps.shortName(pr) }}<span class="q num">{{ ps.qty(x.cartQty) }} {{ ps.unit(pr) }} · dùng {{ x.need }}@if (x.bulk) { · bán nguyên {{ ps.unit(pr) }}, bỏ chọn sẵn }</span></span><span class="num d-buy-price">{{ x.total | vnd }}</span></label>
-                } @else {
-                  <div class="b-row d-unavailable"><span></span><span></span><span class="nm">{{ x.ingredient?.name }}<span class="q">Chưa có sản phẩm phù hợp trong kho</span></span><span></span></div>
-                }
-              }
-              <button class="btn btn-forest" type="button" [disabled]="!chosen().length || adding()" (click)="addMissing()">{{ adding() ? 'ĐANG THÊM VÀO GIỎ…' : chosen().length ? 'THÊM ' + chosen().length + ' SẢN PHẨM VÀO GIỎ · ' + (chosenTotal() | vnd) : 'CHỌN ÍT NHẤT 1 SẢN PHẨM' }}</button>
-            } @else { <p class="h">Bạn đã có đủ nguyên liệu!</p><p class="small muted">Mọi thứ đã sẵn sàng — cùng bắt đầu nấu nhé.</p><button class="btn btn-forest" type="button" (click)="cookNow()">TÔI NẤU MÓN NÀY HÔM NAY</button> }
-          </div>
-        </section>
-
-        <section class="d-section d-cooking">
-          <div class="d-section-heading"><span class="d-section-index">03</span><div><p class="mp-eyebrow">LET'S GET COOKING</p><h3>Bắt đầu chế biến</h3><p class="d-section-sub">Làm theo từng bước để món ăn đạt hương vị ngon nhất.</p></div></div>
-          <ol class="d-steps">@for (step of r.steps; track $index) {
-            <li class="d-step-card">
-              <span class="d-step-number">{{ ($index + 1).toString().padStart(2, '0') }}</span>
-              <div class="d-step-copy">
-                <h4>{{ stepTitle(step, $index) }}</h4>
-                <p>{{ stepDescription(step) }}</p>
-                @if (stepDuration(step)) { <span class="d-step-time">◷ {{ stepDuration(step) }} phút</span> }
-                @if (stepTip(step)) { <aside class="d-step-tip"><b>MẸO NHỎ</b>{{ stepTip(step) }}</aside> }
-              </div>
-            </li>
-          }</ol>
-          <p class="d-nutrition-note">Thời gian và định lượng có thể thay đổi tùy nguyên liệu, thiết bị và khẩu vị thực tế.</p>
+        <!-- Cộng đồng -->
+        <section class="d-section d-community" aria-labelledby="d-h-cm">
+          <div class="d-section-heading"><span class="d-section-index">04</span><div><p class="mp-eyebrow">FRESHMART COMMUNITY</p><h3 id="d-h-cm">Cộng đồng đã nấu món này</h3><p class="d-section-sub">{{ communityPosts().length ? communityPosts().length + ' bài chia sẻ từ thành viên.' : 'Chưa có ai chia sẻ món này.' }}</p></div></div>
+          @if (communityPosts().length) {
+            <ul class="d-cm-list">@for (p of communityPosts().slice(0, 2); track p.id) {
+              <li><span class="d-cm-av" [style.background]="cs.avatarColor(p.authorId)" [style.color]="cs.avatarInk(cs.avatarColor(p.authorId))">{{ cs.initial(p.authorName) }}</span>
+                <span><b>{{ p.authorName }}</b> <small class="muted">{{ cs.timeAgo(p.createdAt) }} · {{ cs.reactionCount(p) }} cảm xúc · {{ p.comments.length }} bình luận</small><span class="d-cm-text">{{ p.text.length > 150 ? p.text.slice(0, 150) + '…' : p.text }}</span></span></li>
+            }</ul>
+            <a class="btn btn-stone btn-sm" routerLink="/cong-dong" [queryParams]="{ mon: r.id }">Xem {{ communityPosts().length }} bài chia sẻ</a>
+          } @else {
+            <p class="muted">Nấu xong món này? Chụp ảnh và chia sẻ để mọi người cùng tham khảo.</p>
+            <button class="btn btn-ink btn-sm" type="button" style="margin-top:12px" (click)="shareToCommunity(r)">Là người đầu tiên chia sẻ</button>
+          }
         </section>
 
         @if (relatedRecipes().length) {
-          <section class="d-section d-related">
-            <div class="d-section-heading"><span class="d-section-index">04</span><div><p class="mp-eyebrow">MORE TO EXPLORE</p><h3>Nấu thêm món ngon</h3><p class="d-section-sub">Một vài gợi ý có thể tận dụng nguyên liệu bạn đang có.</p></div></div>
+          <section class="d-section d-related" aria-labelledby="d-h-rel">
+            <div class="d-section-heading"><span class="d-section-index">05</span><div><p class="mp-eyebrow">MORE TO EXPLORE</p><h3 id="d-h-rel">Món liên quan</h3><p class="d-section-sub">Dùng chung nguyên liệu với {{ r.name }}.</p></div></div>
             <div class="d-related-grid">@for (item of relatedRecipes(); track item.id) {
               <button type="button" class="d-related-card" (click)="openRelated(item.id)">
                 <span class="d-related-image"><img [fmImg]="item.name" [src]="item.imageUrl" [alt]="item.name" loading="lazy"></span>
                 <span class="d-related-name">{{ item.name }}</span>
-                <span class="d-related-meta">{{ mp.totalTime(item) }} phút · {{ item.nutrition.calories }} kcal</span>
+                <span class="d-related-meta">{{ mp.totalTime(item) }} phút · {{ item.nutrition.calories }} kcal · {{ diff[item.difficulty] }}</span>
               </button>
             }</div>
           </section>

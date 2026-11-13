@@ -14,6 +14,7 @@ const pages: Routes = [
   { path: 'thanh-toan/ket-qua', canActivate: [authGuard], title: 'Kết quả thanh toán · FreshMart', loadComponent: () => import('./pages/checkout/payment-result').then(m => m.PaymentResult) },
   { path: 'thanh-toan', canActivate: [authGuard], title: 'Thanh toán · FreshMart', loadComponent: () => import('./pages/checkout/checkout').then(m => m.Checkout) },
   { path: 'meal-planner', title: 'Meal Planner · FreshMart', loadComponent: () => import('./pages/meal-planner/meal-planner').then(m => m.MealPlanner) },
+  { path: 'cong-dong', title: 'Cộng đồng · FreshMart', loadComponent: () => import('./pages/community/community').then(m => m.Community) },
   { path: 'uu-dai', title: 'Ưu đãi · FreshMart', loadComponent: () => import('./pages/offers/offers').then(m => m.Offers) },
   { path: 'cua-hang', title: 'Về FreshMart · Tươi mỗi ngày, ngon mỗi bữa', loadComponent: () => import('./pages/stores/stores').then(m => m.Stores) },
   { path: 'dang-nhap', title: 'Đăng nhập · FreshMart', canActivate: [guestGuard], loadComponent: () => import('./pages/login/login').then(m => m.Login) },

@@ -110,6 +110,25 @@ import { DataService } from '../../core/data.service';
         </div>
       </section>
 
+      <section class="about-community band" aria-labelledby="about-community-title">
+        <div class="about-community-copy">
+          <p class="about-kicker about-kicker-light"><span></span> COOK, SHARE, CONNECT</p>
+          <h2 id="about-community-title" class="about-heading about-heading-light">BẾP CHUNG,<br><em>NẤU CÙNG NHAU.</em></h2>
+          <p>Mỗi bữa ăn đều có một câu chuyện. Chia sẻ món ngon, trao đổi mẹo bếp và cùng nhau tham gia thử thách nấu ăn mỗi tuần trong Cộng đồng FreshMart.</p>
+          <ul class="about-community-topics" aria-label="Hoạt động trong Cộng đồng FreshMart">
+            <li><span aria-hidden="true">01</span> Chia sẻ công thức</li>
+            <li><span aria-hidden="true">02</span> Hỏi đáp chuyện bếp</li>
+            <li><span aria-hidden="true">03</span> Thử thách mỗi tuần</li>
+          </ul>
+          <a class="btn btn-paper" routerLink="/cong-dong">Khám phá Cộng đồng <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="about-community-visual">
+          <img src="/img/cookingcommunity.jpg" alt="Mọi người cùng chuẩn bị và chia sẻ món ăn trong một buổi nấu ăn cộng đồng" loading="lazy">
+          <span class="about-community-stamp">BẾP VUI<br>NHÀ MÌNH</span>
+          <p>Ý tưởng món ngon bắt đầu từ những điều mình cùng chia sẻ.</p>
+        </div>
+      </section>
+
       <section class="about-facts band" aria-label="FreshMart trong vài con số">
         <div><strong class="about-fact-num">{{ data.stores().length || 12 }}</strong><span>cửa hàng tại TP.HCM</span></div>
         <div><strong class="about-fact-num">1–2<span> giờ</span></strong><span>thời gian giao nội thành theo thông tin dịch vụ</span></div>
