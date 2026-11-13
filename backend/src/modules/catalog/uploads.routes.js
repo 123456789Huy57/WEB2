@@ -6,6 +6,7 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const { requireAuth, requireAdmin } = require('../../middleware/auth');
 const { HttpError } = require('../../lib/http-error');
+const rateLimit = require('express-rate-limit');
 const cloudinary = require('../../lib/cloudinary');
 const uploadDirectory = () => path.resolve(process.env.UPLOAD_DIR || path.join(__dirname, '../../../public/images/uploads'));
 const uploadMiddleware = fileUpload({
@@ -33,10 +34,18 @@ async function uploadImage(req, res) {
     try { return res.status(201).json({ imageUrl: await cloudinary.upload(buffer, { publicId: name.replace('.webp', ''), folder: `${process.env.CLOUDINARY_FOLDER || 'freshmart'}/uploads` }) }); }
     catch (error) { console.error('Cloudinary upload failed:', error.message); throw new HttpError(502, 'IMAGE_STORAGE_FAILED', 'Không lưu được ảnh lên Cloudinary. Thử lại sau.'); }
   }
+  // Production (Render) xóa ổ đĩa mỗi lần deploy: ảnh lưu local sẽ mất, nên bắt buộc có Cloudinary.
+  if (process.env.NODE_ENV === 'production') throw new HttpError(503, 'IMAGE_STORAGE_NOT_CONFIGURED', 'Máy chủ chưa cấu hình nơi lưu ảnh. Báo quản trị viên.');
   await fs.mkdir(uploadDirectory(), { recursive: true });
   await fs.writeFile(path.join(uploadDirectory(), name), buffer, { flag: 'wx' });
   res.status(201).json({ imageUrl: `/images/uploads/${name}` });
 }
 router.post('/admin/uploads', requireAuth, requireAdmin, uploadMiddleware, uploadImage);
-router.post('/community/uploads', requireAuth, uploadMiddleware, uploadImage);
+// Khách tải ảnh cho bài Cộng đồng: tối đa 20 ảnh/giờ mỗi tài khoản, tránh làm đầy hạn mức Cloudinary miễn phí
+const communityLimit = rateLimit({
+  windowMs: 60 * 60 * 1000, limit: 20, standardHeaders: 'draft-8', legacyHeaders: false,
+  keyGenerator: req => req.user.id,
+  handler: (req, res) => res.status(429).json({ error: { code: 'UPLOAD_RATE_LIMIT', message: 'Bạn tải ảnh quá nhiều. Thử lại sau một giờ nhé.' } }),
+});
+router.post('/community/uploads', requireAuth, communityLimit, uploadMiddleware, uploadImage);
 module.exports = { router, uploadDirectory };

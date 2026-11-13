@@ -2,7 +2,7 @@ import { Injectable, computed, effect, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
-import { AuthService } from './auth.service';
+import { AuthService, apiMessage } from './auth.service';
 import { ToastService } from './toast.service';
 import { store } from './storage';
 
@@ -96,9 +96,9 @@ export class CommunityService {
     return firstValueFrom(this.http.post<{ imageUrl: string }>('/api/community/uploads', body)).then(r => r.imageUrl);
   }
   private replace(p: CPost): void { this.posts.update(l => l.map(x => (x.id === p.id ? p : x))); }
-  private async call(req: Promise<CPost>, fail = 'Không thực hiện được, thử lại sau'): Promise<CPost | null> {
+  private async call(req: Promise<CPost>): Promise<CPost | null> {
     try { const p = await req; this.replace(p); return p; }
-    catch (e: unknown) { this.toast.show((e as { error?: { message?: string } })?.error?.message ?? fail); return null; }
+    catch (e: unknown) { this.toast.show(apiMessage(e)); return null; }
   }
 
   /** Hành động cần danh tính: chưa đăng nhập thì chuyển tới trang đăng nhập rồi quay lại */
@@ -130,13 +130,13 @@ export class CommunityService {
     const t = text.trim();
     if (!t) return false;
     if (!this.requireLogin('Đăng nhập để bình luận')) return false;
-    void this.call(firstValueFrom(this.http.post<CPost>(`/api/community/posts/${postId}/comments`, { text: t.slice(0, 600), ...(parentId ? { parentId } : {}) })), 'Chưa gửi được bình luận');
+    void this.call(firstValueFrom(this.http.post<CPost>(`/api/community/posts/${postId}/comments`, { text: t.slice(0, 600), ...(parentId ? { parentId } : {}) })));
     return true;
   }
   myVote(p: CPost): string | null { const m = this.me(); return m ? p.poll?.options.find(o => o.votes.includes(m.id))?.id ?? null : null; }
   vote(p: CPost, optionId: string): void {
     if (!this.requireLogin('Đăng nhập để bình chọn')) return;
-    void this.call(firstValueFrom(this.http.post<CPost>(`/api/community/posts/${p.id}/votes`, { optionId })), 'Chưa ghi được bình chọn');
+    void this.call(firstValueFrom(this.http.post<CPost>(`/api/community/posts/${p.id}/votes`, { optionId })));
   }
   async remove(p: CPost): Promise<void> {
     if (this.me()?.id !== p.authorId) return;
@@ -161,7 +161,7 @@ export class CommunityService {
       const post = await firstValueFrom(this.http.post<CPost>('/api/community/posts', body));
       this.posts.update(l => [post, ...l]);
       return post;
-    } catch (e: unknown) { this.toast.show((e as { error?: { message?: string } })?.error?.message ?? 'Chưa đăng được bài'); return null; }
+    } catch (e: unknown) { this.toast.show(apiMessage(e)); return null; }
   }
 
   // ---- Công thức đã lưu (dùng chung với Meal Planner) ----
