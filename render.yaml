@@ -45,6 +45,14 @@ services:
         sync: false
       - key: VNPAY_URL
         value: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+      - key: BANK_CODE
+        sync: false
+      - key: BANK_ACCOUNT
+        sync: false
+      - key: BANK_HOLDER
+        sync: false
+      - key: SEPAY_API_KEY
+        sync: false
       - key: MAIL_TRANSPORT
         value: smtp
       - key: SMTP_HOST

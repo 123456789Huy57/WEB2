@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { apiMessage } from '../core/auth.service';
 import { DatePipe } from '@angular/common';
-import { OrderService, OrderView, ORDER_STATUS, PAYMENT_LABEL, STATUS_FLOW } from '../core/order.service';
+import { OrderService, OrderView, ORDER_STATUS, PAYMENT_LABEL, STATUS_FLOW, isPrepaid } from '../core/order.service';
 import { ProductService } from '../core/product.service';
 import { ToastService } from '../core/toast.service';
 import { ConfirmService } from '../core/confirm.service';
@@ -62,7 +62,8 @@ interface RefundPayment { id: string; orderCode: string; txnRef: string; transac
               </select>
             </td>
             <td class="r">
-              @if (waitingPayment(o)) { <span class="small muted">Chờ khách thanh toán</span> }
+              @if (waitingPayment(o) && o.paymentMethod === 'bank') { <button class="btn btn-stone btn-sm" type="button" [disabled]="refunding() === o.id" (click)="confirmPaid(o)">Đã nhận tiền</button> }
+              @else if (waitingPayment(o)) { <span class="small muted">Chờ khách thanh toán</span> }
               @else if (next(o); as n) { <button class="btn btn-forest btn-sm" type="button" (click)="set(o, n)">{{ st[n] }}</button> }
               <button class="link-btn" type="button" style="margin-left:10px" (click)="toggle(o.orderCode)">{{ open() === o.orderCode ? 'Ẩn' : 'Chi tiết' }}</button>
             </td>
@@ -121,7 +122,15 @@ export class AdminOrders implements OnInit {
     finally { this.refunding.set(''); }
   }
   /** Đơn VNPay chưa trả tiền: không xác nhận/giao được, chỉ chờ khách trả hoặc hủy */
-  protected waitingPayment(o: OrderView): boolean { return o.paymentMethod === 'vnpay' && o.paymentStatus === 'unpaid' && o.status === 'pending'; }
+  protected waitingPayment(o: OrderView): boolean { return isPrepaid(o.paymentMethod) && o.paymentStatus === 'unpaid' && o.status === 'pending'; }
+  /** Chuyển khoản: SePay tự xác nhận; nút này cho trường hợp SePay báo trễ hoặc khách ghi sai nội dung */
+  protected async confirmPaid(o: OrderView): Promise<void> {
+    if (!(await this.cf.ask('Đã nhận tiền?', `Chỉ xác nhận sau khi thấy ${o.total.toLocaleString('vi-VN')} đ cho đơn ${o.orderCode} trong app ngân hàng.`, 'Đã nhận tiền'))) return;
+    this.refunding.set(o.id);
+    try { await this.orders.confirmPayment(o); this.toast.show(`Đơn ${o.orderCode}: đã thanh toán`); }
+    catch (error) { this.toast.show(apiMessage(error)); }
+    finally { this.refunding.set(''); }
+  }
   protected next(o: OrderView): OrderStatus | null { const i = STATUS_FLOW.indexOf(o.status); return i > -1 && i < STATUS_FLOW.length - 1 ? STATUS_FLOW[i + 1] : null; }
   protected toggle(code: string): void { this.open.set(this.open() === code ? '' : code); }
   protected async set(o: OrderView, s: OrderStatus, el?: HTMLSelectElement): Promise<void> {

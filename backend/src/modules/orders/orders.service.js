@@ -4,7 +4,7 @@ const { randomUUID, randomBytes, createHash } = require('node:crypto');
 const { getDatabase, getMongoClient } = require('../../config/database');
 const { HttpError } = require('../../lib/http-error');
 const v = require('../../lib/validation');
-const { TRANSITIONS, CUSTOMER_CANCEL_STATUSES, PAYMENT_METHODS, PAYMENT_TIMEOUT_MINUTES, ORDER_FLOW } = require('../../config/commerce');
+const { TRANSITIONS, CUSTOMER_CANCEL_STATUSES, PAYMENT_METHODS, ONLINE_METHODS, PAYMENT_TIMEOUT_MINUTES, BANK_TIMEOUT_MINUTES, ORDER_FLOW } = require('../../config/commerce');
 const { checkoutProducts } = require('../catalog/catalog.service');
 const { priceCart, totals } = require('./pricing');
 const cart = require('../cart/cart.service');
@@ -37,7 +37,8 @@ function parseOrderBody(body) {
     note: c.note === undefined ? '' : v.text(c.note, 'Ghi chú', 0, 500),
     slot: c.slot === undefined ? '' : v.text(c.slot, 'Giờ nhận', 0, 60),
   };
-  if (!PAYMENT_METHODS.includes(body.paymentMethod)) throw new HttpError(400, 'PAYMENT_METHOD_UNSUPPORTED', 'Chỉ hỗ trợ thanh toán khi nhận hàng (COD) hoặc VNPay.');
+  if (!PAYMENT_METHODS.includes(body.paymentMethod)) throw new HttpError(400, 'PAYMENT_METHOD_UNSUPPORTED', 'Chỉ hỗ trợ thanh toán khi nhận hàng (COD), VNPay hoặc chuyển khoản QR.');
+  if (body.paymentMethod === 'bank' && !require('../../config/env').bank.enabled) throw new HttpError(400, 'PAYMENT_METHOD_UNSUPPORTED', 'Cửa hàng chưa bật chuyển khoản QR.');
   return { customer, paymentMethod: body.paymentMethod, voucherCode: vouchers.normalizeCode(body.voucherCode) };
 }
 
@@ -101,7 +102,7 @@ async function createOrder(req) {
         items: priced.lines.map(l => ({ productId: l.productId, productNameSnapshot: l.product.name, unitSnapshot: l.product.unit, unitPriceSnapshot: l.unitPrice, quantity: l.quantity, lineTotal: l.lineTotal, image_url: l.product.image_url || '' })),
         ...money, voucherCode: discount.voucher?.code || null,
         paymentMethod: input.paymentMethod, paymentStatus: 'unpaid', paidAt: null, status: 'pending',
-        ...(input.paymentMethod === 'vnpay' ? { paymentDueAt: new Date(Date.parse(now) + PAYMENT_TIMEOUT_MINUTES * 60000).toISOString() } : {}),
+        ...(ONLINE_METHODS.includes(input.paymentMethod) ? { paymentDueAt: new Date(Date.parse(now) + (input.paymentMethod === 'bank' ? BANK_TIMEOUT_MINUTES : PAYMENT_TIMEOUT_MINUTES) * 60000).toISOString() } : {}),
         history: [{ from: null, to: 'pending', actorId: userId, at: now }],
         idempotencyKey: key, requestHash: hash, stockRestored: false, createdAt: now, updatedAt: now,
       };
@@ -140,9 +141,9 @@ async function changeStatus({ orderId, to, expectedStatus, actor, ownerId, expir
       if (ownerId && order.paymentStatus === 'paid') throw new HttpError(409, 'ORDER_PAID_CONTACT_SUPPORT', 'Đơn đã thanh toán online. Liên hệ cửa hàng để hủy và hoàn tiền.');
       const allowed = ownerId ? (to === 'cancelled' && CUSTOMER_CANCEL_STATUSES.includes(order.status)) : TRANSITIONS[order.status].includes(to);
       if (!allowed) throw new HttpError(409, 'ORDER_STATUS_INVALID', `Không thể chuyển đơn từ "${order.status}" sang "${to}".`);
-      // Đơn VNPay chỉ được xử lý tiếp khi đã có xác nhận thanh toán; chưa trả thì chỉ có thể hủy.
-      if (order.paymentMethod === 'vnpay' && order.paymentStatus !== 'paid' && to !== 'cancelled') {
-        throw new HttpError(409, 'ORDER_NOT_PAID', 'Đơn VNPay chưa được thanh toán, chưa thể xác nhận hoặc giao.');
+      // Đơn trả trước (VNPay, chuyển khoản) chỉ được xử lý tiếp khi đã có xác nhận thanh toán; chưa trả thì chỉ có thể hủy.
+      if (ONLINE_METHODS.includes(order.paymentMethod) && order.paymentStatus !== 'paid' && to !== 'cancelled') {
+        throw new HttpError(409, 'ORDER_NOT_PAID', 'Đơn trả trước chưa được thanh toán, chưa thể xác nhận hoặc giao.');
       }
       const set = { status: to, updatedAt: now };
       // Chỉ COD mới thu tiền lúc giao. VNPay đã có paidAt từ lúc cổng thanh toán xác nhận.
@@ -176,7 +177,7 @@ async function changeStatus({ orderId, to, expectedStatus, actor, ownerId, expir
 // Hủy các đơn VNPay quá hạn mà khách chưa trả tiền: hoàn kho và lượt voucher. Chạy định kỳ và trước khi tạo thanh toán.
 async function expireUnpaid(now = new Date()) {
   const due = await orders().find(
-    { paymentMethod: 'vnpay', paymentStatus: 'unpaid', status: 'pending', paymentDueAt: { $lte: now.toISOString() } },
+    { paymentMethod: { $in: ONLINE_METHODS }, paymentStatus: 'unpaid', status: 'pending', paymentDueAt: { $lte: now.toISOString() } },
     { projection: { id: 1 } },
   ).limit(100).toArray();
   let expired = 0;

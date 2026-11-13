@@ -7,6 +7,7 @@ function csrfToken(req) {
 }
 // Production: chỉ đúng FRONTEND_ORIGIN. Máy dev: chấp nhận mọi cổng của localhost/127.0.0.1
 // (ng serve tự đổi sang 4201, 4202... khi 4200 đang bận, hoặc mở bằng 127.0.0.1).
+const WEBHOOKS = new Set(['/payments/sepay/webhook']);
 const LOCAL = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/;
 function allowedOrigin(origin) {
   if (origin === new URL(env.frontendOrigin).origin) return true;
@@ -14,6 +15,8 @@ function allowedOrigin(origin) {
 }
 function requireCsrf(req, res, next) {
   if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) return next();
+  // Webhook máy chủ-máy chủ không có phiên trình duyệt; tự xác thực bằng API key trong route.
+  if (WEBHOOKS.has(req.path)) return next();
   const origin = req.get('origin');
   if (origin && !allowedOrigin(origin)) throw new HttpError(403, 'ORIGIN_REJECTED', 'Origin không được phép.');
   const supplied = req.get('x-csrf-token');

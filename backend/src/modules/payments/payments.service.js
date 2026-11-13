@@ -1,6 +1,6 @@
 // Thanh toán online cho đơn đã tạo (đơn giữ hàng ngay khi đặt; thanh toán chỉ đổi paymentStatus).
 // Nhà cung cấp chọn bằng PAYMENT_PROVIDER: "vnpay" (sandbox/thật) hoặc "mock" (cổng giả lập trong hệ thống).
-const { randomUUID } = require('node:crypto');
+const { randomUUID, timingSafeEqual, createHash } = require('node:crypto');
 const { getDatabase, getMongoClient } = require('../../config/database');
 const { HttpError } = require('../../lib/http-error');
 const env = require('../../config/env');
@@ -21,13 +21,14 @@ function provider() {
 async function createPayment({ orderId, userId, ip }) {
   const order = await orders().findOne({ id: orderId, userId });
   if (!order) throw new HttpError(404, 'ORDER_NOT_FOUND', 'Không tìm thấy đơn hàng.');
-  if (order.paymentMethod !== 'vnpay') throw new HttpError(409, 'PAYMENT_NOT_ONLINE', 'Đơn này thanh toán khi nhận hàng.');
+  if (!['vnpay', 'bank'].includes(order.paymentMethod)) throw new HttpError(409, 'PAYMENT_NOT_ONLINE', 'Đơn này thanh toán khi nhận hàng.');
   if (order.paymentStatus === 'paid') throw new HttpError(409, 'ORDER_ALREADY_PAID', 'Đơn đã được thanh toán.');
   if (order.status === 'cancelled') throw new HttpError(409, 'ORDER_CANCELLED', 'Đơn đã hủy, không thể thanh toán.');
   if (order.paymentDueAt && order.paymentDueAt <= new Date().toISOString()) {
     await require('../orders/orders.service').expireUnpaid(); // hủy ngay để hoàn kho, không chờ lượt quét định kỳ
     throw new HttpError(409, 'ORDER_PAYMENT_EXPIRED', 'Đơn đã quá hạn thanh toán và đã được hủy. Vui lòng đặt lại.');
   }
+  if (order.paymentMethod === 'bank') return bankInstructions(order);
   const p = provider();
   const txnRef = `${order.orderCode.replace(/-/g, '')}${Date.now().toString(36).toUpperCase().slice(-5)}`;
   const id = `pay-${randomUUID()}`, now = new Date().toISOString();
@@ -91,4 +92,85 @@ async function markRefunded({ paymentId, actorId, body = {} }) {
   return publicPayment;
 }
 
-module.exports = { createPayment, complete, provider, listRefunds, markRefunded };
+// ---- Chuyển khoản QR + SePay ----
+// Nội dung chuyển khoản là mã đơn bỏ gạch (ngân hàng hay bỏ ký tự đặc biệt): FM-20261113-ABCD2345 -> FM20261113ABCD2345.
+const transferContent = orderCode => orderCode.replace(/-/g, '');
+const CODE_IN_TEXT = /FM-?(\d{8})-?([A-HJ-NP-Z2-9]{8})/i;
+
+function bankInstructions(order) {
+  const b = env.bank;
+  if (!b.enabled) throw new HttpError(503, 'PAYMENT_NOT_CONFIGURED', 'Cửa hàng chưa bật chuyển khoản QR.');
+  const content = transferContent(order.orderCode);
+  const qrUrl = `https://qr.sepay.vn/img?${new URLSearchParams({ acc: b.account, bank: b.code, amount: String(order.total), des: content, template: 'compact' })}`;
+  return { provider: 'bank', qrUrl, bankCode: b.code, account: b.account, holder: b.holder, amount: order.total, content, dueAt: order.paymentDueAt };
+}
+
+// SePay gửi header "Authorization: Apikey <khóa>". So sánh theo thời gian cố định để không lộ khóa qua độ trễ.
+function sepayAuthorized(header = '') {
+  const key = env.bank.sepayApiKey;
+  if (!key) return false;
+  const digest = s => createHash('sha256').update(s).digest();
+  return timingSafeEqual(digest(String(header).replace(/^apikey\s+/i, '').trim()), digest(key));
+}
+
+// Mỗi giao dịch SePay chỉ ghi một lần (txnRef = SEPAY<id>, unique). Đủ tiền thì đơn thành đã thanh toán;
+// thiếu tiền ghi "failed" để admin xem; đơn đã hủy/đã trả thì ghi "refund_required" để admin hoàn tiền.
+async function sepayWebhook(body = {}) {
+  if (body.transferType !== 'in') return { code: 'IGNORED' };
+  const amount = Number(body.transferAmount);
+  const match = CODE_IN_TEXT.exec(`${body.code ?? ''} ${body.content ?? ''} ${body.description ?? ''}`);
+  if (!match || !Number.isInteger(amount) || amount <= 0 || body.id === undefined) return { code: 'IGNORED' };
+  const orderCode = `FM-${match[1]}-${match[2].toUpperCase()}`;
+  const order = await orders().findOne({ orderCode });
+  if (!order) return { code: 'NOT_FOUND' };
+  const now = new Date().toISOString(), id = `pay-${randomUUID()}`, txnRef = `SEPAY${body.id}`;
+  const base = { _id: id, id, orderId: order.id, orderCode, userId: order.userId, provider: 'sepay', txnRef, amount, transactionNo: String(body.referenceCode ?? body.id), content: String(body.content ?? '').slice(0, 300), createdAt: now, updatedAt: now };
+  let code = 'PAID';
+  const session = getMongoClient().startSession();
+  try {
+    await session.withTransaction(async () => {
+      if (await payments().findOne({ txnRef }, { session })) { code = 'ALREADY_DONE'; return; }
+      if (amount < order.total) { code = 'UNDERPAID'; await payments().insertOne({ ...base, status: 'failed', responseCode: 'UNDERPAID' }, { session }); return; }
+      const paid = await orders().updateOne(
+        { id: order.id, paymentStatus: 'unpaid', status: { $ne: 'cancelled' } },
+        { $set: { paymentStatus: 'paid', paidAt: now, updatedAt: now } }, { session },
+      );
+      let status = 'paid';
+      if (!paid.modifiedCount) {
+        // Admin đã xác nhận tay trước khi SePay báo: đây chính là khoản tiền đó, không phải trả hai lần.
+        const fresh = await orders().findOne({ id: order.id }, { session });
+        const manualOnly = fresh.status !== 'cancelled' && fresh.paymentStatus === 'paid'
+          && await payments().findOne({ orderId: order.id, provider: 'manual', status: 'paid' }, { session })
+          && !(await payments().findOne({ orderId: order.id, provider: 'sepay', status: 'paid' }, { session }));
+        if (manualOnly) code = 'ALREADY_PAID';
+        else { code = 'REFUND_REQUIRED'; status = 'refund_required'; }
+      }
+      await payments().insertOne({ ...base, status, ...(status === 'paid' ? { paidAt: now } : {}), ...(code === 'ALREADY_PAID' ? { responseCode: 'MANUAL_FIRST' } : {}) }, { session });
+    });
+  } catch (error) {
+    if (error?.code === 11000) return { code: 'ALREADY_DONE' }; // SePay gửi lại cùng lúc
+    throw error;
+  } finally { await session.endSession(); }
+  return { code, orderCode };
+}
+
+// Admin xác nhận tay khi đã thấy tiền trong app ngân hàng (SePay báo trễ hoặc khách ghi sai nội dung).
+async function confirmBankManually({ orderId, actorId }) {
+  const order = await orders().findOne({ id: orderId });
+  if (!order) throw new HttpError(404, 'ORDER_NOT_FOUND', 'Không tìm thấy đơn hàng.');
+  if (order.paymentMethod !== 'bank') throw new HttpError(409, 'PAYMENT_NOT_BANK', 'Chỉ xác nhận tay cho đơn chuyển khoản.');
+  if (order.paymentStatus === 'paid') return { orderId, paymentStatus: 'paid' };
+  if (order.status === 'cancelled') throw new HttpError(409, 'ORDER_CANCELLED', 'Đơn đã hủy.');
+  const now = new Date().toISOString(), id = `pay-${randomUUID()}`;
+  const session = getMongoClient().startSession();
+  try {
+    await session.withTransaction(async () => {
+      const paid = await orders().updateOne({ id: orderId, paymentStatus: 'unpaid', status: { $ne: 'cancelled' } }, { $set: { paymentStatus: 'paid', paidAt: now, updatedAt: now } }, { session });
+      if (!paid.modifiedCount) throw new HttpError(409, 'ORDER_CHANGED', 'Đơn vừa được cập nhật. Tải lại rồi thử lại.');
+      await payments().insertOne({ _id: id, id, orderId, orderCode: order.orderCode, userId: order.userId, provider: 'manual', txnRef: `MANUAL${orderId}`, amount: order.total, status: 'paid', paidAt: now, confirmedBy: actorId, createdAt: now, updatedAt: now }, { session });
+    });
+  } finally { await session.endSession(); }
+  return { orderId, paymentStatus: 'paid' };
+}
+
+module.exports = { createPayment, complete, provider, listRefunds, markRefunded, sepayWebhook, sepayAuthorized, confirmBankManually, transferContent };

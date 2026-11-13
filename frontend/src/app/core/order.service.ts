@@ -1,5 +1,6 @@
 import { Injectable, computed, effect, inject, signal, untracked } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { ProductService } from './product.service';
 import { AuthService } from './auth.service';
@@ -11,7 +12,11 @@ export const ORDER_STATUS: Record<OrderStatus, string> = {
 };
 /** Thứ tự trạng thái để admin chuyển bước tiếp theo */
 export const STATUS_FLOW: OrderStatus[] = ['pending', 'confirmed', 'preparing', 'shipping', 'delivered'];
-export const PAYMENT_LABEL = { cod: 'Tiền mặt khi nhận', vnpay: 'VNPay' } as const;
+export const PAYMENT_LABEL = { cod: 'Tiền mặt khi nhận', vnpay: 'VNPay', bank: 'Chuyển khoản QR' } as const;
+/** Trả trước: giữ hàng có hạn, chưa trả thì cửa hàng chưa xử lý đơn */
+export const isPrepaid = (m: string) => m === 'vnpay' || m === 'bank';
+/** Thông tin chuyển khoản cho một đơn (mã QR đã điền sẵn số tiền và nội dung) */
+export interface BankInstructions { qrUrl: string; bankCode: string; account: string; holder: string; amount: number; content: string; dueAt?: string; }
 
 /** Đơn kèm các dòng dựng từ bản chụp lúc đặt (giá/tên không đổi theo catalog hiện tại) */
 export interface OrderView extends Order { lines: { p: Product; qty: number; price: number }[]; }
@@ -23,6 +28,9 @@ export class OrderService {
   private products = inject(ProductService);
   private auth = inject(AuthService);
   private cart = inject(CartService);
+  private router = inject(Router);
+  /** Cửa hàng có bật chuyển khoản QR không (backend chỉ bật khi đã cấu hình SePay) */
+  readonly bankEnabled = signal(false);
   private mineRaw = signal<Order[]>([]);
   private adminRaw = signal<Order[]>([]);
   readonly loading = signal(false);
@@ -35,6 +43,7 @@ export class OrderService {
 
   constructor() {
     effect(() => { const u = this.auth.user(); untracked(() => void this.reload(u)); });
+    this.http.get<{ bank: boolean }>('/api/payments/methods').subscribe({ next: m => this.bankEnabled.set(m.bank), error: () => {} });
   }
 
   async reload(u: User | null = this.auth.user()): Promise<void> {
@@ -85,18 +94,28 @@ export class OrderService {
   canCancel(o: Order): boolean { return (o.status === 'pending' || o.status === 'confirmed') && o.paymentStatus === 'unpaid'; }
   /** Đơn VNPay chưa thanh toán và còn trong thời gian giữ hàng: còn thanh toán tiếp được */
   canPay(o: Order): boolean {
-    return o.paymentMethod === 'vnpay' && o.paymentStatus === 'unpaid' && o.status === 'pending' && (!o.paymentDueAt || Date.parse(o.paymentDueAt) > Date.now());
+    return isPrepaid(o.paymentMethod) && o.paymentStatus === 'unpaid' && o.status === 'pending' && (!o.paymentDueAt || Date.parse(o.paymentDueAt) > Date.now());
   }
   /** Nhãn trạng thái thanh toán dùng chung cho khách và admin */
   payStatusLabel(o: Pick<Order, 'paymentMethod' | 'paymentStatus' | 'status'>): string {
     if (o.paymentStatus === 'refunded') return 'Đã hoàn tiền';
     if (o.paymentStatus === 'paid') return o.status === 'cancelled' ? 'Đã thanh toán, chờ hoàn tiền' : 'Đã thanh toán';
-    return o.paymentMethod === 'vnpay' && o.status === 'pending' ? 'Chờ thanh toán' : 'Chưa thanh toán';
+    return isPrepaid(o.paymentMethod) && o.status === 'pending' ? 'Chờ thanh toán' : 'Chưa thanh toán';
   }
   /** Tạo giao dịch rồi chuyển trình duyệt sang cổng thanh toán */
-  async pay(o: Pick<Order, 'id'>): Promise<void> {
+  async pay(o: Pick<Order, 'id' | 'orderCode' | 'paymentMethod'>): Promise<void> {
+    if (o.paymentMethod === 'bank') { await this.router.navigate(['/thanh-toan/chuyen-khoan'], { queryParams: { ma: o.orderCode } }); return; }
     const r = await firstValueFrom(this.http.post<{ payUrl: string }>(`/api/users/me/orders/${o.id}/payments`, {}));
     window.location.href = r.payUrl;
+  }
+  /** Mã QR và thông tin chuyển khoản của đơn */
+  bankInstructions(o: Pick<Order, 'id'>): Promise<BankInstructions> {
+    return firstValueFrom(this.http.post<BankInstructions>(`/api/users/me/orders/${o.id}/payments`, {}));
+  }
+  /** Admin xác nhận tay đã nhận tiền chuyển khoản */
+  async confirmPayment(o: Pick<Order, 'id'>): Promise<void> {
+    await firstValueFrom(this.http.post(`/api/admin/orders/${o.id}/confirm-payment`, {}));
+    await this.reload();
   }
   async cancel(o: Order): Promise<void> {
     this.replace(await firstValueFrom(this.http.post<Order>(`/api/users/me/orders/${o.id}/cancel`, {})));

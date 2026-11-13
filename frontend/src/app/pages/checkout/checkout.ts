@@ -36,7 +36,7 @@ export class Checkout {
   protected ps = inject(ProductService);
   protected auth = inject(AuthService);
   private vs = inject(VoucherService);
-  private orders = inject(OrderService);
+  protected orders = inject(OrderService);
   private toast = inject(ToastService);
   private router = inject(Router);
 
@@ -97,6 +97,7 @@ export class Checkout {
       const items = this.cart.lines().map(l => ({ product: l.p, qty: l.qty, price: this.ps.price(l.p) }));
       const o = await this.orders.place(f, this.t().voucher ? this.cart.voucherCode() : '');
       // Đơn đã giữ hàng; thanh toán online thì chuyển sang cổng, kết quả quay về /thanh-toan/ket-qua.
+      if (o.paymentMethod === 'bank') { await this.orders.pay(o); return; }
       if (o.paymentMethod === 'vnpay') {
         try { await this.orders.pay(o); return; }
         catch (error) { this.toast.show(`Đã tạo đơn ${o.orderCode} nhưng chưa mở được cổng thanh toán. Thanh toán lại trong Tài khoản.`); }

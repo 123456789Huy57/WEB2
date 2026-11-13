@@ -71,7 +71,7 @@ const collections = {
         },
         subtotal: money, shippingFee: money, productDiscount: money, shippingDiscount: money, discount: money, total: money,
         voucherCode: strOrNull,
-        paymentMethod: { enum: ['cod', 'vnpay'] }, paymentStatus: { enum: ['unpaid', 'paid', 'refunded'] }, paidAt: strOrNull, paymentDueAt: str,
+        paymentMethod: { enum: ['cod', 'vnpay', 'bank'] }, paymentStatus: { enum: ['unpaid', 'paid', 'refunded'] }, paidAt: strOrNull, paymentDueAt: str,
         status: { enum: ORDER_STATUSES },
         history: {
           bsonType: 'array',
@@ -205,8 +205,8 @@ const collections = {
     schema: {
       required: ['id', 'orderId', 'userId', 'provider', 'txnRef', 'amount', 'status', 'createdAt'],
       properties: {
-        id: str, orderId: str, orderCode: str, userId: str, provider: { enum: ['vnpay', 'mock'] }, txnRef: str, amount: positive,
-        status: { enum: ['pending', 'paid', 'failed', 'refund_required', 'refunded'] }, responseCode: str, transactionNo: str, paidAt: str,
+        id: str, orderId: str, orderCode: str, userId: str, provider: { enum: ['vnpay', 'mock', 'sepay', 'manual'] }, txnRef: str, amount: positive,
+        status: { enum: ['pending', 'paid', 'failed', 'refund_required', 'refunded'] }, responseCode: str, transactionNo: str, paidAt: str, content: str, confirmedBy: str,
         refundedAt: str, refundedBy: str, refundNote: str, createdAt: str, updatedAt: str,
       },
     },

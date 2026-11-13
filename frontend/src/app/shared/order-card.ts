@@ -1,7 +1,7 @@
 import { Component, computed, inject, input, output, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { OrderService, OrderView, ORDER_STATUS, PAYMENT_LABEL, STATUS_FLOW } from '../core/order.service';
+import { OrderService, OrderView, ORDER_STATUS, PAYMENT_LABEL, isPrepaid, STATUS_FLOW } from '../core/order.service';
 import { ProductService } from '../core/product.service';
 import { VndPipe } from './vnd.pipe';
 import { ImgFallbackDirective } from './img-fallback.directive';
@@ -44,7 +44,7 @@ import { ImgFallbackDirective } from './img-fallback.directive';
       </div>
     }
     <div class="o-bot">
-      <span class="small muted">{{ o().lines.length }} sản phẩm · {{ payLabel[o().paymentMethod] }}{{ o().paymentMethod === 'vnpay' ? ' · ' + orders.payStatusLabel(o()).toLowerCase() : '' }}@if (o().paymentMethod === 'vnpay' && o().paymentStatus === 'unpaid' && o().status === 'pending' && o().paymentDueAt) { · giữ hàng đến {{ o().paymentDueAt | date: 'HH:mm' }} }</span>
+      <span class="small muted">{{ o().lines.length }} sản phẩm · {{ payLabel[o().paymentMethod] }}{{ prepaid(o().paymentMethod) ? ' · ' + orders.payStatusLabel(o()).toLowerCase() : '' }}@if (prepaid(o().paymentMethod) && o().paymentStatus === 'unpaid' && o().status === 'pending' && o().paymentDueAt) { · giữ hàng đến {{ o().paymentDueAt | date: 'HH:mm' }} }</span>
       <div class="o-act">
         <span class="price num">{{ o().total | vnd }}</span>
         <button class="btn btn-paper btn-sm" type="button" (click)="open.set(!open())" [attr.aria-expanded]="open()">{{ open() ? 'Thu gọn' : 'Chi tiết' }}</button>
@@ -67,6 +67,7 @@ export class OrderCard {
   protected orders = inject(OrderService);
   protected status = ORDER_STATUS;
   protected payLabel = PAYMENT_LABEL;
+  protected prepaid = isPrepaid;
   protected flow = STATUS_FLOW;
   protected open = signal(false);
   protected stepIndex = computed(() => STATUS_FLOW.indexOf(this.o().status));

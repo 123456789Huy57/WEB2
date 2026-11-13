@@ -40,4 +40,12 @@ module.exports = {
     vnpHashSecret: process.env.VNPAY_HASH_SECRET?.trim() || '',
     vnpUrl: process.env.VNPAY_URL || 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html',
   },
+  // Chuyển khoản QR, tự xác nhận qua webhook SePay. Thiếu một trong bốn biến thì ẩn lựa chọn này.
+  bank: {
+    code: process.env.BANK_CODE?.trim() || '',
+    account: process.env.BANK_ACCOUNT?.trim() || '',
+    holder: process.env.BANK_HOLDER?.trim() || '',
+    sepayApiKey: process.env.SEPAY_API_KEY?.trim() || '',
+    get enabled() { return Boolean(this.code && this.account && this.holder && this.sepayApiKey); },
+  },
 };

@@ -11,6 +11,7 @@ process.env.MONGODB_URI = process.env.MONGODB_TEST_URI || process.env.MONGODB_UR
 process.env.MONGODB_DB = `fm_test_b_${Date.now().toString(36)}`; // Atlas giới hạn tên DB 38 ký tự
 process.env.SESSION_SECRET = 'freshmart-integration-test-only-secret';
 process.env.PAYMENT_PROVIDER = 'mock'; // test luôn dùng cổng giả lập, kể cả khi .env đã có mã VNPay
+Object.assign(process.env, { BANK_CODE: 'MBBank', BANK_ACCOUNT: '0000123456789', BANK_HOLDER: 'FRESHMART TEST', SEPAY_API_KEY: 'test-sepay-key' });
 const env = require('../src/config/env');
 const db = require('../src/config/database');
 const { ensureIndexes } = require('../src/config/indexes');
@@ -383,6 +384,63 @@ test('Thanh toán online qua cổng giả lập (cùng định dạng VNPay)', a
     await c.post('/api/cart/items', { productId: 'p-a', quantity: 1 });
     const { data: cod } = await order(c);
     assert.equal((await c.post(`/api/users/me/orders/${cod.id}/payments`)).data.error.code, 'PAYMENT_NOT_ONLINE');
+  });
+});
+
+test('Chuyển khoản QR, tự xác nhận qua webhook SePay', async t => {
+  const c = await new Client().register(56);
+  const admin = await new Client().start();
+  assert.equal((await admin.post('/api/auth/login', { identifier: 'admin@example.com', password: 'adminpass123' })).status, 200);
+  const step = (o, status, expectedStatus) => admin.patch(`/api/admin/orders/${o.id}/status`, { status, expectedStatus });
+  const hook = (body, key = 'test-sepay-key') => fetch(`${base}/api/payments/sepay/webhook`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Apikey ${key}` }, body: JSON.stringify(body),
+  }).then(async r => ({ status: r.status, data: await r.json() }));
+  const tx = (o, extra = {}) => ({ id: Math.floor(Math.random() * 1e9), gateway: 'MBBank', transferType: 'in', transferAmount: o.total, content: `CT ${o.orderCode.replace(/-/g, '')} chuyen tien`, referenceCode: 'FT1', ...extra });
+
+  await t.test('đặt đơn chuyển khoản: có mã QR đúng số tiền và nội dung, giữ hàng 30 phút', async () => {
+    assert.equal((await c.get('/api/payments/methods')).data.bank, true);
+    await c.post('/api/cart/items', { productId: 'p-a', quantity: 1 });
+    const { data: o } = await order(c, { paymentMethod: 'bank' });
+    assert.equal(o.paymentStatus, 'unpaid');
+    assert.ok(Date.parse(o.paymentDueAt) - Date.now() > 25 * 60000);
+    const p = await c.post(`/api/users/me/orders/${o.id}/payments`);
+    assert.equal(p.status, 201, JSON.stringify(p.data));
+    assert.equal(p.data.content, o.orderCode.replace(/-/g, ''));
+    assert.match(p.data.qrUrl, new RegExp(`amount=${o.total}&des=${p.data.content}`));
+    assert.equal((await step(o, 'confirmed', 'pending')).data.error.code, 'ORDER_NOT_PAID', 'chưa nhận tiền thì chưa xác nhận đơn');
+  });
+
+  await t.test('webhook: sai khóa bị chặn, thiếu tiền không tính, đủ tiền thì đã thanh toán, gửi lại không ghi hai lần', async () => {
+    await c.post('/api/cart/items', { productId: 'p-a', quantity: 1 });
+    const { data: o } = await order(c, { paymentMethod: 'bank' });
+    assert.equal((await hook(tx(o), 'sai')).status, 401);
+    assert.equal((await hook(tx(o, { transferAmount: o.total - 1000 }))).data.result, 'UNDERPAID');
+    assert.equal((await hook(tx(o, { transferType: 'out' }))).data.result, 'IGNORED');
+    assert.equal((await hook(tx(o, { content: 'chuyen tien an trua' }))).data.result, 'IGNORED');
+    assert.equal((await c.get(`/api/users/me/orders/${o.id}`)).data.paymentStatus, 'unpaid');
+    const body = tx(o);
+    const ok = await hook(body);
+    assert.equal(ok.status, 200);
+    assert.deepEqual([ok.data.success, ok.data.result], [true, 'PAID']);
+    assert.equal((await hook(body)).data.result, 'ALREADY_DONE');
+    assert.equal((await c.get(`/api/users/me/orders/${o.id}`)).data.paymentStatus, 'paid');
+    assert.equal((await step(o, 'confirmed', 'pending')).data.status, 'confirmed', 'đã nhận tiền thì xử lý đơn được');
+    assert.equal(await db.getDatabase().collection('payments').countDocuments({ orderId: o.id, status: 'paid' }), 1);
+  });
+
+  await t.test('tiền vào cho đơn đã hủy cần hoàn tiền; admin xác nhận tay được', async () => {
+    await c.post('/api/cart/items', { productId: 'p-a', quantity: 1 });
+    const { data: gone } = await order(c, { paymentMethod: 'bank' });
+    await c.post(`/api/users/me/orders/${gone.id}/cancel`);
+    assert.equal((await hook(tx(gone))).data.result, 'REFUND_REQUIRED');
+    assert.ok((await admin.get('/api/admin/payments/refunds')).data.items.some(x => x.orderId === gone.id));
+    await c.post('/api/cart/items', { productId: 'p-a', quantity: 1 });
+    const { data: o } = await order(c, { paymentMethod: 'bank' });
+    assert.equal((await c.post(`/api/admin/orders/${o.id}/confirm-payment`)).status, 403);
+    assert.equal((await admin.post(`/api/admin/orders/${o.id}/confirm-payment`)).data.paymentStatus, 'paid');
+    assert.equal((await admin.post(`/api/admin/orders/${o.id}/confirm-payment`)).data.paymentStatus, 'paid', 'bấm lại không lỗi');
+    assert.equal((await hook(tx(o))).data.result, 'ALREADY_PAID', 'SePay báo sau khi admin đã xác nhận tay: là cùng khoản tiền');
+    assert.equal((await hook(tx(o))).data.result, 'REFUND_REQUIRED', 'khách chuyển thêm lần nữa: cần hoàn');
   });
 });
 

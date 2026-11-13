@@ -44,6 +44,22 @@ router.get('/payments/mock/pay', (req, res) => {
 <a class="ok" href="${esc(back('00'))}">Thanh toán thành công</a><a class="no" href="${esc(back('24'))}">Hủy giao dịch</a></main></html>`);
 });
 
+// Trang thanh toán hỏi cửa hàng đang bật những cách trả tiền nào.
+router.get('/payments/methods', (req, res) => res.json({ cod: true, vnpay: true, bank: env.bank.enabled }));
+
+// SePay gọi khi có tiền vào tài khoản. Trả 200 {success:true} cho mọi giao dịch hợp lệ (kể cả không phải của web)
+// để SePay không gửi lại mãi; chỉ sai khóa mới trả 401.
+router.post('/payments/sepay/webhook', async (req, res) => {
+  if (!service.sepayAuthorized(req.get('authorization'))) return res.status(401).json({ success: false });
+  const r = await service.sepayWebhook(req.body ?? {});
+  res.json({ success: true, result: r.code });
+});
+
+// Admin: xác nhận tay đã nhận tiền chuyển khoản.
+router.post('/admin/orders/:id/confirm-payment', requireAuth, requireAdmin, async (req, res) => {
+  res.json(await service.confirmBankManually({ orderId: v.id(req.params.id), actorId: req.user.id }));
+});
+
 // Admin: hoàn tiền cho giao dịch online của đơn đã hủy.
 router.get('/admin/payments/refunds', requireAuth, requireAdmin, async (req, res) => res.json(await service.listRefunds(req.query)));
 router.post('/admin/payments/:id/refund', requireAuth, requireAdmin, async (req, res) => {

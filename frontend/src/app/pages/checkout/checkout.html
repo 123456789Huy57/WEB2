@@ -35,9 +35,12 @@
           <legend class="h3">Thanh toán</legend>
           <div class="choices">
             <label class="choice"><input type="radio" formControlName="payment" value="cod"><span><b>Tiền mặt khi nhận hàng</b><span class="small muted">Trả cho shipper khi nhận, kiểm hàng trước khi trả</span></span></label>
+            @if (orders.bankEnabled()) {
+              <label class="choice"><input type="radio" formControlName="payment" value="bank"><span><b>Chuyển khoản QR</b><span class="small muted">Quét mã bằng app ngân hàng, đơn tự xác nhận khi tiền vào</span></span></label>
+            }
             <label class="choice"><input type="radio" formControlName="payment" value="vnpay"><span><b>VNPay</b><span class="small muted">Thẻ ATM, Visa, QR ngân hàng. Chuyển sang cổng VNPay sau khi đặt</span></span></label>
           </div>
-          <p class="small muted">Website demo chưa kết nối cổng thanh toán trực tuyến.</p>
+          <p class="small muted">Website demo: VNPay chạy ở chế độ thử, không trừ tiền thật.</p>
         </fieldset>
       </div>
       <aside class="panel sticky" aria-labelledby="h-co-sum">
