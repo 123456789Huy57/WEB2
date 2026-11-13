@@ -36,6 +36,11 @@ async function ensureIndexes() {
     db.collection('recipeCooks').createIndex({ day: 1, recipeId: 1 }),
     db.collection('reviews').createIndex({ productId: 1, userId: 1 }, { unique: true }),
     db.collection('reviews').createIndex({ productId: 1, createdAt: -1 }),
+    db.collection('communityPosts').createIndex({ id: 1 }, { unique: true }),
+    db.collection('communityPosts').createIndex({ hidden: 1, createdAt: -1 }),
+    db.collection('communityPosts').createIndex({ hidden: 1, score: -1, createdAt: -1 }),
+    db.collection('communityPosts').createIndex({ recipeId: 1 }),
+    db.collection('communitySaves').createIndex({ userId: 1 }, { unique: true }),
     db.collection('payments').createIndex({ txnRef: 1 }, { unique: true }),
     db.collection('payments').createIndex({ orderId: 1, createdAt: -1 }),
   ]);
