@@ -17,7 +17,7 @@ const POSTS: Post[] = [
     shop: { label: 'Xem quầy rau củ', link: '/san-pham', q: { c: 'vegetables' } }
   },
   {
-    slug: 'trai-cay-theo-mua', tag: 'Mùa vụ', date: '10/06/2026', img: '/img/quay-trai-cay.jpg',
+    slug: 'trai-cay-theo-mua', tag: 'Mùa vụ', date: '10/06/2026', img: '/img/cua-hang-freshmart.webp',
     title: 'Trái cây theo mùa: ăn đúng mùa vừa ngon vừa rẻ',
     excerpt: 'Đầu hè là mùa măng cụt, vải thiều, sầu riêng. Trái đúng mùa ít phải trữ lâu, ngọt hơn và giá mềm hơn.',
     body: [
