@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewEncapsulation, computed, effect, inject, input, signal, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { CHALLENGE, COMMUNITY_TAGS, CPost, POST_TYPE_LABEL, PostType, REACTIONS, CommunityService } from '../../core/community.service';
 import { DIFF_LABEL, MEAL_LABEL, MealPlannerService } from '../../core/meal-planner.service';
 import { DataService } from '../../core/data.service';
@@ -28,18 +29,25 @@ export class Community {
   readonly luot = input<string>();
   protected reelMode = computed(() => this.xem() === 'luot');
   protected setMode(reel: boolean): void {
+    this.lastLuot = undefined;
     void this.router.navigate([], { queryParams: { xem: reel ? 'luot' : null, luot: null }, queryParamsHandling: 'merge' });
   }
-  /** Ghi món đang xem vào URL, thay thế lịch sử để nút Back không phải lùi qua từng món */
+  /** Ghi món đang xem vào URL, thay thế lịch sử để nút Back không phải lùi qua từng món.
+   *  Dùng Location.replaceState thay cho router.navigate: điều hướng của router kích hoạt cuộn về đầu trang
+   *  (scrollPositionRestoration: 'top'), làm khung lướt món bị nhảy mỗi lần bấm lên/xuống. */
+  private lastLuot?: string;
   protected reelMoved(id: string): void {
-    if (this.luot() === id) return;
-    void this.router.navigate([], { queryParams: { luot: id }, queryParamsHandling: 'merge', replaceUrl: true });
+    if ((this.lastLuot ?? this.luot()) === id) return;
+    this.lastLuot = id;
+    const tree = this.router.createUrlTree([], { queryParams: { luot: id }, queryParamsHandling: 'merge' });
+    this.location.replaceState(this.router.serializeUrl(tree));
   }
   protected cs = inject(CommunityService);
   protected mp = inject(MealPlannerService);
   private data = inject(DataService);
   private toast = inject(ToastService);
   private router = inject(Router);
+  private location = inject(Location);
 
   protected readonly reactions = REACTIONS;
   protected readonly typeLabel = POST_TYPE_LABEL;
