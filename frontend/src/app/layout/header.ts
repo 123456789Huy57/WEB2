@@ -104,7 +104,18 @@ export class Header {
       last = y;
     };
     window.addEventListener('scroll', onScroll, { passive: true });
-    inject(DestroyRef).onDestroy(() => window.removeEventListener('scroll', onScroll));
+    // Chiều cao thật của thanh thông báo + header đầy đủ, để khu đầu trang chủ lấp đúng phần màn hình còn lại
+    // (chữ có thể xuống dòng hoặc người dùng phóng to, nên không đoán cố định 158px)
+    const host = inject(ElementRef<HTMLElement>).nativeElement as HTMLElement;
+    const root = document.documentElement;
+    const measure = () => {
+      const notice = document.querySelector<HTMLElement>('.notice');
+      root.style.setProperty('--chrome-h', (notice?.offsetHeight ?? 0) + host.offsetHeight + 'px');
+    };
+    const ro = new ResizeObserver(measure);
+    ro.observe(host);
+    queueMicrotask(() => { const n = document.querySelector('.notice'); if (n) ro.observe(n); measure(); });
+    inject(DestroyRef).onDestroy(() => { window.removeEventListener('scroll', onScroll); ro.disconnect(); root.style.removeProperty('--chrome-h'); });
   }
   search(): void {
     const q = this.term().trim();

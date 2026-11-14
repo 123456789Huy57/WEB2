@@ -98,10 +98,11 @@ export class CartService {
     return dir > 0 ? this.add(id, step) : this.set(id, this.qty(id) - step);
   }
 
-  setVoucher(code: string): void {
+  /** Đặt mã giảm giá rồi hỏi server báo giá lại; trả về khi đã có kết quả (để giao diện hiện trạng thái đang kiểm tra) */
+  setVoucher(code: string): Promise<void> {
     const c = code.trim().toUpperCase();
     this.voucher.set(c); store.set('voucher', c);
-    void this.requote();
+    return this.requote();
   }
 
   clear(): Promise<void> { return this.run(() => this.http.delete<ServerCart>('/api/cart')); }
@@ -121,7 +122,7 @@ export class CartService {
         this.server.set(await firstValueFrom(call()));
         if (bump) this.bumps.update(n => n + 1);
       } catch (error) {
-        this.toast.show(apiMessage(error));
+        this.toast.error(apiMessage(error));
         if (bump) this.server.set(await firstValueFrom(this.http.get<ServerCart>('/api/cart')).catch(() => this.server()));
       }
       await this.requote();

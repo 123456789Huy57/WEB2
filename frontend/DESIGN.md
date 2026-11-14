@@ -60,12 +60,14 @@ Có năm cỡ chữ: `--t-small` 14px, `--t-body` 16px, `--t-lead` 19px, `--t-he
 - **Góc gần vuông:** `--r: 3px`, dùng chung cho nút, ô nhập, thẻ, tab, chip. Không dùng nút bo tròn kiểu viên thuốc.
 - **Không dùng gradient. Không đổ bóng cho thứ nằm yên trên trang.** Chỉ những thứ nổi lên trên mới có bóng (`--shadow-float`): hộp thoại, giỏ trượt, ô gợi ý tìm kiếm, thông báo toast.
 - **Tách khối bằng bậc màu nền** (kem → kem đậm → đen), không dùng đường kẻ mảnh.
-- **Lề ngoài:** `--gut`, từ 16 đến 56px theo bề ngang màn hình. **Khoảng cách giữa các khu:** ở trang chủ mọi khu dùng chung `--sec-y` (56–88px) cho khoảng trống trên và dưới, tiêu đề khu cùng cỡ `--t-head` (34–56px) và cách nội dung 40px; mỗi khu cố gói gọn khoảng một màn hình laptop. Các trang khác vẫn dùng `--gap-sec` (96–168px).
+- **Lề ngoài:** `--gut`, từ 16 đến 56px theo bề ngang màn hình. **Khoảng cách giữa các khu:** ở trang chủ mọi khu dùng chung `--sec-y` (32–88px) cho khoảng trống trên và dưới, tiêu đề khu cùng cỡ `--t-head` (34–56px). **Mỗi khu lấp đúng một màn hình:** khi cuộn, header thu còn 74px nên `--sec-h` = `100svh − 74px` (tối thiểu 480px, không đặt trần để màn hình cao hay trình duyệt thu nhỏ vẫn lấp kín). Video đầu trang nằm dưới thanh thông báo và header đầy đủ nên dùng `--hero-h` = `100svh − --chrome-h`; `--chrome-h` do `header.ts` đo thật (mặc định 158px). Dải chữ chạy là đường phân cách, không tính vào khung. Khoảng trống, chữ tiêu đề, ảnh và đĩa trong từng khu co theo `svh` để vừa 1366×768, 1536×864 và 1920×1080. Footer ở mọi trang (màn hình rộng) cũng cao đúng `--sec-h`, phần đăng ký và cột link canh giữa; điện thoại giữ nguyên như cũ. Các trang khác vẫn dùng `--gap-sec` (96–168px).
+
+- **Trang công cụ và trang đọc** (Meal Planner, Cộng đồng): đầu trang chỉ có tiêu đề, một câu nói trang làm gì và hành động chính; công cụ hoặc bảng tin nằm ngay màn hình đầu, không banner quảng cáo. Không đặt nhãn nhỏ trên tiêu đề, không đánh số 01/02/03 trừ khi đó là thứ tự thật (các bước của một đơn hàng), không dùng emoji làm biểu tượng nút.
 
 ## 6. Ảnh
 
 - Ảnh sản phẩm có nền trắng, đặt trên ô có màu nền và dùng `mix-blend-mode: multiply` để nền trắng biến mất.
-- Hero dùng ảnh dưa hấu của chính dự án (`public/img/p/dua-hau.jpg`), xoay nghiêng và để mép khung cắt bớt.
+- Hero dùng ảnh hai nửa dưa hấu nền trong suốt (`public/img/cut/dua-hau-2.webp`), xoay nghiêng 16° và để mép trái, mép dưới khung cắt bớt (cùng cỡ và vị trí với ảnh dưa hấu cũ).
 - Ảnh chụp (giao hàng, bếp, cửa hàng) dùng góc vuông, `object-fit: cover`.
 - Không dùng ảnh của trang tham khảo.
 
@@ -91,6 +93,7 @@ Tất cả chỉ dùng CSS, không dùng thư viện animation. Khi người dù
 | Bảng giá | `.board-sec` (chỉ có ở trang chủ) |
 | Đi chợ theo quầy | `fm-aisle-carousel`: nền kem, banner bo góc đổi màu theo quầy (vàng, xanh đậm, chanh, xanh lá lặp lại). Trạng thái băng chuyền nằm trong class `Carousel` (`shared/carousel.ts`) |
 | Có gì trong bếp, nấu món đó | `fm-kitchen-match`: kệ 8 nguyên liệu bấm chọn (ô kem, đang chọn tô vàng) và thẻ công thức của món hợp nhất, dùng chung thuật toán `MealPlannerService.generate` với trang Meal Planner |
+| Lướt món (Cộng đồng, `?xem=luot`) | `fm-dish-reel`: mỗi màn một món, cuộn dọc có hít (scroll-snap), phím ↑ ↓ / J K; khung món nền đen chữ kem, không phủ gradient lên ảnh; bảng nguyên liệu nền kem kèm sản phẩm, giá và nút thêm vào giỏ (điện thoại: tấm trượt từ dưới lên). Chỉ dựng đủ ±2 món quanh món đang xem |
 | Dải chữ chạy | `.marquee` |
 | Thanh thông báo | `.notice` (trong `app.ts`) |
 

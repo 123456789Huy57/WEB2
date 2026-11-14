@@ -26,7 +26,19 @@ import { DataService } from './core/data.service';
     </main>
     @if (!isAdmin()) { <fm-footer /><fm-cart-drawer /> }
     <fm-confirm />
-    <div class="toast" [class.on]="toast.visible()" role="status" aria-live="polite">{{ toast.message() }}</div>
+    <!-- Thông báo: vùng "status" đọc nhẹ nhàng, không cướp tiêu điểm bàn phím; khi ẩn thì inert để Tab không lọt vào nút đã ẩn -->
+    <div class="toast" [class.on]="toast.visible()" [attr.data-kind]="toast.kind()" [attr.inert]="toast.visible() ? null : ''"
+         role="status" aria-live="polite" aria-atomic="true"
+         (mouseenter)="toast.pause()" (mouseleave)="toast.resume()" (focusin)="toast.pause()" (focusout)="toast.resume()">
+      @if (toast.kind() === 'success') {
+        <svg class="toast-ico" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.8 10.4l2.8 2.8 5.6-6"/></svg>
+      } @else if (toast.kind() === 'error') {
+        <svg class="toast-ico" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M10 5.5v5.5M10 14.2v.3"/></svg>
+      }
+      <span class="toast-msg">{{ toast.message() }}</span>
+      @if (toast.action(); as a) { <button type="button" class="toast-act" (click)="toast.runAction()">{{ a.label }}</button> }
+      <button type="button" class="toast-x" aria-label="Đóng thông báo" (click)="toast.dismiss()"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg></button>
+    </div>
   `
 })
 export class App {

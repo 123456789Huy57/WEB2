@@ -1,0 +1,18 @@
+/* Danh sách cửa hàng (/he-thong-cua-hang): khôi phục từ trang cửa hàng cũ */
+.st-hero { padding-top: 48px; }
+.st-hero-in { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 56px; align-items: end; }
+.st-hero .lead { margin-top: 20px; max-width: 480px; }
+.st-hero img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: var(--r); }
+.st-list { padding-top: 72px; }
+.st-search input { width: min(360px, 100%); height: 46px; border-radius: var(--r); border: 1px solid var(--stone-2); padding: 0 20px; outline: none; }
+.st-search input:focus { border-color: var(--forest); }
+.stores { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.stores li { background: var(--stone); border-radius: var(--r); padding: 24px; display: flex; flex-direction: column; gap: 6px; }
+.stores .h3 { font-size: 24px; }
+.stores .a { color: var(--muted); }
+.stores .row { margin-top: 14px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.stores .open { font-size: var(--t-small); font-weight: 500; color: var(--forest); }
+.stores .open.closed { color: var(--muted); }
+.stores .empty { grid-column: 1 / -1; background: none; padding: 24px 0; }
+@media (max-width: 1000px) { .stores { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 760px) { .st-hero-in { grid-template-columns: 1fr; gap: 28px; } .stores { grid-template-columns: 1fr; } .st-list { padding-top: 56px; } }

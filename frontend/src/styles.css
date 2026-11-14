@@ -24,6 +24,7 @@
   --green: #289e7c;          /* mảng màu lớn: dải chữ chạy, khu Meal Planner (đi với chữ đen) */
   --yellow: #ffc517;         /* mảng màu lớn: hero, giá trên bảng tối */
   --lime: #d2e07d;           /* mảng màu phụ */
+  --yellow-soft: #ffda70;    /* vàng dịu: nền đầu trang Về FreshMart */
   --butter: #fdf1c7;         /* vàng pastel nhạt: nền khu Bảng giá sáng nay */
   --on-forest: #fefcf5;
   --on-forest-muted: #d6e7de;
@@ -44,9 +45,14 @@
   --gut-l: max(var(--gut), env(safe-area-inset-left, 0px));
   --gut-r: max(var(--gut), env(safe-area-inset-right, 0px));
   --gap-sec: clamp(96px, 11vw, 168px);
-  --sec-y: clamp(56px, 6vw, 88px);   /* khoảng trống trên và dưới của mọi khu ở trang chủ: các khu cách đều nhau */
-  --sec-box: min(620px, 92vw);         /* chiều cao phần nội dung của một khu trang chủ (bằng vòng tròn khu Tươi từ chợ) */
-  --sec-h: calc(var(--sec-box) + 2 * var(--sec-y)); /* chiều cao cả khu trên màn hình rộng */
+  /* Mỗi khu trang chủ lấp đúng một màn hình. Khi cuộn, header thu còn 74px (hàng menu ẩn, thanh thông báo trôi mất),
+     nên một khu = 100svh − 74px. Video đầu trang nằm dưới thanh thông báo và header đầy đủ (~158px) nên dùng --hero-h. */
+  --hdr-min: 74px;
+  /* Không đặt trần: màn hình cao (hoặc trình duyệt thu nhỏ) thì khu vẫn lấp kín, không hở khu kế tiếp */
+  --sec-h: max(480px, calc(100svh - var(--hdr-min)));
+  --hero-h: max(440px, calc(100svh - var(--chrome-h, 158px))); /* --chrome-h do header.ts đo */
+  --sec-y: clamp(32px, min(max(6vw, 56px), 7svh), 88px); /* điện thoại giữ 56px như cũ; laptop thấp co về ~46px */
+  --sec-box: min(92vw, calc(var(--sec-h) - 2 * var(--sec-y))); /* chiều cao phần nội dung của một khu (bằng vòng tròn khu Tươi từ chợ) */
   --header-h: 150px;         /* chiều cao header dính, dùng cho phần tử sticky bên dưới */
   /* Hình khối: góc gần vuông, cùng một bán kính cho nút, ô nhập, thẻ */
   --r: 3px;
@@ -84,8 +90,8 @@ p { margin: 0; }
 /* Mẫu tiêu đề hai dòng căn giữa: dòng nhỏ màu đen dẫn vào, dòng lớn màu xanh là ý chính ("Vì sao chọn / FreshMart?", "Giao trước / bữa tối") */
 .duo-h { font-family: var(--display); font-weight: 600; text-transform: uppercase; line-height: var(--lh-head); text-align: center; }
 .duo-h span { display: block; }
-.duo-h span:first-child { font-size: clamp(22px, 1.8vw, 28px); color: var(--ink); }
-.duo-h span:last-child { font-size: var(--t-head); color: var(--forest); }
+.duo-h span:first-child { font-size: clamp(20px, min(1.8vw, 3.6svh), 28px); color: var(--ink); }
+.duo-h span:last-child { font-size: clamp(34px, min(3.8vw, 7svh), 56px); /* như --t-head nhưng co theo chiều cao màn hình */ color: var(--forest); }
 .lead { font-size: var(--t-lead); line-height: 1.5; }
 .small { font-size: var(--t-small); }
 .muted { color: var(--muted); }
@@ -203,7 +209,7 @@ p { margin: 0; }
 .check input { width: 20px; height: 20px; accent-color: var(--forest); }
 
 /* Dải chữ chạy ngang (marquee): chỉ ghi điều FreshMart làm thật */
-.marquee { display: flex; overflow: hidden; background: var(--green); color: var(--ink); font-family: var(--display); font-weight: 600; font-size: clamp(18px, 1.6vw, 24px); letter-spacing: .02em; text-transform: uppercase; white-space: nowrap; user-select: none; }
+.marquee { --mq-fs: clamp(18px, 1.6vw, 24px); --mq-h: calc(24px + 1.5 * var(--mq-fs)); display: flex; overflow: hidden; background: var(--green); color: var(--ink); font-family: var(--display); font-weight: 600; font-size: var(--mq-fs); line-height: 1.5; letter-spacing: .02em; text-transform: uppercase; white-space: nowrap; user-select: none; }
 .marquee ul { display: flex; flex: 0 0 auto; gap: 0; margin: 0; padding: 12px 0; list-style: none; animation: marquee 38s linear infinite; }
 .marquee li { display: flex; align-items: center; }
 .marquee li::after { content: ""; width: 10px; height: 10px; margin: 0 28px; border-radius: 50%; background: var(--yellow); }
@@ -215,9 +221,15 @@ p { margin: 0; }
 /* Hiệu ứng lộ dần: tầng dưới dính ở đáy màn hình (sticky), tầng trên nằm đè lên và cuộn đi, để lộ chữ FRESHMART đứng yên.
    Dùng overflow: clip thay vì hidden vì hidden biến footer thành khung cuộn riêng, làm sticky không bám theo màn hình. */
 .footer { background: var(--forest-hover); color: var(--on-forest-muted); margin-top: var(--gap-sec); overflow: clip; padding-inline: 0; text-align: center; }
+/* Màn hình rộng, mọi trang: footer cũng lấp đúng một màn hình như các khu; phần đăng ký và cột link canh giữa khoảng trống */
+@media (min-width: 901px) {
+  .footer { display: flex; flex-direction: column; min-height: var(--sec-h); }
+  .f-top { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .f-cols { width: 100%; }
+}
 /* Trang chủ kết thúc bằng khu vàng, footer xanh nối liền ngay sau, không cần khoảng kem ở giữa */
 fm-root:has(.ship) .footer { margin-top: 0; }
-.f-top { position: relative; z-index: 1; background: var(--forest); padding: 48px var(--gut-r) 40px var(--gut-l); }
+.f-top { position: relative; z-index: 1; background: var(--forest); padding: clamp(24px, 4.5svh, 48px) var(--gut-r) clamp(20px, 3.5svh, 40px) var(--gut-l); }
 .f-news { max-width: 560px; margin-inline: auto; }
 .f-news .h3 { color: var(--cream); font-size: clamp(22px, 2vw, 28px); font-weight: 600; }
 .f-news form { margin: 14px auto 0; display: flex; gap: 8px; max-width: 420px; }
@@ -226,14 +238,14 @@ fm-root:has(.ship) .footer { margin-top: 0; }
 .f-news input:focus { border-color: var(--cream); }
 .f-news .btn { height: 44px; padding-block: 0; background: var(--yellow); color: var(--ink); }
 .f-news .btn:hover { background: var(--cream); }
-.f-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; max-width: 960px; margin: 36px auto 0; padding-top: 36px; border-top: 1px solid rgb(254 252 245 / .2); }
-.footer .f-h { font-family: var(--display); color: var(--cream); font-size: 18px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 16px; }
-.footer ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; gap: 10px; font-size: 15px; }
+.f-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; max-width: 960px; margin: clamp(18px, 3svh, 36px) auto 0; padding-top: clamp(18px, 3svh, 36px); border-top: 1px solid rgb(254 252 245 / .2); }
+.footer .f-h { font-family: var(--display); color: var(--cream); font-size: 18px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; margin-bottom: clamp(8px, 1.6svh, 16px); }
+.footer ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; gap: clamp(4px, 1.2svh, 10px); font-size: 15px; }
 .footer a { transition: color .2s; }
 .footer a:hover { color: var(--yellow); }
-.f-bottom { position: sticky; bottom: 0; z-index: 0; background: var(--forest-hover); padding: 40px var(--gut-r) 0 var(--gut-l); }
-.f-mark { margin: 0; font-family: var(--display); font-weight: 700; color: var(--cream); font-size: 12vw; line-height: .8; letter-spacing: -0.02em; text-transform: uppercase; white-space: nowrap; }
-.f-base { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 40px; padding-block: 32px; font-size: 13px; }
+.f-bottom { position: sticky; bottom: 0; z-index: 0; background: var(--forest-hover); padding: clamp(20px, 3.5svh, 40px) var(--gut-r) 0 var(--gut-l); }
+.f-mark { margin: 0; font-family: var(--display); font-weight: 700; color: var(--cream); font-size: min(12vw, 18svh); line-height: .8; /* chữ lớn co theo chiều cao để cả footer vừa một màn hình */ letter-spacing: -0.02em; text-transform: uppercase; white-space: nowrap; }
+.f-base { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 40px; padding-block: clamp(12px, 2svh, 32px); font-size: 13px; }
 @media (max-width: 640px) {
   .f-top { padding-block: 56px 40px; }
   .f-cols { grid-template-columns: 1fr; gap: 32px; margin-top: 40px; padding-top: 40px; }
@@ -241,8 +253,26 @@ fm-root:has(.ship) .footer { margin-top: 0; }
 }
 
 /* Thông báo */
-.toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); z-index: 60; transform: translate(-50%, 16px); opacity: 0; background: var(--ink); color: var(--cream); padding: 14px 22px; border-radius: var(--r); font-size: 15px; transition: opacity .25s, transform .25s var(--ease); pointer-events: none; max-width: calc(100% - 32px); box-shadow: var(--shadow-float); }
-.toast.on { opacity: 1; transform: translate(-50%, 0); }
+/* Thông báo nhỏ ở đáy màn hình: một dòng, nền đen như bảng giá. Thành công có dấu tích xanh lá; lỗi nền kem, viền và biểu tượng đỏ.
+   Không chặn nội dung (chỉ cao ~48px), có nút đóng; thông báo mới thay thế thông báo cũ. */
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); z-index: 60; display: flex; align-items: center; gap: 10px; width: max-content; max-width: min(520px, calc(100% - 32px)); min-height: 48px; padding: 6px 6px 6px 14px; border: 1px solid var(--ink); border-radius: var(--r); background: var(--ink); color: var(--cream); font-size: 15px; line-height: 1.4; box-shadow: var(--shadow-float); opacity: 0; visibility: hidden; transform: translate(-50%, 12px); transition: opacity .2s, transform .2s var(--ease), visibility 0s .2s; }
+.toast.on { opacity: 1; visibility: visible; transform: translate(-50%, 0); transition: opacity .2s, transform .2s var(--ease); }
+.toast-ico { flex: 0 0 20px; width: 20px; height: 20px; }
+.toast-ico circle { fill: var(--green); }
+.toast-ico path { fill: none; stroke: var(--ink); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.toast-msg { flex: 1 1 auto; min-width: 0; padding-block: 6px; }
+.toast-act { flex: none; min-height: 36px; padding: 0 10px; border: 0; border-radius: var(--r); background: none; color: var(--yellow); font: inherit; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; white-space: nowrap; }
+.toast-act:hover { background: rgb(254 252 245 / .1); }
+.toast-x { flex: none; display: grid; place-items: center; width: 36px; height: 36px; border: 0; border-radius: var(--r); background: none; color: inherit; opacity: .75; cursor: pointer; }
+.toast-x:hover { opacity: 1; background: rgb(254 252 245 / .1); }
+.toast-x svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+.toast :focus-visible { outline: 2px solid var(--yellow); outline-offset: 1px; }
+.toast[data-kind="error"] { border-color: var(--sale); background: var(--cream); color: var(--ink); }
+.toast[data-kind="error"] .toast-ico circle { fill: var(--sale); }
+.toast[data-kind="error"] .toast-ico path { stroke: var(--cream); }
+.toast[data-kind="error"] .toast-x:hover { background: var(--stone); }
+.toast[data-kind="error"] :focus-visible { outline-color: var(--ink); }
+@media (max-width: 640px) { .toast { width: calc(100% - 24px); bottom: calc(12px + env(safe-area-inset-bottom, 0px)); } }
 
 /* Chuyển động hiện dần khi cuộn tới (directive fmReveal) */
 .rv { opacity: 0; transform: translateY(28px); transition: opacity .7s var(--ease), transform .7s var(--ease); }

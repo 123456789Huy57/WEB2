@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, computed, effect, inject, input, signal } from '@angular/core';
+import { Component, ViewEncapsulation, computed, effect, inject, input, signal, untracked } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { ProductService } from '../../core/product.service';
@@ -27,6 +27,28 @@ export class Catalog {
   protected sub = computed(() => (this.cat()?.subcategories.some(s => s.id === this.loai()) ? this.loai()! : ''));
   private subCounts = computed(() => { const m = new Map<string, number>(); this.ps.all().forEach(p => p.subcategory && m.set(p.subcategory, (m.get(p.subcategory) ?? 0) + 1)); return m; });
   protected subCount(id: string): number { return this.subCounts().get(id) ?? 0; }
+  /** Số sản phẩm của từng quầy */
+  private catCounts = computed(() => { const m = new Map<string, number>(); this.ps.all().forEach(p => m.set(p.category, (m.get(p.category) ?? 0) + 1)); return m; });
+  protected count(id: string): number { return this.catCounts().get(id) ?? 0; }
+  /** 13 quầy gom thành 3 nhóm cho danh sách ngắn, dễ dò. Quầy mới chưa xếp nhóm thì vào nhóm cuối */
+  private static readonly GROUPS: { id: string; label: string; ids: string[] }[] = [
+    { id: 'tuoi', label: 'Đồ tươi', ids: ['vegetables', 'fruits', 'meat', 'seafood', 'dairy-eggs', 'frozen'] },
+    { id: 'kho', label: 'Đồ khô, gia vị', ids: ['rice-grains', 'noodles', 'condiments'] },
+    { id: 'uong', label: 'Đồ uống, ăn vặt', ids: ['beverages', 'tea-coffee', 'snacks', 'bakery'] }
+  ];
+  protected groups = computed(() => {
+    const cats = this.ps.categories(), known = new Set(Catalog.GROUPS.flatMap(g => g.ids)), cur = this.cat()?.id;
+    return Catalog.GROUPS.map((g, i) => {
+      const list = [...g.ids.map(id => cats.find(c => c.id === id)).filter(c => !!c), ...(i === Catalog.GROUPS.length - 1 ? cats.filter(c => !known.has(c.id)) : [])];
+      const act = list.find(c => c!.id === cur);
+      return { id: g.id, label: g.label, cats: list as typeof cats, activeName: act ? this.ps.catName(act) : '' };
+    }).filter(g => g.cats.length);
+  });
+  /** Nhóm đang mở. Mặc định mở nhóm có quầy đang xem (hoặc "Đồ tươi" khi xem tất cả); người dùng tự mở/đóng thêm */
+  private openGroups = signal<Set<string>>(new Set());
+  protected isOpen(id: string): boolean { return this.openGroups().has(id); }
+  protected toggleGroup(id: string): void { this.openGroups.update(s => { const n = new Set(s); if (n.has(id)) n.delete(id); else n.add(id); return n; }); }
+  protected totalCount = computed(() => this.ps.all().length);
   protected price = signal('');
   protected sale = signal(false);
   protected inStock = signal(true);
@@ -73,6 +95,11 @@ export class Catalog {
   });
 
   constructor() {
+    // Đổi quầy (kể cả từ menu trên cùng): mở nhóm chứa quầy đó, không đóng nhóm người dùng đã mở
+    effect(() => {
+      const id = this.cat()?.id, g = this.groups().find(x => x.cats.some(c => c.id === id))?.id ?? (id ? '' : 'tuoi');
+      if (g) untracked(() => this.openGroups.update(s => (s.has(g) ? s : new Set(s).add(g))));
+    });
     // Đổi quầy hoặc từ khóa thì bỏ lọc "Loại" và quay về 12 sản phẩm đầu
     effect(() => { this.c(); this.q(); this.loai(); this.limit.set(12); });
     effect(() => this.titleSvc.setTitle(this.title() + ' · FreshMart'));

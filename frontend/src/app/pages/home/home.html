@@ -18,14 +18,12 @@
     <p>Đặt trước 16:00, giao trong 1–2 giờ ở nội thành TP.HCM.</p>
     <a class="btn" routerLink="/san-pham">Đi chợ ngay</a>
   </div>
-  <!-- Giấy phép CC BY 3.0 bắt buộc ghi nguồn video -->
-  <p class="hs-credit">Video: <a href="https://commons.wikimedia.org/wiki/File:Mekong_Floating_Markets_,_Ho_Chi_Minh_,Vietnam.webm" target="_blank" rel="noopener">Mekong Floating Markets</a>, Le Monde en Vidéo, <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener">CC BY 3.0</a></p>
 </section>
 
 <!-- Trang 2: trái dưa hấu phóng thật to trên nền vàng, tiêu đề in đứng bên phải -->
 <section class="hs-slide hero band" aria-roledescription="slide" aria-label="2 trên 2" aria-labelledby="hero-title" [inert]="slide() !== 1">
   <div class="hero-media" aria-hidden="true">
-    <img src="/img/cut/dua-hau.png" alt="" width="640" height="640" fetchpriority="high" draggable="false">
+    <img src="/img/cut/dua-hau-2.webp" alt="" width="640" height="640" fetchpriority="high" draggable="false">
   </div>
   <div class="hero-copy">
     <h1 class="hero-h" id="hero-title"><span class="nowrap">Đi chợ liền tay,</span><br><span class="nowrap">giao ngay trước tối</span></h1>
@@ -186,14 +184,14 @@
 @defer (on viewport; prefetch on idle) {
   <fm-aisle-carousel />
 } @placeholder {
-  <div class="defer-ph" style="min-height: 640px" aria-hidden="true"></div>
+  <div class="defer-ph" style="min-height: var(--sec-h)" aria-hidden="true"></div>
 }
 
 <!-- Có gì trong bếp, nấu món đó: Meal Planner thu nhỏ, component riêng (kitchen-match.ts) -->
 @defer (on viewport; prefetch on idle) {
   <fm-kitchen-match />
 } @placeholder {
-  <div class="defer-ph" style="min-height: 720px" aria-hidden="true"></div>
+  <div class="defer-ph" style="min-height: var(--sec-h)" aria-hidden="true"></div>
 }
 
 <!-- Giao hàng: "con đường giao hàng" trên nền vàng. Ba con số là ba biển báo bên đường,
@@ -201,7 +199,7 @@
 <section class="ship" aria-labelledby="h-ship">
   <div class="band ship-head">
     <h2 class="duo-h" id="h-ship" fmReveal><span>Giao trước</span><span>bữa tối</span></h2>
-    <a class="btn btn-ink" routerLink="/cua-hang" fmReveal="1">Xem 12 cửa hàng</a>
+    <a class="btn btn-ink" routerLink="/he-thong-cua-hang" fmReveal="1">Xem 12 cửa hàng</a>
   </div>
   <div class="ship-scene">
     <div class="signs band" role="list">

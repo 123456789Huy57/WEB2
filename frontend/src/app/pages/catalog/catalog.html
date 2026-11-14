@@ -10,27 +10,38 @@
   <aside class="cat-side" [class.open]="filtersOpen()" aria-label="Bộ lọc">
     <div class="f-group">
       <h2 class="f-h">Quầy hàng</h2>
+      <!-- "Tất cả quầy" luôn ở trên; 13 quầy gom thành 3 nhóm mở/đóng được. Nhóm chứa quầy đang xem tự mở -->
       <ul class="cat-list">
-        <li><a routerLink="/san-pham" [queryParams]="{}" [attr.aria-current]="!cat() ? 'page' : null"><span>Tất cả quầy</span></a></li>
-        @for (c of ps.categories(); track c.id) {
-          @let active = cat()?.id === c.id;
-          @let multi = c.subcategories.length > 1;
-          <li [class.has-sub]="multi && !active">
-            <a routerLink="/san-pham" [queryParams]="{ c: c.id }" [attr.aria-current]="active && !sub() ? 'page' : null" [class.on]="active">
-              <span>{{ ps.catName(c) }}</span>
-              
-            </a>
-            @if (multi) {
-              <!-- Quầy đang chọn: loại hàng mở ngay bên dưới. Quầy khác: rê chuột để thấy loại hàng ở bảng bên phải -->
-              <ul class="sub-list" [class.inline]="active" [attr.aria-label]="'Loại hàng trong ' + ps.catName(c)">
-                @for (s of c.subcategories; track s.id) {
-                  <li><a routerLink="/san-pham" [queryParams]="{ c: c.id, loai: s.id }" [attr.aria-current]="active && sub() === s.id ? 'page' : null"><span>{{ s.name }}</span></a></li>
-                }
-              </ul>
-            }
-          </li>
-        }
+        <li><a routerLink="/san-pham" [queryParams]="{}" [attr.aria-current]="!cat() ? 'page' : null"><span class="ai-name">Tất cả quầy</span><span class="ai-n num">{{ totalCount() }}</span></a></li>
       </ul>
+      @for (g of groups(); track g.id) {
+        <div class="cat-group">
+          <button type="button" class="cat-gh" [attr.aria-expanded]="isOpen(g.id)" [attr.aria-controls]="'cg-' + g.id" (click)="toggleGroup(g.id)">
+            <span>{{ g.label }}</span>
+            @if (!isOpen(g.id) && g.activeName) { <span class="cat-gh-cur">{{ g.activeName }}</span> }
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+          <ul class="cat-list" [id]="'cg-' + g.id" [hidden]="!isOpen(g.id)">
+            @for (c of g.cats; track c.id) {
+              @let active = cat()?.id === c.id;
+              @let multi = c.subcategories.length > 1;
+              <li [class.has-sub]="multi && !active">
+                <a routerLink="/san-pham" [queryParams]="{ c: c.id }" [attr.aria-current]="active && !sub() ? 'page' : null" [class.on]="active">
+                  <span class="ai-name">{{ ps.catName(c) }}</span><span class="ai-n num" [attr.aria-label]="count(c.id) + ' sản phẩm'">{{ count(c.id) }}</span>
+                </a>
+                @if (multi) {
+                  <!-- Quầy đang chọn: loại hàng mở ngay bên dưới. Quầy khác: rê chuột để thấy loại hàng ở bảng bên phải -->
+                  <ul class="sub-list" [class.inline]="active" [attr.aria-label]="'Loại hàng trong ' + ps.catName(c)">
+                    @for (s of c.subcategories; track s.id) {
+                      <li><a routerLink="/san-pham" [queryParams]="{ c: c.id, loai: s.id }" [attr.aria-current]="active && sub() === s.id ? 'page' : null"><span class="ai-name">{{ s.name }}</span><span class="ai-n num">{{ subCount(s.id) }}</span></a></li>
+                    }
+                  </ul>
+                }
+              </li>
+            }
+          </ul>
+        </div>
+      }
     </div>
     <div class="f-group">
       <h2 class="f-h">Khoảng giá</h2>

@@ -1,13 +1,25 @@
-/* FreshMart Cộng đồng: bảng tin nấu ăn, dùng token của styles.css */
-.cm-hero { padding-block: clamp(24px, 3vw, 40px); background: var(--yellow); color: var(--ink); }
-.cm-kicker { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-family: var(--display); font-size: 15px; font-weight: 600; letter-spacing: .09em; }
-.cm-kicker span { width: 9px; height: 9px; border-radius: 50%; background: var(--forest); }
-.cm-hero h1 { font-size: clamp(34px, 4.4vw, 62px); line-height: 1.1; letter-spacing: -.025em; }
-.cm-hero h1 em { font-style: normal; color: var(--forest); }
-.cm-hero .lead { margin-top: 10px; max-width: 560px; font-size: 16px; }
-.cm { padding-block: clamp(24px, 3vw, 40px) 72px; background: var(--stone); }
-.cm-layout { display: grid; grid-template-columns: 240px minmax(0, 1fr) 320px; gap: 24px; align-items: start; max-width: 1400px; margin: 0 auto; }
-.cm-left, .cm-right { display: grid; gap: 16px; position: sticky; top: calc(var(--header-h) - 20px); }
+/* FreshMart Cộng đồng: nơi đọc mẹo bếp và hỏi đáp. Bảng tin một cột dễ đọc, cột phải là thử thách tuần và các mục nổi bật.
+   Không còn cột hồ sơ/menu lọc lặp lại thanh lọc, không còn bảng xếp hạng thành viên. */
+/* Hai cột: chữ bên trái co giãn, nút luôn ở bên phải (tiêu đề dài thì xuống dòng trong cột trái thay vì đẩy nút xuống) */
+.cm-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 20px 48px; padding-top: clamp(32px, 4vw, 56px); padding-bottom: clamp(20px, 2.4vw, 28px); border-bottom: 1px solid var(--stone-2); }
+.cm-title { font-family: var(--display); font-size: clamp(40px, 5vw, 72px); font-weight: 700; line-height: var(--lh-head); text-transform: uppercase; }
+.cm-title-line { white-space: nowrap; } /* "cùng nấu, cùng ăn" luôn nằm trọn một dòng riêng */
+.cm-head-lead { margin-top: clamp(14px, 1.6vw, 22px); max-width: 62ch; color: var(--muted); font-size: 17px; line-height: 1.6; } /* chừa chỗ cho dấu nặng của chữ in hoa (CỘNG) để không sát dòng dưới */
+.cm { padding-block: 28px 0; }
+/* Chuyển giữa bảng tin và lướt món: hai nút liền nhau, nút đang chọn nền đen chữ kem như .chip */
+.cm-head-acts { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+.cm-mode { display: inline-flex; border: 1px solid var(--ink); border-radius: var(--r); }
+.cm-mode button { min-height: 44px; padding: 0 18px; border: 0; background: transparent; color: var(--ink); font-family: var(--display); font-size: 16px; font-weight: 600; text-transform: uppercase; cursor: pointer; }
+.cm-mode button + button { border-left: 1px solid var(--ink); }
+.cm-mode button[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
+.cm-mode button:hover:not([aria-pressed="true"]) { background: var(--stone); }
+fm-dish-reel { display: block; }
+/* Khi lướt món, đầu trang thu gọn để khung món lọt trọn màn hình */
+.cm-head.is-reel { align-items: center; padding-block: clamp(16px, 2vw, 24px) 16px; }
+.cm-head.is-reel .cm-title { font-size: clamp(32px, 3.2vw, 44px); }
+.cm-head.is-reel .cm-head-lead { display: none; }
+.cm-layout { display: grid; grid-template-columns: minmax(0, 760px) minmax(280px, 340px); justify-content: space-between; gap: clamp(28px, 4vw, 72px); align-items: start; }
+.cm-right { display: grid; gap: 32px; position: sticky; top: 136px; }
 .cm-main { display: grid; gap: 16px; min-width: 0; }
 .cm-card { background: var(--paper); border: 1px solid var(--stone-2); border-radius: var(--r); padding: 18px; }
 .cm-h { margin-bottom: 12px; font-family: var(--display); font-size: 18px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; }
@@ -23,19 +35,7 @@
 .cm-av.sm { width: 34px; height: 34px; font-size: 15px; }
 .cm-av.xs { width: 28px; height: 28px; font-size: 13px; }
 
-/* Cột trái */
-.cm-me { display: flex; align-items: center; gap: 12px; }
-.cm-me b { display: block; line-height: 1.3; }
-.cm-me small { display: block; color: var(--muted); font-size: 13px; }
-.cm-nav { display: grid; gap: 2px; padding: 8px; }
-.cm-nav button { display: flex; align-items: center; justify-content: space-between; padding: 11px 12px; border: 0; border-radius: var(--r); background: none; text-align: left; font-weight: 500; }
-.cm-nav button:hover { background: var(--stone); }
-.cm-nav button[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
-.cm-nav .num { font-size: 13px; opacity: .7; }
-.cm-cta { display: grid; gap: 6px; background: var(--forest); border-color: var(--forest); color: var(--on-forest); }
-.cm-cta b { font-family: var(--display); font-size: 20px; font-weight: 600; text-transform: uppercase; }
-.cm-cta span { font-size: 14px; color: var(--on-forest-muted); }
-.cm-cta em { font-style: normal; font-weight: 600; color: var(--yellow); }
+/* Thẻ chủ đề */
 .cm-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .cm-tag { padding: 5px 10px; border: 1.5px solid var(--stone-2); border-radius: var(--r); background: var(--paper); font-size: 13px; font-weight: 500; }
 .cm-tag:hover { border-color: var(--ink); }
@@ -49,23 +49,22 @@
 .cm-compose-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding-top: 12px; border-top: 1px solid var(--stone-2); }
 .cm-compose-actions button { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; border: 0; border-radius: var(--r); background: none; font-weight: 600; font-size: 14px; }
 .cm-compose-actions button:hover { background: var(--stone); }
-.cm-compose-actions i { font-style: normal; }
 
-/* Thử thách tuần */
-.cm-challenge { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 20px; padding: clamp(18px, 3vw, 28px); border-radius: var(--r); background: var(--ink); color: var(--cream); }
-.cm-badge { display: inline-block; padding: 6px 10px; background: var(--yellow); color: var(--ink); font-family: var(--display); font-size: 12px; font-weight: 600; letter-spacing: .08em; }
-.cm-challenge h2 { margin: 12px 0 8px; font-family: var(--display); font-size: clamp(30px, 3.4vw, 44px); font-weight: 600; line-height: var(--lh-head); text-transform: uppercase; color: var(--yellow); }
-.cm-challenge p { color: var(--on-ink-muted); font-size: 15px; }
-.cm-ch-meta { margin-top: 12px; color: var(--cream) !important; }
-.cm-ch-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+/* Thử thách tuần: khối tối duy nhất của trang, đặt đầu cột phải */
+.cm-challenge { display: grid; gap: 10px; padding: 20px; border-radius: var(--r); background: var(--ink); color: var(--cream); }
+/* Một điểm vàng duy nhất là nút "Gửi bài dự thi": tiêu đề và link dùng kem để vàng không bị chia ba */
+.cm-challenge h2 { font-family: var(--display); font-size: 26px; font-weight: 600; line-height: var(--lh-head); text-transform: uppercase; color: var(--cream); }
+.cm-challenge p { color: var(--on-ink-muted); font-size: 15px; line-height: 1.55; }
+.cm-ch-meta { font-size: 13px !important; }
+.cm-ch-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin-top: 4px; }
 .cm-challenge .btn-ink { background: var(--yellow); color: var(--ink); }
 .cm-challenge .btn-ink:hover { background: var(--lime); }
-.cm-ch-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; align-content: start; }
-.cm-ch-gallery li { margin: 0; }
-.cm-ch-gallery button, .cm-ch-img { position: relative; display: block; width: 100%; aspect-ratio: 4 / 3; padding: 0; border: 0; overflow: hidden; border-radius: var(--r); background: var(--forest-line); }
+.cm-challenge .cm-link { color: var(--cream); text-decoration-color: var(--yellow); text-decoration-thickness: 2px; }
+.cm-challenge .cm-link:hover { color: var(--yellow); }
+.cm-ch-gallery { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 6px; margin: 4px 0 0; padding: 0; list-style: none; } /* chia đều theo số ảnh thật, không chừa ô trống */
+.cm-ch-gallery button, .cm-ch-gallery li > img { display: block; width: 100%; aspect-ratio: 4 / 3; padding: 0; border: 0; overflow: hidden; border-radius: var(--r); background: var(--forest-line); }
 .cm-ch-gallery img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s var(--ease); }
 .cm-ch-gallery button:hover img { transform: scale(1.05); }
-.cm-ch-gallery span span, .cm-ch-gallery button > span { position: absolute; left: 0; right: 0; bottom: 0; padding: 18px 10px 8px; background: linear-gradient(transparent, rgb(0 0 0 / 75%)); color: #fff; font-size: 12px; font-weight: 600; text-align: left; }
 
 /* Lọc */
 .cm-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
@@ -86,10 +85,10 @@
 .cm-who { flex: 1; min-width: 140px; }
 .cm-who b { display: block; line-height: 1.3; }
 .cm-who small { color: var(--muted); font-size: 13px; }
-.cm-type { padding: 4px 9px; border-radius: var(--r); background: var(--stone); font-family: var(--display); font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
-.cm-type.t-recipe { background: #dcebe3; color: var(--forest); }
-.cm-type.t-question { background: var(--butter); }
-.cm-type.t-challenge { background: var(--yellow); }
+/* Nhãn loại bài: một kiểu trung tính cho mọi loại (chữ đã nói loại bài, màu không cần nói lại).
+   Chỉ "Thử thách" tô vàng vì đó là điểm nhấn của trang (cùng màu khối thử thách tuần). */
+.cm-type { padding: 3px 8px; border: 1px solid var(--stone-2); border-radius: var(--r); background: var(--paper); color: var(--muted); font-family: var(--display); font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+.cm-type.t-challenge { border-color: var(--yellow); background: var(--yellow); color: var(--ink); }
 .cm-x { width: 32px; height: 32px; border: 0; border-radius: var(--r); background: none; font-size: 22px; line-height: 1; color: var(--muted); }
 .cm-x:hover { background: var(--stone); color: var(--sale); }
 .cm-text { white-space: pre-line; overflow-wrap: anywhere; }
@@ -115,7 +114,7 @@
 .cm-opt { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 44px; padding: 0 14px; overflow: hidden; border: 1.5px solid var(--stone-2); border-radius: var(--r); background: var(--paper); text-align: left; font-size: 15px; }
 .cm-opt:hover { border-color: var(--ink); }
 .cm-opt.mine { border-color: var(--forest); font-weight: 600; }
-.cm-opt-bar { position: absolute; inset: 0 auto 0 0; background: #dcebe3; transition: width .4s var(--ease); }
+.cm-opt-bar { position: absolute; inset: 0 auto 0 0; background: var(--lime); transition: width .4s var(--ease); } /* màu chanh của bảng màu; chữ đen trên chanh 13:1 */
 .cm-opt-label, .cm-opt-pct { position: relative; }
 .cm-opt-pct { font-size: 13px; color: var(--muted); white-space: nowrap; }
 
@@ -128,9 +127,16 @@
 .cm-react { position: relative; }
 .cm-react-pop { position: absolute; left: 0; bottom: 100%; z-index: 5; display: none; gap: 2px; padding: 6px; background: var(--paper); border: 1px solid var(--stone-2); border-radius: var(--r); box-shadow: var(--shadow-float); }
 .cm-react:hover .cm-react-pop, .cm-react:focus-within .cm-react-pop { display: flex; }
-.cm-react-pop button { width: 44px; height: 44px; border: 0; border-radius: var(--r); background: none; font-size: 26px; transition: transform .15s var(--ease); }
+.cm-react-pop button { display: grid; place-items: center; width: 44px; height: 44px; border: 0; border-radius: var(--r); background: none; transition: transform .15s var(--ease); }
+/* Biểu tượng cảm xúc SVG */
+.cm-rx { width: 18px; height: 18px; flex: none; }
+.cm-rx.lg { width: 28px; height: 28px; }
+.cm-rx-off { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; }
+.cm-rx-stack { display: inline-flex; vertical-align: middle; }
+.cm-rx-stack .cm-rx + .cm-rx { margin-left: -5px; box-shadow: 0 0 0 1.5px var(--paper); border-radius: 50%; }
+.cm-react-sum { display: inline-flex; align-items: center; gap: 6px; }
 .cm-react-pop button:hover { transform: scale(1.25); background: var(--stone); }
-.cm-react-pop button.on { background: var(--butter); }
+.cm-react-pop button.on { background: var(--stone); }
 
 /* Bình luận */
 .cm-comments { display: grid; gap: 12px; padding-top: 4px; }
@@ -149,20 +155,18 @@
 .cm-more:hover { color: var(--ink); text-decoration: underline; }
 .cm-empty { text-align: center; padding: 40px 18px; }
 
-/* Cột phải */
-.cm-trend { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
-.cm-trend button { display: flex; gap: 12px; width: 100%; padding: 8px 0; border: 0; background: none; text-align: left; }
-.cm-trend button:hover b { text-decoration: underline; }
-.cm-trend b { display: block; font-size: 14px; line-height: 1.35; }
-.cm-trend small { color: var(--muted); font-size: 12px; }
-.cm-rank { flex: none; width: 28px; height: 28px; display: grid; place-items: center; background: var(--yellow); font-family: var(--display); font-weight: 600; border-radius: var(--r); }
-.cm-side-poll { display: grid; gap: 8px; }
-.cm-members { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
-.cm-members li { display: flex; align-items: center; gap: 10px; }
-.cm-members li > span:nth-child(2) { flex: 1; min-width: 0; }
-.cm-members b { display: block; font-size: 14px; line-height: 1.3; }
-.cm-members small { display: block; color: var(--muted); font-size: 12px; }
-.cm-m-n { font-size: 13px; color: var(--muted); }
+/* Cột phải: mỗi mục mở đầu bằng một đường kẻ đậm, không bọc thẻ */
+.cm-side { display: grid; gap: 4px; padding-top: 14px; border-top: 2px solid var(--ink); }
+.cm-side .cm-h { margin-bottom: 6px; }
+.cm-trend { display: grid; margin: 0; padding: 0; list-style: none; }
+.cm-trend li + li { border-top: 1px solid var(--stone-2); }
+.cm-trend button { display: grid; gap: 2px; width: 100%; padding: 10px 0; border: 0; background: none; text-align: left; cursor: pointer; }
+.cm-trend button:hover b { text-decoration: underline; text-underline-offset: 3px; }
+.cm-trend b { font-size: 15px; font-weight: 600; line-height: 1.4; }
+.cm-trend small { color: var(--muted); font-size: 13px; }
+.cm-side-poll { gap: 8px; }
+.cm-post:focus { outline: none; }
+.cm-post:focus-visible { outline: 2px solid var(--forest); outline-offset: 2px; }
 
 /* Hộp thoại đăng bài */
 .cm-dlg { width: min(640px, calc(100% - 24px)); max-height: min(92dvh, 900px); padding: 0; border: 0; border-radius: var(--r); background: var(--paper); box-shadow: var(--shadow-float); }
@@ -202,15 +206,10 @@
 .cm-dlg .hint { font-size: 12px; color: var(--muted); text-align: right; }
 
 /* Responsive */
-@media (max-width: 1180px) {
-  .cm-layout { grid-template-columns: 220px minmax(0, 1fr); }
-  .cm-right { position: static; grid-column: 1 / -1; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-}
-@media (max-width: 820px) {
+@media (max-width: 1024px) {
+  .cm-head { grid-template-columns: minmax(0, 1fr); }
   .cm-layout { grid-template-columns: 1fr; }
-  .cm-left { position: static; grid-template-columns: 1fr; }
-  .cm-left .cm-nav, .cm-left .cm-cta { display: none; }
-  .cm-challenge { grid-template-columns: 1fr; }
+  .cm-right { position: static; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); align-items: start; }
 }
 @media (max-width: 560px) {
   .cm-compose-actions button { flex-direction: column; gap: 2px; font-size: 12px; }
