@@ -45,10 +45,17 @@ async function decorateProducts(items) {
 }
 async function listProducts(query, admin = false) {
   const filter = await productFilter(query, admin);
-  const sorts = { name: { name: 1, id: 1 }, price_asc: { price: 1, id: 1 }, price_desc: { price: -1, id: 1 }, newest: { createdAt: -1, id: 1 } };
+  // Sắp theo giá thì dùng giá khách thật sự trả (giá khuyến mãi khi có), giống cách trang Sản phẩm sắp ở trình duyệt.
+  const sorts = { name: { name: 1, id: 1 }, price_asc: { sellPrice: 1, id: 1 }, price_desc: { sellPrice: -1, id: 1 }, newest: { createdAt: -1, id: 1 } };
   const sort = query.sort === undefined ? 'name' : v.text(query.sort, 'Sort', 1, 20);
   if (!Object.hasOwn(sorts, sort)) v.bad('Sort không hợp lệ.');
-  const cursor = products().find(filter, { projection: admin ? projection : publicList }).sort(sorts[sort]);
+  const sellPrice = { $cond: [{ $and: [{ $gt: ['$sale_price', 0] }, { $lt: ['$sale_price', '$price'] }] }, '$sale_price', '$price'] };
+  const cursor = products().aggregate([
+    { $match: filter },
+    ...(sort.startsWith('price') ? [{ $addFields: { sellPrice } }] : []),
+    { $sort: sorts[sort] },
+    { $project: { ...(admin ? projection : publicList), ...(sort.startsWith('price') ? { sellPrice: 0 } : {}) } },
+  ]);
   if (query.page !== undefined || query.pageSize !== undefined) {
     const { page, pageSize } = v.page(query);
     return { items: await decorateProducts(await cursor.skip((page - 1) * pageSize).limit(pageSize).toArray()), page, pageSize, total: await products().countDocuments(filter) };
