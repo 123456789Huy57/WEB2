@@ -6,6 +6,7 @@ import { ProductService, cdnImage } from '../../core/product.service';
 import { CartService } from '../../core/cart.service';
 import { WishlistService } from '../../core/wishlist.service';
 import { ToastService } from '../../core/toast.service';
+import { UiService } from '../../core/ui.service';
 import { CompareService } from '../../core/compare.service';
 import { MEAL_LABEL, MealPlannerService } from '../../core/meal-planner.service';
 import { VndPipe } from '../../shared/vnd.pipe';
@@ -29,6 +30,7 @@ export class ProductPage {
   private router = inject(Router);
   private wish = inject(WishlistService);
   private toast = inject(ToastService);
+  private ui = inject(UiService);
   private title = inject(Title);
   protected cmp = inject(CompareService);
   protected mp = inject(MealPlannerService);
@@ -98,9 +100,9 @@ export class ProductPage {
     await this.cart.add(p.id, this.qty());
     const added = this.cart.qty(p.id) - before;
     if (added <= 0 && before < p.stock) return false; // lỗi đã được báo bằng toast từ giỏ
-    this.toast.show(added <= 0 ? `Giỏ đã có tối đa số lượng còn trong kho (${this.ps.qty(p.stock)} ${this.ps.unit(p)})`
-      : added < this.qty() ? `Chỉ thêm được ${this.ps.qty(added)} ${this.ps.unit(p)} vì kho còn ${this.ps.qty(p.stock)} ${this.ps.unit(p)}`
-      : `Đã thêm ${this.ps.qty(added)} ${this.ps.unit(p)} ${this.name()} vào giỏ`);
+    if (added <= 0) this.toast.show(`Giỏ đã có tối đa số lượng còn trong kho (${this.ps.qty(p.stock)} ${this.ps.unit(p)})`);
+    else this.toast.success(added < this.qty() ? `Chỉ thêm được ${this.ps.qty(added)} ${this.ps.unit(p)} vì kho còn ${this.ps.qty(p.stock)} ${this.ps.unit(p)}`
+      : `Đã thêm ${this.ps.qty(added)} ${this.ps.unit(p)} ${this.name()} vào giỏ`, { label: 'Xem giỏ', run: () => this.ui.openCart() });
     return added > 0;
   }
   protected async buyNow(): Promise<void> {

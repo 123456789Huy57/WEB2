@@ -1,17 +1,20 @@
 import { Component, ElementRef, ViewEncapsulation, computed, effect, inject, input, signal, viewChild } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { CHALLENGE, COMMUNITY_TAGS, CPost, POST_TYPE_LABEL, PostType, REACTIONS, CommunityService } from '../../core/community.service';
 import { DIFF_LABEL, MEAL_LABEL, MealPlannerService } from '../../core/meal-planner.service';
 import { DataService } from '../../core/data.service';
 import { apiMessage } from '../../core/auth.service';
 import { ToastService } from '../../core/toast.service';
 import { ImgFallbackDirective } from '../../shared/img-fallback.directive';
+import { DishReel } from './dish-reel';
+import { RecipeDialog } from '../../shared/recipe-dialog';
 
 type Filter = 'all' | PostType | 'saved';
 
 @Component({
   selector: 'fm-community',
-  imports: [RouterLink, ImgFallbackDirective],
+  imports: [ImgFallbackDirective, DishReel, RecipeDialog],
   templateUrl: './community.html',
   styleUrl: './community.css',
   encapsulation: ViewEncapsulation.None
@@ -21,11 +24,30 @@ export class Community {
   readonly share = input<string>(undefined, { alias: 'chia-se' });
   /** /cong-dong?mon=rec-003 : chỉ xem các bài chia sẻ món này */
   readonly mon = input<string>();
+  /** /cong-dong?xem=luot : chế độ lướt món; &luot=rec-003 mở đúng món (link chia sẻ được) */
+  readonly xem = input<string>();
+  readonly luot = input<string>();
+  protected reelMode = computed(() => this.xem() === 'luot');
+  protected setMode(reel: boolean): void {
+    this.lastLuot = undefined;
+    void this.router.navigate([], { queryParams: { xem: reel ? 'luot' : null, luot: null }, queryParamsHandling: 'merge' });
+  }
+  /** Ghi món đang xem vào URL, thay thế lịch sử để nút Back không phải lùi qua từng món.
+   *  Dùng Location.replaceState thay cho router.navigate: điều hướng của router kích hoạt cuộn về đầu trang
+   *  (scrollPositionRestoration: 'top'), làm khung lướt món bị nhảy mỗi lần bấm lên/xuống. */
+  private lastLuot?: string;
+  protected reelMoved(id: string): void {
+    if ((this.lastLuot ?? this.luot()) === id) return;
+    this.lastLuot = id;
+    const tree = this.router.createUrlTree([], { queryParams: { luot: id }, queryParamsHandling: 'merge' });
+    this.location.replaceState(this.router.serializeUrl(tree));
+  }
   protected cs = inject(CommunityService);
   protected mp = inject(MealPlannerService);
   private data = inject(DataService);
   private toast = inject(ToastService);
   private router = inject(Router);
+  private location = inject(Location);
 
   protected readonly reactions = REACTIONS;
   protected readonly typeLabel = POST_TYPE_LABEL;
@@ -75,6 +97,15 @@ export class Community {
   protected setFilter(f: Filter): void { this.filter.set(f); this.tagFilter.set(''); }
   protected setTag(t: string): void { this.tagFilter.set(this.tagFilter() === t ? '' : t); this.filter.set('all'); }
   protected clearRecipeFilter(): void { void this.router.navigate([], { queryParams: { mon: null }, queryParamsHandling: 'merge' }); }
+  /** Mục "Đang được quan tâm": bỏ mọi bộ lọc để bài chắc chắn hiện trong bảng tin, rồi cuộn tới đúng bài đó */
+  protected goTo(p: CPost): void {
+    this.filter.set('all'); this.tagFilter.set(''); this.challengeOnly.set(false);
+    setTimeout(() => {
+      const el = document.getElementById('bai-' + p.id);
+      el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      el?.focus({ preventScroll: true });
+    }, 60);
+  }
   protected showChallenge(): void { this.challengeOnly.set(!this.challengeOnly()); this.filter.set('all'); this.tagFilter.set(''); }
 
   // ---- Công thức gắn trong bài (lấy từ Meal Planner, không sao chép dữ liệu) ----
@@ -84,10 +115,18 @@ export class Community {
     const all = (r?.ingredients ?? []).map(l => this.mp.ingredient(l.ingredientId)?.name).filter((x): x is string => !!x);
     return { names: all.slice(0, limit), more: Math.max(0, all.length - limit) };
   }
-  protected cook(id: string): void { void this.router.navigate(['/meal-planner'], { queryParams: { mon: id, tu: 'cong-dong' } }); }
+  /** "Nấu món này" (và bấm ảnh món) mở hộp công thức ngay trên Bảng tin, dùng chung với Meal Planner */
+  private recipeDlg = viewChild.required<RecipeDialog>('recipeDlg');
+  protected cook(id: string): void { this.recipeDlg().open(id); }
   protected total(p: CPost): number { return p.poll ? p.poll.options.reduce((s, o) => s + o.votes.length, 0) : 0; }
   protected pct(p: CPost, votes: number): number { const t = this.total(p); return t ? Math.round((votes / t) * 100) : 0; }
   protected isMine(p: CPost): boolean { return this.cs.me()?.id === p.authorId; }
+  /** Tối đa 3 loại cảm xúc nhiều nhất của bài (để vẽ biểu tượng SVG thay emoji) */
+  protected topReactionIds(p: CPost): string[] {
+    const n: Record<string, number> = {};
+    Object.values(p.reactions).forEach(r => (n[r] = (n[r] ?? 0) + 1));
+    return Object.keys(n).sort((a, b) => n[b] - n[a]).slice(0, 3);
+  }
 
   // ---- Bình luận ----
   protected openComments = signal<string[]>([]);

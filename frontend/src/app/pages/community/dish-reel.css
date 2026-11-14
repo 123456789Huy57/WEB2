@@ -1,0 +1,87 @@
+/* Lướt món (Cộng đồng). Bố cục ba cột học từ chế độ "Lướt" của agni.vn, dựng bằng thành phần FreshMart:
+   khung món dọc (ảnh tràn khung, chữ kem trên dải đen mờ, không gradient, nút .btn góc vuông)
+   · cột thao tác (ô vuông viền mảnh, chữ dưới biểu tượng) · bảng công thức nền kem, tiêu đề Oswald in hoa. */
+.reel { display: grid; grid-template-columns: auto minmax(320px, 460px); justify-content: center; align-items: start; gap: clamp(24px, 3vw, 48px); padding-block: 12px 16px; }
+.reel-stage { display: grid; grid-template-columns: auto auto; align-items: end; gap: 16px; }
+.reel-scroll {
+  --reel-h: var(--reel-fit, clamp(440px, calc(100svh - var(--chrome-h, 158px) - 110px), 900px)); /* --reel-fit do dish-reel.ts đo theo màn hình thật */
+  height: var(--reel-h); width: min(calc(var(--reel-h) * .62), calc(100vw - 2 * var(--gut) - 110px));
+  overflow-y: auto; overscroll-behavior-y: auto; scroll-snap-type: y mandatory; /* tới món đầu/cuối thì cuộn tiếp ra trang, không giữ chân người dùng */
+  border-radius: var(--r); background: var(--ink); scrollbar-width: none;
+}
+.reel-scroll::-webkit-scrollbar { display: none; }
+.reel-scroll:focus-visible { outline: 3px solid var(--forest); outline-offset: 3px; }
+/* Một món = một cột: khoảng nền mờ phía trên, ảnh món (4:3) nằm trọn, rồi phần chữ và nút trên nền tối.
+   Nền mờ là chính ảnh món (blur + tối đi), không dùng gradient. */
+.reel-slide { position: relative; display: flex; flex-direction: column; height: 100%; overflow: hidden; scroll-snap-align: start; scroll-snap-stop: always; background: var(--ink); contain: layout paint style; } /* mỗi ô tự vẽ riêng, đổi món không làm vẽ lại cả khung */
+/* Nền mờ: ảnh 32px kéo giãn (trình duyệt làm mịn sẵn) + lớp tối phía trên. Không dùng filter: blur vì blur phải tính lại mỗi khung hình khi cuộn */
+.reel-bg { position: absolute; inset: 0; background-position: center; background-size: cover; }
+.reel-bg::after { content: ""; position: absolute; inset: 0; background: rgb(18 18 18 / .55); }
+.reel-space { position: relative; flex: 1 1 0; min-height: 0; }
+.reel-frame { position: relative; flex: none; display: block; width: 100%; aspect-ratio: 4 / 3; overflow: hidden; }
+.reel-img { display: block; width: 100%; height: 100%; object-fit: cover; transform: scale(1.08); } /* cắt khoảng 4% mỗi cạnh: đủ bỏ viền trắng trong ảnh gốc */
+.reel-cap { position: relative; flex: none; display: grid; gap: 6px; padding: 22px 20px 20px; background: rgb(18 18 18 / .55); color: var(--cream); }
+.reel-name { font-family: var(--display); font-size: clamp(26px, 2.2vw, 34px); font-weight: 600; line-height: var(--lh-head); text-transform: uppercase; text-wrap: balance; }
+.reel-meta { color: var(--on-ink-muted); font-size: 15px; }
+.reel-voice { justify-self: start; padding: 0; border: 0; background: none; color: var(--on-ink-muted); font: inherit; font-size: 14px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.reel-voice b { color: var(--yellow); font-weight: 600; }
+.reel-voice:hover { color: var(--cream); }
+.reel-cta { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 10px; margin-top: 8px; } /* khung hẹp thì hai nút tự xuống hai hàng, không bị cắt */
+.reel-cta .btn { justify-content: center; min-width: 0; white-space: nowrap; }
+.reel-scroll :focus-visible { outline-color: var(--yellow); }
+
+/* Cột thao tác: đổi món ở trên, các thao tác bên dưới, canh đáy theo khung món */
+.reel-side { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.reel-nav-group { display: grid; justify-items: center; gap: 8px; margin-bottom: 18px; }
+.reel-count { color: var(--muted); font-size: 13px; }
+.reel-nav { display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid var(--stone-2); border-radius: var(--r); background: var(--cream); color: var(--ink); cursor: pointer; }
+.reel-nav:hover:not(:disabled) { background: var(--ink); border-color: var(--ink); color: var(--cream); }
+.reel-nav:disabled { opacity: .35; cursor: default; }
+.reel-nav svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.reel-act { display: grid; justify-items: center; gap: 6px; padding: 0; border: 0; background: none; color: var(--ink); font: inherit; font-size: 14px; font-weight: 600; white-space: nowrap; cursor: pointer; }
+.reel-ico { display: grid; place-items: center; width: 56px; height: 56px; border: 1px solid var(--stone-2); border-radius: var(--r); background: var(--cream); transition: background .15s, border-color .15s; }
+.reel-ico svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.reel-act:hover .reel-ico { border-color: var(--ink); }
+.reel-act[aria-pressed="true"] { color: var(--forest); }
+.reel-act[aria-pressed="true"] .reel-ico { border-color: var(--forest); background: var(--stone); }
+.reel-act[aria-pressed="true"] svg { fill: currentColor; }
+
+/* Bảng công thức: màn hình rộng luôn hiện cạnh khung món (thẻ dialog chưa mở vẫn hiển thị nhờ display: block) */
+.reel-panel { position: static; display: block; width: auto; max-width: none; height: var(--reel-fit, clamp(440px, calc(100svh - var(--chrome-h, 158px) - 110px), 900px)); max-height: none; margin: 0; padding: 0; overflow-y: auto; border: 1px solid var(--stone-2); border-radius: var(--r); background: var(--cream); color: var(--ink); }
+.reel-panel-in { display: grid; gap: 24px; padding: clamp(20px, 2vw, 28px); }
+.reel-panel-head { display: flex; justify-content: space-between; gap: 12px; }
+.reel-panel-head h2 { font-family: var(--display); font-size: clamp(26px, 2.2vw, 34px); font-weight: 600; line-height: var(--lh-head); text-transform: uppercase; }
+.reel-panel-head p { margin-top: 4px; color: var(--muted); }
+.reel-sub { padding-bottom: 8px; border-bottom: 1px solid var(--ink); font-family: var(--display); font-size: 20px; font-weight: 600; line-height: var(--lh-head); text-transform: uppercase; }
+.reel-group { margin-top: 14px; color: var(--forest); font-family: var(--display); font-size: 15px; font-weight: 600; letter-spacing: .04em; line-height: var(--lh-head); text-transform: uppercase; }
+.reel-ing { margin: 0; padding: 0; list-style: none; }
+.reel-ing li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 12px; padding: 7px 0; border-bottom: 1px solid var(--stone); }
+.reel-ing-need { color: var(--ink); text-align: right; }
+.reel-ing-buy { grid-column: 1 / -1; color: var(--muted); font-size: 13px; }
+.reel-total { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-top: 14px; color: var(--muted); font-size: 14px; }
+.reel-total b { color: var(--ink); font-family: var(--display); font-size: 24px; font-weight: 600; }
+.reel-steps { display: grid; gap: 12px; margin: 12px 0 0; padding-left: 22px; line-height: 1.6; }
+.reel-steps li::marker { color: var(--forest); font-family: var(--display); font-weight: 600; }
+.reel-steps b { display: block; }
+.reel-only-sm { display: none; }
+
+/* Màn hình hẹp: một cột; công thức mở thành tấm trượt từ dưới lên */
+@media (max-width: 1023px) {
+  .reel { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+  .reel-only-sm { display: grid; }
+  .reel-panel:not([open]) { display: none; }
+  .reel-panel[open] { position: fixed; inset: auto 0 0; width: 100%; max-width: 100%; height: auto; max-height: 82svh; border: 0; border-radius: 12px 12px 0 0; box-shadow: var(--shadow-float); }
+  .reel-panel::backdrop { background: rgb(18 18 18 / .45); }
+}
+@media (max-width: 640px) {
+  .reel { padding-top: 12px; }
+  .reel-stage { grid-template-columns: minmax(0, 1fr); width: 100%; }
+  .reel-scroll { --reel-h: var(--reel-fit, max(420px, calc(100svh - 300px))); width: 100%; }
+  .reel-side { flex-direction: row; justify-content: space-around; gap: 0; }
+  .reel-act { flex: 1; }
+  .reel-nav-group { display: none; }
+  .reel-act { gap: 4px; font-size: 12px; }
+  .reel-ico { width: 44px; height: 44px; }
+  .reel-cap { padding: 16px 16px 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .reel-ico { transition: none; } }

@@ -5,3 +5,13 @@ out-tsc/
 .env
 .DS_Store
 backend/scripts/data/backups/
+
+# Thư mục skill và cấu hình của các trợ lý AI (không đưa lên git)
+.agents/
+.codex/
+.gemini/
+.impeccable/
+frontend/.impeccable/
+
+# Ảnh tải về bằng npm run images (tải lại được, ~150 MB)
+frontend/public/img/remote/

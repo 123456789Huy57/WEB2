@@ -1,0 +1,50 @@
+import { Component } from '@angular/core';
+import { Ingredient } from '../core/models';
+
+/** Hình vẽ (#km-*) theo tên nguyên liệu; không khớp tên nào thì lấy hình theo nhóm (BY_GROUP) */
+const BY_NAME: [RegExp, string][] = [
+  [/trứng/i, 'egg'], [/sữa|phô mai|kem/i, 'milk'], [/gà/i, 'chicken'], [/bò/i, 'steak'], [/heo/i, 'pork'],
+  [/tôm|ghẹ/i, 'shrimp'], [/cá|lươn|mực/i, 'fish'], [/cà chua/i, 'tomato'], [/cà rốt/i, 'carrot'],
+  [/xà lách|rau sống|bông cải/i, 'lettuce'], [/rau muống|hành lá/i, 'greens'], [/dưa leo|khổ qua/i, 'cucumber'],
+  [/nấm/i, 'mushroom'], [/bắp/i, 'corn'], [/ớt/i, 'chili']
+];
+const BY_GROUP: Record<string, string> = {
+  vegetables: 'leaf', fruits: 'fruit', meat: 'pork', seafood: 'fish', dairy: 'milk', pantry: 'rice', condiments: 'bottle', beverages: 'cup'
+};
+
+/** Tên hình vẽ của nguyên liệu, dùng với <use [attr.href]="'#km-' + foodIcon(i)"/> */
+export function foodIcon(i: Ingredient): string {
+  return BY_NAME.find(([re]) => re.test(i.name))?.[1] ?? BY_GROUP[i.categoryId] ?? 'leaf';
+}
+
+/** Bộ hình nguyên liệu vẽ phẳng, cùng nét với bộ icon ở vòng "Tươi từ chợ" trên trang chủ.
+ *  Đặt <fm-food-sprite /> một lần trong trang rồi dùng <svg><use href="#km-egg"/></svg>. */
+@Component({
+  selector: 'fm-food-sprite',
+  host: { 'aria-hidden': 'true', style: 'position:absolute;width:0;height:0;overflow:hidden' },
+  template: `
+    <svg width="0" height="0">
+      <symbol id="km-egg" viewBox="0 0 48 48"><path d="M17 9c6 0 11 9 11 17a11 11 0 0 1-22 0c0-8 5-17 11-17z" fill="#e9c79b"/><path d="M32 14c5.5 0 10 8 10 15.5a10 10 0 0 1-20 0C22 22 26.5 14 32 14z" fill="#f3e6cc"/><ellipse cx="13.5" cy="20" rx="2.2" ry="4" fill="#f6e3c6"/><ellipse cx="28.5" cy="24" rx="2" ry="3.6" fill="#fffaf0"/></symbol>
+      <symbol id="km-tomato" viewBox="0 0 48 48"><circle cx="24" cy="27" r="16" fill="#d9452b"/><path d="M24 12 27 18 33 16 29 21 34 24 27 24 24 29 21 24 14 24 19 21 15 16 21 18Z" fill="#3a9a52"/><ellipse cx="16" cy="30" rx="3" ry="5" fill="#ea6a50"/></symbol>
+      <symbol id="km-greens" viewBox="0 0 48 48"><path d="M24 44V20M24 44 15 18M24 44l9-26" stroke="#8cc63f" stroke-width="2.4" stroke-linecap="round"/><path d="M24 4c5 5 5 13 0 18-5-5-5-13 0-18zM13 6c6 3 8 10 5 15-6-3-8-10-5-15zM35 6c3 5 1 12-5 15-3-5-1-12 5-15z" fill="#6cbf4f"/><path d="M24 7v13M14 9l3 10M34 9l-3 10" stroke="#e6f2b8" stroke-width="1.2" stroke-linecap="round"/><rect x="19" y="33" width="10" height="4" rx="2" fill="#b5764a"/></symbol>
+      <symbol id="km-chicken" viewBox="0 0 48 48"><g transform="rotate(-38 24 24)"><path d="M24 4c8 0 13 6 13 13 0 7-5 11-9 12v4h-8v-4c-4-1-9-5-9-12 0-7 5-13 13-13z" fill="#e39a5b"/><ellipse cx="19" cy="13" rx="3" ry="5" fill="#f0b984"/><rect x="21" y="31" width="6" height="9" fill="#f3e6cc"/><circle cx="20.5" cy="41.5" r="3.4" fill="#f3e6cc"/><circle cx="27.5" cy="41.5" r="3.4" fill="#f3e6cc"/></g></symbol>
+      <symbol id="km-fish" viewBox="0 0 48 48"><path d="M5 24c6-9 18-12 28-6l9-7v26l-9-7c-10 6-22 3-28-6z" fill="#7fa9bb"/><path d="M9 26c8 5 17 5 24 1-8 2-16 2-24-1z" fill="#c9dde5"/><path d="M20 16c3-4 8-5 11-3-4 0-8 1-11 3z" fill="#5d8a9d"/><circle cx="13" cy="22" r="2" fill="#121212"/></symbol>
+      <symbol id="km-pork" viewBox="0 0 48 48"><rect x="5" y="13" width="38" height="24" rx="5" fill="#f2a7a0"/><path d="M5 18h38" stroke="#e07f74" stroke-width="5"/><path d="M5 25.5h38M5 31.5h38" stroke="#fbe3da" stroke-width="3"/></symbol>
+      <symbol id="km-steak" viewBox="0 0 48 48"><path d="M10 14c8-6 22-6 29 1 6 6 3 16-4 20-8 5-22 4-27-3-4-6-4-13 2-18z" fill="#b5352b"/><path d="M14 18c6-4 16-4 21 0M12 26c6 3 15 4 22 0" stroke="#f3d6c6" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="31" cy="27" r="3.5" fill="#f3d6c6"/></symbol>
+      <symbol id="km-shrimp" viewBox="0 0 48 48"><path d="M33 12a13 13 0 1 0-3 24" stroke="#f08a24" stroke-width="10" fill="none" stroke-linecap="round"/><path d="M28 13l-2 5M20 15l1 5M14 22l5 1M14 30l5-1M20 36l1-5" stroke="#ffc76a" stroke-width="1.8" stroke-linecap="round"/><path d="M30 36l8 6-1-9z" fill="#d9452b"/><path d="M33 12l9-6M33 12l10-1" stroke="#d9452b" stroke-width="1.6" stroke-linecap="round"/><circle cx="31" cy="15" r="1.6" fill="#121212"/></symbol>
+      <symbol id="km-lettuce" viewBox="0 0 48 48"><circle cx="15" cy="27" r="11" fill="#8cc63f"/><circle cx="33" cy="27" r="11" fill="#8cc63f"/><circle cx="24" cy="18" r="12" fill="#a6d45a"/><circle cx="24" cy="30" r="10" fill="#c7e07a"/><path d="M24 40V22M24 30l-6-6M24 30l6-6M24 36l-8-4M24 36l8-4" stroke="#3a9a52" stroke-width="1.6" stroke-linecap="round"/></symbol>
+      <symbol id="km-carrot" viewBox="0 0 48 48"><path d="M30 14 12 42c-1 2 1 3 3 2l26-22c3-3-6-12-11-8z" fill="#f08a24"/><path d="M20 30l4 3M16 36l3 2M25 24l4 3" stroke="#c96a12" stroke-width="2" stroke-linecap="round"/><path d="M34 14c2-6 6-9 10-9-1 4-4 8-8 10zM33 12c-1-5 0-9 3-11 1 4 0 8-1 11z" fill="#3a9a52"/></symbol>
+      <symbol id="km-cucumber" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="#2f7a45"/><circle cx="24" cy="24" r="15" fill="#bfe39b"/><g fill="#eef8dc"><ellipse cx="24" cy="17" rx="1.6" ry="3"/><ellipse cx="24" cy="31" rx="1.6" ry="3"/><ellipse cx="18" cy="21" rx="3" ry="1.6"/><ellipse cx="30" cy="21" rx="3" ry="1.6"/><ellipse cx="18" cy="27" rx="3" ry="1.6"/><ellipse cx="30" cy="27" rx="3" ry="1.6"/></g></symbol>
+      <symbol id="km-mushroom" viewBox="0 0 48 48"><path d="M6 24a18 14 0 0 1 36 0z" fill="#b5764a"/><path d="M18 24h12v12a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4z" fill="#f3e6cc"/><circle cx="16" cy="18" r="2" fill="#f3e6cc"/><circle cx="28" cy="15" r="2.4" fill="#f3e6cc"/></symbol>
+      <symbol id="km-corn" viewBox="0 0 48 48"><path d="M24 6c6 0 9 8 9 18s-3 18-9 18-9-8-9-18 3-18 9-18z" fill="#ffc517"/><path d="M17 16h14M16 22h16M16 28h16M17 34h14M24 7v34M20 8v32M28 8v32" stroke="#e0a400" stroke-width="1.2"/><path d="M15 26c-3 8 0 16 9 18-4-6-6-12-9-18zM33 26c3 8 0 16-9 18 4-6 6-12 9-18z" fill="#3a9a52"/></symbol>
+      <symbol id="km-chili" viewBox="0 0 48 48"><path d="M14 14c4 0 6 3 6 8 0 10 6 18 16 20-12 4-24-4-25-18 0-6 1-10 3-10z" fill="#d9452b"/><path d="M14 14c0-4 2-7 6-8" stroke="#3a9a52" stroke-width="3" fill="none" stroke-linecap="round"/></symbol>
+      <symbol id="km-leaf" viewBox="0 0 48 48"><path d="M8 40C8 22 20 8 42 6c0 20-12 34-34 34z" fill="#3a9a52"/><path d="M8 40 30 18" stroke="#c7e07a" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="km-fruit" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="#f08a24"/><circle cx="24" cy="24" r="15" fill="#ffc76a"/><path d="M24 10v28M10 24h28M14 14l20 20M34 14 14 34" stroke="#f08a24" stroke-width="1.6"/><circle cx="24" cy="24" r="3" fill="#fff1cf"/></symbol>
+      <symbol id="km-milk" viewBox="0 0 48 48"><path d="M17 6h14v6l5 8v20a3 3 0 0 1-3 3H15a3 3 0 0 1-3-3V20l5-8z" fill="#fefcf5"/><rect x="17" y="3" width="14" height="5" rx="1.5" fill="#3a9a52"/><rect x="12" y="24" width="24" height="10" fill="#7fa9bb"/><path d="M12 20h24" stroke="#e4dcc3" stroke-width="1.6"/></symbol>
+      <symbol id="km-rice" viewBox="0 0 48 48"><path d="M8 18c4-8 28-8 32 0z" fill="#fefcf5"/><g fill="#e4dcc3"><ellipse cx="17" cy="15" rx="1.6" ry=".9"/><ellipse cx="24" cy="12.5" rx="1.6" ry=".9"/><ellipse cx="31" cy="15" rx="1.6" ry=".9"/></g><path d="M5 20h38a19 18 0 0 1-38 0z" fill="#7fa9bb"/><path d="M8 25h32" stroke="#c9dde5" stroke-width="2.4"/><path d="M30 4 40 17M35 3l7 14" stroke="#b5764a" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="km-bottle" viewBox="0 0 48 48"><path d="M20 4h8v8c5 3 7 7 7 12v17a3 3 0 0 1-3 3H16a3 3 0 0 1-3-3V24c0-5 2-9 7-12z" fill="#b5764a"/><rect x="19" y="2" width="10" height="5" rx="1.5" fill="#121212"/><rect x="13" y="25" width="22" height="11" fill="#f3e6cc"/><path d="M18 30.5h12" stroke="#d9452b" stroke-width="2.4" stroke-linecap="round"/></symbol>
+      <symbol id="km-cup" viewBox="0 0 48 48"><path d="M12 14h24l-3 28H15z" fill="#c7e07a"/><path d="M13 20h22" stroke="#fefcf5" stroke-width="2"/><path d="M28 14l6-11h5" stroke="#d9452b" stroke-width="2.4" fill="none" stroke-linecap="round"/></symbol>
+    </svg>
+  `
+})
+export class FoodSprite {}

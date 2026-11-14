@@ -53,7 +53,7 @@ import { INFO, INFO_NAV } from './info-content';
         </div>
       </section>
     } @else {
-      <section class="band empty" style="padding-block:120px"><h1 class="h2">Trang này không có trên kệ.</h1><a class="btn btn-forest" routerLink="/">Về trang chủ</a></section>
+      <section class="band empty" style="padding-block:120px"><h1 class="h2">Trang này không có trên kệ</h1><a class="btn btn-forest" routerLink="/">Về trang chủ</a></section>
     }
   `
 })

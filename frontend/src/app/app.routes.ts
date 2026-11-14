@@ -19,6 +19,7 @@ const pages: Routes = [
   { path: 'cong-dong', title: 'Cộng đồng · FreshMart', loadComponent: () => import('./pages/community/community').then(m => m.Community) },
   { path: 'uu-dai', title: 'Ưu đãi · FreshMart', loadComponent: () => import('./pages/offers/offers').then(m => m.Offers) },
   { path: 'cua-hang', title: 'Về FreshMart · Tươi mỗi ngày, ngon mỗi bữa', loadComponent: () => import('./pages/stores/stores').then(m => m.Stores) },
+  { path: 'he-thong-cua-hang', title: 'Hệ thống cửa hàng · FreshMart', loadComponent: () => import('./pages/stores/store-list').then(m => m.StoreList) },
   { path: 'dang-nhap', title: 'Đăng nhập · FreshMart', canActivate: [guestGuard], loadComponent: () => import('./pages/login/login').then(m => m.Login) },
   { path: 'tai-khoan', title: 'Tài khoản · FreshMart', canActivate: [authGuard], loadComponent: () => import('./pages/account/account').then(m => m.Account) },
   { path: 'tra-cuu-don', canActivate: [authGuard], title: 'Tra cứu đơn hàng · FreshMart', loadComponent: () => import('./pages/order-lookup/order-lookup').then(m => m.OrderLookup) },

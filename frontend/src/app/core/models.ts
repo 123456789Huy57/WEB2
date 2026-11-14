@@ -38,7 +38,7 @@ export interface Recipe {
 }
 export interface Ingredient {
   id: string; slug: string; name: string; categoryId: string; defaultUnit: string; unitWeightGram?: number;
-  imageUrl: string; isActive?: boolean;
+  imageUrl: string; isActive?: boolean; aliases?: string[];
 }
 export interface IngredientProductMap { [ingredientId: string]: { preferredProductId?: string; productIds?: string[] } }
 export interface Store { id: string; name: string; address: string; phone: string; hours: string; }

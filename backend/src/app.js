@@ -41,6 +41,18 @@ function createApp() {
   app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', service: 'freshmart-backend', database: databaseStatus() });
   });
+  // Chỉ máy dev: trả mật khẩu tài khoản demo đặt trong backend/.env để trang đăng nhập điền sẵn.
+  // Không đăng ký route này khi NODE_ENV khác development, và chỉ trả lời yêu cầu từ chính máy này.
+  if (env.nodeEnv === 'development') {
+    app.get('/api/dev/demo-accounts', (req, res) => {
+      if (!['127.0.0.1', '::1', '::ffff:127.0.0.1'].includes(req.socket.remoteAddress)) return res.status(404).end();
+      res.set('Cache-Control', 'no-store');
+      res.json({
+        customer: process.env.DEMO_CUSTOMER_PASSWORD || '',
+        admin: process.env.DEMO_ADMIN_PASSWORD || '',
+      });
+    });
+  }
   app.use('/api', require('./middleware/audit').audit);
   app.use('/api', require('./middleware/csrf').requireCsrf);
   app.use('/api', require('./modules/auth/auth.routes'));
