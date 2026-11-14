@@ -1,11 +1,11 @@
 // Dữ liệu Meal Planner (công thức, nguyên liệu, ánh xạ sang sản phẩm, cửa hàng) và tab Cộng đồng.
-// Cộng đồng: mỗi lần khách "nấu" một món (thêm nguyên liệu vào giỏ hoặc bấm Tôi nấu món này) ghi một lượt;
-// mỗi người chỉ tính một lượt cho một món trong một ngày, nên không ai bấm nhiều lần để đẩy hạng được.
-const { createHash } = require('node:crypto');
+// Cộng đồng: mỗi lần thành viên đã đăng nhập "nấu" một món (thêm nguyên liệu vào giỏ hoặc bấm Tôi nấu món này) ghi một lượt;
+// mỗi tài khoản chỉ tính một lượt cho một món trong một ngày, nên không ai bấm nhiều lần để đẩy hạng được. Khách chưa đăng nhập không ghi lượt.
 const router = require('express').Router();
 const { getDatabase } = require('../../config/database');
 const { HttpError } = require('../../lib/http-error');
 const v = require('../../lib/validation');
+const { requireAuth } = require('../../middleware/auth');
 
 const col = name => getDatabase().collection(name);
 const hide = { projection: { _id: 0 } };
@@ -39,13 +39,12 @@ router.get('/recipes/:id', async (req, res) => {
   if (!r) throw new HttpError(404, 'RECIPE_NOT_FOUND', 'Không tìm thấy công thức.');
   res.json(r);
 });
-router.post('/recipes/:id/cook', async (req, res) => {
+router.post('/recipes/:id/cook', requireAuth, async (req, res) => {
   const body = v.object(req.body ?? {}, ['servings']);
   const servings = body.servings === undefined ? 2 : v.number(body.servings, 'Khẩu phần', 1, 20, true);
   const recipe = await col('recipes').findOne({ id: v.id(req.params.id), isActive: { $ne: false } }, { projection: { id: 1 } });
   if (!recipe) throw new HttpError(404, 'RECIPE_NOT_FOUND', 'Không tìm thấy công thức.');
-  // Khách chưa đăng nhập được nhận diện bằng session (đã băm), không lưu cookie thô.
-  const actor = req.session.userId || `s-${createHash('sha256').update(req.sessionID).digest('hex').slice(0, 24)}`;
+  const actor = req.user.id;
   const day = vnDay();
   const id = `${day}:${recipe.id}:${actor}`;
   const result = await col('recipeCooks').updateOne({ _id: id }, { $setOnInsert: { id, recipeId: recipe.id, actorKey: actor, day, servings, at: new Date().toISOString() } }, { upsert: true });

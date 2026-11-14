@@ -49,13 +49,16 @@ export class MealPlanner {
     setTimeout(() => this.toolEl()?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' }));
   }
 
-  /** Ghi một lượt nấu lên server để thống kê món được nấu (mỗi người một lượt/món/ngày, server tự chặn bấm lặp) */
+  /** Ghi một lượt nấu lên server để thống kê món được nấu (mỗi tài khoản một lượt/món/ngày, server tự chặn bấm lặp).
+   *  Chỉ thành viên đã đăng nhập mới ghi lượt; khách vẫn mua nguyên liệu bình thường nhưng không được tính. */
   private async cooked(r: Recipe): Promise<void> {
+    if (!this.cs.me()) return;
     try { await firstValueFrom(this.http.post(`/api/recipes/${r.id}/cook`, { servings: this.f().servings })); } catch { /* không chặn việc mua hàng */ }
   }
 
   /** Nút nấu ngay ở món nổi bật (không mở hộp thoại) */
   protected async cookNow2(r: Recipe): Promise<void> {
+    if (!this.cs.requireLogin('Đăng nhập để ghi lại món bạn nấu')) return;
     await this.cooked(r);
     this.toast.show(`Chúc bạn nấu ${r.name} ngon miệng!`);
   }

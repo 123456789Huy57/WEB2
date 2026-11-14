@@ -135,13 +135,15 @@ export class RecipeDialog {
   protected stepDuration(step: Recipe['steps'][number]): number | null { return typeof step === 'string' ? null : step.durationMinutes ?? null; }
   protected stepTip(step: Recipe['steps'][number]): string | null { return typeof step === 'string' ? null : step.tip ?? null; }
 
-  /** Ghi một lượt nấu lên server để thống kê món được nấu (mỗi người một lượt/món/ngày, server tự chặn bấm lặp) */
+  /** Ghi một lượt nấu lên server để thống kê món được nấu (mỗi tài khoản một lượt/món/ngày, server tự chặn bấm lặp).
+   *  Chỉ thành viên đã đăng nhập mới ghi lượt; khách vẫn mua nguyên liệu bình thường nhưng không được tính. */
   private async cooked(r: Recipe): Promise<void> {
+    if (!this.cs.me()) return;
     try { await firstValueFrom(this.http.post(`/api/recipes/${r.id}/cook`, { servings: this.serv() })); } catch { /* không chặn việc mua hàng */ }
   }
   protected async cookNow(): Promise<void> {
     const r = this.current();
-    if (!r) return;
+    if (!r || !this.cs.requireLogin('Đăng nhập để ghi lại món bạn nấu')) return;
     await this.cooked(r);
     this.toast.show(`Chúc bạn nấu ${r.name} ngon miệng!`);
   }
