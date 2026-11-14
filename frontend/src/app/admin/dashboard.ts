@@ -80,14 +80,15 @@ interface RulesData {
     </div>
     @if (rules(); as r) {
       <section class="card" aria-labelledby="h-rules">
-        <h2 class="h3" id="h-rules">Luật mua kèm (gợi ý "Thường được mua cùng")</h2>
-        <p class="muted" style="margin:-8px 0 14px">
-          Luật kết hợp học từ {{ r.orders.transactions }} đơn chưa hủy ({{ r.orders.totalRules }} luật) và {{ r.recipes.transactions }} công thức ({{ r.recipes.totalRules }} luật).
-          Confidence: mua món trước thì bao nhiêu % mua thêm món sau. Lift &gt; 1: mua cùng nhiều hơn ngẫu nhiên. Cập nhật {{ r.computedAt | date: 'HH:mm dd/MM' }}.
-        </p>
-        <div class="toolbar" role="group" aria-label="Nguồn luật">
-          <button class="tab" type="button" [attr.aria-pressed]="ruleSource() === 'orders'" (click)="ruleSource.set('orders')">Từ đơn hàng</button>
-          <button class="tab" type="button" [attr.aria-pressed]="ruleSource() === 'recipes'" (click)="ruleSource.set('recipes')">Từ công thức</button>
+        <div class="rules-head">
+          <div>
+            <h2 class="h3" id="h-rules">Thường được mua cùng</h2>
+            <p class="muted">Cặp món hay đi chung, dùng cho gợi ý ở trang sản phẩm.</p>
+          </div>
+          <div class="rules-src" role="group" aria-label="Nguồn luật">
+            <button class="tab" type="button" [attr.aria-pressed]="ruleSource() === 'orders'" (click)="ruleSource.set('orders')">Từ đơn hàng <span class="num">{{ r.orders.totalRules }}</span></button>
+            <button class="tab" type="button" [attr.aria-pressed]="ruleSource() === 'recipes'" (click)="ruleSource.set('recipes')">Từ công thức <span class="num">{{ r.recipes.totalRules }}</span></button>
+          </div>
         </div>
         <div class="tbl-wrap"><table class="tbl">
           <thead><tr><th>Khi mua</th><th>Thường mua thêm</th><th class="r">Số lần</th><th class="r">Support</th><th class="r">Confidence</th><th class="r">Lift</th></tr></thead>
@@ -99,6 +100,11 @@ interface RulesData {
             }
           </tbody>
         </table></div>
+        <p class="rules-foot">
+          <span>Học từ {{ ruleSource() === 'orders' ? r.orders.transactions + ' đơn chưa hủy' : r.recipes.transactions + ' công thức' }}, cập nhật {{ r.computedAt | date: 'HH:mm dd/MM' }}.</span>
+          <span><b>Confidence</b>: trong số người mua món đầu, bao nhiêu % mua thêm món sau.</span>
+          <span><b>Lift</b> trên 1: hai món đi cùng nhau nhiều hơn ngẫu nhiên.</span>
+        </p>
       </section>
     }
     @if (lowStock().length) {
