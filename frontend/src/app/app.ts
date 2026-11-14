@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterOutlet } from '@angular/router';
+import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterOutlet, Scroll } from '@angular/router';
+import { ViewportScroller } from '@angular/common';
 import { filter, map } from 'rxjs';
 import { Header } from './layout/header';
 import { Footer } from './layout/footer';
@@ -53,6 +54,21 @@ export class App {
     inject(Router).events.subscribe(e => {
       if (e instanceof NavigationStart) { clearTimeout(t); t = setTimeout(() => this.navigating.set(true), 120); }
       else if (e instanceof NavigationEnd || e instanceof NavigationCancel || e instanceof NavigationError) { clearTimeout(t); this.navigating.set(false); }
+    });
+    // Cuộn khi chuyển trang, thay cho scrollPositionRestoration của router:
+    // Back/Forward về đúng chỗ cũ, có #mục thì nhảy tới mục, sang trang khác thì lên đầu.
+    // Chỉ đổi ?query trên cùng một trang (lọc, chọn tab, Lướt món ?luot=) thì đứng yên, không kéo trang về đầu.
+    const vs = inject(ViewportScroller);
+    vs.setHistoryScrollRestoration('manual');
+    const pathOf = (url: string) => url.split(/[?#]/)[0];
+    let lastPath = pathOf(location.pathname);
+    inject(Router).events.pipe(filter((e): e is Scroll => e instanceof Scroll)).subscribe(e => {
+      const url = e.routerEvent instanceof NavigationEnd ? e.routerEvent.urlAfterRedirects : e.routerEvent.url;
+      const path = pathOf(url), samePage = path === lastPath;
+      lastPath = path;
+      if (e.position) vs.scrollToPosition(e.position);
+      else if (e.anchor) vs.scrollToAnchor(e.anchor);
+      else if (!samePage) vs.scrollToPosition([0, 0]);
     });
   }
   protected isAdmin = toSignal(inject(Router).events.pipe(filter(e => e instanceof NavigationEnd), map(e => (e as NavigationEnd).urlAfterRedirects.startsWith('/admin'))), { initialValue: location.pathname.startsWith('/admin') });

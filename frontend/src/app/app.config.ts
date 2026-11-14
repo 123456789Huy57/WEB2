@@ -11,7 +11,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes, withComponentInputBinding(), withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' }), withViewTransitions({ skipInitialTransition: true }), withPreloading(IdlePreload)),
+    provideRouter(routes, withComponentInputBinding(), withInMemoryScrolling({ scrollPositionRestoration: 'disabled', anchorScrolling: 'disabled' }) /* cuộn tự xử lý trong app.ts */, withViewTransitions({ skipInitialTransition: true }), withPreloading(IdlePreload)),
     provideHttpClient(withFetch(), withInterceptors([apiInterceptor])),
     provideAppInitializer(() => {
       const auth = inject(AuthService), data = inject(DataService);
