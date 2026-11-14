@@ -17,12 +17,12 @@ async function forgotPassword(req, res) {
     const token = randomBytes(32).toString('hex');
     const tokenHash = hashToken(token);
     await users.users().updateOne({ id: user.id, isActive: { $ne: false } }, { $set: { resetTokenHash: tokenHash, resetExpiresAt: new Date(Date.now() + 20 * 60 * 1000) } });
-    try { await mail.sendRecovery(email, token); }
-    catch (error) {
-      // Do not expose account existence or credentials through transport failures.
-      await users.users().updateOne({ id: user.id, resetTokenHash: tokenHash }, { $unset: { resetTokenHash: '', resetExpiresAt: '' } });
+    // Gửi ở nền rồi trả lời ngay: thời gian phản hồi giống nhau dù email có tài khoản hay không,
+    // và người dùng không phải chờ máy chủ thư. Gửi lỗi thì hủy mã để không còn mã "treo".
+    mail.sendRecovery(email, token).catch(async error => {
       console.error('Recovery mail failed:', error.name);
-    }
+      await users.users().updateOne({ id: user.id, resetTokenHash: tokenHash }, { $unset: { resetTokenHash: '', resetExpiresAt: '' } }).catch(() => {});
+    });
   }
   res.status(202).json({ message: 'Yêu cầu khôi phục đã được xử lý. Nếu tài khoản hợp lệ, hướng dẫn có trong thư khôi phục.', delivery });
 }

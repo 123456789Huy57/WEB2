@@ -49,9 +49,10 @@ router.post('/newsletter/subscribe', limit, async (req, res) => {
     },
     { upsert: true },
   );
-  try { await mail.sendNewsletterWelcome(email, token, await welcomeVoucher()); }
-  catch (error) { console.error('Newsletter welcome mail failed:', error.name); } // vẫn giữ đăng ký; lần gửi ưu đãi sau sẽ tới
+  // Trả lời ngay, gửi thư chào mừng ở nền: người dùng không phải chờ máy chủ thư (có thể mất vài giây hoặc bị chặn).
   res.status(202).json({ message: DONE, delivery });
+  welcomeVoucher().then(voucher => mail.sendNewsletterWelcome(email, token, voucher))
+    .catch(error => console.error('Newsletter welcome mail failed:', error.name)); // vẫn giữ đăng ký
 });
 
 router.post('/newsletter/unsubscribe', limit, async (req, res) => {

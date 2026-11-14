@@ -1,0 +1,23 @@
+# Giữ backend Render (gói Free) luôn thức: Render tắt máy chủ sau 15 phút không có truy cập,
+# lượt vào đầu tiên sau đó phải chờ ~20-30 giây. Cứ 10 phút gọi /api/health một lần (đi qua Vercel như khách thật).
+# GitHub có thể chạy trễ vài phút vào giờ cao điểm; vẫn đủ để máy chủ không ngủ trong giờ dùng.
+name: Giữ backend thức
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {}
+
+permissions: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Gọi /api/health
+        run: |
+          for url in "https://web-2-two-lyart.vercel.app/api/health" "https://freshmart-api-j7f6.onrender.com/api/health"; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 90 "$url" || echo 000)
+            echo "$url -> $code"
+          done

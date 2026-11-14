@@ -62,6 +62,7 @@ after(async () => {
 });
 const post = (url, body) => fetch(base + url, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
 async function mails() {
+  await new Promise(r => setTimeout(r, 150)); // thư gửi ở nền sau khi API đã trả lời
   const names = (await fs.readdir(outbox).catch(() => [])).sort();
   return Promise.all(names.map(async n => JSON.parse(await fs.readFile(path.join(outbox, n), 'utf8'))));
 }
