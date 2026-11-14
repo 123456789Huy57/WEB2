@@ -19,7 +19,7 @@ import { DataService } from '../../core/data.service';
           </div>
         </div>
         <div class="about-hero-visual">
-          <img class="about-hero-img" src="/img/quay-trai-cay.jpg" alt="Quầy rau củ và trái cây trong một cửa hàng FreshMart" width="1400" height="933" fetchpriority="high">
+          <img class="about-hero-img" src="/img/cua-hang-freshmart.webp" alt="Quầy rau củ và trái cây trong một cửa hàng FreshMart, logo FreshMart trên tường" width="1717" height="916" fetchpriority="high">
           <div class="about-sticker" aria-hidden="true"><strong>Fresh</strong><span>Cho bữa cơm<br>nhà mình</span></div>
           <div class="about-hero-caption">Top 1 fresh picks</div>
         </div>
