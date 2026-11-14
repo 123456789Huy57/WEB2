@@ -1,4 +1,4 @@
-import { Injectable, computed, effect, inject, signal } from '@angular/core';
+import { Injectable, computed, effect, inject, signal, untracked } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
@@ -68,7 +68,9 @@ export class CommunityService {
   constructor() {
     void this.load();
     // Đăng nhập: lấy danh sách đã lưu của tài khoản, gộp với danh sách trên thiết bị
-    effect(() => { if (this.me()) void this.loadSaves(); });
+    // untracked: loadSaves đọc savedPosts(); nếu để effect theo dõi thì mỗi lần bấm Lưu/Bỏ lưu lại tải danh sách server về
+    // và ghi đè thao tác vừa bấm (bỏ lưu không có tác dụng khi đã đăng nhập)
+    effect(() => { if (this.me()) untracked(() => void this.loadSaves()); });
   }
 
   async load(): Promise<void> {
@@ -199,10 +201,11 @@ export class CommunityService {
   member(id: string): CMember | undefined { return MEMBERS.find(m => m.id === id); }
   /** Màu avatar cố định theo id, lấy từ bảng màu thương hiệu */
   avatarColor(id: string): string {
-    const palette = ['#1c6e55', '#ffc517', '#d2e07d', '#289e7c', '#121212', '#e4dcc3'];
+    // Chỉ tông xanh và be: đen dành cho nút, vàng dành cho điểm nhấn (thử thách, nhãn bữa ăn) nên không dùng cho ảnh đại diện
+    const palette = ['#1c6e55', '#289e7c', '#d2e07d', '#e4dcc3'];
     let h = 0; for (const ch of id) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
     return palette[h % palette.length];
   }
-  avatarInk(color: string): string { return ['#1c6e55', '#121212'].includes(color) ? '#fefcf5' : '#121212'; }
+  avatarInk(color: string): string { return color === '#1c6e55' ? '#fefcf5' : '#121212'; }
   initial(name: string): string { return (name.trim().split(/\s+/).slice(-1)[0] || '?').charAt(0).toUpperCase(); }
 }

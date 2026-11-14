@@ -1,41 +1,30 @@
-<section class="cm-hero band">
-  <div>
-    <p class="cm-kicker"><span></span> CỘNG ĐỒNG FRESHMART</p>
-    <h1 class="display">BẾP CHUNG, <em>NẤU CÙNG NHAU.</em></h1>
-    <p class="lead">Khoe món vừa nấu, hỏi mẹo bếp, thử thách mỗi tuần. Ưng món nào, bấm “Nấu món này” để mua đủ nguyên liệu.</p>
-  </div>
-</section>
+<!-- Biểu tượng cảm xúc (Thích / Yêu thích / Thèm quá) vẽ bằng màu thương hiệu, thay cho emoji -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="rx-like" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1c6e55"/><path d="M7 11h2.5v7H7zM10.5 18h5.2a1.6 1.6 0 0 0 1.6-1.3l.8-4a1.4 1.4 0 0 0-1.4-1.7h-3.2l.5-2.6a1.3 1.3 0 0 0-2.4-.9L10.5 11z" fill="#fefcf5"/></symbol>
+  <symbol id="rx-love" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#b3302a"/><path d="M12 18.2s-5.4-3.3-5.4-7.4a3 3 0 0 1 5.4-1.8 3 3 0 0 1 5.4 1.8c0 4.1-5.4 7.4-5.4 7.4z" fill="#fefcf5"/></symbol>
+  <symbol id="rx-yum" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#ffc517"/><circle cx="8.6" cy="9.6" r="1.3" fill="#121212"/><circle cx="15.4" cy="9.6" r="1.3" fill="#121212"/><path d="M7.5 13.5c1.2 2 2.7 3 4.5 3s3.3-1 4.5-3" stroke="#121212" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M12.6 16.4c.6 1.4 2.4 1.6 2.9.2" fill="#b3302a"/></symbol>
+</svg>
 
+<!-- Đầu trang gọn: trang này là nơi đọc và hỏi đáp, nên bảng tin lên ngay màn hình đầu -->
+<header class="cm-head band" [class.is-reel]="reelMode()">
+  <div>
+    <h1 class="cm-title">Bếp chung,<br><span class="cm-title-line">cùng nấu, cùng ăn</span></h1>
+    <p class="cm-head-lead">Khoe món vừa nấu, hỏi mẹo bếp, thử thách mỗi tuần. Ưng món nào, bấm “Nấu món này” để mua đủ nguyên liệu.</p>
+  </div>
+  <div class="cm-head-acts">
+    <div class="cm-mode" role="group" aria-label="Cách xem">
+      <button type="button" [attr.aria-pressed]="!reelMode()" (click)="setMode(false)">Bảng tin</button>
+      <button type="button" [attr.aria-pressed]="reelMode()" (click)="setMode(true)">Lướt món</button>
+    </div>
+    <button class="btn btn-ink" type="button" (click)="openComposer('discussion')">Viết bài</button>
+  </div>
+</header>
+
+@if (reelMode()) {
+  <fm-dish-reel class="band" [start]="luot()" (moved)="reelMoved($event)" (shareCooked)="openComposer('recipe', $event)" />
+} @else {
 <div class="cm band">
   <div class="cm-layout">
-    <!-- Cột trái: hồ sơ và danh mục -->
-    <aside class="cm-left" aria-label="Danh mục cộng đồng">
-      <section class="cm-card cm-me">
-        @if (cs.me(); as me) {
-          <span class="cm-av lg" [style.background]="cs.avatarColor(me.id)" [style.color]="cs.avatarInk(cs.avatarColor(me.id))">{{ cs.initial(me.name) }}</span>
-          <div><b>{{ me.name }}</b><small>Thành viên FreshMart</small></div>
-        } @else {
-          <span class="cm-av lg" aria-hidden="true">?</span>
-          <div><b>Bạn chưa đăng nhập</b><a class="cm-link" routerLink="/dang-nhap" [queryParams]="{ next: '/cong-dong' }">Đăng nhập để đăng bài</a></div>
-        }
-      </section>
-      <nav class="cm-card cm-nav" aria-label="Lọc bài viết">
-        @for (f of filters; track f.id) {
-          <button type="button" [attr.aria-pressed]="filter() === f.id && !tagFilter() && !challengeOnly()" (click)="setFilter(f.id)">
-            <span>{{ f.label }}</span><span class="num">{{ counts()[f.id] }}</span>
-          </button>
-        }
-      </nav>
-      <section class="cm-card">
-        <h2 class="cm-h">Chủ đề nổi bật</h2>
-        <div class="cm-tags">
-          @for (t of popularTags(); track t) { <button type="button" class="cm-tag" [attr.aria-pressed]="tagFilter() === t" (click)="setTag(t)">#{{ t }}</button> }
-        </div>
-      </section>
-      <a class="cm-card cm-cta" routerLink="/meal-planner">
-        <b>Chưa biết nấu gì?</b><span>Chọn nguyên liệu trong bếp, Meal Planner gợi ý món hợp.</span><em>Mở Meal Planner →</em>
-      </a>
-    </aside>
 
     <!-- Cột giữa: bảng tin -->
     <div class="cm-main" #feedTop>
@@ -43,43 +32,21 @@
         <div class="cm-compose-row">
           @if (cs.me(); as me) {
             <span class="cm-av" [style.background]="cs.avatarColor(me.id)" [style.color]="cs.avatarInk(cs.avatarColor(me.id))">{{ cs.initial(me.name) }}</span>
-          } @else { <span class="cm-av" aria-hidden="true">?</span> }
+          }
           <button type="button" class="cm-compose-input" (click)="openComposer('discussion')">{{ cs.me() ? 'Hôm nay bạn nấu món gì, ' + cs.me()!.name.split(' ').slice(-1)[0] + '?' : 'Đăng nhập để chia sẻ món bạn nấu…' }}</button>
         </div>
         <div class="cm-compose-actions">
-          <button type="button" (click)="openComposer('recipe')"><i aria-hidden="true">🍲</i> Chia sẻ công thức</button>
-          <button type="button" (click)="openComposer('question')"><i aria-hidden="true">❓</i> Đặt câu hỏi</button>
-          <button type="button" (click)="openComposer('discussion')"><i aria-hidden="true">💬</i> Thảo luận</button>
+          <button type="button" (click)="openComposer('recipe')">Chia sẻ công thức</button>
+          <button type="button" (click)="openComposer('question')">Đặt câu hỏi</button>
+          <button type="button" (click)="openComposer('discussion')">Thảo luận</button>
         </div>
       </section>
 
-      <!-- Thử thách tuần -->
-      <section class="cm-challenge" aria-labelledby="cm-ch-h">
-        <div class="cm-ch-copy">
-          <span class="cm-badge">THỬ THÁCH TUẦN NÀY · CÒN {{ challengeDays() }} NGÀY</span>
-          <h2 id="cm-ch-h">{{ challenge.title }}</h2>
-          <p>{{ challenge.description }}</p>
-          <p class="cm-ch-meta"><b class="num">{{ cs.participants() }}</b> người tham gia · <b class="num">{{ cs.challengePosts().length }}</b> bài dự thi · #{{ challenge.tag }}</p>
-          <div class="cm-ch-actions">
-            <button class="btn btn-ink" type="button" (click)="openComposer('recipe', undefined, true)">Tham gia thử thách</button>
-            <button class="btn btn-paper" type="button" [attr.aria-pressed]="challengeOnly()" (click)="showChallenge()">{{ challengeOnly() ? 'Xem tất cả bài' : 'Xem bài dự thi' }}</button>
-          </div>
-        </div>
-        <ul class="cm-ch-gallery" aria-label="Bài dự thi mới nhất">
-          @for (p of cs.challengePosts().slice(0, 4); track p.id) {
-            @if (recipeOf(p); as r) {
-              <li><button type="button" (click)="cook(r.id)" [attr.aria-label]="'Xem ' + r.name"><img [fmImg]="r.name" [src]="r.imageUrl" [alt]="r.name" loading="lazy"><span>{{ p.authorName }}</span></button></li>
-            } @else if (p.image) {
-              <li><span class="cm-ch-img"><img [src]="p.image" alt="" loading="lazy"><span>{{ p.authorName }}</span></span></li>
-            }
-          }
-        </ul>
-      </section>
 
       <div class="cm-bar">
         <div class="cm-chips" role="group" aria-label="Loại bài viết">
           @for (f of filters; track f.id) {
-            <button type="button" class="chip chip-sm" [attr.aria-pressed]="filter() === f.id" (click)="setFilter(f.id)">{{ f.label }}</button>
+            <button type="button" class="chip chip-sm" [attr.aria-pressed]="filter() === f.id" (click)="setFilter(f.id)">{{ f.label }} <span class="num muted">{{ counts()[f.id] }}</span></button>
           }
         </div>
         <div class="cm-sort" role="group" aria-label="Sắp xếp">
@@ -94,7 +61,7 @@
       @if (challengeOnly()) { <p class="cm-note">Đang xem bài dự thi <b>{{ challenge.title }}</b> <button type="button" class="cm-link" (click)="challengeOnly.set(false)">Bỏ lọc</button></p> }
 
       @for (p of feed(); track p.id) {
-        <article class="cm-card cm-post" [class.is-new]="newId() === p.id" [attr.aria-label]="'Bài của ' + p.authorName">
+        <article class="cm-card cm-post" tabindex="-1" [id]="'bai-' + p.id" [class.is-new]="newId() === p.id" [attr.aria-label]="'Bài của ' + p.authorName">
           <header class="cm-post-head">
             <span class="cm-av" [style.background]="cs.avatarColor(p.authorId)" [style.color]="cs.avatarInk(cs.avatarColor(p.authorId))">{{ cs.initial(p.authorName) }}</span>
             <div class="cm-who">
@@ -119,13 +86,13 @@
               </button>
               <div class="cm-recipe-body">
                 <h3>{{ r.name }}</h3>
-                <p class="cm-recipe-meta num"><span>◷ {{ mp.totalTime(r) }} phút</span><span>👥 {{ r.servings }} người</span><span>{{ diff[r.difficulty] }}</span><span>{{ r.nutrition.calories }} kcal</span></p>
+                <p class="cm-recipe-meta num"><span>{{ mp.totalTime(r) }} phút</span><span>{{ r.servings }} người</span><span>{{ diff[r.difficulty] }}</span><span>{{ r.nutrition.calories }} kcal</span></p>
                 @if (ingNames(r.id); as ing) {
                   <p class="cm-recipe-ing"><b>Nguyên liệu:</b> {{ ing.names.join(', ') }}@if (ing.more) { <span> +{{ ing.more }}</span> }</p>
                 }
                 <div class="cm-recipe-cta">
                   <button class="btn btn-forest btn-sm" type="button" (click)="cook(r.id)">Nấu món này</button>
-                  <button class="btn btn-stone btn-sm" type="button" [attr.aria-pressed]="cs.isRecipeSaved(r.id)" (click)="cs.toggleRecipeSaved(r.id)">{{ cs.isRecipeSaved(r.id) ? '✓ Đã lưu món' : 'Lưu công thức' }}</button>
+                  <button class="btn btn-stone btn-sm" type="button" [attr.aria-pressed]="cs.isRecipeSaved(r.id)" (click)="cs.toggleRecipeSaved(r.id)">{{ cs.isRecipeSaved(r.id) ? 'Đã lưu công thức' : 'Lưu công thức' }}</button>
                 </div>
               </div>
             </div>
@@ -140,7 +107,7 @@
               @for (o of pl.options; track o.id) {
                 <button type="button" class="cm-opt" [class.mine]="cs.myVote(p) === o.id" [attr.aria-pressed]="cs.myVote(p) === o.id" (click)="cs.vote(p, o.id)">
                   <span class="cm-opt-bar" [style.width.%]="pct(p, o.votes.length)"></span>
-                  <span class="cm-opt-label">{{ cs.myVote(p) === o.id ? '✓ ' : '' }}{{ o.label }}</span>
+                  <span class="cm-opt-label">{{ o.label }}</span>
                   <span class="cm-opt-pct num">{{ pct(p, o.votes.length) }}% · {{ o.votes.length }}</span>
                 </button>
               }
@@ -149,23 +116,24 @@
           }
 
           <div class="cm-counts">
-            <span class="cm-react-sum">@if (cs.reactionCount(p)) { <span aria-hidden="true">{{ cs.topReactions(p).join('') }}</span> <span class="num">{{ cs.reactionCount(p) }}</span> } @else { <span class="muted">Hãy là người đầu tiên thả cảm xúc</span> }</span>
+            <span class="cm-react-sum">@if (cs.reactionCount(p)) { <span class="cm-rx-stack" aria-hidden="true">@for (id of topReactionIds(p); track id) { <svg class="cm-rx"><use [attr.href]="'#rx-' + id"/></svg> }</span> <span class="num">{{ cs.reactionCount(p) }}</span> } @else { <span class="muted">Hãy là người đầu tiên thả cảm xúc</span> }</span>
             <span class="muted num">{{ p.comments.length }} bình luận</span>
           </div>
           <div class="cm-actions">
             <div class="cm-react">
               <button type="button" class="cm-act" [class.on]="cs.myReaction(p)" (click)="cs.react(p, cs.myReaction(p) ?? 'like')" [attr.aria-pressed]="!!cs.myReaction(p)">
-                <span aria-hidden="true">{{ cs.myReaction(p) ? (cs.myReaction(p) === 'like' ? '👍' : cs.myReaction(p) === 'love' ? '❤️' : '😋') : '👍' }}</span>
+                @if (cs.myReaction(p); as mr) { <svg class="cm-rx" aria-hidden="true"><use [attr.href]="'#rx-' + mr"/></svg> }
+                @else { <svg class="cm-rx-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11h2.5v7H7zM10.5 18h5.2a1.6 1.6 0 0 0 1.6-1.3l.8-4a1.4 1.4 0 0 0-1.4-1.7h-3.2l.5-2.6a1.3 1.3 0 0 0-2.4-.9L10.5 11z"/></svg> }
                 {{ cs.myReaction(p) ? (cs.myReaction(p) === 'like' ? 'Đã thích' : cs.myReaction(p) === 'love' ? 'Yêu thích' : 'Thèm quá') : 'Thích' }}
               </button>
               <span class="cm-react-pop" role="group" aria-label="Chọn cảm xúc">
                 @for (r of reactions; track r.id) {
-                  <button type="button" [attr.aria-label]="r.label" [title]="r.label" [class.on]="cs.myReaction(p) === r.id" (click)="cs.react(p, r.id)">{{ r.icon }}</button>
+                  <button type="button" [attr.aria-label]="r.label" [title]="r.label" [class.on]="cs.myReaction(p) === r.id" (click)="cs.react(p, r.id)"><svg class="cm-rx lg" aria-hidden="true"><use [attr.href]="'#rx-' + r.id"/></svg></button>
                 }
               </span>
             </div>
-            <button type="button" class="cm-act" [attr.aria-expanded]="openComments().includes(p.id)" (click)="toggleComments(p.id)"><span aria-hidden="true">💬</span> Bình luận</button>
-            <button type="button" class="cm-act" [class.on]="cs.isSaved(p.id)" [attr.aria-pressed]="cs.isSaved(p.id)" (click)="cs.toggleSave(p.id)"><span aria-hidden="true">{{ cs.isSaved(p.id) ? '🔖' : '📑' }}</span> {{ cs.isSaved(p.id) ? 'Đã lưu' : 'Lưu bài' }}</button>
+            <button type="button" class="cm-act" [attr.aria-expanded]="openComments().includes(p.id)" (click)="toggleComments(p.id)">Bình luận</button>
+            <button type="button" class="cm-act" [class.on]="cs.isSaved(p.id)" [attr.aria-pressed]="cs.isSaved(p.id)" (click)="cs.toggleSave(p.id)">{{ cs.isSaved(p.id) ? 'Đã lưu' : 'Lưu bài' }}</button>
           </div>
 
           <!-- Bình luận và trả lời -->
@@ -221,51 +189,71 @@
       }
     </div>
 
-    <!-- Cột phải: xu hướng, bình chọn, thành viên -->
+    <!-- Cột phải: thử thách tuần, bài được quan tâm, chủ đề, bình chọn -->
     <aside class="cm-right" aria-label="Nổi bật trong cộng đồng">
-      <section class="cm-card">
+      <section class="cm-challenge" aria-labelledby="cm-ch-h">
+        <h2 id="cm-ch-h">{{ challenge.title }}</h2>
+        <p>{{ challenge.description }}</p>
+        @if (cs.challengePosts().length) {
+          <ul class="cm-ch-gallery" aria-label="Bài dự thi mới nhất">
+            @for (p of cs.challengePosts().slice(0, 3); track p.id) {
+              @if (recipeOf(p); as r) {
+                <li><button type="button" (click)="cook(r.id)" [attr.aria-label]="'Xem công thức ' + r.name + ' của ' + p.authorName"><img [fmImg]="r.name" [src]="r.imageUrl" alt="" loading="lazy"></button></li>
+              } @else if (p.image) {
+                <li><img [src]="p.image" [alt]="'Ảnh dự thi của ' + p.authorName" loading="lazy"></li>
+              }
+            }
+          </ul>
+        }
+        <p class="cm-ch-meta num">Thử thách tuần · còn {{ challengeDays() }} ngày · {{ cs.challengePosts().length }} bài dự thi</p>
+        <div class="cm-ch-actions">
+          <button class="btn btn-ink btn-sm" type="button" (click)="openComposer('recipe', undefined, true)">Gửi bài dự thi</button>
+          <button class="cm-link" type="button" [attr.aria-pressed]="challengeOnly()" (click)="showChallenge()">{{ challengeOnly() ? 'Xem tất cả bài' : 'Xem bài dự thi' }}</button>
+        </div>
+      </section>
+
+      <section class="cm-side">
         <h2 class="cm-h">Đang được quan tâm</h2>
         <ol class="cm-trend">
-          @for (p of trending(); track p.id; let i = $index) {
-            <li><button type="button" (click)="sort.set('top'); filter.set('all'); tagFilter.set('')">
-              <span class="cm-rank num">{{ i + 1 }}</span>
-              <span><b>{{ recipeOf(p)?.name ?? p.text.slice(0, 54) + (p.text.length > 54 ? '…' : '') }}</b>
-                <small class="num">{{ p.authorName }} · {{ cs.reactionCount(p) }} cảm xúc · {{ p.comments.length }} bình luận</small></span>
+          @for (p of trending(); track p.id) {
+            <li><button type="button" (click)="goTo(p)">
+              <b>{{ recipeOf(p)?.name ?? p.text.slice(0, 64) + (p.text.length > 64 ? '…' : '') }}</b>
+              <small class="num">{{ p.authorName }} · {{ p.comments.length }} bình luận</small>
             </button></li>
           }
         </ol>
       </section>
 
+      @if (popularTags().length) {
+        <section class="cm-side">
+          <h2 class="cm-h">Chủ đề</h2>
+          <div class="cm-tags">
+            @for (t of popularTags(); track t) { <button type="button" class="cm-tag" [attr.aria-pressed]="tagFilter() === t" (click)="setTag(t)">#{{ t }}</button> }
+          </div>
+        </section>
+      }
+
       @if (poll(); as pp) {
-        <section class="cm-card cm-side-poll">
-          <h2 class="cm-h">Bình chọn nhanh</h2>
+        <section class="cm-side cm-side-poll">
+          <h2 class="cm-h">Bình chọn</h2>
           <p class="cm-poll-q">{{ pp.poll!.question }}</p>
           @for (o of pp.poll!.options; track o.id) {
             <button type="button" class="cm-opt" [class.mine]="cs.myVote(pp) === o.id" [attr.aria-pressed]="cs.myVote(pp) === o.id" (click)="cs.vote(pp, o.id)">
               <span class="cm-opt-bar" [style.width.%]="pct(pp, o.votes.length)"></span>
-              <span class="cm-opt-label">{{ cs.myVote(pp) === o.id ? '✓ ' : '' }}{{ o.label }}</span>
+              <span class="cm-opt-label">{{ o.label }}</span>
               <span class="cm-opt-pct num">{{ pct(pp, o.votes.length) }}%</span>
             </button>
           }
           <small class="muted num">{{ total(pp) }} lượt bình chọn</small>
         </section>
       }
-
-      <section class="cm-card">
-        <h2 class="cm-h">Thành viên tích cực</h2>
-        <ul class="cm-members">
-          @for (m of topMembers(); track m.id) {
-            <li>
-              <span class="cm-av" [style.background]="cs.avatarColor(m.id)" [style.color]="cs.avatarInk(cs.avatarColor(m.id))">{{ cs.initial(m.name) }}</span>
-              <span><b>{{ m.name }}</b><small>{{ cs.member(m.id)?.title ?? 'Thành viên FreshMart' }}</small></span>
-              <span class="num cm-m-n">{{ m.posts }} bài</span>
-            </li>
-          }
-        </ul>
-      </section>
     </aside>
   </div>
 </div>
+}
+
+<!-- Hộp công thức chi tiết (dùng chung với Meal Planner); "Chia sẻ lên Cộng đồng" mở khung đăng bài của trang này -->
+<fm-recipe-dialog #recipeDlg (share)="openComposer('recipe', $event)" />
 
 <!-- Khung đăng bài (dùng chung cho đăng mới và “Chia sẻ lên Cộng đồng” từ Meal Planner) -->
 <dialog class="cm-dlg" #dlg aria-labelledby="cm-dlg-h" (click)="$event.target === dlg ? dlg.close() : null">
@@ -277,9 +265,9 @@
 
     <div class="cm-dlg-body">
       <div class="cm-types" role="group" aria-label="Loại bài viết">
-        <button type="button" [attr.aria-pressed]="dType() === 'recipe'" (click)="pickType('recipe')">🍲 Công thức</button>
-        <button type="button" [attr.aria-pressed]="dType() === 'question'" (click)="pickType('question')">❓ Hỏi đáp</button>
-        <button type="button" [attr.aria-pressed]="dType() === 'discussion'" (click)="pickType('discussion')">💬 Thảo luận</button>
+        <button type="button" [attr.aria-pressed]="dType() === 'recipe'" (click)="pickType('recipe')">Công thức</button>
+        <button type="button" [attr.aria-pressed]="dType() === 'question'" (click)="pickType('question')">Hỏi đáp</button>
+        <button type="button" [attr.aria-pressed]="dType() === 'discussion'" (click)="pickType('discussion')">Thảo luận</button>
       </div>
 
       @if (dType() === 'recipe') {
@@ -288,7 +276,7 @@
             <img [fmImg]="r.name" [src]="r.imageUrl" [alt]="r.name">
             <div>
               <b>{{ r.name }}</b>
-              <p class="num">◷ {{ mp.totalTime(r) }} phút · 👥 {{ r.servings }} người · {{ diff[r.difficulty] }} · {{ r.nutrition.calories }} kcal</p>
+              <p class="num">{{ mp.totalTime(r) }} phút · {{ r.servings }} người · {{ diff[r.difficulty] }} · {{ r.nutrition.calories }} kcal</p>
               @if (ingNames(r.id, 8); as ing) { <p class="small muted">Nguyên liệu: {{ ing.names.join(', ') }}@if (ing.more) { +{{ ing.more }} } </p> }
               <button type="button" class="cm-link" (click)="pickRecipe(null)">Chọn món khác</button>
             </div>
@@ -316,7 +304,7 @@
       @if (dImage()) {
         <div class="cm-up"><img [src]="dImage()" alt="Ảnh bạn chọn"><button type="button" class="cm-link" (click)="dImage.set('')">Bỏ ảnh</button></div>
       } @else {
-        <label class="cm-file"><input type="file" accept="image/*" (change)="pickImage($event)"> 📷 Thêm ảnh món ăn của bạn</label>
+        <label class="cm-file"><input type="file" accept="image/*" (change)="pickImage($event)"> Thêm ảnh món ăn</label>
       }
 
       @if (dType() === 'discussion') {

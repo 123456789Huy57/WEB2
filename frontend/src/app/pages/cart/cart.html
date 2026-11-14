@@ -34,16 +34,46 @@
       </div>
       <aside class="panel sticky" aria-labelledby="h-sum">
         <h2 class="h3" id="h-sum">Tạm tính</h2>
-        <form class="v-form" (submit)="$event.preventDefault(); apply()">
-          <label class="sr" for="v-code">Mã giảm giá</label>
-          <input id="v-code" name="code" placeholder="Nhập mã giảm giá" autocomplete="off" [value]="code()" (input)="code.set($any($event.target).value)">
-          <button class="btn btn-forest btn-sm" type="submit">Áp dụng</button>
-        </form>
-        <p class="small" [class.ok-note]="!!t().voucher" [class.v-bad]="!t().voucher && !!vMsg()" aria-live="polite" id="v-msg">{{ vMsg() }}</p>
+        <!-- Mã giảm giá: một mã cho mỗi đơn (server kiểm tra và tính tiền giảm). Đã áp dụng thì thay ô nhập bằng thẻ mã + nút Gỡ mã -->
+        <div class="v-box">
+          @if (applied(); as v) {
+            <p class="v-label">Mã giảm giá</p>
+            <div class="v-applied">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M5.8 10.4l2.8 2.8 5.6-6"/></svg>
+              <div class="v-applied-text"><b>{{ v.code }}</b><small>{{ v.title }}</small></div>
+              <button type="button" class="v-remove" (click)="removeVoucher()" [disabled]="applying()" [attr.aria-label]="'Gỡ mã ' + v.code">Gỡ mã</button>
+            </div>
+          } @else {
+            <form class="v-form" (submit)="$event.preventDefault(); apply()" novalidate>
+              <label class="v-label" for="v-code">Mã giảm giá</label>
+              <div class="v-row">
+                <input id="v-code" #vInput name="code" placeholder="Nhập mã giảm giá" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="20"
+                  [value]="code()" (input)="typed($any($event.target).value)" [attr.aria-invalid]="vErr() ? true : null" aria-describedby="v-msg">
+                <button class="btn btn-forest btn-sm" type="submit" [disabled]="applying()">{{ applying() ? 'Đang kiểm tra…' : 'Áp dụng' }}</button>
+              </div>
+            </form>
+            @if (suggestions().length) {
+              <div class="v-sugg" role="group" aria-label="Mã dùng được cho giỏ này">
+                <span>Dùng được cho giỏ này:</span>
+                @for (s of suggestions(); track s.code) {
+                  <button type="button" class="chip chip-sm" [disabled]="applying()" (click)="apply(s.code)" [attr.aria-label]="'Áp dụng mã ' + s.code + ', ' + s.title">{{ s.code }}</button>
+                }
+              </div>
+            }
+          }
+ @if (!auth.user()) {
+            <p class="small v-hint">Mã giảm giá dùng cho tài khoản đã đăng nhập. <a routerLink="/dang-nhap" [queryParams]="{ next: '/gio-hang' }">Đăng nhập</a></p>
+          }
+          <p class="small" id="v-msg" [class.v-bad]="!!vErr()" [class.v-ok]="!vErr() && !!note()" aria-live="polite">{{ vErr() || note() }}</p>
+          @if (!applied() && cart.voucherCode() && t().voucherMsg) {
+            <!-- Mã đã chọn nhưng giỏ hiện chưa đủ điều kiện: mã được giữ, đủ điều kiện lại thì tự áp dụng; khách có thể bỏ hẳn -->
+            <button type="button" class="v-remove" (click)="removeVoucher()" [disabled]="applying()">Bỏ mã {{ cart.voucherCode() }}</button>
+          }
+        </div>
         <div class="sum">
           <div><span>Tiền hàng</span><span class="num">{{ t().sub | vnd }}</span></div>
           <div><span>Phí giao hàng</span><span class="num">{{ t().ship ? (t().ship | vnd) : 'Miễn phí' }}</span></div>
-          @if (t().voucher) { <div><span>Mã {{ t().voucher!.code }}</span><span class="num">−{{ t().disc | vnd }}</span></div> }
+          @if (t().voucher) { <div class="sum-disc"><span>Giảm giá ({{ t().voucher!.code }})</span><span class="num">−{{ t().disc | vnd }}</span></div> }
           <div class="total"><span>Tổng cộng</span><b class="num">{{ t().total | vnd }}</b></div>
         </div>
         <a class="btn btn-forest w100" routerLink="/thanh-toan">Đặt hàng</a>
