@@ -34,13 +34,10 @@ type Errors = Partial<Record<'identifier' | 'password' | 'fullName' | 'phone' | 
                 <button class="pw-toggle" type="button" (click)="showPw.set(!showPw())" [attr.aria-label]="showPw() ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'" [attr.aria-pressed]="showPw()">{{ showPw() ? 'Ẩn' : 'Hiện' }}</button>
               </div>
               <span id="in-pw-err" class="err small">{{ fe().password }}</span>
-              @if (showDemo) {
-                <div class="demo-pick" role="group" aria-label="Tài khoản demo, bấm để điền sẵn">
-                  <span class="demo-lbl">Tài khoản demo, bấm để điền sẵn</span>
-                  <button type="button" class="demo-btn" (click)="fillDemo('customer')"><b>Khách</b><span>{{ demo.customer.id }}</span></button>
-                  <button type="button" class="demo-btn" (click)="fillDemo('admin')"><b>Quản trị</b><span>{{ demo.admin.id }}</span></button>
-                </div>
-              }
+              <span class="hint demo-hint">Tài khoản demo:
+                <button type="button" (click)="fillDemo('customer')">Khách {{ demo.customer.id }}</button> ·
+                <button type="button" (click)="fillDemo('admin')">Quản trị {{ demo.admin.id }}</button>
+              </span>
             </div>
             <div class="auth-row">
               <label class="check"><input type="checkbox" name="rememberMe" [(ngModel)]="rememberMe"> Ghi nhớ đăng nhập 7 ngày</label>
@@ -109,8 +106,7 @@ export class Login {
   protected fullName = '';
   protected phone = '';
 
-  /** Chỉ hiện trên máy dev. Bấm vào để điền sẵn email và mật khẩu tài khoản demo. */
-  protected readonly showDemo = ['localhost', '127.0.0.1'].includes(location.hostname);
+  /** Tài khoản demo, hiện trên mọi bản (cả bản deploy). Bấm vào để điền sẵn email và mật khẩu. */
   protected readonly demo = {
     customer: { id: 'khach@freshmart.vn', pw: "Khach-62f43a84d4de" },
     admin: { id: 'admin@freshmart.vn', pw: "Admin-6b108b87e874" }
