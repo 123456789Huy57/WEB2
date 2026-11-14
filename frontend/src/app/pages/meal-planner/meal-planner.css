@@ -35,7 +35,7 @@
 .mp-link:disabled { opacity: .5; cursor: default; }
 
 /* Bàn làm việc hai cột */
-.mp-work { display: grid; grid-template-columns: minmax(320px, 400px) minmax(0, 1fr); gap: clamp(24px, 3.5vw, 56px); align-items: start; padding-top: 28px; padding-bottom: 24px; scroll-margin-top: calc(var(--header-h) + 16px); }
+.mp-work { display: grid; grid-template-columns: minmax(320px, 400px) minmax(0, 1fr); gap: clamp(24px, 3.5vw, 56px); align-items: start; padding-top: 28px; padding-bottom: 24px; }
 .mp-side { display: grid; gap: 12px; position: sticky; top: 136px; max-height: calc(100svh - 152px); overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--stone-2) transparent; }
 .mp-panel { display: grid; gap: 14px; padding: 18px; border-radius: var(--r); background: var(--stone); }
 .mp-panel-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
@@ -93,14 +93,14 @@
 .mp-actions .btn { flex: 1; }
 
 /* Cột kết quả */
-.mp-main { display: grid; gap: 28px; min-width: 0; scroll-margin-top: calc(var(--header-h) + 16px); }
+.mp-main { display: grid; gap: 28px; min-width: 0; }
 .mp-count { color: var(--muted); font-size: 15px; }
 .mp-empty { display: grid; gap: 8px; justify-items: start; padding: 8px 0 24px; }
 .mp-start { padding: 22px 24px; border-radius: var(--r); background: var(--butter); }
 .mp-start .mp-sub { max-width: 64ch; }
 
 /* Món hợp nhất: ảnh thật của món + danh sách nguyên liệu đã có / cần mua (thông tin, không phải trang trí) */
-.mp-feature { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(20px, 3vw, 40px); align-items: start; margin-top: -12px; scroll-margin-top: calc(var(--header-h) + 16px); }
+.mp-feature { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(20px, 3vw, 40px); align-items: start; margin-top: -12px; }
 .mp-feature-img { display: block; padding: 0; border: 0; overflow: hidden; border-radius: var(--r); background: var(--stone); cursor: pointer; }
 .mp-feature-img img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform .5s var(--ease); }
 .mp-feature-img:hover img { transform: scale(1.03); }

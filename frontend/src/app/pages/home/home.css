@@ -188,7 +188,7 @@ fm-home > .sec { padding-block: var(--sec-y); }
 .ship { --tw: clamp(190px, min(30vw, calc(var(--sec-h) * .4)), 440px); --road: clamp(44px, min(4.5vw, 8svh), 64px); background: var(--yellow); color: var(--ink); padding-top: var(--sec-y); overflow-x: clip; view-timeline-name: --ship; }
 .ship-head { text-align: center; }
 .ship-head .btn { margin-top: clamp(8px, 1.6svh, 18px); }
-.ship-scene { position: relative; margin-top: clamp(12px, min(3vw, 3svh), 40px); }
+.ship-scene { position: relative; container-type: inline-size; margin-top: clamp(12px, min(3vw, 3svh), 40px); }
 /* Hai hàng: hàng 1 là mặt biển, hàng 2 là cột. Mỗi biển dùng subgrid nên ba mặt biển luôn cao bằng nhau (bằng mặt biển nhiều chữ nhất) */
 .signs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: auto 1fr; column-gap: clamp(20px, 3vw, 48px); max-width: 1080px; margin: 0 auto; }
 .sign { display: grid; grid-row: span 2; grid-template-rows: subgrid; justify-items: center; }
@@ -205,11 +205,12 @@ fm-home > .sec { padding-block: var(--sec-y); }
 .road { height: var(--road); background: var(--ink) linear-gradient(90deg, var(--cream) 0 50%, transparent 50%) 0 50% / 72px 4px repeat-x; }
 /* Xe đậu ở mép phải trong lúc khu vàng hiện lên và nằm trọn trong màn hình. Khi người dùng cuộn tiếp (mép trên khu vàng bắt đầu đi qua đỉnh màn hình, exit 0%)
    xe chạy sang trái, tới mép trái khi khu vàng đã cuộn đi khoảng một nửa (exit 55%) để vẫn còn nhìn thấy xe. */
-@keyframes drive-in { from { left: calc(100% - var(--tw) - var(--gut-r)); } to { left: var(--gut-l); } }
+/* Chạy bằng transform (GPU), không đổi `left`: đổi left theo cuộn bắt trình duyệt tính lại bố cục mỗi khung hình → giật. */
+@keyframes drive-in { from { transform: translateX(calc(100cqw - var(--tw) - var(--gut-r) - var(--gut-l))); } to { transform: none; } }
 /* Trình duyệt chưa hỗ trợ animation-timeline hoặc người dùng bật giảm chuyển động thì xe đứng yên ở giữa. */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .truck { animation: drive-in linear both; animation-timeline: --ship; animation-range: exit 0% exit 55%; }
+    .truck { left: var(--gut-l); animation: drive-in linear both; animation-timeline: --ship; animation-range: exit 0% exit 55%; }
   }
 }
 /* Laptop thấp (khung trình duyệt dưới ~800px chiều cao): bỏ icon trang trí trên mặt biển để cả khu vừa chiều cao video đầu trang */

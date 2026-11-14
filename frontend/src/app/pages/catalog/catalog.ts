@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, computed, effect, inject, input, signal, untracked } from '@angular/core';
+import { Component, DestroyRef, ViewEncapsulation, computed, effect, inject, input, signal, untracked } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { ProductService } from '../../core/product.service';
@@ -6,6 +6,10 @@ import { Product } from '../../core/models';
 import { ProductCard } from '../../shared/product-card';
 
 type SortKey = 'pop' | 'new' | 'asc' | 'desc' | 'off';
+/** Nhớ số sản phẩm đã mở và bộ lọc của từng danh sách, để bấm "quay lại" từ trang sản phẩm thì về đúng chỗ đang xem. */
+type ViewState = { limit: number; price: string; sale: boolean; inStock: boolean; sort: SortKey };
+const remembered = new Map<string, ViewState>();
+
 
 @Component({
   selector: 'fm-catalog',
@@ -100,8 +104,19 @@ export class Catalog {
       const id = this.cat()?.id, g = this.groups().find(x => x.cats.some(c => c.id === id))?.id ?? (id ? '' : 'tuoi');
       if (g) untracked(() => this.openGroups.update(s => (s.has(g) ? s : new Set(s).add(g))));
     });
-    // Đổi quầy hoặc từ khóa thì bỏ lọc "Loại" và quay về 12 sản phẩm đầu
-    effect(() => { this.c(); this.q(); this.loai(); this.limit.set(12); });
+    // Quay lại danh sách đã xem: khôi phục số sản phẩm đã mở + bộ lọc (trình duyệt sẽ cuộn về đúng vị trí cũ).
+    // Đổi quầy hoặc từ khóa thì bỏ lọc "Loại" và quay về 12 sản phẩm đầu.
+    const key = () => `${this.c() ?? ''}|${this.q() ?? ''}|${this.loai() ?? ''}`;
+    let restoring = true;
+    effect(() => {
+      const saved = remembered.get(key());
+      untracked(() => {
+        if (restoring && saved) { this.limit.set(saved.limit); this.price.set(saved.price); this.sale.set(saved.sale); this.inStock.set(saved.inStock); this.sort.set(saved.sort); }
+        else this.limit.set(12);
+        restoring = false;
+      });
+    });
+    inject(DestroyRef).onDestroy(() => remembered.set(key(), { limit: this.limit(), price: this.price(), sale: this.sale(), inStock: this.inStock(), sort: this.sort() }));
     effect(() => this.titleSvc.setTitle(this.title() + ' · FreshMart'));
   }
 

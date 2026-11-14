@@ -1,5 +1,6 @@
-import { Component, DestroyRef, ElementRef, computed, effect, inject, signal, viewChild } from '@angular/core';
+import { Component, DestroyRef, ElementRef, NgZone, computed, effect, inject, signal, viewChild } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { ViewportScroller } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CartService } from '../core/cart.service';
@@ -100,10 +101,12 @@ export class Header {
       const hide = y > 240 && y > last;
       // Chỉ đo chiều cao menu lúc chuyển sang thu gọn, không đo ở mọi lần cuộn
       if (hide && !this.compact()) this.navH.set(this.navEl().nativeElement.offsetHeight);
-      this.compact.set(hide);
+      if (hide !== this.compact()) this.compact.set(hide);
       last = y;
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
+    // Nghe cuộn NGOÀI vùng theo dõi của Angular: nếu không, mỗi sự kiện cuộn (hàng chục lần/giây) bắt Angular kiểm tra
+    // lại toàn bộ giao diện → cuộn giật. Signal compact/navH tự báo Angular cập nhật đúng lúc giá trị đổi.
+    inject(NgZone).runOutsideAngular(() => window.addEventListener('scroll', onScroll, { passive: true }));
     // Chiều cao thật của thanh thông báo + header đầy đủ, để khu đầu trang chủ lấp đúng phần màn hình còn lại
     // (chữ có thể xuống dòng hoặc người dùng phóng to, nên không đoán cố định 158px)
     const host = inject(ElementRef<HTMLElement>).nativeElement as HTMLElement;
@@ -111,11 +114,15 @@ export class Header {
     const measure = () => {
       const notice = document.querySelector<HTMLElement>('.notice');
       root.style.setProperty('--chrome-h', (notice?.offsetHeight ?? 0) + host.offsetHeight + 'px');
+      root.style.setProperty('--header-real', host.offsetHeight + 'px');
     };
+    // Nhảy tới một mục trong trang (#faq, #bang-gia, nút "xem kết quả"...): chừa đúng chiều cao header dính,
+    // để tiêu đề của mục không bị header che. (offsetHeight không đổi khi header thu gọn bằng transform.)
+    inject(ViewportScroller).setOffset(() => [0, host.offsetHeight + 12]);
     const ro = new ResizeObserver(measure);
     ro.observe(host);
     queueMicrotask(() => { const n = document.querySelector('.notice'); if (n) ro.observe(n); measure(); });
-    inject(DestroyRef).onDestroy(() => { window.removeEventListener('scroll', onScroll); ro.disconnect(); root.style.removeProperty('--chrome-h'); });
+    inject(DestroyRef).onDestroy(() => { window.removeEventListener('scroll', onScroll); ro.disconnect(); root.style.removeProperty('--chrome-h'); root.style.removeProperty('--header-real'); });
   }
   search(): void {
     const q = this.term().trim();

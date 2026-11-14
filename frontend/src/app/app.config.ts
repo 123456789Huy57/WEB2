@@ -1,16 +1,17 @@
 import { ApplicationConfig, inject, provideAppInitializer, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withComponentInputBinding, withInMemoryScrolling, withViewTransitions, withPreloading, PreloadAllModules } from '@angular/router';
+import { provideRouter, withComponentInputBinding, withInMemoryScrolling, withViewTransitions, withPreloading } from '@angular/router';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { routes } from './app.routes';
 import { DataService } from './core/data.service';
 import { AuthService } from './core/auth.service';
 import { apiInterceptor } from './core/api.interceptor';
+import { IdlePreload } from './core/idle-preload';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes, withComponentInputBinding(), withInMemoryScrolling({ scrollPositionRestoration: 'top', anchorScrolling: 'enabled' }), withViewTransitions({ skipInitialTransition: true }), withPreloading(PreloadAllModules)),
+    provideRouter(routes, withComponentInputBinding(), withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' }), withViewTransitions({ skipInitialTransition: true }), withPreloading(IdlePreload)),
     provideHttpClient(withFetch(), withInterceptors([apiInterceptor])),
     provideAppInitializer(() => {
       const auth = inject(AuthService), data = inject(DataService);

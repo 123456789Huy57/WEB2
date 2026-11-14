@@ -33,7 +33,7 @@
 .d-serv button:hover:not(:disabled) { background: var(--ink); color: var(--cream); }
 .d-serv button:disabled { opacity: .35; cursor: default; }
 
-.d-actions { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 10px; padding: 12px clamp(18px, 4vw, 40px); border-bottom: 1px solid var(--stone-2); background: rgb(254 252 245 / 95%); backdrop-filter: blur(8px); }
+.d-actions { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 10px; padding: 12px clamp(18px, 4vw, 40px); border-bottom: 1px solid var(--stone-2); background: var(--paper); } /* nền đặc: blur sau thanh dính phải tính lại mỗi khung hình khi cuộn công thức */
 .d-actions .btn-ink { background: var(--ink); }
 .d-actions .btn-ink:hover { background: var(--forest); }
 .d-actions .btn[aria-pressed="true"] { background: var(--yellow); }

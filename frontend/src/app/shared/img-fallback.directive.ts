@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, inject, input } from '@angular/core';
+import { DestroyRef, Directive, ElementRef, NgZone, inject, input } from '@angular/core';
 
 /**
  * Ảnh ngoài (CDN) lỗi thì ẩn ảnh, khung chứa hiện chữ cái đầu của tên trên nền đá
@@ -15,11 +15,17 @@ export class ImgFallbackDirective {
     const img = this.el.nativeElement;
     if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
     if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
-    // Ảnh hiện dần khi tải xong thay vì bật ra từng mảng; trong lúc chờ khung chứa có ánh sáng chạy nhẹ.
+    // Ảnh hiện dần khi tải xong thay vì bật ra từng mảng.
     img.classList.add('img-wait', 'img-in');
+    // load/error chỉ đổi class trên chính ảnh, không cần Angular vẽ lại: nghe NGOÀI vùng theo dõi của Angular,
+    // nếu không mỗi ảnh tải xong (hàng chục ảnh khi cuộn danh sách) bắt Angular kiểm tra lại toàn trang → giật.
+    const onLoad = () => this.loaded();
+    const onError = () => this.failed();
+    inject(NgZone).runOutsideAngular(() => { img.addEventListener('load', onLoad); img.addEventListener('error', onError); });
+    inject(DestroyRef).onDestroy(() => { img.removeEventListener('load', onLoad); img.removeEventListener('error', onError); });
   }
 
-  @HostListener('error') onError(): void {
+  private failed(): void {
     const img = this.el.nativeElement;
     img.classList.add('img-missing');
     img.classList.remove('img-wait');
@@ -27,7 +33,7 @@ export class ImgFallbackDirective {
     const name = (this.fmImg() || img.alt || '').trim();
     if (box && name) { box.classList.add('ph-missing'); box.dataset['initial'] = name.charAt(0).toUpperCase(); }
   }
-  @HostListener('load') onLoad(): void {
+  private loaded(): void {
     const img = this.el.nativeElement;
     img.classList.remove('img-missing', 'img-wait');
     img.parentElement?.classList.remove('ph-missing');

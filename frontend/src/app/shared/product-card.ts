@@ -1,4 +1,4 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, DestroyRef, ElementRef, NgZone, computed, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ProductService } from '../core/product.service';
 import { Product } from '../core/models';
@@ -21,7 +21,7 @@ import { ToastService } from '../core/toast.service';
   `,
   template: `
     <div class="ph-wrap">
-      <a class="ph" [routerLink]="['/san-pham', p().slug || p().id]" tabindex="-1" aria-hidden="true" (pointerenter)="prefetch()" (click)="morph($event)">
+      <a class="ph" [routerLink]="['/san-pham', p().slug || p().id]" tabindex="-1" aria-hidden="true" (click)="morph($event)">
         <img [fmImg]="name()" [src]="ps.img(p())" [alt]="name()" loading="lazy">
       </a>
       <button class="p-wish" type="button" [attr.aria-pressed]="wished()" [attr.aria-label]="wished() ? 'Bỏ ' + name() + ' khỏi yêu thích' : 'Lưu ' + name() + ' vào yêu thích'" (click)="toggleWish()">
@@ -29,7 +29,7 @@ import { ToastService } from '../core/toast.service';
       </button>
       <div class="add"><fm-add-control [product]="p()" /></div>
     </div>
-    <h3><a [routerLink]="['/san-pham', p().slug || p().id]" (pointerenter)="prefetch()" (focus)="prefetch()" (click)="morph($event)">{{ name() }}</a></h3>
+    <h3><a [routerLink]="['/san-pham', p().slug || p().id]" (focus)="prefetch()" (click)="morph($event)">{{ name() }}</a></h3>
     <p class="sub">{{ p().subcategoryName || p().categoryName }} · {{ ps.unit(p()) }}</p>
     <div class="price-row">
       <span class="price num">{{ ps.price(p()) | vnd }}</span>
@@ -44,6 +44,17 @@ export class ProductCard {
   protected ps = inject(ProductService);
   /** Rê chuột vào là tải sẵn mô tả, bộ ảnh: bấm vào trang chi tiết hiện đủ ngay */
   protected prefetch(): void { void this.ps.loadDetail(this.p().id); }
+  constructor() {
+    // Tải trước chi tiết khi chuột DỪNG trên thẻ 150 ms (đang nhắm vào sản phẩm), không phải mỗi lần thẻ trượt qua
+    // dưới con trỏ lúc cuộn (trước đây cuộn qua 50 thẻ = 50 request + 50 lần Angular kiểm tra lại giao diện).
+    // Nghe ngoài vùng theo dõi của Angular vì việc này không đổi gì trên màn hình.
+    const host = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const enter = (e: PointerEvent) => { if (e.pointerType === 'mouse') { clearTimeout(timer); timer = setTimeout(() => this.prefetch(), 150); } };
+    const leave = () => clearTimeout(timer);
+    inject(NgZone).runOutsideAngular(() => { host.addEventListener('pointerenter', enter); host.addEventListener('pointerleave', leave); });
+    inject(DestroyRef).onDestroy(() => { clearTimeout(timer); host.removeEventListener('pointerenter', enter); host.removeEventListener('pointerleave', leave); });
+  }
   /** Ảnh của thẻ vừa bấm "bay" sang ảnh lớn ở trang chi tiết (View Transitions; chỉ gắn tên cho đúng một thẻ) */
   protected morph(e: MouseEvent): void {
     const img = (e.currentTarget as HTMLElement).closest('fm-product-card')?.querySelector('img');
