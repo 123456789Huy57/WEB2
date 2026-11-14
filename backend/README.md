@@ -44,7 +44,7 @@ Mật khẩu ít nhất 8 ký tự và tối đa 72 byte UTF-8, lưu bằng bcry
 | `npm run seed:catalog` | Nhập products/categories còn thiếu |
 | `npm run seed:admin` | Tạo admin từ cấu hình riêng |
 | `npm run seed:vouchers` | Nhập voucher còn thiếu, gán loại khách mới/mọi khách |
-| `npm run mail:inbox` | Xem thư khôi phục thử local, không gửi email thật |
+| `npm run mail:inbox` | Xem thư thử local (khôi phục mật khẩu, chào mừng nhận ưu đãi), không gửi email thật |
 
 Integration test dùng `MONGODB_TEST_URI` nếu có, mặc định MongoDB local; luôn tạo tên DB thử mới, không dùng DB làm việc của nhóm.
 
@@ -80,7 +80,21 @@ Xem [phân công](docs/backend-task-assignment.md) và [đối chiếu môn họ
 
 ## Thư khôi phục và ảnh tải lên
 
-Mặc định development dùng MAIL_TRANSPORT=outbox; thư lưu private trong `.local-mail`, xem bằng `npm run mail:inbox`. Link chỉ dùng một lần và hết hạn sau 20 phút. Đây là hộp thư thử, không phải email đã gửi tới người dùng. Muốn gửi email thật, chuyển MAIL_TRANSPORT=smtp rồi điền MAIL_FROM và các trường SMTP trong .env. Không dùng outbox ở production.
+Thư (khôi phục mật khẩu, chào mừng khi đăng ký nhận ưu đãi) đi qua `src/modules/auth/mail.service.js`. Chưa điền SMTP thì máy dev dùng outbox: thư lưu private trong `.local-mail`, xem bằng `npm run mail:inbox` (không phải email đã gửi tới người dùng). Link khôi phục chỉ dùng một lần và hết hạn sau 20 phút.
+
+Gửi email thật bằng Gmail: bật xác minh 2 bước cho tài khoản Gmail, tạo **Mật khẩu ứng dụng** tại myaccount.google.com/apppasswords, rồi điền vào `.env` (và Environment của Render khi deploy):
+
+```
+MAIL_TRANSPORT=
+MAIL_FROM="FreshMart <ban@gmail.com>"
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=ban@gmail.com
+SMTP_PASSWORD=<mật khẩu ứng dụng 16 ký tự>
+```
+
+Có `SMTP_HOST` + `MAIL_FROM` là tự gửi thật (để trống `MAIL_TRANSPORT` hoặc đặt `smtp`; đừng để `outbox`). Production thiếu SMTP thì API trả 503 thay vì báo gửi thành công.
 
 Ảnh upload chỉ admin được phép gửi, tối đa 2 MB, được kiểm tra và chuyển WebP trước khi lưu trong `public/images/uploads`. Thư thử và ảnh tải lên đều không được commit. Có thể dùng MAIL_OUTBOX_DIR/UPLOAD_DIR để chỉ định thư mục riêng; integration tests luôn dùng thư mục tạm và tự xóa.
 

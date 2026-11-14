@@ -1,20 +1,23 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { apiMessage } from '../core/auth.service';
+import { NewsletterService } from '../core/newsletter.service';
 
 @Component({
   selector: 'fm-footer',
-  imports: [RouterLink],
+  imports: [RouterLink, FormsModule],
   host: { class: 'footer band' },
   template: `
     <div class="f-top">
       <div class="f-news">
         <p class="h3">Nhận ưu đãi mỗi tuần</p>
-        <form (submit)="$event.preventDefault(); done.set(true)">
-          <label class="sr" for="email">Email</label>
-          <input id="email" type="email" placeholder="Email của bạn" required>
-          <button class="btn btn-paper" type="submit">Đăng ký</button>
+        <form (ngSubmit)="subscribe()">
+          <label class="sr" for="newsletter-email">Email</label>
+          <input id="newsletter-email" name="email" type="email" autocomplete="email" placeholder="Email của bạn" required maxlength="254" [(ngModel)]="email" [disabled]="busy()">
+          <button class="btn btn-paper" type="submit" [disabled]="busy()">{{ busy() ? 'Đang gửi…' : 'Đăng ký' }}</button>
         </form>
-        <p class="small" style="margin-top:10px" aria-live="polite">{{ done() ? 'Đã đăng ký. Ưu đãi đầu tiên gửi vào thứ Hai.' : 'Không spam. Hủy đăng ký bất cứ lúc nào.' }}</p>
+        <p class="small" style="margin-top:10px" role="status" aria-live="polite">{{ note() }}</p>
       </div>
       <div class="f-cols">
       <div><h3 class="f-h">FreshMart</h3><ul><li><a routerLink="/cua-hang">Về FreshMart</a></li><li><a routerLink="/thong-tin/doi-ngu">Đội ngũ phát triển</a></li><li><a routerLink="/thong-tin/doi-tac">Đối tác</a></li><li><a routerLink="/blog">Blog ẩm thực</a></li><li><a routerLink="/cua-hang" fragment="faq">Câu hỏi thường gặp</a></li></ul></div>
@@ -28,4 +31,21 @@ import { RouterLink } from '@angular/router';
     </div>
   `
 })
-export class Footer { protected done = signal(false); }
+export class Footer {
+  private newsletter = inject(NewsletterService);
+  protected email = '';
+  protected busy = signal(false);
+  protected note = signal('Không spam. Hủy đăng ký bất cứ lúc nào.');
+  protected async subscribe(): Promise<void> {
+    const email = this.email.trim();
+    if (this.busy()) return;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { this.note.set('Email chưa đúng định dạng.'); return; }
+    this.busy.set(true);
+    try {
+      const result = await this.newsletter.subscribe(email);
+      this.note.set(result.delivery === 'outbox' ? 'Đã đăng ký. Máy chủ đang dùng hộp thư thử của nhóm nên chưa gửi tới email thật.' : result.message);
+      this.email = '';
+    } catch (error) { this.note.set(apiMessage(error)); }
+    finally { this.busy.set(false); }
+  }
+}

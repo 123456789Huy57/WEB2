@@ -42,6 +42,9 @@ async function ensureIndexes() {
     db.collection('communityPosts').createIndex({ recipeId: 1 }),
     db.collection('communitySaves').createIndex({ userId: 1 }, { unique: true }),
     db.collection('payments').createIndex({ txnRef: 1 }, { unique: true }),
+    db.collection('subscribers').createIndex({ email: 1 }, { unique: true }),
+    db.collection('subscribers').createIndex({ unsubscribeTokenHash: 1 }),
+    db.collection('subscribers').createIndex({ status: 1, createdAt: -1 }),
     db.collection('payments').createIndex({ orderId: 1, createdAt: -1 }),
   ]);
 }

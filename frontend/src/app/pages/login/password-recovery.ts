@@ -46,7 +46,7 @@ export class PasswordRecovery {
         this.message.set('Đã đặt lại mật khẩu. Bạn hãy đăng nhập bằng mật khẩu mới.');
       } else {
         const result = await this.auth.requestRecovery(this.email);
-        this.message.set(result.delivery === 'outbox' ? 'Yêu cầu đã được ghi nhận. Ứng dụng đang dùng hộp thư thử của nhóm; chưa gửi tới email thật.' : result.message);
+        this.message.set(result.delivery === 'outbox' ? 'Yêu cầu đã được ghi nhận. Máy chủ đang dùng hộp thư thử (chưa cấu hình SMTP) nên thư chưa gửi tới email thật: chạy npm run mail:inbox trong thư mục backend để lấy liên kết.' : result.message);
       }
       this.done.set(true);
     } catch (error) { this.error.set(apiMessage(error)); }

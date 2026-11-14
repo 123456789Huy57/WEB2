@@ -201,3 +201,9 @@ API phần B trả 404 cho tới khi B mount router thật. Không thêm mock en
 Các bổ sung này không đổi contract session/giỏ/đơn/kho của B. Danh sách kiểm tra bàn giao ở [part-a-handoff.md](part-a-handoff.md).
 
 Login hỗ trợ email hoặc số điện thoại trong field `identifier`; field `email` cũ vẫn tương thích. Không gửi cả hai field trong cùng request.
+
+## Newsletter (đăng ký nhận ưu đãi)
+
+- POST `/newsletter/subscribe`: body `{email}`, cần cookie/CSRF; 202 `{message,delivery}`. Lưu vào `subscribers` (email duy nhất), gửi thư chào mừng kèm mã `NEWSLETTER_VOUCHER` (mặc định WELCOME10, chỉ khi mã còn hiệu lực) và link hủy. Email đã đăng ký trả cùng thông báo, không gửi lại thư. Giới hạn 8 lần/15 phút/IP.
+- POST `/newsletter/unsubscribe`: body `{token}` (64 hex, lấy từ link `/huy-nhan-uu-dai?token=...` trong thư); 200 `{message}`; token sai 400 `UNSUBSCRIBE_TOKEN_INVALID`. Đăng ký lại sẽ tạo token mới.
+- GET `/newsletter/subscribers`: admin; `{total, active, items}` (không trả token hash).

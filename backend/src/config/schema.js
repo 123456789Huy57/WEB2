@@ -212,6 +212,16 @@ const collections = {
     },
   },
 
+  subscribers: {
+    schema: {
+      required: ['id', 'email', 'status', 'createdAt'],
+      properties: {
+        id: str, email: { bsonType: 'string', maxLength: 254 }, status: { enum: ['active', 'unsubscribed'] }, userId: str,
+        unsubscribeTokenHash: { bsonType: 'string', pattern: '^[a-f0-9]{64}$' }, subscribedAt: str, unsubscribedAt: str, createdAt: str, updatedAt: str,
+      },
+    },
+  },
+
   stores: {
     schema: { required: ['id', 'name', 'address'], properties: { id: str, name: str, address: str, phone: str, hours: str } },
   },

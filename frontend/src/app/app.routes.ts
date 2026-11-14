@@ -6,6 +6,7 @@ import { Home } from './pages/home/home';
 const pages: Routes = [
   { path: 'quen-mat-khau', title: 'Quên mật khẩu · FreshMart', loadComponent: () => import('./pages/login/password-recovery').then(m => m.PasswordRecovery) },
   { path: 'dat-lai-mat-khau', title: 'Đặt lại mật khẩu · FreshMart', data: { resetMode: true }, loadComponent: () => import('./pages/login/password-recovery').then(m => m.PasswordRecovery) },
+  { path: 'huy-nhan-uu-dai', title: 'Hủy nhận ưu đãi · FreshMart', loadComponent: () => import('./pages/login/unsubscribe').then(m => m.Unsubscribe) },
   // Trang chủ là trang vào nhiều nhất: nạp sẵn trong bundle chính để bớt một lượt tải. Các trang khác vẫn lazy.
   { path: '', title: 'FreshMart · Đi chợ liền tay, giao ngay trước tối', component: Home },
   { path: 'san-pham', title: 'Sản phẩm · FreshMart', loadComponent: () => import('./pages/catalog/catalog').then(m => m.Catalog) },
