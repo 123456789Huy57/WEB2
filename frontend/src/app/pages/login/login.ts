@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ViewEncapsulation, inject, input, signal } from '@angular/core';
+import { Component, ViewEncapsulation, inject, input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
@@ -106,26 +106,16 @@ export class Login {
   protected fullName = '';
   protected phone = '';
 
-  /** Chỉ hiện trên máy dev. Mật khẩu không nằm trong frontend bundle: lấy từ backend/.env qua route chỉ có ở máy dev. */
+  /** Chỉ hiện trên máy dev. Bấm vào để điền sẵn email và mật khẩu tài khoản demo. */
   protected readonly showDemo = ['localhost', '127.0.0.1'].includes(location.hostname);
   protected readonly demo = {
-    customer: { id: 'khach@freshmart.vn' },
-    admin: { id: 'admin@freshmart.vn' }
+    customer: { id: 'khach@freshmart.vn', pw: "Khach-62f43a84d4de" },
+    admin: { id: 'admin@freshmart.vn', pw: "Admin-6b108b87e874" }
   };
-  private cdr = inject(ChangeDetectorRef);
-  private demoPw?: Promise<Record<'customer' | 'admin', string>>;
-  protected async fillDemo(kind: 'customer' | 'admin'): Promise<void> {
+  protected fillDemo(kind: 'customer' | 'admin'): void {
     this.identifier = this.demo[kind].id;
-    this.password = '';
+    this.password = this.demo[kind].pw;
     this.fe.set({}); this.err.set('');
-    this.demoPw ??= fetch('/api/dev/demo-accounts', { cache: 'no-store' })
-      .then(r => (r.ok ? r.json() : { customer: '', admin: '' }))
-      .catch(() => ({ customer: '', admin: '' }));
-    const pw = (await this.demoPw)[kind];
-    if (this.identifier !== this.demo[kind].id) return; // người dùng đã bấm tài khoản kia hoặc tự gõ
-    if (pw) this.password = pw;
-    else this.demoPw = undefined; // chưa cấu hình: lần bấm sau thử lại
-    this.cdr.markForCheck();
   }
 
   protected switchTab(signup: boolean): void {
