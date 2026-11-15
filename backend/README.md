@@ -1,101 +1,69 @@
-# Backend FreshMart
+# FreshMart · Backend
 
-Phần A đã hoàn thành theo [bảng bàn giao](docs/part-a-handoff.md): auth/session, phân quyền, hồ sơ, khách hàng, catalog, upload ảnh và khôi phục mật khẩu. Phần B (giỏ, đặt đơn COD/VNPay, kho, voucher, dashboard) và phần mở rộng (Meal Planner API, Cộng đồng, đánh giá, Cloudinary) đã triển khai: xem [bàn giao phần B](docs/part-b-handoff.md) và [hợp đồng backend v1](docs/backend-contract.md). Dùng Node.js 22+, Express, CommonJS, MongoClient, Morgan, Nodemon và express-session.
+API Express cho FreshMart, chạy trên Node.js 22 và MongoDB. Cách cài đặt và chạy xem [README gốc](../README.md). Danh sách endpoint xem [docs/api.md](../docs/api.md).
 
-## Chạy local
+## Cấu trúc
 
-```bash
-cd backend
-npm ci
-cp .env.example .env
+```
+src/
+├── server.js          Khởi động: kết nối database, tạo index, cập nhật luật kiểm tra, mở cổng
+├── app.js             Ghép middleware và router của các module
+├── config/            Biến môi trường, kết nối DB, session, index, $jsonSchema, quy tắc giá và phí ship
+├── lib/               Hàm dùng chung: lỗi HTTP, kiểm tra dữ liệu, Cloudinary
+├── middleware/        Đăng nhập và phân quyền, CSRF, ghi log thao tác, xử lý lỗi
+└── modules/           Mỗi nghiệp vụ một thư mục
+    ├── auth/          Đăng ký, đăng nhập, quên mật khẩu, gửi email
+    ├── users/         Hồ sơ, đổi mật khẩu, quản lý khách hàng
+    ├── catalog/       Sản phẩm, danh mục, tải ảnh
+    ├── cart/          Giỏ hàng trong session, báo giá
+    ├── orders/        Đặt đơn, trạng thái đơn, khung giờ giao, tự hủy đơn quá hạn
+    ├── payments/      VNPay, chuyển khoản VietQR qua SePay, hoàn tiền
+    ├── inventory/     Tồn kho và lịch sử nhập xuất
+    ├── vouchers/      Voucher và giới hạn lượt dùng
+    ├── recipes/       Công thức, nguyên liệu, cửa hàng, lượt nấu
+    ├── reviews/       Đánh giá sản phẩm
+    ├── community/     Bài viết, bình luận, cảm xúc, bình chọn
+    ├── recommendations/  Luật kết hợp "thường được mua cùng"
+    ├── dashboard/     Số liệu trang tổng quan admin
+    └── newsletter/    Đăng ký nhận ưu đãi qua email
+scripts/               Khởi tạo, đồng bộ và rà soát dữ liệu
+tests/                 *.test.js là unit test, *.integration.cjs là integration test
 ```
 
-Cả nhóm dùng chung MongoDB Atlas theo [hướng dẫn](docs/mongodb-atlas.md). Điền `MONGODB_URI` (local: `mongodb://127.0.0.1:27017`), `MONGODB_DB=freshmart` và `SESSION_SECRET` riêng trong `.env`. Tạo secret bằng:
+## Quy ước
+
+- **Một module gồm** `*.routes.js` (khai báo đường dẫn và quyền), `*.controller.js` (đọc request, trả response) và `*.service.js` (nghiệp vụ, truy cập database). Module nhỏ có thể gộp controller vào routes.
+- **Lỗi** ném ra bằng `HttpError(status, code, message)` trong `src/lib/http-error.js`. Middleware lỗi đổi thành JSON `{ error: { code, message } }`.
+- **Kiểm tra đầu vào** dùng các hàm trong `src/lib/validation.js`. Body có trường lạ hoặc sai kiểu đều bị từ chối.
+- **Quyền** dùng `requireAuth` và `requireAdmin` trong `src/middleware/auth.js`. Vai trò và trạng thái tài khoản được đọc lại từ database ở mỗi request.
+- **Nghiệp vụ nhiều bước** (đặt đơn, hủy đơn, thanh toán, chỉnh kho) chạy trong transaction MongoDB, nhận `session` và truyền xuống mọi câu truy vấn.
+- **Tiền** là số nguyên VND. **Giá, phí ship, bước số lượng, trạng thái đơn** chỉ khai báo một lần trong `src/config/commerce.js`.
+
+## Biến môi trường
+
+Mẫu đầy đủ kèm giải thích nằm trong [`.env.example`](.env.example).
+
+| Nhóm | Biến | Bắt buộc |
+|---|---|---|
+| Cơ bản | `MONGODB_URI`, `MONGODB_DB`, `SESSION_SECRET`, `FRONTEND_ORIGIN`, `BACKEND_URL` | Có (production) |
+| Tài khoản admin | `DEV_ADMIN_EMAIL`, `DEV_ADMIN_PHONE`, `DEV_ADMIN_PASSWORD`, `DEV_ADMIN_NAME` | Chỉ khi chạy `seed:admin` |
+| Email | `MAIL_FROM`, `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD` | Không. Để trống thì ghi thư vào hộp thư thử |
+| VNPay | `PAYMENT_PROVIDER`, `VNPAY_TMN_CODE`, `VNPAY_HASH_SECRET`, `VNPAY_URL` | Không. Để trống thì dùng cổng giả lập |
+| Chuyển khoản | `BANK_CODE`, `BANK_ACCOUNT`, `BANK_HOLDER`, `SEPAY_API_KEY` | Không. Thiếu một biến thì ẩn phương thức này |
+| Ảnh | `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` | Không. Để trống thì lưu ảnh ở máy |
+
+Không đưa file `.env` lên Git.
+
+## Kiểm thử
 
 ```bash
-node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
-npm run seed:catalog
-npm run seed:vouchers
-npm run dev
+npm test                    # unit test, không cần database
+npm run test:integration    # tài khoản, sản phẩm, phân quyền
+npm run test:b              # giỏ, đơn, thanh toán, kho, voucher, giao hàng
 ```
 
-Seed chỉ thêm sản phẩm/danh mục chưa có, giữ mã demo và không ghi đè giá/tồn kho đã sửa. Không tự import tài khoản/mật khẩu Web1. Khi chưa có MongoDB, chỉ dùng health API và session guest để kiểm tra khung; dữ liệu/auth cần DB. `GET /api/health` là HTTP liveness, không phải kiểm tra readiness trực tiếp.
-
-## Tài khoản quản trị
-
-Điền `DEV_ADMIN_EMAIL`, `DEV_ADMIN_PHONE`, `DEV_ADMIN_PASSWORD`, `DEV_ADMIN_NAME` trong `.env` rồi chạy:
-
-```bash
-npm run seed:admin
-```
-
-Mật khẩu ít nhất 8 ký tự và tối đa 72 byte UTF-8, lưu bằng bcrypt hash. Script chỉ tạo tài khoản mới; không ghi đè/nâng quyền tài khoản đã có. Không có tài khoản hay mật khẩu admin mặc định. Khách tự đăng ký trên giao diện. Không commit `.env` hoặc thông tin đăng nhập.
-
-## Các lệnh
-
-| Lệnh | Mục đích |
-|---|---|
-| `npm run dev` | Nodemon tự khởi động lại khi sửa code |
-| `npm start` | Chạy server bằng Node |
-| `npm test` | Kiểm tra HTTP, session và quy tắc dùng chung |
-| `npm run test:integration` | Kiểm tra phần A với MongoDB local trong DB thử riêng, xóa sau khi chạy |
-| `npm run db:setup` | Dựng database: collection, luật kiểm tra, index, dữ liệu mẫu (leader chạy) |
-| `npm run check:db` | Kiểm tra kết nối MongoDB, in lý do nếu lỗi |
-| `npm run seed:catalog` | Nhập products/categories còn thiếu |
-| `npm run seed:admin` | Tạo admin từ cấu hình riêng |
-| `npm run seed:vouchers` | Nhập voucher còn thiếu, gán loại khách mới/mọi khách |
-| `npm run mail:inbox` | Xem thư thử local (khôi phục mật khẩu, chào mừng nhận ưu đãi), không gửi email thật |
-
-Integration test dùng `MONGODB_TEST_URI` nếu có, mặc định MongoDB local; luôn tạo tên DB thử mới, không dùng DB làm việc của nhóm.
-
-## Điểm nối cho B
-
-- Đọc [backend-contract.md](docs/backend-contract.md) trước khi code: đây là nguồn chuẩn về session, API giỏ/đơn, tiền, trạng thái và stock.
-- A: `src/modules/auth`, `users`, `catalog`; B: `cart`, `vouchers`, `orders`, `inventory`.
-- B dùng middleware `requireAuth`/`requireAdmin`; sau đó lấy user từ `req.user`.
-- Toàn bộ API ghi `/api` cần cookie và X-CSRF-Token; token lấy từ GET /api/auth/session và thay sau login/register.
-- MVP giỏ trong session cho guest và user; login giữ giỏ guest, logout xóa giỏ. Checkout cần login, chỉ COD.
-- A sở hữu thông tin/giá sản phẩm. Product mới stock=0, catalog PATCH từ chối stock/counters. B cập nhật stock qua inventory service trong cùng transaction với đơn.
-- `src/config/commerce.js` chứa phí ship, giá bán, bước quantity và ma trận trạng thái đã chốt.
-- `catalog.service.checkoutProducts(productIds, mongoSession)` hỗ trợ đọc trong cùng transaction. Dùng `getMongoClient()` để mở transaction; cần replica set/Atlas phù hợp.
-- Router/controller/model tách theo module; thêm service cho nghiệp vụ nhiều bước. Mount router B sau middleware chung trong `src/app.js`.
-
-## Frontend và phiên đăng nhập
-
-Frontend đã có dev proxy `/api/**` → localhost:3000, interceptor cookie/CSRF và gọi API phần A. Chạy backend trước, sau đó `cd frontend` và `npm ci`, `npm start`. Auth không dùng localStorage/users.json; catalog lấy dữ liệu MongoDB. Public API trả mảng mặc định; admin user API trả phân trang.
-
-Giỏ, đơn, voucher, kho, công thức và đánh giá đều đọc/ghi qua API; trình duyệt chỉ còn lưu tiện ích cá nhân (yêu thích, so sánh, nguyên liệu đã chọn).
-
-Session dùng cookie HttpOnly/SameSite=Lax, 1 giờ hoặc 7 ngày nếu rememberMe. Có DB thì lưu collection sessions; MemoryStore chỉ cho local chưa cấu hình DB. Production yêu cầu URI/secret, HTTPS; nếu có reverse proxy phải cấu hình trust proxy theo hạ tầng. Admin/user role và trạng thái được kiểm tra từ DB trên mỗi request cần quyền.
+Integration test cần `MONGODB_URI` (hoặc `MONGODB_TEST_URI`), tự tạo database tạm có tên ngẫu nhiên và xóa khi chạy xong.
 
 ## Postman
 
-Import `docs/freshmart.postman_collection.json`. Folder Starter kiểm tra server; các folder auth/catalog cần DB. Postman phải giữ cookie jar và lấy token trước khi gửi request ghi. Có thể chạy Starter trên máy này:
-
-```bash
-/Users/quynhlu/.local/bin/postman collection run docs/freshmart.postman_collection.json -i Starter --no-report-events
-```
-
-Xem [phân công](docs/backend-task-assignment.md) và [đối chiếu môn học](docs/team-guide.md) để biết phạm vi hai người.
-
-## Thư khôi phục và ảnh tải lên
-
-Thư (khôi phục mật khẩu, chào mừng khi đăng ký nhận ưu đãi) đi qua `src/modules/auth/mail.service.js`. Chưa điền SMTP thì máy dev dùng outbox: thư lưu private trong `.local-mail`, xem bằng `npm run mail:inbox` (không phải email đã gửi tới người dùng). Link khôi phục chỉ dùng một lần và hết hạn sau 20 phút.
-
-Gửi email thật bằng Gmail: bật xác minh 2 bước cho tài khoản Gmail, tạo **Mật khẩu ứng dụng** tại myaccount.google.com/apppasswords, rồi điền vào `.env` (và Environment của Render khi deploy):
-
-```
-MAIL_TRANSPORT=
-MAIL_FROM="FreshMart <ban@gmail.com>"
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_SECURE=false
-SMTP_USER=ban@gmail.com
-SMTP_PASSWORD=<mật khẩu ứng dụng 16 ký tự>
-```
-
-Có `SMTP_HOST` + `MAIL_FROM` là tự gửi thật (để trống `MAIL_TRANSPORT` hoặc đặt `smtp`; đừng để `outbox`). Production thiếu SMTP thì API trả 503 thay vì báo gửi thành công.
-
-Ảnh upload chỉ admin được phép gửi, tối đa 2 MB, được kiểm tra và chuyển WebP trước khi lưu trong `public/images/uploads`. Thư thử và ảnh tải lên đều không được commit. Có thể dùng MAIL_OUTBOX_DIR/UPLOAD_DIR để chỉ định thư mục riêng; integration tests luôn dùng thư mục tạm và tự xóa.
-
-Giao diện phần A bổ sung `/admin/danh-muc`, quên/đặt lại mật khẩu, đổi mật khẩu trong hồ sơ, remember-me và chi tiết khách hàng. Logs bảo mật trong collection auditLogs không chứa nội dung nhạy cảm và hết hạn sau 90 ngày.
+Import [docs/freshmart.postman_collection.json](../docs/freshmart.postman_collection.json). Postman cần bật lưu cookie, và phải gọi `GET /api/auth/session` để lấy CSRF token trước khi gửi request ghi dữ liệu.

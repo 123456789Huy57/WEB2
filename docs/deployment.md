@@ -1,4 +1,4 @@
-# Deploy FreshMart
+# Triển khai FreshMart
 
 ```
 Trình duyệt ──► Vercel (Angular, tên miền của nhóm)
@@ -10,7 +10,7 @@ Trình duyệt ──► Vercel (Angular, tên miền của nhóm)
 
 Vì sao chuyển tiếp `/api` qua Vercel: đăng nhập dùng cookie session `HttpOnly` + CSRF. Frontend và backend chung một tên miền thì cookie là cookie của chính trang, không bị trình duyệt chặn như cookie bên thứ ba.
 
-Chỉ **leader** làm các bước dưới. Không đưa chuỗi kết nối, mật khẩu, khóa API vào Git hay ảnh chụp.
+Các bước dưới chỉ cần làm một lần. Không đưa chuỗi kết nối, mật khẩu, khóa API vào Git hay ảnh chụp.
 
 ## 0. Chuẩn bị (một lần)
 
@@ -29,7 +29,7 @@ Chỉ **leader** làm các bước dưới. Không đưa chuỗi kết nối, m�
 | `MONGODB_URI` | chuỗi Atlas của user `render` |
 | `FRONTEND_ORIGIN` | tên miền frontend, ví dụ `https://freshmart-web2.vercel.app` (chưa có thì điền tạm, sửa ở bước 3) |
 | `BACKEND_URL` | **giống `FRONTEND_ORIGIN`** (cổng thanh toán trả khách về `/api/...` qua Vercel) |
-| `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`, `CLOUDINARY_FOLDER` | như trong `backend/.env` của leader |
+| `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`, `CLOUDINARY_FOLDER` | như trong `backend/.env` trên máy |
 | `SMTP_USER`, `SMTP_PASSWORD`, `MAIL_FROM` | Gmail + **mật khẩu ứng dụng** (Google Account → Bảo mật → Mật khẩu ứng dụng). Bỏ trống thì "Quên mật khẩu" báo chưa cấu hình, phần còn lại vẫn chạy |
 
 `SESSION_SECRET` Render tự sinh. Khi chưa điền `PAYMENT_PROVIDER` hoặc chưa có TMN code, backend vẫn dùng cổng mock để demo. Muốn VNPay sandbox thật, đặt `PAYMENT_PROVIDER=vnpay`, thêm `VNPAY_TMN_CODE`, `VNPAY_HASH_SECRET` và dùng đúng `BACKEND_URL` public để VNPay gọi IPN/return.

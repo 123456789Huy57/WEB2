@@ -1,6 +1,6 @@
 # Sơ đồ database FreshMart (MongoDB)
 
-Database `freshmart`. Bám theo `backend-contract.md` v1: ID là chuỗi, tiền là số nguyên VND, thời gian ISO 8601 UTC. Cột **Quản lý** cho biết phần nào được ghi vào collection.
+Database `freshmart`. Quy ước chung: ID là chuỗi, tiền là số nguyên VND, thời gian ISO 8601 UTC. Cột **Quản lý** cho biết phần nào được ghi vào collection.
 
 ## Tổng quan
 

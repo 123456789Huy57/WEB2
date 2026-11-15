@@ -2,7 +2,7 @@
 
 Hướng thiết kế: **"Bảng giá chợ sáng"**, kiểu bold editorial cho một cửa hàng thực phẩm.
 
-Tất cả giá trị nằm trong `src/styles.css` (khối `:root`). Component chỉ dùng biến, không tự đặt màu hay cỡ chữ mới.
+Tất cả giá trị nằm trong `frontend/src/styles.css` (khối `:root`). Component chỉ dùng biến, không tự đặt màu hay cỡ chữ mới.
 
 ## 1. Ý tưởng
 

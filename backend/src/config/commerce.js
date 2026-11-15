@@ -1,5 +1,6 @@
-// See docs/backend-contract.md. Inputs must be validated before calling these helpers.
-// Shared contract v1. B imports these rules; do not duplicate them in controllers.
+// Commerce rules (shipping, sale price, quantity steps, order statuses). See docs/api.md.
+// Inputs must be validated before calling these helpers.
+// Controllers import these rules instead of duplicating them.
 const SHIPPING_FEE = 20000;
 const FREE_SHIPPING_FROM = 300000;
 const ORDER_FLOW = ['pending', 'confirmed', 'preparing', 'shipping', 'delivered'];

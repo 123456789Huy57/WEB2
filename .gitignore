@@ -6,7 +6,7 @@ out-tsc/
 .DS_Store
 backend/scripts/data/backups/
 
-# Thư mục skill và cấu hình của các trợ lý AI (không đưa lên git)
+# Thư mục cấu hình riêng của công cụ trên máy từng người
 .agents/
 .codex/
 .gemini/

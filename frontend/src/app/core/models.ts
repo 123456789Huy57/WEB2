@@ -47,7 +47,7 @@ export type Role = 'customer' | 'admin';
 export interface User { id: string; fullName: string; email: string; phone: string; address: string; role: Role; isActive?: boolean; createdAt?: string; }
 export type PaymentMethod = 'cod' | 'vnpay' | 'bank';
 export type OrderStatus = 'pending' | 'confirmed' | 'preparing' | 'shipping' | 'delivered' | 'cancelled';
-/** Dòng đơn lưu bản chụp tên/giá lúc đặt (backend-contract mục 6) */
+/** Dòng đơn lưu bản chụp tên/giá lúc đặt */
 export interface OrderItem {
   productId: string; productNameSnapshot: string; unitSnapshot: string; unitPriceSnapshot: number;
   quantity: number; lineTotal: number; image_url?: string;
@@ -62,7 +62,7 @@ export interface Order {
   history: OrderHistory[];
 }
 export interface CheckoutInfo { name: string; phone: string; email: string; address: string; note: string; slot: string; payment: PaymentMethod; }
-/** Giỏ/báo giá do server tính (backend-contract mục 4) */
+/** Giỏ/báo giá do server tính */
 export interface CartIssue { productId: string; code: string; available?: number; requested?: number; step?: number; }
 export interface ServerCart {
   items: { productId: string; quantity: number; unitPrice: number; lineTotal: number; product: Partial<Product> & { id: string; name: string; unit: string } }[];

@@ -1,5 +1,5 @@
 // Tính tiền dùng chung cho giỏ, báo giá và đặt đơn. Hàm thuần: không đọc DB, dễ kiểm thử.
-// Quy tắc: docs/backend-contract.md mục 5.
+// Quy tắc tính tiền: docs/api.md, mục "Quy tắc nghiệp vụ".
 const { salePrice, shippingFee, quantityStep } = require('../../config/commerce');
 
 const STEP_EPSILON = 1e-9;

@@ -12,7 +12,7 @@ export const FREE_SHIP_FROM = 300000;
 export const SHIP_FEE = 20000;
 
 /**
- * Giỏ hàng lưu ở server (session), mọi con số cuối cùng do server tính (backend-contract mục 4).
+ * Giỏ hàng lưu ở server (session), mọi con số cuối cùng do server tính.
  * Bấm thêm/bớt là màn hình đổi ngay (optimistic update) theo giá đang có, rồi mới gửi lên server;
  * server trả về thì thay bằng số chính xác, lỗi thì tải lại giỏ thật và báo khách.
  * Các lệnh gửi lên được xếp hàng tuần tự: hai thao tác liền nhau không ghi đè giỏ của nhau.

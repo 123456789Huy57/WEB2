@@ -459,8 +459,8 @@ test('Thêm nhiều món vào giỏ một lượt; số điện thoại sai đ�
   assert.equal(reg.status, 400, 'đầu số 01 không đặt hàng được nên cũng không cho đăng ký');
 });
 
-// Các lỗi trong backend/docs/backend-review.md (rà soát 05/11): mỗi ca là một lần tái hiện, giữ lại để không tái phát.
-test('Regression từ backend-review', async t => {
+// Các lỗi tìm ra khi rà soát code (05/11): mỗi ca là một lần tái hiện, giữ lại để không tái phát.
+test('Regression từ đợt rà soát code', async t => {
   const admin = await new Client().start();
   await admin.post('/api/auth/login', { identifier: 'admin@example.com', password: 'adminpass123' });
   const now = new Date().toISOString();
