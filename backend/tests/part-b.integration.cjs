@@ -277,10 +277,12 @@ test('Meal Planner API và tab Cộng đồng', async t => {
     assert.equal((await g.get('/api/ingredient-products')).data['ing-trung'].preferredProductId, 'p-a');
   });
 
-  await t.test('cộng đồng: mỗi người một lượt/món/ngày, xếp hạng món và nguyên liệu hot', async () => {
+  await t.test('cộng đồng: chỉ thành viên ghi lượt nấu, mỗi người một lượt/món/ngày, xếp hạng món và nguyên liệu hot', async () => {
     const empty = (await new Client().get('/api/recipes/trending')).data;
     assert.equal(empty.recipes.length, 0);
-    const a = await new Client().start(), b = await new Client().register(30), c = await new Client().start();
+    const guest = await new Client().start();
+    assert.equal((await guest.post('/api/recipes/rec-1/cook')).status, 401, 'khách chưa đăng nhập không ghi lượt nấu');
+    const a = await new Client().register(31), b = await new Client().register(30), c = await new Client().register(32);
     assert.equal((await a.post('/api/recipes/rec-1/cook', { servings: 2 })).status, 201);
     assert.equal((await a.post('/api/recipes/rec-1/cook', { servings: 4 })).status, 200, 'bấm lại không cộng thêm');
     await b.post('/api/recipes/rec-1/cook');
